@@ -29,9 +29,9 @@ namespace Marmi
 
             while (true)
             {
-                if (stack.Count > 0)
+                if (App.stack.Count > 0)
                 {
-                    var kv = stack.Pop();
+                    var kv = App.stack.Pop();
                     int index = kv.Key;
                     Delegate action = kv.Value;
 
@@ -52,7 +52,7 @@ namespace Marmi
                     {
                         if (!g_pi.Items[index].cacheImage.hasImage)
                         {
-                            Uty.WriteLine("AsyncIOThread() index={0}, remain={1}", index, stack.Count);
+                            Uty.WriteLine("AsyncIOThread() index={0}, remain={1}", index, App.stack.Count);
                             //7zをOpenしていなければOpen
                             if (g_pi.packType == PackageType.Archive && !AsyncSZ.isOpen)
                             {

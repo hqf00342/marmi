@@ -33,6 +33,9 @@ namespace Marmi
         //非同期IOタイムアウト値
         internal const int ASYNC_TIMEOUT = 5000;
 
+        //非同期取得用スタック
+        internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
+
         public static class Cursors
         {
             private static readonly Icon iconLoope = Properties.Resources.loopeIcon;

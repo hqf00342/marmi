@@ -79,7 +79,7 @@ namespace Marmi
 
         //非同期取得用スタック
         //ver1.81 Sidebarからも登録するためpublicに変更
-        private PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
+        //private static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
 
         //非同期全展開用SevenZipWrapper
         private SevenZipWrapper m_AsyncSevenZip = null;
@@ -532,8 +532,8 @@ namespace Marmi
             }
 
             //ver1.41 非同期IOを停止
-            stack.Clear();
-            stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            App.stack.Clear();
+            App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
             g_pi.Initialize();
             setStatusbarInfo("準備中・・・" + filenames[0]);
 
@@ -1166,7 +1166,7 @@ namespace Marmi
                 string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, g_pi.Items.Count);
 
                 //スタックに入れる
-                stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
+                App.stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
                 {
                     setStatusbarInfo(s);
                     //読み込んだものをPurge対象にする
@@ -1175,7 +1175,7 @@ namespace Marmi
                 //Uty.WriteLine("{0}のサムネイル作成登録が終了", cnt);
             }
             //読み込み完了メッセージもPush
-            stack.PushLow(new KeyValuePair<int, Delegate>(g_pi.Items.Count - 1, (MethodInvoker)(() =>
+            App.stack.PushLow(new KeyValuePair<int, Delegate>(g_pi.Items.Count - 1, (MethodInvoker)(() =>
             {
                 setStatusbarInfo("事前画像情報読み込み完了");
             })));
@@ -1267,8 +1267,8 @@ namespace Marmi
             //g_FileCache.Clear();
 
             //2012/09/04 非同期IOを中止
-            stack.Clear();
-            stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            App.stack.Clear();
+            App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
@@ -1679,7 +1679,7 @@ namespace Marmi
             //}
 
             //ver1.54 HighQueueとして登録されているかどうか確認する。
-            var array = stack.ToArrayHigh();
+            var array = App.stack.ToArrayHigh();
             foreach (var elem in array)
             {
                 if (elem.Key == index)
@@ -1691,7 +1691,7 @@ namespace Marmi
 
             //非同期するためにPush
             //Uty.WriteLine("AsyncGetBitmap() Push {0}", index);
-            stack.Push(new KeyValuePair<int, Delegate>(index, action));
+            App.stack.Push(new KeyValuePair<int, Delegate>(index, action));
         }
 
         public Bitmap SyncGetBitmap(int index)
@@ -2410,7 +2410,7 @@ namespace Marmi
         /// <param name="f"></param>
         public void PushLow(int index, Delegate f)
         {
-            stack.PushLow(new KeyValuePair<int, Delegate>(index, f));
+            App.stack.PushLow(new KeyValuePair<int, Delegate>(index, f));
         }
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)
