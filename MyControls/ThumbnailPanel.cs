@@ -180,13 +180,13 @@ namespace Marmi
 
             #region ver0.982
 
-            if (Form1.g_Config.isShowTPFileName)
+            if (App.Config.isShowTPFileName)
                 BOX_HEIGHT += PADDING + FONT_HEIGHT;
 
-            if (Form1.g_Config.isShowTPFileSize)
+            if (App.Config.isShowTPFileSize)
                 BOX_HEIGHT += PADDING + FONT_HEIGHT;
 
-            if (Form1.g_Config.isShowTPPicSize)
+            if (App.Config.isShowTPPicSize)
                 BOX_HEIGHT += PADDING + FONT_HEIGHT;
 
             #endregion ver0.982
@@ -225,7 +225,7 @@ namespace Marmi
                 if (size > THUMBNAIL_SIZE)
                 {
                     SetThumbnailSize(size);
-                    Form1.g_Config.ThumbnailSize = size;
+                    App.Config.ThumbnailSize = size;
                     fastDraw = false;
                     this.Invalidate();
                     return;
@@ -247,7 +247,7 @@ namespace Marmi
                 if ((int)d < THUMBNAIL_SIZE)
                 {
                     SetThumbnailSize((int)d);
-                    Form1.g_Config.ThumbnailSize = (int)d;
+                    App.Config.ThumbnailSize = (int)d;
                     fastDraw = false;
                     this.Invalidate();
                     return;
@@ -358,8 +358,8 @@ namespace Marmi
                 }
 
                 //影・枠にチェック
-                thumbFrame.Checked = Form1.g_Config.isDrawThumbnailFrame;
-                thumbShadow.Checked = Form1.g_Config.isDrawThumbnailShadow;
+                thumbFrame.Checked = App.Config.isDrawThumbnailFrame;
+                thumbShadow.Checked = App.Config.isDrawThumbnailShadow;
 
                 //m_tooltip.Disposed += new EventHandler((se, ee) => { m_tooltip.Active = true; });
 
@@ -378,36 +378,36 @@ namespace Marmi
             {
                 case "最小":
                     SetThumbnailSize((int)DefaultThumbSize.minimum);
-                    Form1.g_Config.ThumbnailSize = (int)DefaultThumbSize.minimum;
+                    App.Config.ThumbnailSize = (int)DefaultThumbSize.minimum;
                     break;
 
                 case "小":
                     SetThumbnailSize((int)DefaultThumbSize.small);
-                    Form1.g_Config.ThumbnailSize = (int)DefaultThumbSize.small;
+                    App.Config.ThumbnailSize = (int)DefaultThumbSize.small;
                     break;
 
                 case "中":
                     SetThumbnailSize((int)DefaultThumbSize.normal);
-                    Form1.g_Config.ThumbnailSize = (int)DefaultThumbSize.normal;
+                    App.Config.ThumbnailSize = (int)DefaultThumbSize.normal;
                     break;
 
                 case "大":
                     SetThumbnailSize((int)DefaultThumbSize.large);
-                    Form1.g_Config.ThumbnailSize = (int)DefaultThumbSize.large;
+                    App.Config.ThumbnailSize = (int)DefaultThumbSize.large;
                     break;
 
                 case "最大":
                     SetThumbnailSize((int)DefaultThumbSize.big);
-                    Form1.g_Config.ThumbnailSize = (int)DefaultThumbSize.big;
+                    App.Config.ThumbnailSize = (int)DefaultThumbSize.big;
                     break;
 
                 case "影をつける":
-                    Form1.g_Config.isDrawThumbnailShadow = !Form1.g_Config.isDrawThumbnailShadow;
+                    App.Config.isDrawThumbnailShadow = !App.Config.isDrawThumbnailShadow;
                     //Invalidate();
                     break;
 
                 case "枠線":
-                    Form1.g_Config.isDrawThumbnailFrame = !Form1.g_Config.isDrawThumbnailFrame;
+                    App.Config.isDrawThumbnailFrame = !App.Config.isDrawThumbnailFrame;
                     //Invalidate();
                     break;
 
@@ -633,7 +633,7 @@ namespace Marmi
                 if (y > availablerange)
                     y = availablerange;
             }
-            if (Form1.g_Config.ThumbnailPanelSmoothScroll)
+            if (App.Config.ThumbnailPanelSmoothScroll)
             {
                 //アニメーションをする。
                 //スクロールタイマーの起動
@@ -790,7 +790,7 @@ namespace Marmi
 
                     if (this.Visible)
                     {
-                        if (Form1.g_Config.isThumbFadein)
+                        if (App.Config.isThumbFadein)
                         {
                             //フェードインアニメーションで表示
                             m_thumbnailSet[item].animateStartTime = DateTime.Now.Ticks;
@@ -834,7 +834,7 @@ namespace Marmi
 
                 //影の描写
                 Rectangle frameRect = imageRect;
-                if (Form1.g_Config.isDrawThumbnailShadow) // && isDrawFrame)
+                if (App.Config.isDrawThumbnailShadow) // && isDrawFrame)
                 {
                     BitmapUty.drawDropShadow(g, frameRect);
                 }
@@ -844,7 +844,7 @@ namespace Marmi
                 g.DrawImage(drawBitmap, imageRect);
 
                 //外枠を書く。
-                if (Form1.g_Config.isDrawThumbnailFrame) // && isDrawFrame)
+                if (App.Config.isDrawThumbnailFrame) // && isDrawFrame)
                 {
                     g.DrawRectangle(Pens.LightGray, frameRect);
                 }
@@ -953,7 +953,7 @@ namespace Marmi
             Rectangle imageRect = new Rectangle(sx, sy, w, h);
 
             //影を描写する.アイコン時（＝drawFrame==false）で描写しない
-            if (Form1.g_Config.isDrawThumbnailShadow && drawFrame)
+            if (App.Config.isDrawThumbnailShadow && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 BitmapUty.drawDropShadow(g, frameRect);
@@ -966,7 +966,7 @@ namespace Marmi
             g.DrawImage(drawBitmap, imageRect);
 
             //写真風に外枠を書く
-            if (Form1.g_Config.isDrawThumbnailFrame && drawFrame)
+            if (App.Config.isDrawThumbnailFrame && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 //枠がおかしいので拡大しない
@@ -1153,7 +1153,7 @@ namespace Marmi
             sf.Trimming = StringTrimming.EllipsisPath;      //中間の省略
 
             //ファイル名を書く
-            if (Form1.g_Config.isShowTPFileName)
+            if (App.Config.isShowTPFileName)
             {
                 string filename = Path.GetFileName(m_thumbnailSet[item].filename);
                 if (filename != null)
@@ -1164,7 +1164,7 @@ namespace Marmi
             }
 
             //ファイルサイズを書く
-            if (Form1.g_Config.isShowTPFileSize)
+            if (App.Config.isShowTPFileSize)
             {
                 string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].length);
                 g.DrawString(s, m_font, new SolidBrush(m_fontColor), textRect, sf);
@@ -1172,7 +1172,7 @@ namespace Marmi
             }
 
             //画像サイズを書く
-            if (Form1.g_Config.isShowTPPicSize)
+            if (App.Config.isShowTPPicSize)
             {
                 string s = String.Format(
                     "{0:#,0}x{1:#,0} px",

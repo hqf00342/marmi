@@ -16,7 +16,7 @@ namespace Marmi
     {
         private void PicPanel_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (g_Config.mouseConfigWheel == "拡大縮小")
+            if (App.Config.mouseConfigWheel == "拡大縮小")
             {
                 //PicPanel内部で処理しているのでなにもしない
             }
@@ -94,13 +94,13 @@ namespace Marmi
             //ページナビゲートをする。
             bool isForword = PicPanel.checkMousePosRight();
             //コンフィグ確認
-            if (!g_Config.RightScrClickIsNextPic)
+            if (!App.Config.RightScrClickIsNextPic)
                 isForword = !isForword;
             //左開きなら入れ替え
             if (!g_pi.LeftBook)
                 isForword = !isForword;
             ////入れ替えがあるならさらに入れ替え ver1.65 commentout
-            //if (g_Config.isReplaceArrowButton)
+            //if (App.Config.isReplaceArrowButton)
             //    isForword = !isForword;
             //ナビゲート
             if (isForword)
@@ -121,7 +121,7 @@ namespace Marmi
             base.OnMouseDoubleClick(e);
 
             //ver1.80 全画面をダブルクリックで対応するオプション導入
-            if (g_Config.DoubleClickToFullscreen)
+            if (App.Config.DoubleClickToFullscreen)
                 ToggleFullScreen();
 
             if (e.Button == MouseButtons.Left)
@@ -174,7 +174,7 @@ namespace Marmi
             }
 
             //全画面モードの時にツールバーを表示するか
-            if (g_Config.isFullScreen)
+            if (App.Config.isFullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
                 if (e.Y < 10 && toolStrip1.Visible == false)
@@ -189,7 +189,7 @@ namespace Marmi
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > toolStrip1.Height && toolStrip1.Visible == true && !g_Config.isThumbnailView)
+                else if (e.Y > toolStrip1.Height && toolStrip1.Visible == true && !App.Config.isThumbnailView)
                 {
                     //スクロールバーが出る可能性があるので消しておく
                     //PicPanel.AutoScroll = true;
@@ -267,7 +267,7 @@ namespace Marmi
             //ver1.27 マウス位置を補正
             float ratio = PicPanel.ZoomRatio;   //拡縮率をローカルに取る
 
-            if (g_Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
+            if (App.Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
                                                 //&& viewPages == 1				//1ページ表示モード.コメントアウト2011年7月22日
                 && ratio < 0.99F                //100%未満表示である.99%にしておく
                 )
@@ -315,7 +315,7 @@ namespace Marmi
                 //loupe.DrawLoupeFast2(mouseX - cRect.Left, mouseY - cRect.Top);	//ver0.986サイドバー補正
 
                 //ver1.27 左上座標に補正
-                double mag = g_Config.loupeMagnifcant;
+                double mag = App.Config.loupeMagnifcant;
                 double x9 = ((mag - 1.0d) / mag) * (double)mouseX;
                 double y9 = ((mag - 1.0d) / mag) * (double)mouseY;
                 loupe.DrawLoupeFast3((int)x9, (int)y9);
@@ -333,7 +333,7 @@ namespace Marmi
             //ver0.990 2011/07/21全画面ルーペ
             int dx = cRect.Width;
             int dy = cRect.Height;
-            int mag = g_Config.loupeMagnifcant;
+            int mag = App.Config.loupeMagnifcant;
 
             loupe = new Loupe(this, dx, dy, mag);
             this.Controls.Add(loupe);
@@ -349,7 +349,7 @@ namespace Marmi
                 loupe.Visible = true;
 
             //ステータスバー表示
-            if (g_Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
+            if (App.Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
                 && PicPanel.ZoomRatio < 1.0F)           //表示倍率が100%以下
             {
                 setStatubarRatio("ルーペ（100%表示）");
@@ -359,8 +359,8 @@ namespace Marmi
                 //%表示
                 setStatubarRatio(
                     string.Format("ルーペ:{0}倍（{1,0:p1}表示）",
-                        g_Config.loupeMagnifcant,
-                        (double)(PicPanel.ZoomRatio * g_Config.loupeMagnifcant)
+                        App.Config.loupeMagnifcant,
+                        (double)(PicPanel.ZoomRatio * App.Config.loupeMagnifcant)
                         ));
             }
         }
@@ -376,7 +376,7 @@ namespace Marmi
                 Cursor.Current = Cursors.Default;
                 PicPanel.Visible = true;
             }
-            else if (e.Button == MouseButtons.Right && !g_Config.isThumbnailView)
+            else if (e.Button == MouseButtons.Right && !App.Config.isThumbnailView)
             {
                 //右クリックで且つサムネイル中ではないので
                 //コンテキストメニューを表示する
@@ -450,7 +450,7 @@ namespace Marmi
         private void g_ThumbPanel_MouseMove(object sender, MouseEventArgs e)
         {
             //全画面モードの時にツールバーを表示するか
-            if (g_Config.isFullScreen)
+            if (App.Config.isFullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
                 if (e.Y < 1

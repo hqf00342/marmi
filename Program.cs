@@ -24,12 +24,12 @@ namespace Marmi
             // 設定ファイルの読み込み
             // ver1.76 Form1::Form1()から移動
             // ここで読み込んで多重起動禁止フラグを確認する。
-            Form1.g_Config = (AppGlobalConfig)AppGlobalConfig.LoadFromXmlFile();
-            if (Form1.g_Config == null)
-                Form1.g_Config = new AppGlobalConfig();
+            App.Config = (AppGlobalConfig)AppGlobalConfig.LoadFromXmlFile();
+            if (App.Config == null)
+                App.Config = new AppGlobalConfig();
 
             //多重起動確認
-            if (Form1.g_Config.disableMultipleStarts)
+            if (App.Config.disableMultipleStarts)
             {
                 //多重起動は禁止されているためmutexで制御
                 var APPNAME = Application.ProductName;

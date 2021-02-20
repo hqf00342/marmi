@@ -70,7 +70,7 @@ namespace Marmi
                         g_FileCache.Add(filename);
                         _bmp = g_FileCache[filename];
                     }
-                    else if (g_pi.isSolid && g_Config.isExtractIfSolidArchive)
+                    else if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
                     {
                         //ver1.10
                         //ソリッド書庫からの読み込み
@@ -96,7 +96,7 @@ namespace Marmi
 
                     //ver1.09 どうしてこれが消えたのか・・・？？
                     //サムネイルパネル中なら更新を通知する
-                    if (g_Config.isThumbnailView)
+                    if (App.Config.isThumbnailView)
                     {
                         g_ThumbPanel.CheckUpdateAndDraw(item);
                     }
@@ -104,7 +104,7 @@ namespace Marmi
                     //ver1.30 2012年2月25日
                     //表示中のアイテムに近ければ再描写信号を出す
                     if (item == g_pi.NowViewPage + 1
-                        && g_Config.dualView)
+                        && App.Config.dualView)
                     {
                         //次のページ情報が更新された
                         //2ページ表示可能かもしれないのでチェック
@@ -157,7 +157,7 @@ namespace Marmi
         private void StartThumnailMakerThread()
         {
             //ver1.35 メモリモデルを導入
-            if (g_Config.memModel == MemoryModel.Small)
+            if (App.Config.memModel == MemoryModel.Small)
                 return;
 
             //作成するサムネイル数が多すぎる場合の事前確認
@@ -201,7 +201,7 @@ namespace Marmi
         private void StopThumbnailMakerThread()
         {
             //ver1.35 メモリモデルを導入
-            if (g_Config.memModel == MemoryModel.Small)
+            if (App.Config.memModel == MemoryModel.Small)
                 return;
 
             //ThreadPool版
@@ -239,7 +239,7 @@ namespace Marmi
         public static void PauseThumbnailMakerThread()
         {
             //ver1.35 メモリモデルを導入
-            if (g_Config.memModel == MemoryModel.Small)
+            if (App.Config.memModel == MemoryModel.Small)
                 return;
 
             Debug.WriteLine("PauseThreadPool()");
@@ -260,7 +260,7 @@ namespace Marmi
         public static void ResumeThumbnailMakerThread()
         {
             //ver1.35 メモリモデルを導入
-            if (g_Config.memModel == MemoryModel.Small)
+            if (App.Config.memModel == MemoryModel.Small)
                 return;
 
             Debug.WriteLine("ContinueThreadPool()");

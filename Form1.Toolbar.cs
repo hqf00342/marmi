@@ -44,7 +44,7 @@ namespace Marmi
 
         private void toolButtonLeft_Click(object sender, EventArgs e)
         {
-            if (g_Config.isReplaceArrowButton)
+            if (App.Config.isReplaceArrowButton)
                 NavigateToForword();
             else
                 NavigateToBack();
@@ -52,7 +52,7 @@ namespace Marmi
 
         private void toolButtonRight_Click(object sender, EventArgs e)
         {
-            if (g_Config.isReplaceArrowButton)
+            if (App.Config.isReplaceArrowButton)
                 NavigateToBack();
             else
                 NavigateToForword();
@@ -79,7 +79,7 @@ namespace Marmi
 
         private void toolStripButton_ZoomIn_Click(object sender, EventArgs e)
         {
-            if (g_Config.isThumbnailView)
+            if (App.Config.isThumbnailView)
             {
                 //サムネイル対応
                 g_ThumbPanel.ThumbSizeZoomIn();
@@ -93,7 +93,7 @@ namespace Marmi
 
         private void toolStripButton_ZoomOut_Click(object sender, EventArgs e)
         {
-            if (g_Config.isThumbnailView)
+            if (App.Config.isThumbnailView)
             {
                 //サムネイル対応
                 g_ThumbPanel.ThumbSizeZoomOut();
@@ -122,7 +122,7 @@ namespace Marmi
             PicPanel.isAutoFit = true;
             //表示倍率の調整
             float r = PicPanel.FittingRatio;
-            if (r > 1.0f && Form1.g_Config.noEnlargeOver100p)
+            if (r > 1.0f && App.Config.noEnlargeOver100p)
                 r = 1.0f;
             PicPanel.ZoomRatio = r;
             //PicPanel.Refresh();
@@ -181,7 +181,7 @@ namespace Marmi
             Rectangle r = PicPanel.ClientRectangle;
             if (toolStrip1.Dock == DockStyle.Top)
             {
-                if (g_Config.isFullScreen)
+                if (App.Config.isFullScreen)
                     r.Y += toolStrip1.Height;
                 //Debug.WriteLine(r, "add navigatebar");
                 g_trackNaviPanel.OpenPanel(r, g_pi.NowViewPage);

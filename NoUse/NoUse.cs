@@ -15,7 +15,7 @@ namespace Marmi
         private void setStatusbarVisible(bool isVisible)
         {
             statusStrip1.Visible = isVisible;
-            g_Config.visibleStatusBar = isVisible;
+            App.Config.visibleStatusBar = isVisible;
             MenuItem_ViewStatusbar.Checked = isVisible;
             MenuItem_ContextStatusbar.Checked = isVisible;
         }
@@ -28,7 +28,7 @@ namespace Marmi
         private void setToolbarVisible(bool isVisible)
         {
             toolStrip1.Visible = isVisible;
-            g_Config.visibleToolBar = isVisible;
+            App.Config.visibleToolBar = isVisible;
             MenuItem_ViewToolbar.Checked = isVisible;
             MenuItem_ContextToolbar.Checked = isVisible;
         }
@@ -41,7 +41,7 @@ namespace Marmi
         private void setMenubarVisible(bool isVisible)
         {
             menuStrip1.Visible = isVisible;
-            g_Config.visibleMenubar = isVisible;
+            App.Config.visibleMenubar = isVisible;
             MenuItem_ViewMenubar.Checked = isVisible;
             MenuItem_ContextMenubar.Checked = isVisible;
         }
@@ -85,7 +85,7 @@ namespace Marmi
                 return;
             }
 
-            if (!g_Config.dualView
+            if (!App.Config.dualView
                 || bmp1.Width > bmp1.Height)
             {
                 //1画面モード確定
@@ -148,12 +148,12 @@ namespace Marmi
             //高さ補正。ツールバーの高さをClientRectanble/Boundsから補正
             int toolbarHeight = 0;
             //if (toolStrip1.Visible && !toolButtonFullScreen.Checked)	//全画面モードではなく、toolbarが表示されているとき
-            if (toolStrip1.Visible && !g_Config.isFullScreen)   //全画面モードではなく、toolbarが表示されているとき
+            if (toolStrip1.Visible && !App.Config.isFullScreen)   //全画面モードではなく、toolbarが表示されているとき
                 toolbarHeight = toolStrip1.Height;
             cr.Height -= toolbarHeight;
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.Clear(g_Config.BackColor);    //これは必要か？
+            g.Clear(App.Config.BackColor);    //これは必要か？
             if (bmp1 == null)
                 return;
 
@@ -244,7 +244,7 @@ namespace Marmi
                 return;
             }
 
-            if (g_Config.dualView && CanDualView(nIndex))
+            if (App.Config.dualView && CanDualView(nIndex))
             {
                 //2枚表示
                 Bitmap bmp2 = GetBitmap(nIndex + 1);
@@ -279,7 +279,7 @@ namespace Marmi
 
             using (Graphics g = Graphics.FromImage(g_bmp))
             {
-                g.Clear(g_Config.BackColor);
+                g.Clear(App.Config.BackColor);
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
                 float ratio = 1.0f;
@@ -373,7 +373,7 @@ namespace Marmi
             int height = (int)(g_bmp.Height * ratio);
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.Clear(g_Config.BackColor);
+            g.Clear(App.Config.BackColor);
             g.DrawImage(
                 g_bmp,                                      //描写イメージ
                 (rect.Width - width) / 2,                   //始点X
@@ -412,7 +412,7 @@ namespace Marmi
             if (g_bmp != null)
                 g_bmp.Dispose();
 
-            if (!g_Config.dualView
+            if (!App.Config.dualView
                 || bmp1.Width > bmp1.Height)
             {
                 //1画面モード確定
@@ -1868,7 +1868,7 @@ namespace Marmi
             if (g_bmp != null)
                 g_bmp.Dispose();
 
-            if (!g_Config.dualView
+            if (!App.Config.dualView
                 || bmp1.Width > bmp1.Height)
             {
                 //1画面モード確定
@@ -1924,7 +1924,7 @@ namespace Marmi
             if (ratio >= 1 || ratio <= 0) ratio = 1.0F;
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            g.Clear(g_Config.BackColor);
+            g.Clear(App.Config.BackColor);
 
             if (isScreenFitting || ratio == 1.0F)
             {
@@ -2041,7 +2041,7 @@ namespace Marmi
             m_lastDrawMode = LastDrawMode.HighQuality;
 
             if (g_bmp != null)
-                PaintGBMP(g_bg.Graphics, g_Config.isFitScreenAndImage);
+                PaintGBMP(g_bg.Graphics, App.Config.isFitScreenAndImage);
         }
 
         /// <summary>
@@ -2058,7 +2058,7 @@ namespace Marmi
                 Graphics g = g_bg.Graphics;
                 //g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                g.Clear(g_Config.BackColor);
+                g.Clear(App.Config.BackColor);
 
                 Rectangle cRect = GetClientRectangle();
 
@@ -2068,7 +2068,7 @@ namespace Marmi
                 float ratio = (ratioX > ratioY) ? ratioY : ratioX;
                 if (ratio >= 1 || ratio <= 0) ratio = 1.0F;
 
-                if (g_Config.isFitScreenAndImage)
+                if (App.Config.isFitScreenAndImage)
                 {
                     //画像サイズを変更し縮尺表示する。
                     int width = (int)(g_bmp.Width * ratio);

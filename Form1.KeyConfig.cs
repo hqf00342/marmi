@@ -77,40 +77,40 @@ namespace Marmi
         //	Keys keyValue = Keys.None;
 
         //	//次のページ
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfNextPage, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfNextPage, out keyValue))
         //		KeyMethods.Add(keyValue, NavigateToForword);
         //	//次のページ（半分）
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfNextPageHalf, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfNextPageHalf, out keyValue))
         //		KeyMethods.Add(keyValue, () => SetViewPage(++g_pi.NowViewPage));
         //	//最後のページ
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfLastPage, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfLastPage, out keyValue))
         //		KeyMethods.Add(keyValue, () => SetViewPage(g_pi.Items.Count - 1));
         //	//前のページ
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfPrevPage, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrevPage, out keyValue))
         //		KeyMethods.Add(keyValue, NavigateToBack);
         //	//前のページ（半分）
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfPrevPageHalf, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrevPageHalf, out keyValue))
         //		KeyMethods.Add(keyValue, () => SetViewPage(--g_pi.NowViewPage));
         //	//ブックマーク
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfBookMark, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfBookMark, out keyValue))
         //		KeyMethods.Add(keyValue, ToggleBookmark);
         //	//フルスクリーン
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfFullScr, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfFullScr, out keyValue))
         //		KeyMethods.Add(keyValue, ToggleFullScreen);
         //	//表示モード
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfPrintMode, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrintMode, out keyValue))
         //		KeyMethods.Add(keyValue, ToggleFitScreen);
         //	//先頭ページ
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfTopPage, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfTopPage, out keyValue))
         //		KeyMethods.Add(keyValue, () => SetViewPage(0));
         //	//２画面モード切替
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfDualMode, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetDualViewMode(!g_Config.dualView));
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfDualMode, out keyValue))
+        //		KeyMethods.Add(keyValue, () => SetDualViewMode(!App.Config.dualView));
         //	// ゴミ箱
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfRecycleBin, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfRecycleBin, out keyValue))
         //		KeyMethods.Add(keyValue, () => RecycleBinNowPage());
         //	// 終了 ver1.77
-        //	if (keyConfigList.TryGetValue(g_Config.keyConfExitApp, out keyValue))
+        //	if (keyConfigList.TryGetValue(App.Config.keyConfExitApp, out keyValue))
         //		KeyMethods.Add(keyValue, () => Application.Exit());
 
         //}
@@ -124,66 +124,66 @@ namespace Marmi
             KeyMethods.Clear();
 
             //前後ページ移動
-            if (g_Config.ka_nextpage1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_nextpage1, NavigateToForword);
-            if (g_Config.ka_nextpage2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_nextpage2, NavigateToForword);
-            if (g_Config.ka_prevpage1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_prevpage1, NavigateToBack);
-            if (g_Config.ka_prevpage2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_prevpage2, NavigateToBack);
+            if (App.Config.ka_nextpage1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_nextpage1, NavigateToForword);
+            if (App.Config.ka_nextpage2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_nextpage2, NavigateToForword);
+            if (App.Config.ka_prevpage1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_prevpage1, NavigateToBack);
+            if (App.Config.ka_prevpage2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_prevpage2, NavigateToBack);
 
             //前後ページ移動（半分）
-            if (g_Config.ka_nexthalf1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_nexthalf1, () => SetViewPage(++g_pi.NowViewPage));
-            if (g_Config.ka_nexthalf2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_nexthalf2, () => SetViewPage(++g_pi.NowViewPage));
-            if (g_Config.ka_prevhalf1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_prevhalf1, () => SetViewPage(--g_pi.NowViewPage));
-            if (g_Config.ka_prevhalf2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_prevhalf2, () => SetViewPage(--g_pi.NowViewPage));
+            if (App.Config.ka_nexthalf1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_nexthalf1, () => SetViewPage(++g_pi.NowViewPage));
+            if (App.Config.ka_nexthalf2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_nexthalf2, () => SetViewPage(++g_pi.NowViewPage));
+            if (App.Config.ka_prevhalf1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_prevhalf1, () => SetViewPage(--g_pi.NowViewPage));
+            if (App.Config.ka_prevhalf2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_prevhalf2, () => SetViewPage(--g_pi.NowViewPage));
 
             //先頭最終ページ
-            if (g_Config.ka_toppage1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_toppage1, () => SetViewPage(0));
-            if (g_Config.ka_toppage2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_toppage2, () => SetViewPage(0));
-            if (g_Config.ka_lastpage1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_lastpage1, () => SetViewPage(g_pi.Items.Count - 1));
-            if (g_Config.ka_lastpage2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
+            if (App.Config.ka_toppage1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_toppage1, () => SetViewPage(0));
+            if (App.Config.ka_toppage2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_toppage2, () => SetViewPage(0));
+            if (App.Config.ka_lastpage1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_lastpage1, () => SetViewPage(g_pi.Items.Count - 1));
+            if (App.Config.ka_lastpage2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
 
             //ブックマーク
-            if (g_Config.ka_bookmark1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_bookmark1, ToggleBookmark);
-            if (g_Config.ka_bookmark2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_bookmark2, ToggleBookmark);
+            if (App.Config.ka_bookmark1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_bookmark1, ToggleBookmark);
+            if (App.Config.ka_bookmark2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_bookmark2, ToggleBookmark);
 
             //フルスクリーン
-            if (g_Config.ka_fullscreen1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_fullscreen1, ToggleFullScreen);
-            if (g_Config.ka_fullscreen2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_fullscreen2, ToggleFullScreen);
+            if (App.Config.ka_fullscreen1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_fullscreen1, ToggleFullScreen);
+            if (App.Config.ka_fullscreen2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_fullscreen2, ToggleFullScreen);
             //２画面モード切替
-            if (g_Config.ka_dualview1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_dualview1, () => SetDualViewMode(!g_Config.dualView));
-            if (g_Config.ka_dualview2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_dualview2, () => SetDualViewMode(!g_Config.dualView));
+            if (App.Config.ka_dualview1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_dualview1, () => SetDualViewMode(!App.Config.dualView));
+            if (App.Config.ka_dualview2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_dualview2, () => SetDualViewMode(!App.Config.dualView));
             // ゴミ箱
-            if (g_Config.ka_recycle1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_recycle1, () => RecycleBinNowPage());
-            if (g_Config.ka_recycle2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_recycle2, () => RecycleBinNowPage());
+            if (App.Config.ka_recycle1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_recycle1, () => RecycleBinNowPage());
+            if (App.Config.ka_recycle2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_recycle2, () => RecycleBinNowPage());
             //表示モード
-            if (g_Config.ka_viewratio1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_viewratio1, ToggleFitScreen);
-            if (g_Config.ka_viewratio2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_viewratio2, ToggleFitScreen);
+            if (App.Config.ka_viewratio1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_viewratio1, ToggleFitScreen);
+            if (App.Config.ka_viewratio2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_viewratio2, ToggleFitScreen);
             // 終了 ver1.77
-            if (g_Config.ka_exit1 != Keys.None)
-                KeyMethods.Add(g_Config.ka_exit1, () => Application.Exit());
-            if (g_Config.ka_exit2 != Keys.None)
-                KeyMethods.Add(g_Config.ka_exit2, () => Application.Exit());
+            if (App.Config.ka_exit1 != Keys.None)
+                KeyMethods.Add(App.Config.ka_exit1, () => Application.Exit());
+            if (App.Config.ka_exit2 != Keys.None)
+                KeyMethods.Add(App.Config.ka_exit2, () => Application.Exit());
         }
     }
 }

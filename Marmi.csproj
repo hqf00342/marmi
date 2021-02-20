@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <None Include="NoUse\BookmarkMenu.cs">
       <SubType>UserControl</SubType>

@@ -272,7 +272,7 @@ namespace Marmi
                 //通常ファイルからの読み込み
                 Items[index].cacheImage.Add(filename);
             }
-            else if (isSolid && Form1.g_Config.isExtractIfSolidArchive)
+            else if (isSolid && App.Config.isExtractIfSolidArchive)
             {
                 //ver1.10 ソリッド書庫 一時フォルダから読み取りを試みる
                 string tempname = Path.Combine(tempDirname, filename);
@@ -371,7 +371,7 @@ namespace Marmi
         public void FileCacheCleanUp2(int MaxCacheSize)
         {
             MaxCacheSize *= 1000000;    //MB変換
-            switch (Form1.g_Config.memModel)
+            switch (App.Config.memModel)
             {
                 case MemoryModel.Small:
                     //すべてのキャッシュをクリアする

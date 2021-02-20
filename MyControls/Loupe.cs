@@ -336,7 +336,7 @@ namespace Marmi
             using (Graphics g = Graphics.FromImage(m_loupeBmp))
             {
                 //いったんクリア
-                g.Clear(Form1.g_Config.BackColor);
+                g.Clear(App.Config.BackColor);
 
                 //指定位置をキャプチャの中心部に変換
                 int sx = x - this.Width / 2;    // 1/2で中央に
@@ -370,7 +370,7 @@ namespace Marmi
             using (Graphics g = Graphics.FromImage(m_loupeBmp))
             {
                 //いったんクリア
-                g.Clear(Form1.g_Config.BackColor);
+                g.Clear(App.Config.BackColor);
 
                 //指定位置をキャプチャの中心部に変換
                 int sx = left;

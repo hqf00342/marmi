@@ -35,9 +35,9 @@ namespace Marmi
             savename = suggestFilename(Filename);
 
             //グローバルコンフィグを一時保存
-            saveConf_isDrawFilename = Form1.g_Config.isShowTPFileName;
-            saveConf_isDrawFileSize = Form1.g_Config.isShowTPFileSize;
-            saveConf_isDrawPicSize = Form1.g_Config.isShowTPPicSize;
+            saveConf_isDrawFilename = App.Config.isShowTPFileName;
+            saveConf_isDrawFileSize = App.Config.isShowTPFileSize;
+            saveConf_isDrawPicSize = App.Config.isShowTPPicSize;
         }
 
         ~FormSaveThumbnail()
@@ -64,9 +64,9 @@ namespace Marmi
         private void FormSaveThumbnail_FormClosed(object sender, FormClosedEventArgs e)
         {
             //グローバルコンフィグを元に戻す
-            Form1.g_Config.isShowTPFileName = saveConf_isDrawFilename;
-            Form1.g_Config.isShowTPFileSize = saveConf_isDrawFileSize;
-            Form1.g_Config.isShowTPPicSize = saveConf_isDrawPicSize;
+            App.Config.isShowTPFileName = saveConf_isDrawFilename;
+            App.Config.isShowTPFileSize = saveConf_isDrawFileSize;
+            App.Config.isShowTPPicSize = saveConf_isDrawPicSize;
         }
 
         private void btCancel_Click(object sender, EventArgs e)
@@ -122,9 +122,9 @@ namespace Marmi
 
             //グローバルコンフィグを一時的に変更
             //FormClosed()で元に戻す
-            Form1.g_Config.isShowTPFileName = isDrawFileName.Checked;
-            Form1.g_Config.isShowTPFileSize = isDrawFileSize.Checked;
-            Form1.g_Config.isShowTPPicSize = isDrawPicSize.Checked;
+            App.Config.isShowTPFileName = isDrawFileName.Checked;
+            App.Config.isShowTPFileSize = isDrawFileSize.Checked;
+            App.Config.isShowTPPicSize = isDrawPicSize.Checked;
 
             //サムネイルを保存する
             btExcute.Enabled = false;

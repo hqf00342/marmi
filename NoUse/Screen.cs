@@ -86,8 +86,8 @@ namespace Marmi
 
             bg1 = Context1.Allocate(g, rect);
             bg2 = Context1.Allocate(g, rect);
-            bg1.Graphics.Clear(Form1.g_Config.BackColor);
-            bg2.Graphics.Clear(Form1.g_Config.BackColor);
+            bg1.Graphics.Clear(App.Config.BackColor);
+            bg2.Graphics.Clear(App.Config.BackColor);
         }
 
         public void CopyFrontToBack()

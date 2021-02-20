@@ -1084,7 +1084,7 @@ namespace Marmi
 
             //小さいほうを使う
             double r = rx < ry ? rx : ry;
-            if (r > 1.0f && Form1.g_Config.noEnlargeOver100p)
+            if (r > 1.0f && App.Config.noEnlargeOver100p)
                 r = 1.0f;
 
             Bitmap newbmp = new Bitmap(screenSize.Width, screenSize.Height);
@@ -1093,7 +1093,7 @@ namespace Marmi
                 //画像描写モード：低品質に
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-                g.Clear(Form1.g_Config.BackColor);
+                g.Clear(App.Config.BackColor);
                 //中心に描写
                 double width = (double)bmp.Width * r;
                 double height = (double)bmp.Height * r;
