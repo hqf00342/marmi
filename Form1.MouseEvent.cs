@@ -209,12 +209,12 @@ namespace Marmi
             if (loupe != null && loupe.Visible)
             {
                 //ルーペ中
-                ChangeCursor(cursorLoupe);
+                ChangeCursor(App.Cursors.Loupe);
             }
             else if (!g_LastClickPoint.IsEmpty)
             {
                 //ドラッグスクロール中
-                ChangeCursor(cursorHandOpen);
+                ChangeCursor(App.Cursors.OpenHand);
             }
             else if (g_pi.Items.Count <= 1 | !GetClientRectangle().Contains(cursorPos))
             {
@@ -223,12 +223,12 @@ namespace Marmi
             else if (PicPanel.checkMousePosRight())
             {
                 //画面の右側
-                ChangeCursor(cursorRight);
+                ChangeCursor(App.Cursors.Right);
             }
             else
             {
                 //画面の左側
-                ChangeCursor(cursorLeft);
+                ChangeCursor(App.Cursors.Left);
 
                 //半透明の前後ページを表示しようとしてみた
                 //if(g_pi.NowViewPage>=1)

@@ -477,8 +477,8 @@ namespace Marmi
                 AjustScrollPosition();
                 this.Invalidate();
 
-                if (Cursor.Current != Form1.cursorHandOpen)
-                    Cursor.Current = Form1.cursorHandOpen;
+                if (Cursor.Current != App.Cursors.OpenHand)
+                    Cursor.Current = App.Cursors.OpenHand;
 
                 //デバッグ中ならステータスバーも更新
 #if DEBUG

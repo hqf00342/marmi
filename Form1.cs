@@ -62,18 +62,6 @@ namespace Marmi
 
         #endregion --- コントロール ---
 
-        #region --- リソースオブジェクト ---
-
-        private readonly Icon iconLoope = Properties.Resources.loopeIcon;
-        private readonly Icon iconLeftFinger = Properties.Resources.finger_left_shadow_ico;
-        private readonly Icon iconRightFinger = Properties.Resources.finger_right_shadow_ico;
-        private readonly Icon iconHandOpen = Properties.Resources.iconHandOpen;
-        private Cursor cursorLeft;
-        private Cursor cursorRight;
-        private Cursor cursorLoupe;
-        public static Cursor cursorHandOpen;
-
-        #endregion --- リソースオブジェクト ---
 
         #region --- データクラス ---
 
@@ -230,10 +218,10 @@ namespace Marmi
         private void Form1_Load(object sender, EventArgs e)
         {
             //アイコン、カーソルの設定
-            cursorLeft = new Cursor(iconLeftFinger.Handle);
-            cursorRight = new Cursor(iconRightFinger.Handle);
-            cursorLoupe = new Cursor(iconLoope.Handle);
-            cursorHandOpen = new Cursor(iconHandOpen.Handle);
+            //cursorLeft = new Cursor(iconLeftFinger.Handle);
+            //cursorRight = new Cursor(iconRightFinger.Handle);
+            //cursorLoupe = new Cursor(iconLoope.Handle);
+            //cursorHandOpen = new Cursor(iconHandOpen.Handle);
 
             ////設定のロード/適用
             //生成はMyInitで先に実施しておくことにする。ver0.982

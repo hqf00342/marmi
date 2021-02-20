@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Marmi
 {
@@ -31,5 +33,18 @@ namespace Marmi
         //非同期IOタイムアウト値
         internal const int ASYNC_TIMEOUT = 5000;
 
+        public static class Cursors
+        {
+            private static readonly Icon iconLoope = Properties.Resources.loopeIcon;
+            private static readonly Icon iconLeftFinger = Properties.Resources.finger_left_shadow_ico;
+            private static readonly Icon iconRightFinger = Properties.Resources.finger_right_shadow_ico;
+            private static readonly Icon iconHandOpen = Properties.Resources.iconHandOpen;
+
+            internal static Cursor Left = new Cursor(iconLeftFinger.Handle);
+            internal static Cursor Right = new Cursor(iconRightFinger.Handle);
+            internal static Cursor Loupe = new Cursor(iconLoope.Handle);
+            internal static Cursor OpenHand = new Cursor(iconHandOpen.Handle);
+
+        }
     }
 }
