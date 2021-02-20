@@ -910,58 +910,5 @@ namespace Marmi
 				SlideShowTimer.Start();
 			}
 		}
-
-
-		private void Menu_Bookshelf_Click(object sender, EventArgs e)
-		{
-			if (BookShelf == null)
-			{
-				//SideBarがある場合は消す
-				if (g_Sidebar.Visible)
-					g_Sidebar.Visible = false;
-
-				//トラックバーはDisable
-				g_trackbar.Enabled = false;
-
-				//PicPanelを非表示に
-				PicPanel.Visible = false;
-				PicPanel.Dock = DockStyle.None;
-
-				BookShelf = new CBookShelf();
-				//BookShelf.BackColor = System.Drawing.Color.AntiqueWhite;
-				if(!this.Controls.Contains(BookShelf))
-					this.Controls.Add(BookShelf);
-				BookShelf.BringToFront();
-				//BookShelf.Parent = this;
-				BookShelf.Dock = DockStyle.Fill;
-				BookShelf.Visible = true;
-
-				BookShelf.flowPanel.Controls.Add(new BookItem());
-				BookShelf.flowPanel.Controls.Add(new BookItem());
-				BookShelf.flowPanel.Controls.Add(new BookItem());
-				BookShelf.flowPanel.Controls.Add(new BookItem());
-			}
-			else
-			{
-				BookShelf.Hide();
-				BookShelf.Dock = DockStyle.None;
-				this.Controls.Remove(BookShelf);
-				BookShelf.Dispose();
-				BookShelf = null;
-				//PicPanelを非表示に
-				PicPanel.Visible = true;
-				PicPanel.Dock = DockStyle.Fill;
-
-				//サイドバーを戻す
-				if (g_Config.visibleNavibar)
-					g_Sidebar.Visible = true;
-
-				//トラックバーを戻す Ver0.975
-				g_trackbar.Enabled = true;
-			}
-
-
-
-		}
 	}
 }

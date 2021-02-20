@@ -117,7 +117,7 @@ namespace Marmi
 
 		//ver1.80 本棚機能用パネル
 		//FlowLayoutPanel BookShelf = null;
-		CBookShelf BookShelf = null;
+		//CBookShelf BookShelf = null;
 
 
 		// コンストラクタ *************************************************************/

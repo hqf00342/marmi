@@ -450,13 +450,6 @@
 			this.MenuItem_FileRecent.Size = new System.Drawing.Size(205, 22);
 			this.MenuItem_FileRecent.Text = "最近使った書庫ファイル";
 			// 
-			// Menu_ViewThumbnail
-			// 
-			this.Menu_ViewThumbnail.Name = "Menu_ViewThumbnail";
-			this.Menu_ViewThumbnail.Size = new System.Drawing.Size(205, 22);
-			this.Menu_ViewThumbnail.Text = "本棚";
-			this.Menu_ViewThumbnail.Click += new System.EventHandler(this.Menu_Bookshelf_Click);
-			// 
 			// MenuItem_ClearMRU
 			// 
 			this.MenuItem_ClearMRU.Name = "MenuItem_ClearMRU";
@@ -669,13 +662,6 @@
 			this.MenuItem_SortCustom.Size = new System.Drawing.Size(163, 22);
 			this.MenuItem_SortCustom.Text = "自分で並び替え...";
 			this.MenuItem_SortCustom.Click += new System.EventHandler(this.Menu_SortCustom_Click);
-			// 
-			// MenuItem_Books
-			// 
-			this.MenuItem_Books.Name = "MenuItem_Books";
-			this.MenuItem_Books.Size = new System.Drawing.Size(175, 22);
-			this.MenuItem_Books.Text = "本棚";
-			this.MenuItem_Books.Click += new System.EventHandler(this.Menu_Bookshelf_Click);
 			// 
 			// Menu_ViewPictureInfo
 			// 

@@ -101,18 +101,18 @@
     <None Include="NoUse\BookmarkMenu.Designer.cs">
       <DependentUpon>BookmarkMenu.cs</DependentUpon>
     </None>
-    <Compile Include="BookItem.cs">
+    <None Include="NoUse\BookItem.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="BookItem.Designer.cs">
+    </None>
+    <None Include="NoUse\BookItem.Designer.cs">
       <DependentUpon>BookItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CBookShelf.cs">
+    </None>
+    <None Include="NoUse\CBookShelf.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CBookShelf.Designer.cs">
+    </None>
+    <None Include="NoUse\CBookShelf.Designer.cs">
       <DependentUpon>CBookShelf.cs</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="Form1.AsyncIO.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,11 +125,11 @@
     <Compile Include="MyControls\KeyAccelerator.Designer.cs">
       <DependentUpon>KeyAccelerator.cs</DependentUpon>
     </Compile>
-    <Compile Include="LateBoundUnmanagedDll.cs" />
-    <Compile Include="Susie.cs" />
-    <Compile Include="SusieFileInfo.cs" />
-    <Compile Include="SusiePlugin.cs" />
-    <Compile Include="Unrar.cs" />
+    <Compile Include="Susie\LateBoundUnmanagedDll.cs" />
+    <Compile Include="Susie\Susie.cs" />
+    <Compile Include="Susie\SusieFileInfo.cs" />
+    <Compile Include="Susie\SusiePlugin.cs" />
+    <Compile Include="Susie\Unrar.cs" />
     <Compile Include="Win32.cs" />
     <None Include="app.config" />
     <None Include="NoUse\WeakRefCache.cs" />
@@ -260,12 +260,12 @@
     <None Include="NoUse\BookmarkMenu.resx">
       <DependentUpon>BookmarkMenu.cs</DependentUpon>
     </None>
-    <EmbeddedResource Include="BookItem.resx">
+    <None Include="NoUse\BookItem.resx">
       <DependentUpon>BookItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CBookShelf.resx">
+    </None>
+    <None Include="NoUse\CBookShelf.resx">
       <DependentUpon>CBookShelf.cs</DependentUpon>
-    </EmbeddedResource>
+    </None>
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Form1.cs</DependentUpon>
