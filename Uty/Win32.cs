@@ -5,8 +5,52 @@ using System.Runtime.InteropServices;
 
 namespace Marmi
 {
-	public class Win32
+	public static class Win32
 	{
+		#region USER32
+
+		[DllImport("USER32.DLL", CharSet = CharSet.Auto)]
+		public static extern int ShowWindow(IntPtr hWnd, int nCmdShow);
+
+		//[DllImport("USER32.DLL", CharSet = CharSet.Auto)]
+		//public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		public const int SW_NORMAL = 1;
+
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetForegroundWindow();
+
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern bool BringWindowToTop(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public extern static bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+		[return: MarshalAs(UnmanagedType.Bool)]
+		[DllImport("user32.dll", SetLastError = true)]
+		public extern static bool PostMessage(HandleRef hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+		// 外部プロセスのメイン・ウィンドウを起動するためのWin32 API
+		//[DllImport("user32.dll")]
+		//private static extern bool SetForegroundWindow(IntPtr hWnd);
+		[DllImport("user32.dll")]
+		public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+		[DllImport("user32.dll")]
+		public static extern bool IsIconic(IntPtr hWnd);
+
+		// ShowWindowAsync関数のパラメータに渡す定義値
+		public const int SW_RESTORE = 9;  // 画面を元の大きさに戻す
+		public const int WM_USER = 0x400;
+		public const int MY_FORCE_FOREGROUND_MESSAGE = WM_USER + 1;
+
+		#endregion
 
 		#region kernel32.dll
 
@@ -30,7 +74,6 @@ namespace Marmi
 		public extern static IntPtr LocalFree(IntPtr hMem);
 
 		#endregion
-
 
 		#region gdi32.dll
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]

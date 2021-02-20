@@ -14,13 +14,12 @@ namespace Marmi
 {
 	public partial class Form1 : Form, IRemoteObject
 	{
-		#region static var
-		//コンフィグ保存用。ただ１つだけ存在
+		//コンフィグ。ただ１つだけ存在
+		//読み込みは Program.csで行っている。
 		public static AppGlobalConfig g_Config;
+
 		//Form1参照用ハンドル
 		public static Form1 _instance;
-		#endregion
-
 
 		//static定義
 		public static readonly int DEFAULT_THUMBNAIL_SIZE = 400;	//サムネイル標準サイズ
@@ -250,7 +249,7 @@ namespace Marmi
 			//if (g_Config == null)
 			//    g_Config = new AppGlobalConfig();
 
-			applySettingToApplication();
+			ApplySettingToApplication();
 
 			//初期化
 			InitControls();
@@ -325,7 +324,8 @@ namespace Marmi
 			if (g_Config.isSaveConfig)
 			{
 				//設定ファイルを保存する
-				applySettingToConfig();
+				g_Config.windowLocation = this.Location;
+				g_Config.windowSize = this.Size;
 				AppGlobalConfig.SaveToXmlFile(g_Config);
 			}
 			else

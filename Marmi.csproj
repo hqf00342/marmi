@@ -95,6 +95,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Uty\WindowOperation.cs" />
     <None Include="NoUse\BookmarkMenu.cs">
       <SubType>UserControl</SubType>
     </None>
@@ -123,9 +124,10 @@
     <Compile Include="Form1.AsyncIO.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.KeyEvent.cs">
+    <Compile Include="Form1.Event.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Interfaces\IRemoteObject.cs" />
     <Compile Include="MyControls\KeyAccelerator.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -137,7 +139,7 @@
     <Compile Include="Susie\SusieFileInfo.cs" />
     <Compile Include="Susie\SusiePlugin.cs" />
     <Compile Include="Susie\Unrar.cs" />
-    <Compile Include="Win32.cs" />
+    <Compile Include="Uty\Win32.cs" />
     <None Include="app.config" />
     <None Include="NoUse\WeakRefCache.cs" />
     <None Include="NoUse\BitmapCache.cs" />
@@ -341,7 +343,7 @@
     <None Include="NoUse\ZipWrapper.cs" />
     <None Include="NoUse\Screen.cs" />
     <None Include="NoUse\sevenzipExtractAll.cs" />
-    <Compile Include="DataClass\Uty.cs" />
+    <Compile Include="Uty\Uty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zic_png.png" />
