@@ -97,24 +97,6 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
-    <None Include="NoUse\BookmarkMenu.cs">
-      <SubType>UserControl</SubType>
-    </None>
-    <None Include="NoUse\BookmarkMenu.Designer.cs">
-      <DependentUpon>BookmarkMenu.cs</DependentUpon>
-    </None>
-    <None Include="NoUse\BookItem.cs">
-      <SubType>UserControl</SubType>
-    </None>
-    <None Include="NoUse\BookItem.Designer.cs">
-      <DependentUpon>BookItem.cs</DependentUpon>
-    </None>
-    <None Include="NoUse\CBookShelf.cs">
-      <SubType>UserControl</SubType>
-    </None>
-    <None Include="NoUse\CBookShelf.Designer.cs">
-      <DependentUpon>CBookShelf.cs</DependentUpon>
-    </None>
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\DefaultThumbSize.cs" />
     <Compile Include="enums\DiagLocate.cs" />
@@ -142,16 +124,11 @@
     <Compile Include="Susie\Unrar.cs" />
     <Compile Include="Uty\Win32.cs" />
     <None Include="app.config" />
-    <None Include="NoUse\WeakRefCache.cs" />
-    <None Include="NoUse\BitmapCache.cs" />
-    <None Include="NoUse\BitmapCache2.cs" />
-    <None Include="NoUse\ArchiveItem.cs" />
     <Compile Include="Form1.KeyConfig.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataClass\AppGlobalConfig.cs" />
     <Compile Include="DataClass\CompareClass.cs" />
-    <None Include="NoUse\IArchiver.cs" />
     <Compile Include="DataClass\ImageInfo.cs" />
     <Compile Include="DataClass\MRUList.cs" />
     <Compile Include="DataClass\PrioritySafeQueue.cs" />
@@ -168,9 +145,6 @@
     <Compile Include="Form1.Statusbar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <None Include="NoUse\Form1.Thread.cs">
-      <SubType>Form</SubType>
-    </None>
     <Compile Include="Form1.Toolbar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,18 +165,12 @@
       <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
     </Compile>
     <Compile Include="DataClass\BitmapUty.cs" />
-    <None Include="NoUse\KeyConfigControl.cs">
-      <SubType>Component</SubType>
-    </None>
     <Compile Include="MyControls\ClearPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MyControls\Loupe.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <None Include="NoUse\FadePictureBox.cs">
-      <SubType>UserControl</SubType>
-    </None>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,9 +183,6 @@
     <Compile Include="MyChildForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <None Include="NoUse\NoUse.cs">
-      <SubType>Form</SubType>
-    </None>
     <Compile Include="MyChildForms\FormPackageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,9 +201,6 @@
     <Compile Include="MyChildForms\FormPictureInfo.Designer.cs">
       <DependentUpon>FormPictureInfo.cs</DependentUpon>
     </Compile>
-    <None Include="NoUse\NaviBar.cs">
-      <SubType>UserControl</SubType>
-    </None>
     <Compile Include="DataClass\PackageInfo.cs" />
     <Compile Include="DataClass\SevenZipWrapper.cs" />
     <Compile Include="MyControls\MaskPanel.cs">
@@ -255,8 +217,6 @@
     <Compile Include="MyControls\Navibar3.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <None Include="NoUse\BitmapPanel.cs" />
-    <None Include="NoUse\NoUse110.cs" />
     <Compile Include="MyControls\PicturePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -266,15 +226,6 @@
     <Compile Include="DataClass\SafeStack.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="NoUse\BookmarkMenu.resx">
-      <DependentUpon>BookmarkMenu.cs</DependentUpon>
-    </None>
-    <None Include="NoUse\BookItem.resx">
-      <DependentUpon>BookItem.cs</DependentUpon>
-    </None>
-    <None Include="NoUse\CBookShelf.resx">
-      <DependentUpon>CBookShelf.cs</DependentUpon>
-    </None>
     <EmbeddedResource Include="Form1.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Form1.cs</DependentUpon>
@@ -341,9 +292,6 @@
     <Compile Include="MyChildForms\Version.Designer.cs">
       <DependentUpon>Version.cs</DependentUpon>
     </Compile>
-    <None Include="NoUse\ZipWrapper.cs" />
-    <None Include="NoUse\Screen.cs" />
-    <None Include="NoUse\sevenzipExtractAll.cs" />
     <Compile Include="Uty\Uty.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -354,7 +302,6 @@
     <Content Include="DataClass\ReadMe.txt" />
     <Content Include="MyChildForms\ReadMe.txt" />
     <Content Include="MyControls\ReadMe.txt" />
-    <Content Include="NoUse\ReadMe.txt" />
     <None Include="Resources\heart24.png" />
     <None Include="Resources\iconHandOpen.ico" />
     <None Include="Resources\handopen.png" />
