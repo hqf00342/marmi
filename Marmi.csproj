@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25F6D4AC-AB77-433F-B503-AE2926E9F2EB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Marmi</RootNamespace>
+    <AssemblyName>Marmi</AssemblyName>
+    <ApplicationIcon>zic.ico</ApplicationIcon>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NoUse\BookmarkMenu.cs">
+      <SubType>UserControl</SubType>
+    </None>
+    <None Include="NoUse\BookmarkMenu.Designer.cs">
+      <DependentUpon>BookmarkMenu.cs</DependentUpon>
+    </None>
+    <Compile Include="BookItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BookItem.Designer.cs">
+      <DependentUpon>BookItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CBookShelf.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CBookShelf.Designer.cs">
+      <DependentUpon>CBookShelf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.AsyncIO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.KeyEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyControls\KeyAccelerator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\KeyAccelerator.Designer.cs">
+      <DependentUpon>KeyAccelerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LateBoundUnmanagedDll.cs" />
+    <Compile Include="Susie.cs" />
+    <Compile Include="SusieFileInfo.cs" />
+    <Compile Include="SusiePlugin.cs" />
+    <Compile Include="Unrar.cs" />
+    <Compile Include="Win32.cs" />
+    <None Include="app.config" />
+    <None Include="NoUse\WeakRefCache.cs" />
+    <None Include="NoUse\BitmapCache.cs" />
+    <None Include="NoUse\BitmapCache2.cs" />
+    <None Include="NoUse\ArchiveItem.cs" />
+    <Compile Include="Form1.KeyConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataClass\AppGlobalConfig.cs" />
+    <Compile Include="DataClass\CompareClass.cs" />
+    <None Include="NoUse\IArchiver.cs" />
+    <Compile Include="DataClass\ImageInfo.cs" />
+    <Compile Include="DataClass\MRUList.cs" />
+    <Compile Include="DataClass\PrioritySafeQueue.cs" />
+    <Compile Include="DataClass\SmallBitmap.cs" />
+    <Compile Include="Form1.Define.cs" />
+    <Compile Include="Form1.MenuEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.MouseEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Serialize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Statusbar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <None Include="NoUse\Form1.Thread.cs">
+      <SubType>Form</SubType>
+    </None>
+    <Compile Include="Form1.Toolbar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataClass\JpegSerializedImage.cs" />
+    <Compile Include="MyChildForms\AsyncExtractForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\AsyncExtractForm.Designer.cs">
+      <DependentUpon>AsyncExtractForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyChildForms\FormPictureInfoWhite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormSaveThumbnail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormSaveThumbnail.Designer.cs">
+      <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataClass\BitmapUty.cs" />
+    <None Include="NoUse\KeyConfigControl.cs">
+      <SubType>Component</SubType>
+    </None>
+    <Compile Include="MyControls\ClearPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\Loupe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <None Include="NoUse\FadePictureBox.cs">
+      <SubType>UserControl</SubType>
+    </None>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyChildForms\FormOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormOption.Designer.cs">
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </Compile>
+    <None Include="NoUse\NoUse.cs">
+      <SubType>Form</SubType>
+    </None>
+    <Compile Include="MyChildForms\FormPackageInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormPackageInfo.Designer.cs">
+      <DependentUpon>FormPackageInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyChildForms\FormPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormPassword.Designer.cs">
+      <DependentUpon>FormPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyChildForms\FormPictureInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\FormPictureInfo.Designer.cs">
+      <DependentUpon>FormPictureInfo.cs</DependentUpon>
+    </Compile>
+    <None Include="NoUse\NaviBar.cs">
+      <SubType>UserControl</SubType>
+    </None>
+    <Compile Include="DataClass\PackageInfo.cs" />
+    <Compile Include="DataClass\SevenZipWrapper.cs" />
+    <Compile Include="MyControls\MaskPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\MomentumScrollPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataClass\SafeQueue.cs" />
+    <Compile Include="DataClass\NamedBuffer.cs" />
+    <Compile Include="MyControls\SideBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\Navibar3.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <None Include="NoUse\BitmapPanel.cs" />
+    <None Include="NoUse\NoUse110.cs" />
+    <Compile Include="MyControls\PicturePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\PicturePanel.designer.cs">
+      <DependentUpon>PicturePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataClass\SafeStack.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="NoUse\BookmarkMenu.resx">
+      <DependentUpon>BookmarkMenu.cs</DependentUpon>
+    </None>
+    <EmbeddedResource Include="BookItem.resx">
+      <DependentUpon>BookItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CBookShelf.resx">
+      <DependentUpon>CBookShelf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyControls\KeyAccelerator.resx">
+      <DependentUpon>KeyAccelerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\AsyncExtractForm.resx">
+      <DependentUpon>AsyncExtractForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\FormSaveThumbnail.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\FormOption.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\FormPackageInfo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormPackageInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\FormPassword.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\FormPictureInfo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FormPictureInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyChildForms\Version.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Version.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\DataSources\AppGlobalConfig.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="MyControls\ThumbnailPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\ToolStripTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\Version.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyChildForms\Version.Designer.cs">
+      <DependentUpon>Version.cs</DependentUpon>
+    </Compile>
+    <None Include="NoUse\ZipWrapper.cs" />
+    <None Include="NoUse\Screen.cs" />
+    <None Include="NoUse\sevenzipExtractAll.cs" />
+    <Compile Include="DataClass\Uty.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zic_png.png" />
+    <None Include="Resources\zippedFile.png" />
+    <None Include="Resources\Folder_Open.png" />
+    <None Include="Resources\Image_File.png" />
+    <Content Include="DataClass\ReadMe.txt" />
+    <Content Include="MyChildForms\ReadMe.txt" />
+    <Content Include="MyControls\ReadMe.txt" />
+    <Content Include="NoUse\ReadMe.txt" />
+    <None Include="Resources\heart24.png" />
+    <None Include="Resources\iconHandOpen.ico" />
+    <None Include="Resources\handopen.png" />
+    <None Include="Resources\16x16\application-sidebar.png" />
+    <None Include="Resources\16x16\arrow.png" />
+    <None Include="Resources\16x16\arrow-000-small.png" />
+    <None Include="Resources\16x16\arrow-180.png" />
+    <None Include="Resources\16x16\arrow-180-small.png" />
+    <None Include="Resources\16x16\arrow-stop-090.png" />
+    <None Include="Resources\16x16\arrow-stop-270.png" />
+    <None Include="Resources\16x16\bookmark.png" />
+    <None Include="Resources\16x16\folder-horizontal-open.png" />
+    <None Include="Resources\16x16\information.png" />
+    <None Include="Resources\16x16\magnifier-zoom-actual.png" />
+    <None Include="Resources\16x16\magnifier-zoom-in.png" />
+    <None Include="Resources\16x16\magnifier-zoom-out.png" />
+    <None Include="Resources\16x16\magnifier-zoom-fit.png" />
+    <None Include="Resources\16x16\application-resize-full.png" />
+    <None Include="Resources\16x16\image-saturation.png" />
+    <None Include="Resources\16x16\gear.png" />
+    <None Include="Resources\16x16\door-open.png" />
+    <None Include="Resources\16x16\sort-alphabet.png" />
+    <None Include="Resources\loading19.gif" />
+    <None Include="Resources\folder-horizontal-open.png" />
+    <None Include="Resources\16x16\arrow-circle-double.png" />
+    <None Include="Resources\ScrNext.png" />
+    <None Include="Resources\ScrPrev.png" />
+    <Content Include="配布物\readme.txt" />
+    <None Include="7z.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="7z64.dll" />
+    <None Include="配布物\使い方%28詳細版%29.txt" />
+    <None Include="配布物\SevenZipSharp.dll" />
+    <Content Include="zic.ico" />
+    <None Include="Resources\rc_tif32.png" />
+    <None Include="Resources\finger-right-shadow-ico.ico" />
+    <None Include="Resources\finger-left-shadow-ico.ico" />
+    <None Include="Resources\rc_tif48.png" />
+    <None Include="Resources\rc_tif.ico" />
+    <None Include="Resources\emblem-readonly.png" />
+    <None Include="Resources\loopeIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows インストーラー 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
