@@ -113,6 +113,13 @@
     <None Include="NoUse\CBookShelf.Designer.cs">
       <DependentUpon>CBookShelf.cs</DependentUpon>
     </None>
+    <Compile Include="enums\AnimateMode.cs" />
+    <Compile Include="enums\DefaultThumbSize.cs" />
+    <Compile Include="enums\DiagLocate.cs" />
+    <Compile Include="enums\MemoryModel.cs" />
+    <Compile Include="enums\PackageType.cs" />
+    <Compile Include="enums\ThreadStatus.cs" />
+    <Compile Include="enums\ThumnailMode.cs" />
     <Compile Include="Form1.AsyncIO.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,7 +153,6 @@
     <Compile Include="DataClass\MRUList.cs" />
     <Compile Include="DataClass\PrioritySafeQueue.cs" />
     <Compile Include="DataClass\SmallBitmap.cs" />
-    <Compile Include="Form1.Define.cs" />
     <Compile Include="Form1.MenuEvent.cs">
       <SubType>Form</SubType>
     </Compile>
