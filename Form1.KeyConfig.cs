@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-
 namespace Marmi
 {
     public partial class Form1 : Form
@@ -10,6 +9,7 @@ namespace Marmi
         /// キーコンフィグと呼び出しメソッドを関連づけるDic
         /// </summary>
         private Dictionary<Keys, MethodInvoker> KeyMethods = new Dictionary<Keys, MethodInvoker>();
+
         //#region --- キーコンフィグリスト ---
         //public static Dictionary<string, Keys> keyConfigList = new Dictionary<string, Keys>()
         //{
@@ -153,7 +153,6 @@ namespace Marmi
             if (g_Config.ka_lastpage2 != Keys.None)
                 KeyMethods.Add(g_Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
 
-
             //ブックマーク
             if (g_Config.ka_bookmark1 != Keys.None)
                 KeyMethods.Add(g_Config.ka_bookmark1, ToggleBookmark);
@@ -185,9 +184,6 @@ namespace Marmi
                 KeyMethods.Add(g_Config.ka_exit1, () => Application.Exit());
             if (g_Config.ka_exit2 != Keys.None)
                 KeyMethods.Add(g_Config.ka_exit2, () => Application.Exit());
-
         }
-
-
     }
 }

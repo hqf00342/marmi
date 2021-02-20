@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace Marmi
 {
-	public partial class BookItem : UserControl
-	{
-		public BookItem()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class BookItem : UserControl
+    {
+        public BookItem()
+        {
+            InitializeComponent();
+        }
+    }
 }

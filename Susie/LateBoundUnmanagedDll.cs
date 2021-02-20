@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;   //SafeHandle
+
 namespace Marmi
 {
-    class LateBoundUnmanagedDll : SafeHandle
+    internal class LateBoundUnmanagedDll : SafeHandle
     {
         // アンマネージDLLの遅延バインディング
         // 以下のURLを参照。
@@ -14,7 +12,7 @@ namespace Marmi
 
         public override bool IsInvalid
         {
-            get{ return IsClosed || this.handle == IntPtr.Zero; }
+            get { return IsClosed || this.handle == IntPtr.Zero; }
         }
 
         public LateBoundUnmanagedDll(string dllName) : base(IntPtr.Zero, true)
@@ -41,6 +39,7 @@ namespace Marmi
         }
 
         #region DllImport
+
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetDllDirectory([MarshalAs(UnmanagedType.LPStr)] string lpPathName);
@@ -54,6 +53,7 @@ namespace Marmi
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetProcAddress(IntPtr hModule, [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
-        #endregion
+
+        #endregion DllImport
     }
 }

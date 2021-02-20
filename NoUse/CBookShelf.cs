@@ -9,15 +9,14 @@ using System.Windows.Forms;
 
 namespace Marmi
 {
-	public partial class CBookShelf : UserControl
-	{
-		public FlowLayoutPanel flowPanel { get { return flowLayoutPanel1; } }
-		public Panel leftPanel { get { return splitContainer1.Panel1; } }
+    public partial class CBookShelf : UserControl
+    {
+        public FlowLayoutPanel flowPanel { get { return flowLayoutPanel1; } }
+        public Panel leftPanel { get { return splitContainer1.Panel1; } }
 
-		public CBookShelf()
-		{
-			InitializeComponent();
-		}
-
-	}
+        public CBookShelf()
+        {
+            InitializeComponent();
+        }
+    }
 }

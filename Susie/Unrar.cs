@@ -1,21 +1,19 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Collections;
-
 
 /*  Author:  Michael A. McCloskey
  *  Company: Schematrix
  *  Version: 20040714
- *  
+ *
  *  Personal Comments:
- *  I created this unrar wrapper class for personal use 
+ *  I created this unrar wrapper class for personal use
  *  after running into a number of issues trying to use
- *  another COM unrar product via COM interop.  I hope it 
+ *  another COM unrar product via COM interop.  I hope it
  *  proves as useful to you as it has to me and saves you
  *  some time in building your own products.
- *  
+ *
  *  動的ロードに対応するように変更
  *  ２０１４年３月１７日
  *  t.nagashima
@@ -29,31 +27,36 @@ namespace Marmi
     /// Represents the method that will handle data available events
     /// </summary>
     public delegate void DataAvailableHandler(object sender, DataAvailableEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle extraction progress events
     /// </summary>
     public delegate void ExtractionProgressHandler(object sender, ExtractionProgressEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle missing archive volume events
     /// </summary>
     public delegate void MissingVolumeHandler(object sender, MissingVolumeEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle new volume events
     /// </summary>
     public delegate void NewVolumeHandler(object sender, NewVolumeEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle new file notifications
     /// </summary>
     public delegate void NewFileHandler(object sender, NewFileEventArgs e);
+
     /// <summary>
     /// Represents the method that will handle password required events
     /// </summary>
     public delegate void PasswordRequiredHandler(object sender, PasswordRequiredEventArgs e);
 
-    #endregion
+    #endregion Event Delegate Definitions
 
     /// <summary>
-    /// Wrapper class for unrar DLL supplied by RARSoft.  
+    /// Wrapper class for unrar DLL supplied by RARSoft.
     /// Calls unrar DLL via platform invocation services (pinvoke).
     /// DLL is available at http://www.rarlab.com/rar/UnRARDLL.exe
     /// </summary>
@@ -120,7 +123,7 @@ namespace Marmi
             NeedPassword = 2
         }
 
-        #endregion
+        #endregion Unrar DLL enumerations
 
         #region Unrar DLL structure definitions
 
@@ -129,8 +132,10 @@ namespace Marmi
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string ArcName;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string FileName;
+
             public uint Flags;
             public uint PackSize;
             public uint UnpSize;
@@ -140,8 +145,10 @@ namespace Marmi
             public uint UnpVer;
             public uint Method;
             public uint FileAttr;
+
             [MarshalAs(UnmanagedType.LPStr)]
             public string CmtBuf;
+
             public uint CmtBufSize;
             public uint CmtSize;
             public uint CmtState;
@@ -158,12 +165,16 @@ namespace Marmi
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
             public string ArcName;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
             public string ArcNameW;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
             public string FileName;
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
             public string FileNameW;
+
             public uint Flags;
             public uint PackSize;
             public uint PackSizeHigh;
@@ -175,11 +186,14 @@ namespace Marmi
             public uint UnpVer;
             public uint Method;
             public uint FileAttr;
+
             [MarshalAs(UnmanagedType.LPStr)]
             public string CmtBuf;
+
             public uint CmtBufSize;
             public uint CmtSize;
             public uint CmtState;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)]
             public uint[] Reserved;
 
@@ -195,10 +209,13 @@ namespace Marmi
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string ArcName;
+
             public uint OpenMode;
             public uint OpenResult;
+
             [MarshalAs(UnmanagedType.LPStr)]
             public string CmtBuf;
+
             public uint CmtBufSize;
             public uint CmtSize;
             public uint CmtState;
@@ -215,16 +232,21 @@ namespace Marmi
         {
             [MarshalAs(UnmanagedType.LPStr)]
             public string ArcName;
+
             [MarshalAs(UnmanagedType.LPWStr)]
             public string ArcNameW;
+
             public uint OpenMode;
             public uint OpenResult;
+
             [MarshalAs(UnmanagedType.LPStr)]
             public string CmtBuf;
+
             public uint CmtBufSize;
             public uint CmtSize;
             public uint CmtState;
             public uint Flags;
+
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public uint[] Reserved;
 
@@ -236,70 +258,80 @@ namespace Marmi
             }
         }
 
-        #endregion
+        #endregion Unrar DLL structure definitions
 
         #region Win32API
+
         [DllImport("kernel32", CharSet = CharSet.Auto, ExactSpelling = false)]
-        private extern static IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)]string lpFileName);
+        private extern static IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)] string lpFileName);
 
         [DllImport("kernel32", ExactSpelling = true)]
         private extern static bool FreeLibrary(IntPtr hModule);
 
         [DllImport("kernel32", CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private extern static IntPtr GetProcAddress(IntPtr hModule, [MarshalAs(UnmanagedType.LPStr)]string lpProcName);
-        #endregion
+        private extern static IntPtr GetProcAddress(IntPtr hModule, [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
+
+        #endregion Win32API
 
         #region Unrar function declarations
 
         //[DllImport("unrar.dll")]
         //private static extern IntPtr RAROpenArchive(ref RAROpenArchiveData archiveData);
-        delegate IntPtr _RAROpenArchive(ref RAROpenArchiveData archiveData);
-        _RAROpenArchive RAROpenArchive = null;
+        private delegate IntPtr _RAROpenArchive(ref RAROpenArchiveData archiveData);
+
+        private _RAROpenArchive RAROpenArchive = null;
 
         //[DllImport("UNRAR.DLL")]
         //private static extern IntPtr RAROpenArchiveEx(ref RAROpenArchiveDataEx archiveData);
-        delegate IntPtr _RAROpenArchiveEx(ref RAROpenArchiveDataEx archiveData);
-        _RAROpenArchiveEx RAROpenArchiveEx = null;
+        private delegate IntPtr _RAROpenArchiveEx(ref RAROpenArchiveDataEx archiveData);
+
+        private _RAROpenArchiveEx RAROpenArchiveEx = null;
 
         //[DllImport("unrar.dll")]
         //private static extern int RARCloseArchive(IntPtr hArcData);
-        delegate int _RARCloseArchive(IntPtr hArcData);
+        private delegate int _RARCloseArchive(IntPtr hArcData);
+
         private _RARCloseArchive RARCloseArchive = null;
 
         //[DllImport("unrar.dll")]
         //private static extern int RARReadHeader(IntPtr hArcData, ref RARHeaderData headerData);
-        delegate int _RARReadHeader(IntPtr hArcData, ref RARHeaderData headerData);
-        _RARReadHeader RARReadHeader = null;
+        private delegate int _RARReadHeader(IntPtr hArcData, ref RARHeaderData headerData);
+
+        private _RARReadHeader RARReadHeader = null;
 
         //[DllImport("unrar.dll")]
         //private static extern int RARReadHeaderEx(IntPtr hArcData, ref RARHeaderDataEx headerData);
-        delegate int _RARReadHeaderEx(IntPtr hArcData, ref RARHeaderDataEx headerData);
-        _RARReadHeaderEx RARReadHeaderEx = null;
+        private delegate int _RARReadHeaderEx(IntPtr hArcData, ref RARHeaderDataEx headerData);
+
+        private _RARReadHeaderEx RARReadHeaderEx = null;
 
         //[DllImport("unrar.dll")]
         //private static extern int RARProcessFile(IntPtr hArcData, int operation,
-        //    [MarshalAs(UnmanagedType.LPStr)] string destPath, 
+        //    [MarshalAs(UnmanagedType.LPStr)] string destPath,
         //    [MarshalAs(UnmanagedType.LPStr)] string destName );
-        delegate int _RARProcessFile(IntPtr hArcData, int operation,
+        private delegate int _RARProcessFile(IntPtr hArcData, int operation,
             [MarshalAs(UnmanagedType.LPStr)] string destPath,
             [MarshalAs(UnmanagedType.LPStr)] string destName);
-        _RARProcessFile RARProcessFile = null;
+
+        private _RARProcessFile RARProcessFile = null;
 
         //[DllImport("unrar.dll")]
         //private static extern void RARSetCallback(IntPtr hArcData, UNRARCallback callback, int userData);
-        delegate void _RARSetCallback(IntPtr hArcData, UNRARCallback callback, int userData);
-        _RARSetCallback RARSetCallback = null;
+        private delegate void _RARSetCallback(IntPtr hArcData, UNRARCallback callback, int userData);
+
+        private _RARSetCallback RARSetCallback = null;
 
         //[DllImport("unrar.dll")]
         //private static extern void RARSetPassword(IntPtr hArcData,
         //    [MarshalAs(UnmanagedType.LPStr)] string password);
-        delegate void _RARSetPassword(IntPtr hArcData, [MarshalAs(UnmanagedType.LPStr)] string password);
-        _RARSetPassword RARSetPassword = null;
+        private delegate void _RARSetPassword(IntPtr hArcData, [MarshalAs(UnmanagedType.LPStr)] string password);
+
+        private _RARSetPassword RARSetPassword = null;
 
         // Unrar callback delegate signature
         private delegate int UNRARCallback(uint msg, int UserData, IntPtr p1, int p2);
 
-        #endregion
+        #endregion Unrar function declarations
 
         #region Public event declarations
 
@@ -307,30 +339,36 @@ namespace Marmi
         /// Event that is raised when a new chunk of data has been extracted
         /// </summary>
         public event DataAvailableHandler DataAvailable;
+
         /// <summary>
         /// Event that is raised to indicate extraction progress
         /// </summary>
         public event ExtractionProgressHandler ExtractionProgress;
+
         /// <summary>
         /// Event that is raised when a required archive volume is missing
         /// </summary>
         public event MissingVolumeHandler MissingVolume;
+
         /// <summary>
         /// Event that is raised when a new file is encountered during processing
         /// </summary>
         public event NewFileHandler NewFile;
+
         /// <summary>
         /// Event that is raised when a new archive volume is opened for processing
         /// </summary>
         public event NewVolumeHandler NewVolume;
+
         /// <summary>
         /// Event that is raised when a password is required before continuing
         /// </summary>
         public event PasswordRequiredHandler PasswordRequired;
 
-        #endregion
+        #endregion Public event declarations
 
         #region Private fields
+
         private string archivePathName = string.Empty;
         private IntPtr archiveHandle = new IntPtr(0);
         private bool retrieveComment = true;
@@ -341,9 +379,11 @@ namespace Marmi
         private string destinationPath = string.Empty;
         private RARFileInfo currentFile = null;
         private UNRARCallback callback = null;
+
         //unrar.dllをLoadLibrary()したときのハンドル
         private IntPtr dllHandle = IntPtr.Zero;
-        #endregion
+
+        #endregion Private fields
 
         #region Object lifetime procedures
 
@@ -428,7 +468,7 @@ namespace Marmi
                 FreeLibrary(dllHandle);
         }
 
-        #endregion
+        #endregion Object lifetime procedures
 
         #region Public Properties
 
@@ -448,7 +488,7 @@ namespace Marmi
         }
 
         /// <summary>
-        /// Archive comment 
+        /// Archive comment
         /// </summary>
         public string Comment
         {
@@ -501,15 +541,15 @@ namespace Marmi
             }
         }
 
-		/// <summary>
-		/// DLLが読込済みであればtrue
-		/// </summary>
-		public bool dllLoaded
-		{
-			get { return (dllHandle != IntPtr.Zero); }
-		}
+        /// <summary>
+        /// DLLが読込済みであればtrue
+        /// </summary>
+        public bool dllLoaded
+        {
+            get { return (dllHandle != IntPtr.Zero); }
+        }
 
-        #endregion
+        #endregion Public Properties
 
         #region Public Methods
 
@@ -560,7 +600,7 @@ namespace Marmi
         }
 
         /// <summary>
-        /// Opens specified archive using the specified mode.  
+        /// Opens specified archive using the specified mode.
         /// </summary>
         /// <param name="archivePathName">Path of archive to open</param>
         /// <param name="openMode">Mode in which to open archive</param>
@@ -773,7 +813,7 @@ namespace Marmi
             this.Extract(destinationPath, string.Empty);
         }
 
-        #endregion
+        #endregion Public Methods
 
         #region Private Methods
 
@@ -883,7 +923,7 @@ namespace Marmi
             return result;
         }
 
-        #endregion
+        #endregion Private Methods
 
         #region Protected Virtual (Overridable) Methods
 
@@ -972,19 +1012,19 @@ namespace Marmi
             return result;
         }
 
-        #endregion
+        #endregion Protected Virtual (Overridable) Methods
 
-		/// <summary>
-		/// unrar.DLLが読み込めるかどうかをチェック
-		/// </summary>
-		/// <returns></returns>
-		public static bool DllCheck()
-		{
-			using(Unrar u = new Unrar())
-			{
-				return u.dllLoaded;
-			}
-		}
+        /// <summary>
+        /// unrar.DLLが読み込めるかどうかをチェック
+        /// </summary>
+        /// <returns></returns>
+        public static bool DllCheck()
+        {
+            using (Unrar u = new Unrar())
+            {
+                return u.dllLoaded;
+            }
+        }
     }
 
     #region Event Argument Classes
@@ -1031,6 +1071,7 @@ namespace Marmi
     public class NewFileEventArgs
     {
         public RARFileInfo fileInfo;
+
         public NewFileEventArgs(RARFileInfo fileInfo)
         {
             this.fileInfo = fileInfo;
@@ -1074,5 +1115,5 @@ namespace Marmi
         }
     }
 
-    #endregion
+    #endregion Event Argument Classes
 }

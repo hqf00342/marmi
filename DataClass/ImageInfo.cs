@@ -1,208 +1,209 @@
 using System;
-using System.Text;
-
-using System.Diagnostics;				// Debug, Stopwatch
 using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
 using System.Drawing.Imaging;			// fadePictureBox ColorMatrix
-using System.IO;						// Directory, File
+using System.Text;
+
 //using System.Xml.Serialization;		// XmlSerializer
 
 namespace Marmi
 {
-	/********************************************************************************/
-	//サムネイル画像を保存するためのクラス
-	/********************************************************************************/
+    /********************************************************************************/
+    //サムネイル画像を保存するためのクラス
+    /********************************************************************************/
 
-	/// <summary>
-	/// サムネイル画像を保存するためのクラス。
-	/// Exifから画像データを収集するなど高速にサムネイルを取得する
-	/// </summary>
-	[Serializable()]
-	public class ImageInfo : IDisposable
-	{
+    /// <summary>
+    /// サムネイル画像を保存するためのクラス。
+    /// Exifから画像データを収集するなど高速にサムネイルを取得する
+    /// </summary>
+    [Serializable()]
+    public class ImageInfo : IDisposable
+    {
+        //サムネイル画像のサイズ。最大値
+        private int THUMBNAIL_WIDTH = Form1.DEFAULT_THUMBNAIL_SIZE;
 
-		//サムネイル画像のサイズ。最大値
-		private int THUMBNAIL_WIDTH = Form1.DEFAULT_THUMBNAIL_SIZE;
-		private int THUMBNAIL_HEIGHT = Form1.DEFAULT_THUMBNAIL_SIZE;
-		//ファイル名
-		public string filename;
+        private int THUMBNAIL_HEIGHT = Form1.DEFAULT_THUMBNAIL_SIZE;
 
-		//オリジナル画像サイズ
-		public Size bmpsize = Size.Empty;
-		public int width { get { return bmpsize.Width; } }
-		public int height { get { return bmpsize.Height; } }
-		//public int width = 0;		
-		//public int height = 0;		
+        //ファイル名
+        public string filename;
 
+        //オリジナル画像サイズ
+        public Size bmpsize = Size.Empty;
 
-		//作成日
-		public DateTime createDate;
+        public int width { get { return bmpsize.Width; } }
+        public int height { get { return bmpsize.Height; } }
+        //public int width = 0;
+        //public int height = 0;
 
-		//バイト数
-		public long length;
+        //作成日
+        public DateTime createDate;
 
-		//ソート前の順番
-		public int nOrgIndex;
+        //バイト数
+        public long length;
 
-		//キャッシュをこちらに持つ 2013/01/13
-		[NonSerialized]
-		public SmallBitmap cacheImage = new SmallBitmap();
+        //ソート前の順番
+        public int nOrgIndex;
 
-		//public Bitmap image {
-		//    get
-		//    {
-		//        if (cacheImage.Length == 0)
-		//            return null;
-		//        else
-		//            return cacheImage.bitmap;
-		//    } 
-		//}
+        //キャッシュをこちらに持つ 2013/01/13
+        [NonSerialized]
+        public SmallBitmap cacheImage = new SmallBitmap();
 
-		//ver1.26 JpegでSerializeするために変更
-		private JpegSerializedImage _thumbImage = new JpegSerializedImage();
-		public Bitmap thumbnail
-		{
-			get { return _thumbImage.bitmap as Bitmap; }
-			set { _thumbImage.bitmap = value; }
-		}
+        //public Bitmap image {
+        //    get
+        //    {
+        //        if (cacheImage.Length == 0)
+        //            return null;
+        //        else
+        //            return cacheImage.bitmap;
+        //    }
+        //}
 
-		//ver1.56 SmallBitmap版thumbnail
-		//private SmallBitmap _thumb = new SmallBitmap();
-		//public Bitmap thumbnail
-		//{
-		//    get { return _thumb.bitmap; }
-		//    set { _thumb.Add(value); }
-		//}
+        //ver1.26 JpegでSerializeするために変更
+        private JpegSerializedImage _thumbImage = new JpegSerializedImage();
 
+        public Bitmap thumbnail
+        {
+            get { return _thumbImage.bitmap as Bitmap; }
+            set { _thumbImage.bitmap = value; }
+        }
 
-		//アニメーションタイマー DateTime.Now.Ticks
-		[NonSerialized]
-		public long animateStartTime = 0;
+        //ver1.56 SmallBitmap版thumbnail
+        //private SmallBitmap _thumb = new SmallBitmap();
+        //public Bitmap thumbnail
+        //{
+        //    get { return _thumb.bitmap; }
+        //    set { _thumb.Add(value); }
+        //}
 
+        //アニメーションタイマー DateTime.Now.Ticks
+        [NonSerialized]
+        public long animateStartTime = 0;
 
-		//EXIF
-		public int ExifISO;
-		public string ExifDate;
-		public string ExifMake;
-		public string ExifModel;
+        //EXIF
+        public int ExifISO;
 
-		//しおり 2011年10月2日
-		public bool isBookMark = false;
+        public string ExifDate;
+        public string ExifMake;
+        public string ExifModel;
 
-		//回転情報 2011年12月24日
-		private int _rotate = 0;
-		public int rotate {
-			get { return _rotate; }
-			set { _rotate = value % 360; }
-		}
+        //しおり 2011年10月2日
+        public bool isBookMark = false;
 
-		//ver1.36 表示させるかどうか
-		public bool isVisible;
+        //回転情報 2011年12月24日
+        private int _rotate = 0;
 
+        public int rotate
+        {
+            get { return _rotate; }
+            set { _rotate = value % 360; }
+        }
 
-		//サムネイルパネル内での位置
-		//[NonSerialized()]
-		//public Point ThumbnailPos;
+        //ver1.36 表示させるかどうか
+        public bool isVisible;
 
-		//ver1.51 画像情報を持っているか
-		public bool hasInfo { get{ return width != 0;} }
+        //サムネイルパネル内での位置
+        //[NonSerialized()]
+        //public Point ThumbnailPos;
 
-		//ver1.54 縦長かどうか
-		public bool isTall { get { return height > width;} }
+        //ver1.51 画像情報を持っているか
+        public bool hasInfo { get { return width != 0; } }
 
-		//var1.54 横長かどうか
-		public bool isFat { get { return width > height; } }
+        //ver1.54 縦長かどうか
+        public bool isTall { get { return height > width; } }
 
-		public ImageInfo(int index, string name, DateTime date, long bytes)
-		{
-			//初期化
-			thumbnail = null;
-			isVisible = true;
-			//width = 0;
-			//height = 0;
-			bmpsize = Size.Empty;
-			animateStartTime = 0;
+        //var1.54 横長かどうか
+        public bool isFat { get { return width > height; } }
 
-			nOrgIndex = index;
-			filename = name;
-			createDate = date;
-			length = bytes;
-		}
+        public ImageInfo(int index, string name, DateTime date, long bytes)
+        {
+            //初期化
+            thumbnail = null;
+            isVisible = true;
+            //width = 0;
+            //height = 0;
+            bmpsize = Size.Empty;
+            animateStartTime = 0;
 
+            nOrgIndex = index;
+            filename = name;
+            createDate = date;
+            length = bytes;
+        }
 
-		~ImageInfo()
-		{
-		    Dispose();
-		}
+        ~ImageInfo()
+        {
+            Dispose();
+        }
 
-		public void Dispose()
-		{
-			if (thumbnail != null)
-				thumbnail.Dispose();
-			thumbnail = null;
-			if (cacheImage != null)
-				cacheImage.Clear();
-		}
-		//-------------------------------------------
-		// メソッド
+        public void Dispose()
+        {
+            if (thumbnail != null)
+                thumbnail.Dispose();
+            thumbnail = null;
+            if (cacheImage != null)
+                cacheImage.Clear();
+        }
 
-		/// <summary>
-		/// ver1.10 サムネイル画像をオリジナル画像から登録する。
-		/// 上のLoadImage()を使わなくするために作成
-		/// </summary>
-		/// <param name="orgSizeBitmap"></param>
-		public void resisterThumbnailImage(Bitmap orgSizeBitmap)
-		{
-			//登録済みなら何もしない
-			if (thumbnail != null)
-				return;
+        //-------------------------------------------
+        // メソッド
 
-			//念のため。登録画像がなければクリア
-			if (orgSizeBitmap == null)
-			{
-				thumbnail = null;
-				//width = 0;
-				//height = 0;
-				return;
-			}
-			
-			//ver1.26 高さ固定のサムネイルを作る
-			this.thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgSizeBitmap, THUMBNAIL_HEIGHT);
-			//this.width = orgSizeBitmap.Width;
-			//this.height = orgSizeBitmap.Height;
-			GetExifInfo(orgSizeBitmap);
-		}
+        /// <summary>
+        /// ver1.10 サムネイル画像をオリジナル画像から登録する。
+        /// 上のLoadImage()を使わなくするために作成
+        /// </summary>
+        /// <param name="orgSizeBitmap"></param>
+        public void resisterThumbnailImage(Bitmap orgSizeBitmap)
+        {
+            //登録済みなら何もしない
+            if (thumbnail != null)
+                return;
 
-		private void GetExifInfo(Image orgImage)
-		{
-			//Exif情報の取得。
-			//http://cachu.xrea.jp/perl/ExifTAG.html
-			//http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
-			//http://exif.org/specifications.html
-			foreach (PropertyItem pi in orgImage.PropertyItems)
-			{
-				switch (pi.Id)
-				{
-					case 0x8827: //ISO
-						ExifISO = BitConverter.ToUInt16(pi.Value, 0);
-						break;
-					case 0x9003: //撮影日時
-						//「YYYY:MM:DD HH:MM:SS」形式19文字
-						ExifDate = Encoding.ASCII.GetString(pi.Value, 0, 19);
-						//date = date.Replace(':', '-').Replace(' ', '_');
-						break;
-					//DateTime dt = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
-					case 0x010f: //Make
-						ExifMake = Encoding.ASCII.GetString(pi.Value);
-						ExifMake = ExifMake.Trim(new char[] { '\0' });
-						break;
-					case 0x0110: //Model
-						ExifModel = Encoding.ASCII.GetString(pi.Value);
-						ExifModel = ExifModel.Trim(new char[] { '\0' });
-						break;
-				}//switch
-			}
-		}
+            //念のため。登録画像がなければクリア
+            if (orgSizeBitmap == null)
+            {
+                thumbnail = null;
+                //width = 0;
+                //height = 0;
+                return;
+            }
 
-	}
+            //ver1.26 高さ固定のサムネイルを作る
+            this.thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgSizeBitmap, THUMBNAIL_HEIGHT);
+            //this.width = orgSizeBitmap.Width;
+            //this.height = orgSizeBitmap.Height;
+            GetExifInfo(orgSizeBitmap);
+        }
+
+        private void GetExifInfo(Image orgImage)
+        {
+            //Exif情報の取得。
+            //http://cachu.xrea.jp/perl/ExifTAG.html
+            //http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
+            //http://exif.org/specifications.html
+            foreach (PropertyItem pi in orgImage.PropertyItems)
+            {
+                switch (pi.Id)
+                {
+                    case 0x8827: //ISO
+                        ExifISO = BitConverter.ToUInt16(pi.Value, 0);
+                        break;
+
+                    case 0x9003: //撮影日時
+                                 //「YYYY:MM:DD HH:MM:SS」形式19文字
+                        ExifDate = Encoding.ASCII.GetString(pi.Value, 0, 19);
+                        //date = date.Replace(':', '-').Replace(' ', '_');
+                        break;
+                    //DateTime dt = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
+                    case 0x010f: //Make
+                        ExifMake = Encoding.ASCII.GetString(pi.Value);
+                        ExifMake = ExifMake.Trim(new char[] { '\0' });
+                        break;
+
+                    case 0x0110: //Model
+                        ExifModel = Encoding.ASCII.GetString(pi.Value);
+                        ExifModel = ExifModel.Trim(new char[] { '\0' });
+                        break;
+                }//switch
+            }
+        }
+    }
 }
