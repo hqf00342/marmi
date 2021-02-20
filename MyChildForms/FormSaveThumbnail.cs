@@ -7,7 +7,7 @@ namespace Marmi
 {
     public partial class FormSaveThumbnail : Form
     {
-        //const int DEFAULT_THUMBNAIL_SIZE = 120; //Form1.DEFAULT_THUMBNAIL_SIZEに統合;
+        //const int DEFAULT_THUMBNAIL_SIZE = 120; //App.DEFAULT_THUMBNAIL_SIZEに統合;
         private const int DEFAULT_VERTICAL_WIDTH = 640;
 
         private bool saveConf_isDrawFilename;       //グローバルコンフィグの一時待避領域
@@ -48,8 +48,8 @@ namespace Marmi
         private void FormSaveThumbnail_Load(object sender, EventArgs e)
         {
             //テキストボックスの初期化：画像サイズ、画像個数
-            tbPixels.Text = Form1.DEFAULT_THUMBNAIL_SIZE.ToString();
-            int vertical = DEFAULT_VERTICAL_WIDTH / Form1.DEFAULT_THUMBNAIL_SIZE;
+            tbPixels.Text = App.DEFAULT_THUMBNAIL_SIZE.ToString();
+            int vertical = DEFAULT_VERTICAL_WIDTH / App.DEFAULT_THUMBNAIL_SIZE;
             tbnItemX.Text = vertical.ToString();
 
             //プログレスバーの初期化
@@ -89,7 +89,7 @@ namespace Marmi
             //サムネイルサイズの設定
             int ThumbnailSize = 0;
             if (!Int32.TryParse(tbPixels.Text, out ThumbnailSize))
-                ThumbnailSize = Form1.DEFAULT_THUMBNAIL_SIZE;
+                ThumbnailSize = App.DEFAULT_THUMBNAIL_SIZE;
             tbPixels.Text = ThumbnailSize.ToString();
 
             //横に並ぶ個数の設定
@@ -175,7 +175,7 @@ namespace Marmi
             //サムネイルサイズの設定
             int ThumbnailSize = 0;
             if (!Int32.TryParse(tbPixels.Text, out ThumbnailSize))
-                ThumbnailSize = Form1.DEFAULT_THUMBNAIL_SIZE;
+                ThumbnailSize = App.DEFAULT_THUMBNAIL_SIZE;
             tbPixels.Text = ThumbnailSize.ToString();
 
             //横に並ぶ個数の設定

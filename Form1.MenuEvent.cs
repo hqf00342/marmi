@@ -248,7 +248,7 @@ namespace Marmi
                 if (App.Config != null)
                     g_Sidebar.Width = App.Config.sidebarWidth;
                 else
-                    g_Sidebar.Width = SIDEBAR_DEFAULT_WIDTH;
+                    g_Sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
 
                 g_Sidebar.Visible = true;
                 g_Sidebar.SetItemToCenter(g_pi.NowViewPage);
@@ -341,7 +341,7 @@ namespace Marmi
 
         private void Menu_ClearCacheFile_Click(object sender, EventArgs e)
         {
-            string[] files = Directory.GetFiles(Application.StartupPath, "*" + CACHEEXT);
+            string[] files = Directory.GetFiles(Application.StartupPath, "*" + App.CACHEEXT);
             if (files.Length > 0)
             {
                 long size = 0;

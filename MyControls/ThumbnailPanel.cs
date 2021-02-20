@@ -114,7 +114,7 @@ namespace Marmi
             SetFont(new Font("ＭＳ ゴシック", 9), Color.Black);
 
             //サムネイルサイズからBOXの値を決定する。
-            SetThumbnailSize(Form1.DEFAULT_THUMBNAIL_SIZE);
+            SetThumbnailSize(App.DEFAULT_THUMBNAIL_SIZE);
 
             //コンテキストメニューの初期化
             InitContextMenu();

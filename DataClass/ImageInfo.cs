@@ -19,9 +19,9 @@ namespace Marmi
     public class ImageInfo : IDisposable
     {
         //サムネイル画像のサイズ。最大値
-        private int THUMBNAIL_WIDTH = Form1.DEFAULT_THUMBNAIL_SIZE;
+        private int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
 
-        private int THUMBNAIL_HEIGHT = Form1.DEFAULT_THUMBNAIL_SIZE;
+        private int THUMBNAIL_HEIGHT = App.DEFAULT_THUMBNAIL_SIZE;
 
         //ファイル名
         public string filename;

@@ -1,13 +1,13 @@
 #define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
 using System;
-using System.Collections;				//ICollection asでつかう
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;				//Debug, Stopwatch
+using System.Diagnostics;
 using System.Drawing;
-using System.IO;						//Directory, File
+using System.IO;
 using System.Linq;
-using System.Threading;					//ThreadPool, WaitCallback
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -21,28 +21,7 @@ namespace Marmi
         //Form1参照用ハンドル
         public static Form1 _instance;
 
-        //static定義
-        public static readonly int DEFAULT_THUMBNAIL_SIZE = 400;    //サムネイル標準サイズ
-
         public static PackageInfo g_pi = null;              //現在見ているパッケージ情報
-
-        #region const
-
-        //コンフィグファイル名。XmlSerializeで利用
-        //private const string CONFIGNAME = "Marmi.xml";
-        //アプリ名。タイトルとして利用
-        private const string APPNAME = "Marmi";
-
-        //サムネイルキャッシュの拡張子
-        private const string CACHEEXT = ".tmp";
-
-        //サイドバーの標準サイズ
-        private const int SIDEBAR_DEFAULT_WIDTH = 200;
-
-        //非同期IOタイムアウト値
-        private const int ASYNC_TIMEOUT = 5000;
-
-        #endregion const
 
         //画面表示関連
         public int g_viewPages = 1;                     //今見ているページ数：１か２
@@ -706,7 +685,7 @@ namespace Marmi
             //タイトルバーの設定
             //this.Text = APPNAME + @" - " + g_pi.PackageName;
             //ver1.79 フルパス表示をやめる
-            this.Text = APPNAME + @" - " + Path.GetFileName(g_pi.PackageName);
+            this.Text = App.APPNAME + @" - " + Path.GetFileName(g_pi.PackageName);
 
             //サムネイルの作成
             AsyncLoadImageInfo();
@@ -1741,11 +1720,11 @@ namespace Marmi
                     asyncFinished = true;
                 }));
 
-                while (!asyncFinished && sw.ElapsedMilliseconds < ASYNC_TIMEOUT)
+                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
                     Application.DoEvents();
                 sw.Stop();
 
-                if (sw.ElapsedMilliseconds < ASYNC_TIMEOUT)
+                if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
                     return g_pi.GetBitmapFromCache(index);
                 else
                 {
@@ -1774,7 +1753,7 @@ namespace Marmi
                 {
                     asyncFinished = true;
                 }));
-                while (!asyncFinished && sw.ElapsedMilliseconds < ASYNC_TIMEOUT)
+                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
                     Application.DoEvents();
                 sw.Stop();
 
@@ -2257,7 +2236,7 @@ namespace Marmi
         //古いキャッシュDBファイルを消去する。Form1_FormClosed()から呼ばれる
         private void ClearOldCacheDBFile()
         {
-            string[] files = Directory.GetFiles(Application.StartupPath, "*" + CACHEEXT);
+            string[] files = Directory.GetFiles(Application.StartupPath, "*" + App.CACHEEXT);
             foreach (string sz in files)
             {
                 bool isDel = true;
