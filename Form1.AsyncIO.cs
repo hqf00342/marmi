@@ -13,8 +13,8 @@ namespace Marmi
         private void AsyncIOThreadStart()
         {
             //Thread動作
-            AsyncIOThread = new Thread(Worker);
-            AsyncIOThread.Start();
+            App.AsyncIOThread = new Thread(Worker);
+            App.AsyncIOThread.Start();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Marmi
                             if (g_pi.packType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
-                                byte[] b = susie.GetFile(g_pi.PackageName, index, (int)g_pi.Items[index].length);
+                                byte[] b = App.susie.GetFile(g_pi.PackageName, index, (int)g_pi.Items[index].length);
                                 ImageConverter ic = new ImageConverter();
                                 Bitmap _b = ic.ConvertFrom(b) as Bitmap;
                                 g_pi.Items[index].cacheImage.Add(_b);

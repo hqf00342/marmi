@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,8 +34,17 @@ namespace Marmi
         //非同期IOタイムアウト値
         internal const int ASYNC_TIMEOUT = 5000;
 
+        //非同期IO用スレッド
+        internal static Thread AsyncIOThread = null;
+
         //非同期取得用スタック
         internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
+
+        //Susieプラグイン
+        internal static Susie susie = new Susie();
+
+        //unrar.dllプラグイン ver1.76
+        internal static Unrar unrar = new Unrar();
 
         public static class Cursors
         {

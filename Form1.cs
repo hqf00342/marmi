@@ -27,10 +27,10 @@ namespace Marmi
         public int g_viewPages = 1;                     //今見ているページ数：１か２
 
         //Susieプラグイン
-        private Susie susie = new Susie();
+        //private Susie susie = new Susie();
 
         //unrar.dllプラグイン ver1.76
-        private Unrar unrar = new Unrar();
+        //private Unrar unrar = new Unrar();
 
         #region --- コントロール ---
 
@@ -75,7 +75,7 @@ namespace Marmi
         #region --- 非同期IO用オブジェクト ---
 
         //非同期IO用スレッド
-        private Thread AsyncIOThread = null;
+        //private Thread AsyncIOThread = null;
 
         //非同期取得用スタック
         //ver1.81 Sidebarからも登録するためpublicに変更
@@ -271,8 +271,8 @@ namespace Marmi
             }
 
             //非同期IOスレッドの終了
-            AsyncIOThread.Abort();
-            AsyncIOThread.Join();
+            App.AsyncIOThread.Abort();
+            App.AsyncIOThread.Join();
 
             //サムネイルモードの解放
             if (App.Config.isThumbnailView)
@@ -322,7 +322,7 @@ namespace Marmi
             Application.Idle -= new EventHandler(Application_Idle);
 
             //ver1.57 susie解放
-            susie.Dispose();
+            App.susie.Dispose();
         }
 
         protected override void OnDragEnter(DragEventArgs drgevent)
@@ -599,7 +599,7 @@ namespace Marmi
             //pdfチェック
             if (g_pi.packType == PackageType.Pdf)
             {
-                if (!susie.isSupportedExtentions("pdf"))
+                if (!App.susie.isSupportedExtentions("pdf"))
                 {
                     string str = "pdfファイルはサポートしていません";
                     g_ClearPanel.ShowAndClose(str, 1000);
@@ -705,7 +705,7 @@ namespace Marmi
                     g_pi.packType = PackageType.Directory;
                     GetDirPictureList(files[0], App.Config.isRecurseSearchDir);
                 }
-                else if (unrar.dllLoaded && files[0].ToLower().EndsWith(".rar"))
+                else if (App.unrar.dllLoaded && files[0].ToLower().EndsWith(".rar"))
                 {
                     //
                     //unrar.dllを使う。
@@ -714,22 +714,22 @@ namespace Marmi
                     g_pi.isSolid = true;
 
                     //ファイルリストを構築
-                    unrar.Open(files[0], Unrar.OpenMode.List);
+                    App.unrar.Open(files[0], Unrar.OpenMode.List);
                     int num = 0;
-                    while (unrar.ReadHeader())
+                    while (App.unrar.ReadHeader())
                     {
-                        if (!unrar.CurrentFile.IsDirectory)
+                        if (!App.unrar.CurrentFile.IsDirectory)
                         {
                             g_pi.Items.Add(new ImageInfo(
                                 num++,
-                                unrar.CurrentFile.FileName,
-                                unrar.CurrentFile.FileTime,
-                                unrar.CurrentFile.UnpackedSize
+                                App.unrar.CurrentFile.FileName,
+                                App.unrar.CurrentFile.FileTime,
+                                App.unrar.CurrentFile.UnpackedSize
                                 ));
                         }
-                        unrar.Skip();
+                        App.unrar.Skip();
                     }
-                    unrar.Close();
+                    App.unrar.Close();
 
                     //展開が必要なのでtrueを返す
                     return true;
@@ -752,9 +752,9 @@ namespace Marmi
                 {
                     //pdfファイル
                     g_pi.packType = PackageType.Pdf;
-                    if (susie.isSupportPdf())
+                    if (App.susie.isSupportPdf())
                     {
-                        var list = susie.GetArchiveInfo(files[0]);
+                        var list = App.susie.GetArchiveInfo(files[0]);
                         foreach (var e in list)
                         {
                             g_pi.Items.Add(new ImageInfo((int)e.position, e.filename, e.timestamp, e.filesize));
