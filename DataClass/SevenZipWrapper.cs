@@ -38,36 +38,24 @@ namespace Marmi
 
         public event EventHandler ExtractAllEndEventHandler;    //完全展開完了後のイベント
 
-        public bool isCancelExtraction { get; set; }
+        public bool IsCancelExtraction { get; set; }
 
-        public bool isOpen { get { return m_isOpen; } }
+        public bool IsOpen => m_isOpen;
 
         /// <summary>
         ///書庫にあるアイテム数を返す
         ///ディレクトリも1ファイルとして返すので注意
         /// </summary>
-        public int itemCount
-        {
-            get { return m_7z.ArchiveFileData.Count; }
-        }
+        public int ItemCount => m_7z.ArchiveFileData.Count;
 
         /// <summary>
         /// 書庫がソリッドかどうか返す
         /// </summary>
-        public bool isSolid
-        {
-            get { return m_7z.IsSolid; }
-        }
+        public bool IsSolid => m_7z.IsSolid;
 
-        public ArchivedFiles Items
-        {
-            get { return m_7z.ArchiveFileData; }
-        }
+        public ArchivedFiles Items => m_7z.ArchiveFileData;
 
-        public string Filename
-        {
-            get { return m_filename; }
-        }
+        public string Filename => m_filename;
 
         public SevenZipWrapper()
         {
@@ -81,7 +69,7 @@ namespace Marmi
             //setLibrary32or64();
 
             //ver1.10 キャンセル処理のための初期化
-            isCancelExtraction = false;
+            IsCancelExtraction = false;
         }
 
         public SevenZipWrapper(string filename) : this()
@@ -490,7 +478,7 @@ namespace Marmi
         {
             Debug.WriteLine("Extract is Calceling...");
             if (m_7z != null)
-                isCancelExtraction = true;
+                IsCancelExtraction = true;
         }
 
         public bool ExtractFile(string extractFilename, string path)
@@ -537,7 +525,7 @@ namespace Marmi
         private void evtFileExtractionFinished(object sender, FileInfoEventArgs e)
         {
             //ver1.10 キャンセル処理の追加
-            if (isCancelExtraction)
+            if (IsCancelExtraction)
             {
                 e.Cancel = true;
                 Debug.WriteLine("7z展開中に中断処理が入りました");
@@ -553,7 +541,7 @@ namespace Marmi
             //ver1.10 キャンセル処理の追加
             //ただしここでのキャンセルは効かない模様。
             //効くのはFileExtractionFinished()
-            if (isCancelExtraction)
+            if (IsCancelExtraction)
             {
                 e.Cancel = true;
                 Debug.WriteLine("7z展開中に中断処理が入りました", "m_sevenzipExtractor_Extracting()");

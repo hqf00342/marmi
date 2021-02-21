@@ -53,7 +53,7 @@ namespace Marmi
                     if (index < 0 && action == null)
                     {
                         Debug.WriteLine("AsyncIO : 7z解放信号受信");
-                        if (AsyncSZ.isOpen)
+                        if (AsyncSZ.IsOpen)
                         {
                             Uty.WriteLine("AsyncIO : {0}解放", AsyncSZ.Filename);
                             AsyncSZ.Close();
@@ -68,7 +68,7 @@ namespace Marmi
                         {
                             Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
                             //7zをOpenしていなければOpen
-                            if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
+                            if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.IsOpen)
                             {
                                 AsyncSZ.Open(App.g_pi.PackageName);
                                 Debug.WriteLine("AsyncIO : 7zOpen");

@@ -1255,7 +1255,7 @@ namespace Marmi
                 App.g_pi.PackageName = filename;
                 var fi = new FileInfo(App.g_pi.PackageName);
                 App.g_pi.PackageSize = fi.Length;
-                App.g_pi.isSolid = szw.isSolid;
+                App.g_pi.isSolid = szw.IsSolid;
 
                 //ver1.31 7zファイルなのにソリッドじゃないことがある！？
                 if (Path.GetExtension(filename) == ".7z")

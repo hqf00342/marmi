@@ -184,7 +184,7 @@ namespace Marmi
                 while (!ExtractThread.Join(100))
                 {
                     if (now7z != null)
-                        now7z.isCancelExtraction = true;
+                        now7z.IsCancelExtraction = true;
                 }
             }
             DialogResult = DialogResult.Cancel;
@@ -341,7 +341,7 @@ namespace Marmi
                 Path.GetFileName(progressArchiveName)
                 );
 
-            if (now7z.isCancelExtraction)
+            if (now7z.IsCancelExtraction)
                 s = "キャンセル処理中";
 
             BeginInvoke((MethodInvoker)(() => { labelInfo.Text = s; }));
