@@ -242,13 +242,6 @@ namespace Marmi
         public static void WriteLine(string format, params object[] args)
         {
             Debug.WriteLine(string.Format(format, args), DateTime.Now.ToString());
-            //for(int i=0; i<args.Length; ++i)
-            //{
-            //   format = format.Replace(
-            //        "{" + i.ToString() + "}",
-            //       args[i].ToString());
-            //}
-            //Debug.WriteLine(format);
         }
 
         [Conditional("DEBUG")]

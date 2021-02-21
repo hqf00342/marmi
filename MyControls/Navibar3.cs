@@ -401,9 +401,9 @@ namespace Marmi
                 //ver1.81 “Ç‚Ýž‚Ýƒ‹[ƒ`ƒ“‚ðPushLow()‚É•ÏX
                 if (timer == null || !timer.Enabled)
                 {
-                    Form1._instance.PushLow(index, (Action)(() =>
+                    Form1.PushLow(index, (Action)(() =>
                     {
-                        var bmp = Form1._instance.SyncGetBitmap(index);
+                        var bmp = Form1.SyncGetBitmap(index);
                         Form1.g_pi.ThumnailMaker(index, bmp);
                         CalcAllItemPos();
                         if (this.Visible)

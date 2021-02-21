@@ -68,7 +68,7 @@ namespace Marmi
         private List<string> DeleteDirList = new List<string>();    //削除候補ディレクトリ
 
         //ver1.35 スクリーンキャッシュ
-        private Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
+        //private Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
 
         #endregion --- データクラス ---
 
@@ -129,7 +129,7 @@ namespace Marmi
             this.BackColor = App.Config.BackColor;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.SetStyle(ControlStyles.Opaque, true);
-            Application.Idle += new EventHandler(Application_Idle);
+            Application.Idle += Application_Idle;
 
             //zオーダーを初期化
             //SetFullScreen(false);
@@ -161,11 +161,11 @@ namespace Marmi
             //PicPanel.Left = 0;	//ver1.62コメントアウト
             PicPanel.Width = ClientRectangle.Width;
             PicPanel.BackColor = App.Config.BackColor;
-            PicPanel.MouseClick += (s, e) => { OnMouseClick(e); };
-            PicPanel.MouseDoubleClick += (s, e) => { OnMouseDoubleClick(e); };
-            PicPanel.MouseMove += (s, e) => { OnMouseMove(e); };
-            PicPanel.MouseUp += (s, e) => { OnMouseUp(e); };
-            PicPanel.MouseWheel += new MouseEventHandler(PicPanel_MouseWheel);
+            PicPanel.MouseClick += (s, e) => OnMouseClick(e);
+            PicPanel.MouseDoubleClick += (s, e) => OnMouseDoubleClick(e);
+            PicPanel.MouseMove += (s, e) => OnMouseMove(e);
+            PicPanel.MouseUp += (s, e) => OnMouseUp(e);
+            PicPanel.MouseWheel += PicPanel_MouseWheel;
             PicPanel.Dock = DockStyle.Fill;
             //
             //NaviBar
@@ -176,7 +176,7 @@ namespace Marmi
             //g_Sidebar.Width = SIDEBAR_DEFAULT_WIDTH
             g_Sidebar.Width = App.Config.sidebarWidth;
             g_Sidebar.Dock = DockStyle.Left;
-            g_Sidebar.SidebarSizeChanged += new EventHandler(g_Sidebar_SidebarSizeChanged);
+            g_Sidebar.SidebarSizeChanged += g_Sidebar_SidebarSizeChanged;
             //
             //TrackBar
             //
@@ -184,17 +184,17 @@ namespace Marmi
             g_trackbar.Name = "MarmiTrackBar";
             g_trackbar.AutoSize = false;
             g_trackbar.Size = new System.Drawing.Size(300, 20);
-            g_trackbar.ValueChanged += new EventHandler(g_trackbar_ValueChanged);
-            g_trackbar.MouseUp += new MouseEventHandler(g_trackbar_MouseUp);
-            g_trackbar.MouseDown += new MouseEventHandler(g_trackbar_MouseDown);
-            g_trackbar.MouseWheel += new EventHandler<MouseEventArgs>(g_trackbar_MouseWheel);
+            g_trackbar.ValueChanged += g_trackbar_ValueChanged;
+            g_trackbar.MouseUp += g_trackbar_MouseUp;
+            g_trackbar.MouseDown += g_trackbar_MouseDown;
+            g_trackbar.MouseWheel += g_trackbar_MouseWheel;
             //g_trackbar.MouseEnter += new EventHandler(g_trackbar_MouseEnter);
             //
             //サムネイルパネル
             //
             g_ThumbPanel = new ThumbnailPanel();
             this.Controls.Add(g_ThumbPanel);
-            g_ThumbPanel.MouseMove += new MouseEventHandler(g_ThumbPanel_MouseMove);
+            g_ThumbPanel.MouseMove += g_ThumbPanel_MouseMove;
             g_ThumbPanel.Init();
             g_ThumbPanel.Visible = false;
             g_ThumbPanel.Dock = DockStyle.Fill;
@@ -210,7 +210,7 @@ namespace Marmi
             SetKeyConfig2();
 
             //ver1.35 スライドショータイマー
-            SlideShowTimer.Tick += new EventHandler(SlideShowTimer_Tick);
+            SlideShowTimer.Tick += SlideShowTimer_Tick;
         }
 
         // フォームイベント *************************************************************/
@@ -308,7 +308,7 @@ namespace Marmi
                 ClearOldCacheDBFile();
 
             //Application.Idleの解放
-            Application.Idle -= new EventHandler(Application_Idle);
+            Application.Idle -= Application_Idle;
 
             //ver1.57 susie解放
             App.susie.Dispose();
@@ -427,9 +427,7 @@ namespace Marmi
         {
             //return;
 
-            //Debug.WriteLine(DateTime.Now, "Application_Idle()");
             UpdateToolbar();
-            //setStatusbarPages();
 
             //低品質描写だったら高品質で書き直す
             if (PicPanel.LastDrawMode
@@ -460,9 +458,9 @@ namespace Marmi
             if (needMakeScreenCache)
             {
                 needMakeScreenCache = false;
-                ThreadPool.QueueUserWorkItem(dummy =>
+                ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    getScreenCache();
+                    MakeScreenCache();
                     PurgeScreenCache();
                     g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 });
@@ -524,7 +522,7 @@ namespace Marmi
             setStatusbarInfo("準備中・・・" + filenames[0]);
 
             //ver1.35スクリーンキャッシュをクリア
-            ScreenCache.Clear();
+            App.ScreenCache.Clear();
 
             //コントロールの初期化
             InitControls();     //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
@@ -1080,7 +1078,7 @@ namespace Marmi
 
             //ver1.36 スクリーンキャッシュをクリア
             //ClearScreenCache();
-            ScreenCache.Clear();
+            App.ScreenCache.Clear();
 
             SetViewPage(g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
@@ -1449,7 +1447,7 @@ namespace Marmi
                 return;
 
             //ver1.36 Index範囲チェック
-            Debug.Assert(CheckIndex(index));
+            Debug.Assert(index >= 0 && index < g_pi.Items.Count);
 
             // ページ進行方向 進む方向なら正、戻る方向なら負
             // アニメーションで利用する
@@ -1461,7 +1459,7 @@ namespace Marmi
 
             //ver1.35 スクリーンキャッシュチェック
             Bitmap screenImage = null;
-            if (ScreenCache.TryGetValue(index, out screenImage))
+            if (App.ScreenCache.TryGetValue(index, out screenImage))
             {
                 //スクリーンキャッシュあったのですぐに描写
                 SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
@@ -1471,15 +1469,15 @@ namespace Marmi
             {
                 //ver1.50
                 //Keyだけある{key,null}キャッシュだったら消す。稀に発生するため
-                if (ScreenCache.ContainsKey(index))
-                    ScreenCache.Remove(index);
+                if (App.ScreenCache.ContainsKey(index))
+                    App.ScreenCache.Remove(index);
 
                 //ver1.50 読み込み中と表示
                 setStatusbarInfo("Now Loading ... " + (index + 1).ToString());
                 Application.DoEvents();
 
                 //画像作成をスレッドプールに登録
-                ThreadPool.QueueUserWorkItem(dummy =>
+                ThreadPool.QueueUserWorkItem(_ =>
                 {
                     //screenImage = MakeOriginalSizeImage(g_pi.NowViewPage);
                     screenImage = MakeOriginalSizeImage(index);
@@ -1555,7 +1553,7 @@ namespace Marmi
 
             //ver1.78 倍率をオプション指定できるように変更
             if (!App.Config.keepMagnification     //倍率維持モードではない
-                || isFitToScreen())             //画面にフィットしている
+                || IsFitToScreen())             //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
@@ -1610,7 +1608,7 @@ namespace Marmi
         }
 
         //ver1.35 前のページ番号。すでに先頭ページなら-1
-        private int GetPrevPage(int index)
+        private static int GetPrevPage(int index)
         {
             if (index > 0)
             {
@@ -1628,7 +1626,7 @@ namespace Marmi
         }
 
         //ver1.36次のページ番号。すでに最終ページなら-1
-        private int GetNextPage(int index)
+        private static int GetNextPage(int index)
         {
             int pages = CanDualView(index) ? 2 : 1;
 
@@ -1639,30 +1637,13 @@ namespace Marmi
                 return -1;
         }
 
-        public void AsyncGetBitmap(int index, Delegate action)
+        public static void AsyncGetBitmap(int index, MethodInvoker action)
         {
             //キャッシュを持っていれば非同期しない
-            //Bitmap bmp = g_pi.GetBitmapFromCache(index);
-            //if (bmp != null)
             if (g_pi.hasCacheImage(index))
             {
-                if (action != null)
-                    ((MethodInvoker)action)();
-                return;
+                action?.Invoke();
             }
-
-            ////ver1.57 pdf対応
-            //if (g_pi.packType == PackageType.Pdf)
-            //{
-            //    int filesize = (int)g_pi.Items[index].length;
-            //    byte[] buf = susie.GetFile(g_pi.PackageName, index, filesize);
-            //    ImageConverter ic = new ImageConverter();
-            //    Bitmap _bmp = ic.ConvertFrom(buf) as Bitmap;
-            //    g_pi.Items[index].cacheImage.Add(_bmp);
-            //    if (action != null)
-            //        ((MethodInvoker)action)();
-            //    return;
-            //}
 
             //ver1.54 HighQueueとして登録されているかどうか確認する。
             var array = App.stack.ToArrayHigh();
@@ -1670,29 +1651,28 @@ namespace Marmi
             {
                 if (elem.Key == index)
                 {
-                    Uty.WriteLine("AsyncGetBitmap() Skip {0}", index);
+                    Debug.WriteLine($"AsyncGetBitmap() : Skip. {index} is already queued.");
                     return;
                 }
             }
 
             //非同期するためにPush
-            //Uty.WriteLine("AsyncGetBitmap() Push {0}", index);
             App.stack.Push(new KeyValuePair<int, Delegate>(index, action));
         }
 
-        public Bitmap SyncGetBitmap(int index)
+        public static Bitmap SyncGetBitmap(int index)
         {
-            Bitmap bmp = g_pi.GetBitmapFromCache(index);
+            var bmp = g_pi.GetBitmapFromCache(index);
+
             if (bmp != null)
+            {
                 return bmp;
+            }
             else
             {
                 bool asyncFinished = false;
                 Stopwatch sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, (MethodInvoker)(() =>
-                {
-                    asyncFinished = true;
-                }));
+                AsyncGetBitmap(index, () => asyncFinished = true);
 
                 while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
                     Application.DoEvents();
@@ -1702,7 +1682,7 @@ namespace Marmi
                     return g_pi.GetBitmapFromCache(index);
                 else
                 {
-                    Uty.WriteLine("SyncGetBitmap({0}), timeOut", index);
+                    Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
                     return null;
                 }
             }
@@ -1714,7 +1694,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        private Size SyncGetBitmapSize(int index)
+        private static Size SyncGetBitmapSize(int index)
         {
             if (g_pi.Items[index].hasInfo)
                 return g_pi.Items[index].bmpsize;
@@ -1722,11 +1702,8 @@ namespace Marmi
             {
                 //非同期のGetBitmap()を読み終わるまで待つ
                 bool asyncFinished = false;
-                Stopwatch sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, (MethodInvoker)(() =>
-                {
-                    asyncFinished = true;
-                }));
+                var sw = Stopwatch.StartNew();
+                AsyncGetBitmap(index, () => asyncFinished = true);
                 while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
                     Application.DoEvents();
                 sw.Stop();
@@ -1740,10 +1717,9 @@ namespace Marmi
 
         private Bitmap MakeOriginalSizeImage(int index)
         {
-            Uty.WriteLine("MakeOriginalSizeImage({0})", index);
+            Debug.WriteLine($"MakeOriginalSizeImage({index})");
 
             //とりあえず1枚読め！
-            //Bitmap bmp1 = g_pi.GetBitmap(index);
             Bitmap bmp1 = SyncGetBitmap(index);
             if (bmp1 == null)
             {
@@ -1755,20 +1731,15 @@ namespace Marmi
             }
 
             //ver1.81 サムネイル登録
-            //g_pi.AsyncThumnailMaker(index, bmp1);
             g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
 
             if (App.Config.dualView && CanDualView(index))
             {
                 //2枚表示
-                //viewPages = 2;
-                //Bitmap bmp2 = g_pi.GetBitmap(index + 1);
                 Bitmap bmp2 = SyncGetBitmap(index + 1);
                 if (bmp2 == null)
                 {
                     //2枚目の読み込みがエラーなので1枚表示にする
-                    //viewPages = 1;
-                    //g_originalSizeBitmap = bmp1;
                     bmp1.Tag = 1;
                     return bmp1;
                 }
@@ -1892,10 +1863,10 @@ namespace Marmi
                     }
 
                     //100%ズーム
-                    toolStripButton_Zoom100.Checked = isScreen100p();
+                    toolStripButton_Zoom100.Checked = IsScreen100p();
 
                     //画面フィットズーム
-                    toolStripButton_ZoomFit.Checked = isFitToScreen();
+                    toolStripButton_ZoomFit.Checked = IsFitToScreen();
 
                     //Favorite
                     if (g_pi.Items[g_pi.NowViewPage].isBookMark)
@@ -1918,15 +1889,15 @@ namespace Marmi
         }
 
         //画面にフィットしているかどうか
-        private bool isFitToScreen()
+        private bool IsFitToScreen()
         {
-            return (Math.Abs(PicPanel.ZoomRatio - PicPanel.FittingRatio) < 0.001f);
+            return Math.Abs(PicPanel.ZoomRatio - PicPanel.FittingRatio) < 0.001f;
         }
 
         //100%表示かどうか
-        private bool isScreen100p()
+        private bool IsScreen100p()
         {
-            return (Math.Abs(PicPanel.ZoomRatio - 1.0f) < 0.001f);
+            return Math.Abs(PicPanel.ZoomRatio - 1.0f) < 0.001f;
         }
 
         /// <summary>
@@ -1941,17 +1912,13 @@ namespace Marmi
 
             int menuCount = 0;
 
-            //for (int i = 0; i < mySetting.mru.Length; i++)	//古い順
-            for (int i = App.Config.mru.Length - 1; i >= 0; i--)      //新しい順にする
+            //新しい順にする
+            for (int i = App.Config.mru.Length - 1; i >= 0; i--)
             {
                 if (App.Config.mru[i] == null)
                     continue;
 
-                MenuItem_FileRecent.DropDownItems.Add(
-                    App.Config.mru[i].Name,                   //アイテムのテキスト
-                    null,                                   //アイテムのイメージ
-                    new System.EventHandler(OnClickMRUMenu) //イベント
-                    );
+                MenuItem_FileRecent.DropDownItems.Add(App.Config.mru[i].Name, null, new EventHandler(OnClickMRUMenu));
 
                 //ver1.73 MRU表示数の制限
                 if (++menuCount >= App.Config.numberOfMru)
@@ -1964,7 +1931,7 @@ namespace Marmi
         /// </summary>
         /// <param name="dirName">追加対象のディレクトリ名</param>
         /// <param name="isRecurse">再帰的に走査する場合はtrue</param>
-        private void GetDirPictureList(string dirName, bool isRecurse)
+        private static void GetDirPictureList(string dirName, bool isRecurse)
         {
             string[] files = Directory.GetFiles(dirName);
 
@@ -1981,11 +1948,9 @@ namespace Marmi
             }
 
             //再帰的に取得するかどうか。
-            //if (App.Config.isRecurseSearchDir)
             if (isRecurse)
             {
-                string[] dirs = Directory.GetDirectories(dirName);
-                foreach (string name in dirs)
+                foreach (var name in Directory.GetDirectories(dirName))
                     GetDirPictureList(name, isRecurse);
             }
         }
@@ -2002,11 +1967,6 @@ namespace Marmi
             if (g_pi.Items.Count <= 1)
                 return false;
             return (bool)(g_pi.NowViewPage + g_viewPages >= g_pi.Items.Count);
-        }
-
-        private bool CheckIndex(int index)
-        {
-            return (index >= 0 && index < g_pi.Items.Count);
         }
 
         /// <summary>
@@ -2083,7 +2043,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス値</param>
         /// <returns>2画面表示できるときはtrue</returns>
-        private bool CanDualView(int index)
+        private static bool CanDualView(int index)
         {
             //最後のページになっていないか確認
             if (index >= g_pi.Items.Count - 1 || index < 0)
@@ -2099,35 +2059,23 @@ namespace Marmi
 
             //1枚目チェック
             if (!g_pi.Items[index].hasInfo)
-                //SyncGetBitmap(index);
                 SyncGetBitmapSize(index);
-            //if (g_pi.Items[index].width > g_pi.Items[index].height)
             if (g_pi.Items[index].isFat)
                 return false; //横長だった
 
             //２枚目チェック
             if (!g_pi.Items[index + 1].hasInfo)
-                //SyncGetBitmap(index + 1);
                 SyncGetBitmapSize(index + 1);
-            //if (g_pi.Items[index + 1].width > g_pi.Items[index + 1].height)
             if (g_pi.Items[index + 1].isFat)
                 return false; //横長だった
 
             //全て縦長だった時の処理
-            //ver1.70 縦長ならOKとする
-            //if(!App.Config.dualview_exactCheck)
-            //	return true;
-            //ver1.79 簡易チェック：縦画像2枚でOK
             if (App.Config.dualView_Normal)
                 return true; //縦画像2枚
 
-            //ver1.20 ほぼ同じサイズかどうかをチェック
-            //縦の長さがほとんど変わらなければtrue
+            //2画像の高さがほとんど変わらなければtrue
             const int ACCEPTABLE_RANGE = 200;
-            if (Math.Abs(g_pi.Items[index].height - g_pi.Items[index + 1].height) < ACCEPTABLE_RANGE)
-                return true;
-            else
-                return false;
+            return Math.Abs(g_pi.Items[index].height - g_pi.Items[index + 1].height) < ACCEPTABLE_RANGE;
         }
 
         // ユーティリティ系：画像キャッシュ *********************************************/
@@ -2138,25 +2086,29 @@ namespace Marmi
         /// 前後ページの画面キャッシュを作成する
         /// 現在見ているページを中心とする
         /// </summary>
-        private void getScreenCache()
+        private void MakeScreenCache()
         {
             //ver1.37 スレッドで使うことを前提にロック
-            lock ((ScreenCache as ICollection).SyncRoot)
+            lock ((App.ScreenCache as ICollection).SyncRoot)
             {
                 //前のページ
                 int ix = GetPrevPage(g_pi.NowViewPage);
-                if (ix >= 0 && !ScreenCache.ContainsKey(ix))
+                if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Prev");
-                    ScreenCache.Add(ix, MakeOriginalSizeImage(ix));
+                    var bmp = MakeOriginalSizeImage(ix);
+                    if(bmp!=null)
+                        App.ScreenCache.Add(ix, bmp);
                 }
 
                 //前のページ
                 ix = GetNextPage(g_pi.NowViewPage);
-                if (ix >= 0 && !ScreenCache.ContainsKey(ix))
+                if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Next");
-                    ScreenCache.Add(ix, MakeOriginalSizeImage(ix));
+                    var bmp = MakeOriginalSizeImage(ix);
+                    if (bmp != null)
+                        App.ScreenCache.Add(ix, bmp);
                 }
             }
         }
@@ -2164,14 +2116,14 @@ namespace Marmi
         /// <summary>
         /// 不要なスクリーンキャッシュを削除する
         /// </summary>
-        private void PurgeScreenCache()
+        private static void PurgeScreenCache()
         {
             //削除候補をリストアップ
             int now = g_pi.NowViewPage;
             const int DISTANCE = 2;
             List<int> deleteCandidate = new List<int>();
 
-            foreach (var ix in ScreenCache.Keys)
+            foreach (var ix in App.ScreenCache.Keys)
             {
                 if (ix > now + DISTANCE || ix < now - DISTANCE)
                 {
@@ -2190,11 +2142,9 @@ namespace Marmi
                     //ScreenCache.Remove(key);
                     //tempBmp.Dispose();
                     Bitmap tempBmp = null;
-                    if (ScreenCache.TryGetValue(ix, out tempBmp))
+                    if (App.ScreenCache.TryGetValue(ix, out tempBmp))
                     {
-                        ScreenCache.Remove(ix);
-                        //if (tempBmp != null)
-                        //    tempBmp.Dispose();
+                        App.ScreenCache.Remove(ix);
                         Uty.WriteLine("PurgeScreenCache({0})", ix);
                     }
                     else
@@ -2208,7 +2158,7 @@ namespace Marmi
         #endregion スクリーンキャッシュ
 
         //古いキャッシュDBファイルを消去する。Form1_FormClosed()から呼ばれる
-        private void ClearOldCacheDBFile()
+        private static void ClearOldCacheDBFile()
         {
             string[] files = Directory.GetFiles(Application.StartupPath, "*" + App.CACHEEXT);
             foreach (string sz in files)
@@ -2299,28 +2249,10 @@ namespace Marmi
             g_pi.Items.RemoveAt(now);
 
             //ScreenCacheから削除
-            ScreenCache.Clear();
+            App.ScreenCache.Clear();
 
             //Trackbarを変更
             InitTrackbar();
-
-            ////ページを切り替える
-            //if (!CheckIndex(now))
-            //    now--;
-            //if (now < 0)
-            //{
-            //    //最後のページを消した
-            //    Debug.WriteLine("最後のページを消した");
-            //    PicPanel.bmp = null;
-            //    PicPanel.ResetView();
-            //    PicPanel.Refresh();
-            //    //g_originalSizeBitmap.Dispose();
-            //    g_pi.Items.Clear();
-            //}
-            //else
-            //{
-            //    SetViewPage(now);
-            //}
         }
 
         //*****************************************************************
@@ -2373,8 +2305,7 @@ namespace Marmi
         /// <param name="args">コマンドライン引数</param>
         void IRemoteObject.IPCMessage(string[] args)
         {
-            //this.Activate();
-            this.Invoke(((Action)(() =>
+            this.Invoke((Action)(() =>
             {
                 //自分を前面にする
                 this.Activate();
@@ -2385,7 +2316,7 @@ namespace Marmi
                     //1つめに自分のexeファイル名が入っているので除く
                     AsyncStart(args.Skip(1).ToArray());
                 }
-            })));
+            }));
         }
 
         /// <summary>
@@ -2393,10 +2324,10 @@ namespace Marmi
         /// SidebarやTrackbarから画像を取得したいときに使う。
         /// </summary>
         /// <param name="index"></param>
-        /// <param name="f"></param>
-        public void PushLow(int index, Delegate f)
+        /// <param name="func"></param>
+        public static void PushLow(int index, Delegate func)
         {
-            App.stack.PushLow(new KeyValuePair<int, Delegate>(index, f));
+            App.stack.PushLow(new KeyValuePair<int, Delegate>(index, func));
         }
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)

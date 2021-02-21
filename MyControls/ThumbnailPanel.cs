@@ -783,7 +783,7 @@ namespace Marmi
             {
                 //画像がないときは非同期で取ってくる
                 //スタック型の非同期GetBitmapに変更
-                Form1._instance.AsyncGetBitmap(item, (MethodInvoker)(() =>
+                Form1.AsyncGetBitmap(item, () =>
                 {
                     //ver1.75 サムネイルがないので作る
                     Form1.g_pi.AsyncThumnailMaker(item);
@@ -815,7 +815,7 @@ namespace Marmi
                             this.Invalidate(GetThumbboxRectanble(item));
                         }
                     }
-                }));
+                });
 
                 thumbnailBoxRect.Inflate(-PADDING, -PADDING);
                 thumbnailBoxRect.Height = THUMBNAIL_SIZE;
@@ -1025,7 +1025,7 @@ namespace Marmi
                     //orgBitmap = ((Form1)Parent).GetBitmap(item);
                     //orgBitmap = Form1.g_pi.GetBitmap(item);
                     //ver1.50
-                    orgBitmap = ((Form1)Parent).SyncGetBitmap(item);
+                    orgBitmap = Form1.SyncGetBitmap(item);
                 }));
             }
             else
@@ -1033,7 +1033,7 @@ namespace Marmi
                 //orgBitmap = ((Form1)Parent).GetBitmap(item);
                 //orgBitmap = Form1.g_pi.GetBitmap(item);
                 //ver1.50
-                orgBitmap = ((Form1)Parent).SyncGetBitmap(item);
+                orgBitmap = Form1.SyncGetBitmap(item);
             }
 
             return orgBitmap;

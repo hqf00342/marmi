@@ -197,7 +197,7 @@ namespace Marmi
         private void Menu_ViewPictureInfo_Click(object sender, EventArgs e)
         {
             //ver1.81 画像情報確認
-            if (!CheckIndex(g_pi.NowViewPage))
+            if (g_pi.NowViewPage < 0 || g_pi.NowViewPage >= g_pi.Items.Count)
                 return;
 
             FormPictureInfo p = new FormPictureInfo();
@@ -317,7 +317,7 @@ namespace Marmi
                 ResizeTrackBar();
 
                 //ver1.79 ScreenCacheをクリアする。
-                ScreenCache.Clear();
+                App.ScreenCache.Clear();
 
                 //サムネイルサイズはすぐに反映
                 //if (g_ThumbPanel != null)
@@ -421,7 +421,7 @@ namespace Marmi
                 }
 
                 //ver1.38 ソート後に画面を書き直す
-                ScreenCache.Clear();
+                App.ScreenCache.Clear();
                 SetViewPage(g_pi.NowViewPage);
             }
         }
@@ -448,7 +448,7 @@ namespace Marmi
                 //ResumeThumbnailMakerThread();	//ver1.09 スレッド再開
 
                 //ver1.38 ソート後に画面を書き直す
-                ScreenCache.Clear();
+                App.ScreenCache.Clear();
                 SetViewPage(g_pi.NowViewPage);
             }
         }
@@ -460,7 +460,7 @@ namespace Marmi
             pif.ShowDialog(g_pi.NowViewPage);
 
             //ver1.38 ソート後に画面を書き直す
-            ScreenCache.Clear();
+            App.ScreenCache.Clear();
             SetViewPage(g_pi.NowViewPage);
         }
 

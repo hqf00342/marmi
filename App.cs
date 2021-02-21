@@ -46,6 +46,9 @@ namespace Marmi
         //unrar.dllプラグイン ver1.76
         internal static Unrar unrar = new Unrar();
 
+        //ver1.35 スクリーンキャッシュ
+        internal static Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
+
         public static class Cursors
         {
             private static readonly Icon iconLoope = Properties.Resources.loopeIcon;
