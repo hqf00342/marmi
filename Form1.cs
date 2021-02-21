@@ -1479,11 +1479,17 @@ namespace Marmi
                 //画像作成をスレッドプールに登録
                 ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    //screenImage = MakeOriginalSizeImage(g_pi.NowViewPage);
                     screenImage = MakeOriginalSizeImage(index);
                     this.Invoke((MethodInvoker)(() =>
                     {
-                        SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
+                        if (screenImage == null)
+                        {
+                            PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
+                        }
+                        else
+                        {
+                            SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
+                        }
                     }));
                 });
 
@@ -1715,7 +1721,7 @@ namespace Marmi
             }
         }
 
-        private Bitmap MakeOriginalSizeImage(int index)
+        private static Bitmap MakeOriginalSizeImage(int index)
         {
             Debug.WriteLine($"MakeOriginalSizeImage({index})");
 
@@ -1723,10 +1729,10 @@ namespace Marmi
             Bitmap bmp1 = SyncGetBitmap(index);
             if (bmp1 == null)
             {
-                if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
-                    PicPanel.Message = "画像ファイルを展開中です";
-                else
-                    PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
+                //if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
+                //    PicPanel.Message = "画像ファイルを展開中です";
+                //else
+                //    PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
                 return null;
             }
 
