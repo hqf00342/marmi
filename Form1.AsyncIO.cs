@@ -64,10 +64,11 @@ namespace Marmi
                             {
                                 //pdfファイルの読み込み
                                 byte[] b = App.susie.GetFile(g_pi.PackageName, index, (int)g_pi.Items[index].length);
-                                ImageConverter ic = new ImageConverter();
-                                Bitmap _b = ic.ConvertFrom(b) as Bitmap;
-                                g_pi.Items[index].cacheImage.Add(_b);
-                                g_pi.Items[index].bmpsize = _b.Size;
+                                //ImageConverter ic = new ImageConverter();
+                                //Bitmap _b = ic.ConvertFrom(b) as Bitmap;
+                                //g_pi.Items[index].cacheImage.Load(_b);
+                                g_pi.Items[index].cacheImage.Load(b);
+                                g_pi.Items[index].bmpsize = g_pi.Items[index].cacheImage.GetImageSize();
                                 g_pi.AsyncThumnailMaker(index);
                             }
                             else

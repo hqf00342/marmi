@@ -45,7 +45,7 @@ namespace Marmi
 
         //ƒLƒƒƒbƒVƒ…‚ğ‚±‚¿‚ç‚É‚Â 2013/01/13
         [NonSerialized]
-        public SmallBitmap cacheImage = new SmallBitmap();
+        public RawImage cacheImage = new RawImage();
 
         //public Bitmap image {
         //    get

@@ -2,13 +2,14 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-
+/*
+画像をBitmap化せずにそのままメモリーに保持するクラス。
+必要な時はToBitmap()する。
+*/
 namespace Marmi
 {
-    public class SmallBitmap
+    public class RawImage
     {
-        #region --- const for GetImageSize() ---
-
         private const byte JPG_SOF0 = 0xc0;
         private const byte JPG_SOF15 = 0xcf;
         private const int BMP_HEADER2 = 0x424d;
@@ -18,42 +19,11 @@ namespace Marmi
         private const int TIF_HEADERI = 0x4949;
         private const int TIF_HEADERM = 0x4d4d;
 
-        #endregion --- const for GetImageSize() ---
+        private byte[] _internalBuffer = null;
 
-        #region --- private ---
+        public int Length => _internalBuffer == null ? 0 : _internalBuffer.Length;
 
-        private byte[] internalBuffer = null;
-
-        #endregion --- private ---
-
-        #region --- プロパティ ---
-
-        public Bitmap bitmap
-        {
-            get { return ImageConv(); }
-            set
-            {
-                if (value == null)
-                    Clear();
-                else
-                    Add(value);
-            }
-        }
-
-        public int Length
-        {
-            get
-            {
-                if (internalBuffer == null)
-                    return 0;
-                else
-                    return internalBuffer.Length;
-            }
-        }
-
-        public bool hasImage { get { return internalBuffer != null; } }
-
-        #endregion --- プロパティ ---
+        public bool hasImage => _internalBuffer != null;
 
         ////////////////////////////////////////////////////////////////////////////////
         // publicメソッド
@@ -62,38 +32,32 @@ namespace Marmi
         /// 指定したファイル名をメモリバッファに登録する
         /// </summary>
         /// <param name="filename">登録したい実ファイル名</param>
-        public void Add(string filename)
+        public void Load(string filename)
         {
-            //キーとファイル名を同じにして登録
-            //ファイルが存在しなければ何もしない
             if (!File.Exists(filename))
                 return;
 
-            using (FileStream fs = File.OpenRead(filename))
+            using (var fs = File.OpenRead(filename))
             {
-                FileInfo fi = new FileInfo(filename);
-                MemoryStream ms = new MemoryStream((int)fi.Length);
-                int len;
-                byte[] buf = new byte[4096];
-                while ((len = fs.Read(buf, 0, buf.Length)) > 0)
-                    ms.Write(buf, 0, len);
+                Load(fs);
+            }
+        }
 
-                ms.Close();
-                internalBuffer = ms.GetBuffer();
-                //buffer = ms.ToArray();
-            }//using
+        public void Load(byte[] buffer)
+        {
+            _internalBuffer = buffer;
         }
 
         /// <summary>
         /// ストリームをそのまま登録する
         /// </summary>
         /// <param name="st">登録ストリーム</param>
-        public void Add(Stream st)
+        public void Load(Stream st)
         {
             MemoryStream ms;
-            if (st is MemoryStream)  //if(st.GetType() == typeof(MemoryStream))
+            if (st is MemoryStream) 
             {
-                //このままClose()してbyte[]にするのでSeek()不要
+                //このままbyte[]にするのでSeek()不要
                 //st.Seek(0, SeekOrigin.Begin);
                 ms = st as MemoryStream;
             }
@@ -101,23 +65,27 @@ namespace Marmi
             {
                 //Seekしないと末尾にあるのでコピーできない
                 st.Seek(0, SeekOrigin.Begin);
-
                 ms = new MemoryStream((int)st.Length);
-                int len;
-                byte[] buf = new byte[4096];
-                while ((len = st.Read(buf, 0, buf.Length)) > 0)
-                    ms.Write(buf, 0, len);
+                st.CopyTo(ms);
+                //int len;
+                //byte[] buf = new byte[4096];
+                //while ((len = st.Read(buf, 0, buf.Length)) > 0)
+                //    ms.Write(buf, 0, len);
             }
 
+            //ms.Close();
+            //2021年2月21日：ToArray()にすべき
+            //_internalBuffer = ms.GetBuffer();
+            _internalBuffer = ms.ToArray();
             ms.Close();
-            internalBuffer = ms.GetBuffer();
         }
 
         /// <summary>
         /// BitmapをBufferに登録する。
+        /// メモリー節約のためJpegにエンコードしている
         /// </summary>
-        /// <param name="bmp">登録するBitmap</param>
-        public void Add(Bitmap bitmap)
+        /// <param name="bitmap">登録するBitmap</param>
+        public void Load(Bitmap bitmap)
         {
             //null設定された時はクリアする
             if (bitmap == null)
@@ -133,41 +101,30 @@ namespace Marmi
 
             //メモリを最小化するためにGetBuffer()ではなくToArray()を使う
             //msdn:このメソッドは、MemoryStream が閉じられているときに機能します。
-            internalBuffer = ms.ToArray();
+            _internalBuffer = ms.ToArray();
         }
 
-        public void Clear()
-        {
-            if (internalBuffer == null)
-                return;
-            if (internalBuffer.Length > 0)
-                internalBuffer = null;
-        }
+        public void Clear() => _internalBuffer = null;
 
-        #region private Method
-
-        private Bitmap ImageConv()
+        /// <summary>
+        /// Raw Image をBitmapに変換する
+        /// </summary>
+        /// <returns>Bitmap。データがない場合はnull</returns>
+        public Bitmap ToBitmap()
         {
-            if (internalBuffer == null || internalBuffer.Length == 0)
+            if (_internalBuffer == null || _internalBuffer.Length == 0)
                 return null;
 
             try
             {
                 ImageConverter ic = new ImageConverter();
-                return ic.ConvertFrom(internalBuffer) as Bitmap;
-
-                //using (MemoryStream ms = new MemoryStream(internalBuffer))
-                //{
-                //    return Image.FromStream(ms, true, false) as Bitmap;
-                //}
+                return ic.ConvertFrom(_internalBuffer) as Bitmap;
             }
             catch (ArgumentException)
             {
                 return null;
             }
         }
-
-        #endregion private Method
 
         /// <summary>
         /// ver1.51 画像サイズをBMPを作らずに取得
@@ -180,7 +137,7 @@ namespace Marmi
         {
             int width = 0;
             int height = 0;
-            byte[] bs = internalBuffer;
+            byte[] bs = _internalBuffer;
             if (bs == null)
                 return Size.Empty;
 
@@ -225,7 +182,7 @@ namespace Marmi
                 case TIF_HEADERM:
                 default:
                     //TIFFフォーマットは面倒なのでBITMAP化
-                    using (Bitmap bmp = ImageConv())
+                    using (Bitmap bmp = ToBitmap())
                     {
                         width = bmp.Width;
                         height = bmp.Height;

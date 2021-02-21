@@ -99,7 +99,7 @@ namespace Marmi
         /// <returns>Bitmap 無ければcacheがなければnull</returns>
         public Bitmap GetBitmapFromCache(int index)
         {
-            return hasCacheImage(index) ? Items[index].cacheImage.bitmap : null;
+            return hasCacheImage(index) ? Items[index].cacheImage.ToBitmap() : null;
         }
 
         public bool hasCacheImage(int index)
@@ -126,13 +126,13 @@ namespace Marmi
             if (PackType != PackageType.Archive)
             {
                 //通常ファイルからの読み込み
-                Items[index].cacheImage.Add(filename);
+                Items[index].cacheImage.Load(filename);
             }
             else if (isSolid && App.Config.isExtractIfSolidArchive)
             {
                 //ver1.10 ソリッド書庫 一時フォルダから読み取りを試みる
                 string tempname = Path.Combine(tempDirname, filename);
-                Items[index].cacheImage.Add(tempname);
+                Items[index].cacheImage.Load(tempname);
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Marmi
                         _7z = new SevenZipWrapper();
                     if (_7z.Open(PackageName))
                     {
-                        Items[index].cacheImage.Add(_7z.GetStream(filename));
+                        Items[index].cacheImage.Load(_7z.GetStream(filename));
                     }
                     else
                         return false;
@@ -177,7 +177,7 @@ namespace Marmi
                     try
                     {
                         //ver1.10 サムネイル登録も行う
-                        Bitmap _bmp = Items[index].cacheImage.bitmap;
+                        Bitmap _bmp = Items[index].cacheImage.ToBitmap();
                         if (_bmp != null)
                         {
                             Items[index].resisterThumbnailImage(_bmp);
