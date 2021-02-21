@@ -658,14 +658,21 @@ namespace Marmi
                 if (m_scrollTimer == null || !m_scrollTimer.Enabled)
                 {
                     Uty.WriteLine("Sidebar AsyncGetBitmap()");
-                    Form1.PushLow(index, (Action)(() =>
+                    //Form1.PushLow(index, (Action)(() =>
+                    //{
+                    //    //Form1.g_pi.AsyncThumnailMaker(index);
+                    //    var bmp = Form1.SyncGetBitmap(index);
+                    //    App.g_pi.ThumnailMaker(index, bmp);
+                    //    if (this.Visible)
+                    //        this.Invalidate();
+                    //}));
+                    AsyncIO.AddJobLow(index, () =>
                     {
-                        //Form1.g_pi.AsyncThumnailMaker(index);
                         var bmp = Form1.SyncGetBitmap(index);
                         App.g_pi.ThumnailMaker(index, bmp);
                         if (this.Visible)
                             this.Invalidate();
-                    }));
+                    });
                 }
             }
 

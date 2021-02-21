@@ -1,6 +1,7 @@
 ﻿#define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -11,12 +12,14 @@ namespace Marmi
         //非同期IO用スレッド
         private static Thread _thread = null;
 
+        //非同期Jobリスト
+        internal static PrioritySafeQueue<KeyValuePair<int, Action>> _queue = new PrioritySafeQueue<KeyValuePair<int, Action>>();
+
         /// <summary>
         /// 非同期IOを処理するための無限ループスレッドを生成し開始する
         /// </summary>
         public static void StartThread()
         {
-            //Thread動作
             _thread = new Thread(Worker);
             _thread.Start();
         }
@@ -40,9 +43,9 @@ namespace Marmi
 
             while (true)
             {
-                if (App.stack.Count > 0)
+                if (_queue.Count > 0)
                 {
-                    var kv = App.stack.Pop();
+                    var kv = _queue.Pop();
                     int index = kv.Key;
                     Delegate action = kv.Value;
 
@@ -63,7 +66,7 @@ namespace Marmi
                     {
                         if (!App.g_pi.Items[index].cacheImage.hasImage)
                         {
-                            Debug.WriteLine($"AsyncIO : index={index}, remain={App.stack.Count}");
+                            Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
                             //7zをOpenしていなければOpen
                             if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
                             {
@@ -108,5 +111,18 @@ namespace Marmi
                 }
             }
         }
+
+        /// <summary>Low Queue Jobを追加。サムネイル作成など</summary>
+        public static void AddJobLow(int index, Action uiAction) => _queue.PushLow(new KeyValuePair<int, Action>(index, uiAction));
+
+        /// <summary>High Queue Jobを追加</summary>
+        public static void AddJob(int index, Action uiAction) => _queue.PushHigh(new KeyValuePair<int, Action>(index, uiAction));
+
+        /// <summary>Jobをクリアする</summary>
+        public static void ClearJob() => _queue.Clear();
+
+        /// <summary>Job一覧を取得</summary>
+        public static KeyValuePair<int, Action>[] GetAllJob() => _queue.ToArrayHigh();
+
     }
 }

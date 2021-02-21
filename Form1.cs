@@ -497,8 +497,10 @@ namespace Marmi
             }
 
             //ver1.41 非同期IOを停止
-            App.stack.Clear();
-            App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            //App.stack.Clear();
+            //App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            AsyncIO.ClearJob();
+            AsyncIO.AddJob(-1, null);
             App.g_pi.Initialize();
             SetStatusbarInfo("準備中・・・" + filenames[0]);
 
@@ -1109,19 +1111,27 @@ namespace Marmi
                 string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, App.g_pi.Items.Count);
 
                 //スタックに入れる
-                App.stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
+                //App.stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
+                //{
+                //    SetStatusbarInfo(s);
+                //    //読み込んだものをPurge対象にする
+                //    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
+                //})));
+
+                AsyncIO.AddJobLow(-1, () =>
                 {
                     SetStatusbarInfo(s);
                     //読み込んだものをPurge対象にする
                     App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
-                })));
-                //Uty.WriteLine("{0}のサムネイル作成登録が終了", cnt);
+                });
             }
             //読み込み完了メッセージもPush
-            App.stack.PushLow(new KeyValuePair<int, Delegate>(App.g_pi.Items.Count - 1, (MethodInvoker)(() =>
-            {
-                SetStatusbarInfo("事前画像情報読み込み完了");
-            })));
+            //App.stack.PushLow(new KeyValuePair<int, Delegate>(App.g_pi.Items.Count - 1, (MethodInvoker)(() =>
+            //{
+            //    SetStatusbarInfo("事前画像情報読み込み完了");
+            //})));
+
+            AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
         }
 
         private void InitTrackbar()
@@ -1210,8 +1220,10 @@ namespace Marmi
             //g_FileCache.Clear();
 
             //2012/09/04 非同期IOを中止
-            App.stack.Clear();
-            App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            //App.stack.Clear();
+            //App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
+            AsyncIO.ClearJob();
+            AsyncIO.AddJob(-1, null);
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
@@ -1552,16 +1564,17 @@ namespace Marmi
                 return -1;
         }
 
-        public static void AsyncGetBitmap(int index, MethodInvoker action)
+        public static void AsyncGetBitmap(int index, Action uiAction)
         {
             //キャッシュを持っていれば非同期しない
             if (App.g_pi.hasCacheImage(index))
             {
-                action?.Invoke();
+                uiAction?.Invoke();
             }
 
             //ver1.54 HighQueueとして登録されているかどうか確認する。
-            var array = App.stack.ToArrayHigh();
+            //var array = App.stack.ToArrayHigh();
+            var array = AsyncIO.GetAllJob();
             foreach (var elem in array)
             {
                 if (elem.Key == index)
@@ -1572,7 +1585,8 @@ namespace Marmi
             }
 
             //非同期するためにPush
-            App.stack.Push(new KeyValuePair<int, Delegate>(index, action));
+            //App.stack.Push(new KeyValuePair<int, Delegate>(index, action));
+            AsyncIO.AddJob(index, uiAction);
         }
 
         public static Bitmap SyncGetBitmap(int index)
@@ -2234,17 +2248,6 @@ namespace Marmi
                     AsyncStart(args.Skip(1).ToArray());
                 }
             }));
-        }
-
-        /// <summary>
-        /// スタックにプッシュする
-        /// SidebarやTrackbarから画像を取得したいときに使う。
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="func"></param>
-        public static void PushLow(int index, Delegate func)
-        {
-            App.stack.PushLow(new KeyValuePair<int, Delegate>(index, func));
         }
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)

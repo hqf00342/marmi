@@ -35,7 +35,7 @@ namespace Marmi
         internal const int ASYNC_TIMEOUT = 5000;
 
         //非同期取得用スタック
-        internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
+        //internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
 
         //Susieプラグイン
         internal static Susie susie = new Susie();

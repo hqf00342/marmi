@@ -401,14 +401,22 @@ namespace Marmi
                 //ver1.81 “Ç‚Ýž‚Ýƒ‹[ƒ`ƒ“‚ðPushLow()‚É•ÏX
                 if (timer == null || !timer.Enabled)
                 {
-                    Form1.PushLow(index, (Action)(() =>
+                    //Form1.PushLow(index, (Action)(() =>
+                    //{
+                    //    var bmp = Form1.SyncGetBitmap(index);
+                    //    App.g_pi.ThumnailMaker(index, bmp);
+                    //    CalcAllItemPos();
+                    //    if (this.Visible)
+                    //        this.Invalidate();
+                    //}));
+                    AsyncIO.AddJobLow(index, () =>
                     {
                         var bmp = Form1.SyncGetBitmap(index);
                         App.g_pi.ThumnailMaker(index, bmp);
                         CalcAllItemPos();
                         if (this.Visible)
                             this.Invalidate();
-                    }));
+                    });
                 }
             }
 
