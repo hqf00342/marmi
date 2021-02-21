@@ -268,7 +268,7 @@ namespace Marmi
         private void Menu_View_LeftOpen_Click(object sender, EventArgs e)
         {
             //g_pi.PageDirectionisRight = !MenuItem_View_LeftOpen.Checked;
-            g_pi.LeftBook = !g_pi.LeftBook;
+            g_pi.PageDirectionIsLeft = !g_pi.PageDirectionIsLeft;
             if (App.Config.dualView)
             {
                 SetViewPage(g_pi.NowViewPage);
@@ -564,7 +564,7 @@ namespace Marmi
         private void Menu_Page_DropDownOpening(object sender, EventArgs e)
         {
             //左開きにする
-            Menu_View_LeftOpen.Checked = !g_pi.LeftBook;
+            Menu_View_LeftOpen.Checked = !g_pi.PageDirectionIsLeft;
             //ファイルを閲覧していない場合のナビゲーション
             if (g_pi == null || g_pi.Items == null || g_pi.Items.Count < 1)
             {
@@ -829,12 +829,10 @@ namespace Marmi
         /// </summary>
         private void OnBookmarkList(object sender, EventArgs e)
         {
-            ToolStripDropDownItem tsddi = (ToolStripDropDownItem)sender;
+            var tsddi = (ToolStripDropDownItem)sender;
             int index = g_pi.GetIndexFromFilename(tsddi.Text);
-            //int index = (int)tsddi.Tag;
-            if (index < 0)
-                return;
-            SetViewPage(index);
+            if (index >= 0)
+                SetViewPage(index);
         }
 
         private void BookMark_Clear_Click(object sender, EventArgs e)

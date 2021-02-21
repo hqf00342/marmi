@@ -37,16 +37,12 @@ namespace Marmi
             //ver1.61 Ctrl+TABも特殊動作
             if (e.KeyCode == Keys.Tab && e.Control)
             {
-                Marmi.WindowOperation.TryToChangeActiveWindow(e.Shift);
+                WindowOperation.TryToChangeActiveWindow(e.Shift);
             }
 
-            //キー毎のメソッドを実行
-            MethodInvoker func = null;
-
             //ver1.80 Ctrl,Shitに対応するためKeyDataに変更
-            if (KeyMethods.TryGetValue(e.KeyData, out func))
-                if (func != null)
-                    func();
+            if (KeyDefines.TryGetValue(e.KeyData, out var func))
+                func?.Invoke();
         }
     }
 }

@@ -8,112 +8,7 @@ namespace Marmi
         /// <summary>
         /// キーコンフィグと呼び出しメソッドを関連づけるDic
         /// </summary>
-        private Dictionary<Keys, MethodInvoker> KeyMethods = new Dictionary<Keys, MethodInvoker>();
-
-        //#region --- キーコンフィグリスト ---
-        //public static Dictionary<string, Keys> keyConfigList = new Dictionary<string, Keys>()
-        //{
-        //	//{"(なし)", Keys.None},	//ver1.60重複チェック対象外のためはずす
-        //	{"→", Keys.Right},
-        //	{"←", Keys.Left},
-        //	{"↑", Keys.Up},
-        //	{"↓", Keys.Down},
-        //	{"ESC", Keys.Escape},
-        //	{"Space", Keys.Space},
-        //	{"Enter", Keys.Enter},
-        //	{"Tab", Keys.Tab},
-        //	{"PageUp", Keys.PageUp},
-        //	{"PageDown", Keys.PageDown},
-        //	{"Home", Keys.Home},
-        //	{"End", Keys.End},
-        //	{"Insert", Keys.Insert},
-        //	{"Delete", Keys.Delete},
-        //	{"BackSpace", Keys.Back},
-        //	{"1", Keys.D1},
-        //	{"2", Keys.D2},
-        //	{"3", Keys.D3},
-        //	{"4", Keys.D4},
-        //	{"5", Keys.D5},
-        //	{"6", Keys.D6},
-        //	{"7", Keys.D7},
-        //	{"8", Keys.D8},
-        //	{"9", Keys.D9},
-        //	{"0", Keys.D0},
-        //	{"A", Keys.A},
-        //	{"B", Keys.B},
-        //	{"C", Keys.C},
-        //	{"D", Keys.D},
-        //	{"E", Keys.E},
-        //	{"F", Keys.F},
-        //	{"G", Keys.G},
-        //	{"H", Keys.H},
-        //	{"I", Keys.I},
-        //	{"J", Keys.J},
-        //	{"K", Keys.K},
-        //	{"L", Keys.L},
-        //	{"M", Keys.M},
-        //	{"N", Keys.N},
-        //	{"O", Keys.O},
-        //	{"P", Keys.P},
-        //	{"Q", Keys.Q},
-        //	{"R", Keys.R},
-        //	{"S", Keys.S},
-        //	{"T", Keys.T},
-        //	{"U", Keys.U},
-        //	{"V", Keys.V},
-        //	{"W", Keys.W},
-        //	{"X", Keys.X},
-        //	{"Y", Keys.Y},
-        //	{"Z", Keys.Z}
-        //};
-        //#endregion
-
-        //private void SetKeyConfig()
-        //{
-        //	SetKeyConfig2();
-        //	return;
-
-        //	KeyMethods.Clear();
-        //	Keys keyValue = Keys.None;
-
-        //	//次のページ
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfNextPage, out keyValue))
-        //		KeyMethods.Add(keyValue, NavigateToForword);
-        //	//次のページ（半分）
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfNextPageHalf, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetViewPage(++g_pi.NowViewPage));
-        //	//最後のページ
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfLastPage, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetViewPage(g_pi.Items.Count - 1));
-        //	//前のページ
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrevPage, out keyValue))
-        //		KeyMethods.Add(keyValue, NavigateToBack);
-        //	//前のページ（半分）
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrevPageHalf, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetViewPage(--g_pi.NowViewPage));
-        //	//ブックマーク
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfBookMark, out keyValue))
-        //		KeyMethods.Add(keyValue, ToggleBookmark);
-        //	//フルスクリーン
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfFullScr, out keyValue))
-        //		KeyMethods.Add(keyValue, ToggleFullScreen);
-        //	//表示モード
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfPrintMode, out keyValue))
-        //		KeyMethods.Add(keyValue, ToggleFitScreen);
-        //	//先頭ページ
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfTopPage, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetViewPage(0));
-        //	//２画面モード切替
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfDualMode, out keyValue))
-        //		KeyMethods.Add(keyValue, () => SetDualViewMode(!App.Config.dualView));
-        //	// ゴミ箱
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfRecycleBin, out keyValue))
-        //		KeyMethods.Add(keyValue, () => RecycleBinNowPage());
-        //	// 終了 ver1.77
-        //	if (keyConfigList.TryGetValue(App.Config.keyConfExitApp, out keyValue))
-        //		KeyMethods.Add(keyValue, () => Application.Exit());
-
-        //}
+        private Dictionary<Keys, MethodInvoker> KeyDefines = new Dictionary<Keys, MethodInvoker>();
 
         /// <summary>
         /// キーコンフィグをDicに登録するメソッド
@@ -121,69 +16,51 @@ namespace Marmi
         /// </summary>
         private void SetKeyConfig2()
         {
-            KeyMethods.Clear();
+            KeyDefines.Clear();
+
+            void setkey(Keys key, MethodInvoker func)
+            {
+                if (key != Keys.None)
+                    KeyDefines.Add(key, func);
+            }
 
             //前後ページ移動
-            if (App.Config.ka_nextpage1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_nextpage1, NavigateToForword);
-            if (App.Config.ka_nextpage2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_nextpage2, NavigateToForword);
-            if (App.Config.ka_prevpage1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_prevpage1, NavigateToBack);
-            if (App.Config.ka_prevpage2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_prevpage2, NavigateToBack);
+            setkey(App.Config.ka_nextpage1, NavigateToForword);
+            setkey(App.Config.ka_nextpage2, NavigateToForword);
+            setkey(App.Config.ka_prevpage1, NavigateToBack);
+            setkey(App.Config.ka_prevpage2, NavigateToBack);
 
             //前後ページ移動（半分）
-            if (App.Config.ka_nexthalf1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_nexthalf1, () => SetViewPage(++g_pi.NowViewPage));
-            if (App.Config.ka_nexthalf2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_nexthalf2, () => SetViewPage(++g_pi.NowViewPage));
-            if (App.Config.ka_prevhalf1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_prevhalf1, () => SetViewPage(--g_pi.NowViewPage));
-            if (App.Config.ka_prevhalf2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_prevhalf2, () => SetViewPage(--g_pi.NowViewPage));
+            setkey(App.Config.ka_nexthalf1, () => SetViewPage(++g_pi.NowViewPage));
+            setkey(App.Config.ka_nexthalf2, () => SetViewPage(++g_pi.NowViewPage));
+            setkey(App.Config.ka_prevhalf1, () => SetViewPage(--g_pi.NowViewPage));
+            setkey(App.Config.ka_prevhalf2, () => SetViewPage(--g_pi.NowViewPage));
 
             //先頭最終ページ
-            if (App.Config.ka_toppage1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_toppage1, () => SetViewPage(0));
-            if (App.Config.ka_toppage2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_toppage2, () => SetViewPage(0));
-            if (App.Config.ka_lastpage1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_lastpage1, () => SetViewPage(g_pi.Items.Count - 1));
-            if (App.Config.ka_lastpage2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
+            setkey(App.Config.ka_toppage1, () => SetViewPage(0));
+            setkey(App.Config.ka_toppage2, () => SetViewPage(0));
+            setkey(App.Config.ka_lastpage1, () => SetViewPage(g_pi.Items.Count - 1));
+            setkey(App.Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
 
             //ブックマーク
-            if (App.Config.ka_bookmark1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_bookmark1, ToggleBookmark);
-            if (App.Config.ka_bookmark2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_bookmark2, ToggleBookmark);
+            setkey(App.Config.ka_bookmark1, ToggleBookmark);
+            setkey(App.Config.ka_bookmark2, ToggleBookmark);
 
             //フルスクリーン
-            if (App.Config.ka_fullscreen1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_fullscreen1, ToggleFullScreen);
-            if (App.Config.ka_fullscreen2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_fullscreen2, ToggleFullScreen);
+            setkey(App.Config.ka_fullscreen1, ToggleFullScreen);
+            setkey(App.Config.ka_fullscreen2, ToggleFullScreen);
             //２画面モード切替
-            if (App.Config.ka_dualview1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_dualview1, () => SetDualViewMode(!App.Config.dualView));
-            if (App.Config.ka_dualview2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_dualview2, () => SetDualViewMode(!App.Config.dualView));
+            setkey(App.Config.ka_dualview1, () => SetDualViewMode(!App.Config.dualView));
+            setkey(App.Config.ka_dualview2, () => SetDualViewMode(!App.Config.dualView));
             // ゴミ箱
-            if (App.Config.ka_recycle1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_recycle1, () => RecycleBinNowPage());
-            if (App.Config.ka_recycle2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_recycle2, () => RecycleBinNowPage());
+            setkey(App.Config.ka_recycle1, () => RecycleBinNowPage());
+            setkey(App.Config.ka_recycle2, () => RecycleBinNowPage());
             //表示モード
-            if (App.Config.ka_viewratio1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_viewratio1, ToggleFitScreen);
-            if (App.Config.ka_viewratio2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_viewratio2, ToggleFitScreen);
+            setkey(App.Config.ka_viewratio1, ToggleFitScreen);
+            setkey(App.Config.ka_viewratio2, ToggleFitScreen);
             // 終了 ver1.77
-            if (App.Config.ka_exit1 != Keys.None)
-                KeyMethods.Add(App.Config.ka_exit1, () => Application.Exit());
-            if (App.Config.ka_exit2 != Keys.None)
-                KeyMethods.Add(App.Config.ka_exit2, () => Application.Exit());
+            setkey(App.Config.ka_exit1, () => Application.Exit());
+            setkey(App.Config.ka_exit2, () => Application.Exit());
         }
     }
 }

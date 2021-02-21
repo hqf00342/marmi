@@ -1067,7 +1067,7 @@ namespace Marmi
             int slideValueY = 0;
             slideValueX = (direction >= 0) ? 2 : -2;
 
-            if (!Form1.g_pi.LeftBook)
+            if (!Form1.g_pi.PageDirectionIsLeft)
                 slideValueX = -slideValueX;
 
             fastDraw = true;
@@ -1095,7 +1095,7 @@ namespace Marmi
             int slideValueX = (direction >= 0) ? 2 : -2;
             int slideValueY = 0;
 
-            if (!Form1.g_pi.LeftBook)
+            if (!Form1.g_pi.PageDirectionIsLeft)
                 slideValueX = -slideValueX;
 
             //新しい画像

@@ -70,21 +70,21 @@ namespace Marmi
             //ver1.80キー設定に基づく動作
             MethodInvoker func = null;
             if (e.Button == MouseButtons.Middle)
-                if (KeyMethods.TryGetValue(Keys.MButton, out func))
+                if (KeyDefines.TryGetValue(Keys.MButton, out func))
                     if (func != null)
                     {
                         func();
                         return;
                     }
             if (e.Button == MouseButtons.XButton1)
-                if (KeyMethods.TryGetValue(Keys.XButton1, out func))
+                if (KeyDefines.TryGetValue(Keys.XButton1, out func))
                     if (func != null)
                     {
                         func();
                         return;
                     }
             if (e.Button == MouseButtons.XButton2)
-                if (KeyMethods.TryGetValue(Keys.XButton2, out func))
+                if (KeyDefines.TryGetValue(Keys.XButton2, out func))
                     if (func != null)
                     {
                         func();
@@ -97,7 +97,7 @@ namespace Marmi
             if (!App.Config.RightScrClickIsNextPic)
                 isForword = !isForword;
             //左開きなら入れ替え
-            if (!g_pi.LeftBook)
+            if (!g_pi.PageDirectionIsLeft)
                 isForword = !isForword;
             ////入れ替えがあるならさらに入れ替え ver1.65 commentout
             //if (App.Config.isReplaceArrowButton)

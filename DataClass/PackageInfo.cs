@@ -5,39 +5,35 @@ using System.Drawing;
 using System.IO;
 using System.Linq;	//Bookmarkの集計のために追加
 using System.Threading;
-
+/*
+閲覧対象の画像一覧クラス
+シリアライズ対応
+*/
 namespace Marmi
 {
-    /********************************************************************************/
-    //シリアライズ用データクラス：見ている画像セット
-    /********************************************************************************/
-
     [Serializable]
     public class PackageInfo // : IDisposable
     {
         //Zipファイル名、もしくはディレクトリ名
-        public string PackageName;
-
-        //zipファイルかどうか
-        //public bool isZip;
+        public string PackageName { get; set; }
 
         //現在見ているアイテム番号
-        public int NowViewPage;
+        public int NowViewPage { get; set; }
 
         //Zipファイルサイズ
-        public long size;
+        public long PackageSize { get; set; }
 
         //Zipファイル作成日
-        public DateTime date;
+        public DateTime CreateDate { get; set; }
 
         //サムネイル画像集
-        public List<ImageInfo> Items = new List<ImageInfo>();
+        public List<ImageInfo> Items { get; } = new List<ImageInfo>();
 
         //ver1.31 パッケージのタイプ
-        public PackageType packType = PackageType.None;
+        public PackageType PackType { get; set; } = PackageType.None;
 
         //ver1.30 ページ送り方向
-        public bool LeftBook;
+        public bool PageDirectionIsLeft { get; set; }
 
         //ver1.09 書庫のモード
         [NonSerialized]
@@ -47,15 +43,11 @@ namespace Marmi
         [NonSerialized]
         public string tempDirname;
 
-        //SevenZip書庫インスタンス
-        //private SevenZipWrapper m_szw = null;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public PackageInfo()
         {
-            Uty.WriteLine("コンストラクタ");
             Initialize();
         }
 
@@ -64,24 +56,15 @@ namespace Marmi
         /// </summary>
         public void Initialize()
         {
-            Clear();
-            //m_szw = new SevenZipWrapper();
-            //Uty.WriteLine("make m_szw in Initialize");
-        }
-
-        public void Clear()
-        {
             PackageName = string.Empty;
-            packType = PackageType.None;
+            PackType = PackageType.None;
             isSolid = false;
             NowViewPage = 0;
-            size = 0;
-            date = DateTime.MinValue;
+            PackageSize = 0;
+            CreateDate = DateTime.MinValue;
             tempDirname = string.Empty;
-            //PackageMode = Mode.None;
-            //isZip = false;
 
-            LeftBook = true;
+            PageDirectionIsLeft = true;
 
             if (Items.Count > 0)
             {
@@ -91,65 +74,19 @@ namespace Marmi
             }
 
             //ファイルキャッシュをクリア
-            //g_FileCache.Clear();
             foreach (var item in Items)
                 item.cacheImage.Clear();
-
-            //7zをクリア
-            //if (m_szw != null)
-            //{
-            //    m_szw.Close();
-            //    m_szw = null;
-            //    Uty.WriteLine("m_szw clear");
-            //}
-        }
-
-        //loadThumbnailDBFile()のためだけに生成
-        //public void InitCache()
-        //{
-        //    if (g_FileCache == null)
-        //        g_FileCache = new BitmapCache();
-        //}
-
-        //public void Dispose()
-        //{
-        //    if (Items.Count > 0)
-        //    {
-        //        for (int i = 0; i < Items.Count; i++)
-        //            Items[i].Dispose();	//サムネイル画像をクリア
-        //        Items.Clear();
-        //    }
-        //    //Items.Clear();
-
-        //    g_FileCache.Clear();
-
-        //    if (m_szw != null)
-        //    {
-        //        m_szw.Close();
-        //    }
-        //}
-
-        /// <summary>
-        /// 指定インデックスが正しいかどうかチェックする
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        private void CheckIndex(int index)
-        {
-            Debug.Assert(index >= 0 && index < Items.Count);
-            //return (index >= 0 && index < Items.Count);
         }
 
         /// <summary>
         /// ファイル名からインデックスを取得する
         /// </summary>
-        /// <param name="name">ファイル名</param>
+        /// <param name="filename">ファイル名</param>
         /// <returns>インデックス番号。無い場合は-1</returns>
-        public int GetIndexFromFilename(string name)
+        public int GetIndexFromFilename(string filename)
         {
-            int z = Items.Count;
-            for (int i = 0; i < z; i++)
-                if (Items[i].filename == name)
+            for (int i = 0; i < Items.Count; i++)
+                if (Items[i].filename == filename)
                     return i;
             return -1;
         }
@@ -162,14 +99,7 @@ namespace Marmi
         /// <returns>Bitmap 無ければcacheがなければnull</returns>
         public Bitmap GetBitmapFromCache(int index)
         {
-            //ver1.70 Indexチェック
-            if (index < 0 || index >= Items.Count)
-                return null;
-
-            if (Items[index].cacheImage.hasImage)
-                return Items[index].cacheImage.bitmap;
-            else
-                return null;
+            return hasCacheImage(index) ? Items[index].cacheImage.bitmap : null;
         }
 
         public bool hasCacheImage(int index)
@@ -177,83 +107,8 @@ namespace Marmi
             if (index < 0 || index >= Items.Count)
                 return false;
 
-            if (Items[index].cacheImage.hasImage)
-                return true;
-            else
-                return false;
+            return Items[index].cacheImage.hasImage;
         }
-
-        /// <summary>
-        /// 指定インデックスのBitmapを得る。
-        /// 得られない場合はnullを返す
-        /// </summary>
-        /// <param name="index">取得するItem番号</param>
-        /// <returns>得られたBitmap</returns>
-        //public Bitmap GetBitmap(int index)
-        //{
-        //    //if (nIndex < 0 || nIndex > g_pi.Items.Count - 1)
-        //    CheckIndex(index);
-
-        //    //キャッシュにファイルがあるかどうかチェック
-        //    string filename = Items[index].filename;
-        //    //if (Items[index].cacheImage.bitmap != null)
-        //    if (Items[index].cacheImage.hasImage)
-        //    {
-        //        //キャッシュにファイルがあるのでそれを使う
-        //        Debug.WriteLine(filename, "GetBitmap() from CACHE");
-        //        return Items[index].cacheImage.bitmap;
-        //    }
-        //    else
-        //    {
-        //        //キャッシュにファイルがないので取ってくる
-        //        try
-        //        {
-        //            //取ったついでにキャッシュに追加
-        //            if (m_szw == null)
-        //            {
-        //                m_szw = new SevenZipWrapper();
-        //                Uty.WriteLine("make m_szw in GetBitmap(int index)");
-        //            }
-        //            Bitmap bmp = GetBitmapWithoutCache(index, m_szw);
-        //            if (bmp == null)
-        //            {
-        //                Debug.WriteLine(filename, "GetBitmap() CANNOT load");
-        //                return null;
-        //            }
-
-        //            Debug.WriteLine(filename, "GetBitmap() Load");
-        //            return bmp;
-        //        }
-        //        catch (ArgumentException e)
-        //        {
-        //            //キャッシュ重複でnull返しはモッタイナイ
-        //            Debug.WriteLine(e.Message, "キャッシュ重複エラー");
-        //            return Items[index].cacheImage.bitmap;
-        //            //return g_FileCache[filename];
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// キャッシュなしでの読み込みルーチン
-        /// 読み込めなかったときは潔くnullを返す仕様
-        /// ver1.10 一時フォルダがある場合はそこから読み込む
-        /// 　　　　そこから読み込めない場合はnullを返す
-        /// </summary>
-        /// <param name="index">インデックス</param>
-        /// <returns>得られたBitmapオブジェクト。無い場合はnull</returns>
-        //[Obsolete]
-        //public Bitmap GetBitmapWithoutCache(int index, SevenZipWrapper _7z)
-        //{
-        //    LoadCache(index, _7z);
-
-        //    //ver1.10 サムネイル登録も行う
-        //    Bitmap _bmp = Items[index].cacheImage.bitmap;
-        //    //if (_bmp != null)
-        //    //    Items[index].resisterThumbnailImage(_bmp);
-
-        //    return _bmp;
-        //}
 
         /// <summary>
         /// キャッシュにファイルを読み込む
@@ -263,11 +118,12 @@ namespace Marmi
         /// <returns></returns>
         public bool LoadCache(int index, SevenZipWrapper _7z)
         {
-            CheckIndex(index);
+            if (index < 0 || index >= Items.Count)
+                return false;
 
             string filename = Items[index].filename;
 
-            if (packType != PackageType.Archive)
+            if (PackType != PackageType.Archive)
             {
                 //通常ファイルからの読み込み
                 Items[index].cacheImage.Add(filename);
@@ -440,31 +296,22 @@ namespace Marmi
             }
         }
 
-        public string getBookmarks()
+        public string GetCsvFromBookmark()
         {
             //bookmarkされたorgIndexを拾ってくる。
             var bookmarks = Items.Where(c => c.isBookMark).Select(c => c.nOrgIndex);
-
-            //csvに変換
-            //string s = string.Empty;
-            //foreach(var b in bookmarks)
-            //{
-            //	s = s + b.ToString() + ",";
-            //}
-            //s = s.Trim(',');
 
             //Int配列をcsvに変換
             return string.Join(",", bookmarks.Select(c => c.ToString()).ToArray());
         }
 
-        public void setBookmarks(string csv)
+        public void SetBookmarksFromCsv(string csv)
         {
-            //空だったらなにもしない。NullReference対策
             if (string.IsNullOrEmpty(csv))
                 return;
 
             //csvをInt配列に変換
-            var bm = csv.Split(',').Select(c => { int r; Int32.TryParse(c, out r); return r; });
+            var bm = csv.Split(',').Select(c => { int.TryParse(c, out int r); return r; });
 
             //g_piに適用
             for (int i = 0; i < Items.Count; i++)

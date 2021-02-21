@@ -50,14 +50,14 @@ namespace Marmi
         private void LoadPackageInfo()
         {
             //パッケージ情報の設定
-            if (m_packageInfo.packType == PackageType.Archive)//(m_packageInfo.isZip)
+            if (m_packageInfo.PackType == PackageType.Archive)//(m_packageInfo.isZip)
             {
                 //Zipファイル
                 pictureBox1.Image = Properties.Resources.zippedFile;
                 textBox1.Lines = new string[]{
                     string.Format("Zipファイル名 \t: {0}", Path.GetFileName(m_packageInfo.PackageName)),
                     string.Format("ファイルパス  \t: {0}", m_packageInfo.PackageName),
-                    string.Format("ファイルサイズ\t: {0:N0}", m_packageInfo.size),
+                    string.Format("ファイルサイズ\t: {0:N0}", m_packageInfo.PackageSize),
                     string.Format("画像ファイル数\t: {0}", m_packageInfo.Items.Count),
                 };
             }

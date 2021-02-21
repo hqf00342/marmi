@@ -10,7 +10,7 @@ namespace Marmi
         /// <summary>
         /// ロードしたコンフィグをアプリに適用していく
         /// </summary>
-        private void ApplySettingToApplication()
+        private void ApplyConfigToWindow()
         {
             //バー関連
             menuStrip1.Visible = App.Config.visibleMenubar;

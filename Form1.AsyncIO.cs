@@ -54,13 +54,13 @@ namespace Marmi
                         {
                             Uty.WriteLine("AsyncIOThread() index={0}, remain={1}", index, App.stack.Count);
                             //7zをOpenしていなければOpen
-                            if (g_pi.packType == PackageType.Archive && !AsyncSZ.isOpen)
+                            if (g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
                             {
                                 AsyncSZ.Open(g_pi.PackageName);
                                 Uty.WriteLine("非同期IO 7zOpen");
                             }
 
-                            if (g_pi.packType == PackageType.Pdf)
+                            if (g_pi.PackType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
                                 byte[] b = App.susie.GetFile(g_pi.PackageName, index, (int)g_pi.Items[index].length);

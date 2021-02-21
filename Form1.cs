@@ -109,7 +109,7 @@ namespace Marmi
         // コンストラクタ *************************************************************/
         public Form1()
         {
-            this.Name = "Marmi";
+            this.Name = App.APPNAME;
             _instance = this;
 
             ////設定ファイルの読み込みはProgram.csで実施
@@ -166,10 +166,10 @@ namespace Marmi
             PicPanel.MouseMove += (s, e) => { OnMouseMove(e); };
             PicPanel.MouseUp += (s, e) => { OnMouseUp(e); };
             PicPanel.MouseWheel += new MouseEventHandler(PicPanel_MouseWheel);
-            PicPanel.Dock = DockStyle.Fill; //ver1.62 追加
-                                            //
-                                            //NaviBar
-                                            //
+            PicPanel.Dock = DockStyle.Fill;
+            //
+            //NaviBar
+            //
             g_Sidebar = new SideBar();
             this.Controls.Add(g_Sidebar);
             g_Sidebar.Visible = false;
@@ -197,10 +197,10 @@ namespace Marmi
             g_ThumbPanel.MouseMove += new MouseEventHandler(g_ThumbPanel_MouseMove);
             g_ThumbPanel.Init();
             g_ThumbPanel.Visible = false;
-            g_ThumbPanel.Dock = DockStyle.Fill; //ver1.64追加
-                                                //
-                                                //ClearPanel
-                                                //
+            g_ThumbPanel.Dock = DockStyle.Fill;
+            //
+            //ClearPanel
+            //
             g_ClearPanel = new ClearPanel(PicPanel);
 
             //その他変数初期化
@@ -217,19 +217,8 @@ namespace Marmi
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //アイコン、カーソルの設定
-            //cursorLeft = new Cursor(iconLeftFinger.Handle);
-            //cursorRight = new Cursor(iconRightFinger.Handle);
-            //cursorLoupe = new Cursor(iconLoope.Handle);
-            //cursorHandOpen = new Cursor(iconHandOpen.Handle);
-
-            ////設定のロード/適用
-            //生成はMyInitで先に実施しておくことにする。ver0.982
-            //App.Config = (AppGlobalConfig)LoadFromXmlFile();
-            //if (App.Config == null)
-            //    App.Config = new AppGlobalConfig();
-
-            ApplySettingToApplication();
+            //設定をFormに適用する
+            ApplyConfigToWindow();
 
             //初期化
             InitControls();
@@ -509,10 +498,7 @@ namespace Marmi
         /// <param name="files"></param>
         private void AsyncStart(string[] files)
         {
-            ThreadPool.QueueUserWorkItem(dummy =>
-                {
-                    this.Invoke((MethodInvoker)(() => { Start(files); }));
-                });
+            ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
         }
 
         // スタート *********************************************************************/
@@ -582,7 +568,7 @@ namespace Marmi
                     //ダイアログの表示が終了
                     //ディレクトリをすべてg_piに読み込む
                     this.Cursor = Cursors.WaitCursor;
-                    g_pi.packType = PackageType.Pictures;
+                    g_pi.PackType = PackageType.Pictures;
                     g_pi.Items.Clear();
                     GetDirPictureList(g_pi.tempDirname, true);
                     this.Cursor = Cursors.Arrow;
@@ -597,14 +583,14 @@ namespace Marmi
             //UpdateMRUList();
 
             //pdfチェック
-            if (g_pi.packType == PackageType.Pdf)
+            if (g_pi.PackType == PackageType.Pdf)
             {
                 if (!App.susie.isSupportedExtentions("pdf"))
                 {
                     string str = "pdfファイルはサポートしていません";
                     g_ClearPanel.ShowAndClose(str, 1000);
                     setStatusbarInfo(str);
-                    g_pi.Clear();
+                    g_pi.Initialize();
                     return;
                 }
             }
@@ -649,7 +635,7 @@ namespace Marmi
                         //最終ページを設定する。
                         g_pi.NowViewPage = mru.LastViewPage;
                         //Bookmarkを設定する
-                        g_pi.setBookmarks(mru.Bookmarks);
+                        g_pi.SetBookmarksFromCsv(mru.Bookmarks);
                         break;
                     }
                 }
@@ -702,7 +688,7 @@ namespace Marmi
                 if (Directory.Exists(g_pi.PackageName))
                 {
                     //ディレクトリの場合
-                    g_pi.packType = PackageType.Directory;
+                    g_pi.PackType = PackageType.Directory;
                     GetDirPictureList(files[0], App.Config.isRecurseSearchDir);
                 }
                 else if (App.unrar.dllLoaded && files[0].ToLower().EndsWith(".rar"))
@@ -710,7 +696,7 @@ namespace Marmi
                     //
                     //unrar.dllを使う。
                     //
-                    g_pi.packType = PackageType.Archive;
+                    g_pi.PackType = PackageType.Archive;
                     g_pi.isSolid = true;
 
                     //ファイルリストを構築
@@ -737,7 +723,7 @@ namespace Marmi
                 else if (Uty.isAvailableArchiveFile(g_pi.PackageName))
                 {
                     // 書庫ファイル
-                    g_pi.packType = PackageType.Archive;
+                    g_pi.PackType = PackageType.Archive;
                     bool needRecurse = GetArchivedFileInfo(files[0]);
                     //if (needRecurse)
                     //{
@@ -751,7 +737,7 @@ namespace Marmi
                 else if (files[0].ToLower().EndsWith(".pdf"))
                 {
                     //pdfファイル
-                    g_pi.packType = PackageType.Pdf;
+                    g_pi.PackType = PackageType.Pdf;
                     if (App.susie.isSupportPdf())
                     {
                         var list = App.susie.GetArchiveInfo(files[0]);
@@ -772,7 +758,7 @@ namespace Marmi
                 {
                     //単一画像ファイル
                     g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
-                    g_pi.packType = PackageType.Pictures;
+                    g_pi.PackType = PackageType.Pictures;
 
                     //１つだけファイルを登録
                     if (Uty.isPictureFilename(files[0]))
@@ -788,7 +774,7 @@ namespace Marmi
                 //複数ファイル
                 g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
                                                     //g_pi.isZip = false;
-                g_pi.packType = PackageType.Pictures;
+                g_pi.PackType = PackageType.Pictures;
 
                 //ファイルを追加する
                 int index = 0;
@@ -841,7 +827,7 @@ namespace Marmi
             else if (App.Config.lastPage_toNextArchive)
             {
                 //ver1.70 最終ページで次の書庫を開く
-                if (g_pi.packType != PackageType.Directory)
+                if (g_pi.PackType != PackageType.Directory)
                 {
                     string filename = g_pi.PackageName;
                     string dirname = Path.GetDirectoryName(filename);
@@ -1346,7 +1332,7 @@ namespace Marmi
                 //Zipファイル情報を設定
                 g_pi.PackageName = filename;
                 FileInfo fi = new FileInfo(g_pi.PackageName);
-                g_pi.size = fi.Length;
+                g_pi.PackageSize = fi.Length;
                 g_pi.isSolid = szw.isSolid;
 
                 //ver1.31 7zファイルなのにソリッドじゃないことがある！？
@@ -1354,7 +1340,7 @@ namespace Marmi
                     g_pi.isSolid = true;
 
                 //g_pi.isZip = true;
-                g_pi.packType = PackageType.Archive;
+                g_pi.PackType = PackageType.Archive;
 
                 //ファイルをリストに追加
                 //TODO: IEnumerable を実装してforeachにしたい
@@ -1397,7 +1383,7 @@ namespace Marmi
                 return;
 
             //ディレクトリでも追加しない
-            if (g_pi.packType == PackageType.Directory)
+            if (g_pi.PackType == PackageType.Directory)
                 return;
 
             //MRUに追加する必要があるか確認
@@ -1416,7 +1402,7 @@ namespace Marmi
                     needMruAdd = false;
 
                     //ver1.77 Bookmarkも設定
-                    App.Config.mru[i].Bookmarks = g_pi.getBookmarks();
+                    App.Config.mru[i].Bookmarks = g_pi.GetCsvFromBookmark();
                 }
             }
             if (needMruAdd)
@@ -1428,7 +1414,7 @@ namespace Marmi
                                     g_pi.PackageName,
                                     DateTime.Now,
                                     g_pi.NowViewPage,
-                                    g_pi.getBookmarks());
+                                    g_pi.GetCsvFromBookmark());
             }
             Array.Sort(App.Config.mru);   //並べ直す
         }
@@ -1802,7 +1788,7 @@ namespace Marmi
                 using (Graphics g = Graphics.FromImage(returnBmp))
                 {
                     g.Clear(App.Config.BackColor);
-                    if (g_pi.LeftBook)
+                    if (g_pi.PageDirectionIsLeft)
                     {
                         //左から右へ
                         //2枚目(左）を描写
@@ -2273,7 +2259,7 @@ namespace Marmi
             if (g_viewPages == 2)
                 return;
             //アーカイブに対してもなにもしない
-            if (g_pi.packType == PackageType.Archive)
+            if (g_pi.PackType == PackageType.Archive)
                 return;
 
             //今のページ番号を保存
