@@ -404,50 +404,12 @@ namespace Marmi
         }
 
         /// <summary>
-        /// 他のクラス（sidebar)からキー入力を転送するために使う
-        /// いらないかも
-        /// </summary>
-        /// <param name="e"></param>
-        //public void TransferKeyDown(KeyEventArgs e)
-        //{
-        //    OnKeyDown(e);
-        //}
-
-        //protected override void OnKeyDown(KeyEventArgs e)
-        //{
-        //    base.OnKeyDown(e);
-
-        //    //Debug.WriteLine(e.KeyCode, "KeyCode");
-
-        //    //スライドショー中だったら中断させる
-        //    if (isSlideShow)
-        //    {
-        //        StopSlideShow();
-        //        return;
-        //    }
-
-        //    //Altキーは特別な動作
-        //    if (e.KeyCode == Keys.Menu && !menuStrip1.Visible)
-        //    {
-        //        menuStrip1.Visible = true;
-        //        AjustSidebarArrangement();
-        //        return;
-        //    }
-
-        //    //キー毎のメソッドを実行
-        //    MethodInvoker func = null;
-        //    if (KeyMethods.TryGetValue(e.KeyCode, out func))
-        //        func();
-
-        //}
-
-        /// <summary>
         /// サムネイル画面時のマウス移動
         /// 全画面時のツールバーの表示を制御
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void g_ThumbPanel_MouseMove(object sender, MouseEventArgs e)
+        private void ThumbPanel_MouseMove(object sender, MouseEventArgs e)
         {
             //全画面モードの時にツールバーを表示するか
             if (App.Config.isFullScreen)

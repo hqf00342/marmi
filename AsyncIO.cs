@@ -1,20 +1,31 @@
 ﻿#define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
 using System;
-using System.Drawing;
+using System.Diagnostics;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace Marmi
 {
-    public partial class Form1 : Form
+    public static class AsyncIO
     {
-        //ver1.54 再作成
-        private void AsyncIOThreadStart()
+        //非同期IO用スレッド
+        private static Thread _thread = null;
+
+        /// <summary>
+        /// 非同期IOを処理するための無限ループスレッドを生成し開始する
+        /// </summary>
+        public static void StartThread()
         {
             //Thread動作
-            App.AsyncIOThread = new Thread(Worker);
-            App.AsyncIOThread.Start();
+            _thread = new Thread(Worker);
+            _thread.Start();
+        }
+
+        /// <summary>スレッドを停止する。Marmiが終了するときに呼ばれる。</summary>
+        public static void StopThread()
+        {
+            _thread?.Abort();
+            _thread?.Join();
         }
 
         /// <summary>
@@ -22,7 +33,7 @@ namespace Marmi
         /// 新しいスレッド内でタスクを待ち受けている
         /// タスクを発見したらそのタスクを処理。
         /// </summary>
-        private void Worker()
+        private static void Worker()
         {
             //スレッド専用SevenZip
             SevenZipWrapper AsyncSZ = new SevenZipWrapper();
@@ -38,10 +49,10 @@ namespace Marmi
                     //終了信号受信
                     if (index < 0 && action == null)
                     {
-                        Uty.WriteLine("AsyncIOThread() 7z解放信号受信");
+                        Debug.WriteLine("AsyncIO : 7z解放信号受信");
                         if (AsyncSZ.isOpen)
                         {
-                            Uty.WriteLine("AsyncIOThread() {0}解放", AsyncSZ.Filename);
+                            Uty.WriteLine("AsyncIO : {0}解放", AsyncSZ.Filename);
                             AsyncSZ.Close();
                         }
                         continue;
@@ -52,21 +63,18 @@ namespace Marmi
                     {
                         if (!App.g_pi.Items[index].cacheImage.hasImage)
                         {
-                            Uty.WriteLine("AsyncIOThread() index={0}, remain={1}", index, App.stack.Count);
+                            Debug.WriteLine($"AsyncIO : index={index}, remain={App.stack.Count}");
                             //7zをOpenしていなければOpen
                             if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
                             {
                                 AsyncSZ.Open(App.g_pi.PackageName);
-                                Uty.WriteLine("非同期IO 7zOpen");
+                                Debug.WriteLine("AsyncIO : 7zOpen");
                             }
 
                             if (App.g_pi.PackType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
                                 byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].length);
-                                //ImageConverter ic = new ImageConverter();
-                                //Bitmap _b = ic.ConvertFrom(b) as Bitmap;
-                                //g_pi.Items[index].cacheImage.Load(_b);
                                 App.g_pi.Items[index].cacheImage.Load(b);
                                 App.g_pi.Items[index].bmpsize = App.g_pi.Items[index].cacheImage.GetImageSize();
                                 App.g_pi.AsyncThumnailMaker(index);
@@ -83,17 +91,14 @@ namespace Marmi
                         }
 
                         //Invoke(action)を実行
-                        if (this.IsHandleCreated)
+                        if (Form1._instance.IsHandleCreated && action != null)
                         {
-                            if (action != null)
-                                this.Invoke(action);
+                            Form1._instance.Invoke(action);
                         }
                     }
-                    catch
+                    catch(Exception e)
                     {
-                        //System.ArgumentOutOfRangeException
-                        //System.Threading.ThreadAbortException
-                        Uty.WriteLine("catch出来たみたい。AsyncIOThreadStart()");
+                        Debug.WriteLine($"AsyncIO : {e.GetType().Name}");
                     }
                 }
                 else

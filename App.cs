@@ -34,9 +34,6 @@ namespace Marmi
         //非同期IOタイムアウト値
         internal const int ASYNC_TIMEOUT = 5000;
 
-        //非同期IO用スレッド
-        internal static Thread AsyncIOThread = null;
-
         //非同期取得用スタック
         internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
 

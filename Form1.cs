@@ -64,19 +64,9 @@ namespace Marmi
 
         #endregion --- データクラス ---
 
-        #region --- 非同期IO用オブジェクト ---
-
-        //非同期IO用スレッド
-        //private Thread AsyncIOThread = null;
-
-        //非同期取得用スタック
-        //ver1.81 Sidebarからも登録するためpublicに変更
-        //private static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
 
         //非同期全展開用SevenZipWrapper
         private SevenZipWrapper m_AsyncSevenZip = null;
-
-        #endregion --- 非同期IO用オブジェクト ---
 
         //フラグ類
         //サムネイルを作るか。1000個以上あったときのフラグ
@@ -135,7 +125,7 @@ namespace Marmi
             SetToolbarString();
 
             //非同期IOの開始
-            AsyncIOThreadStart();
+            AsyncIO.StartThread();
         }
 
         private void MyInitializeComponent()
@@ -186,7 +176,7 @@ namespace Marmi
             //
             g_ThumbPanel = new ThumbnailPanel();
             this.Controls.Add(g_ThumbPanel);
-            g_ThumbPanel.MouseMove += g_ThumbPanel_MouseMove;
+            g_ThumbPanel.MouseMove += ThumbPanel_MouseMove;
             g_ThumbPanel.Init();
             g_ThumbPanel.Visible = false;
             g_ThumbPanel.Dock = DockStyle.Fill;
@@ -252,8 +242,7 @@ namespace Marmi
             }
 
             //非同期IOスレッドの終了
-            App.AsyncIOThread.Abort();
-            App.AsyncIOThread.Join();
+            AsyncIO.StopThread();
 
             //サムネイルモードの解放
             if (App.Config.isThumbnailView)
