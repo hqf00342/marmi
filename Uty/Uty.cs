@@ -15,27 +15,22 @@ namespace Marmi
         /// </summary>
         /// <param name="archiveName">チェック対象の書庫ファイル名</param>
         /// <returns>対応書庫ならtrue</returns>
-        public static bool isAvailableArchiveFile(string archiveName)
+        public static bool IsSupportArchiveFile(string archiveName)
         {
-            if (string.Compare(Path.GetExtension(archiveName), ".zip", true) == 0)
-                return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".7z", true) == 0)
-                return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".rar", true) == 0)
-                return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".tar", true) == 0)
-                return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".lzh", true) == 0)
-                return true;
-            //ver1.31
-            //if (string.Compare(Path.GetExtension(archiveName), ".bz2", true) == 0)
-            //    return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".gz", true) == 0)
-                return true;
-            if (string.Compare(Path.GetExtension(archiveName), ".tgz", true) == 0)
-                return true;
-
-            return false;
+            var ext = Path.GetExtension(archiveName).ToLower();
+            switch (ext)
+            {
+                case ".zip":
+                case ".7z":
+                case ".rar":
+                case ".tar":
+                case ".lzh":
+                case ".gz":
+                case ".tgz":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -44,13 +39,13 @@ namespace Marmi
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public static bool isAvailableFile(string filename)
+        public static bool IsAvailableFile(string filename)
         {
-            if (isAvailableArchiveFile(filename))
+            if (IsSupportArchiveFile(filename))
                 return true;
-            else if (isPictureFilename(filename))
+            else if (IsPictureFilename(filename))
                 return true;
-            return filename.ToLower().EndsWith(".pdf");
+            return filename.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -58,13 +53,9 @@ namespace Marmi
         /// </summary>
         /// <param name="sz">ファイル名</param>
         /// <returns>画像ファイルであればtrue</returns>
-        public static bool isPictureFilename(string sz)
+        public static bool IsPictureFilename(string sz)
         {
-            //System.Text.RegularExpressions.Regex
-            if (Regex.Match(sz, @"\.(jpeg|jpg|jpe|png|gif|bmp|ico|tif|tiff)$", RegexOptions.IgnoreCase).Success)
-                return true;
-            else
-                return false;
+            return Regex.Match(sz, @"\.(jpeg|jpg|jpe|png|gif|bmp|ico|tif|tiff)$", RegexOptions.IgnoreCase).Success;
         }
 
         /// <summary>
@@ -85,7 +76,7 @@ namespace Marmi
         /// </summary>
         /// <param name="filename">対象のファイル</param>
         /// <returns>16進数文字列</returns>
-        public static string calcMd5(string filename)
+        public static string CalcMd5(string filename)
         {
             //ファイルを開く
             System.IO.FileStream fs = File.OpenRead(filename);
@@ -127,9 +118,9 @@ namespace Marmi
                 string[] exfiles = Directory.GetFiles(extractDir);
                 foreach (string file in exfiles)
                 {
-                    if (isAvailableArchiveFile(file))
+                    if (IsSupportArchiveFile(file))
                     {
-                        string extDirName = getUniqueDirname(file);
+                        string extDirName = GetUniqueDirname(file);
                         Debug.WriteLine(file, extDirName);
                         RecurseExtractAll(file, extDirName);
                     }
@@ -138,14 +129,14 @@ namespace Marmi
         }
 
         /// <summary>
-        /// ファイル名（アーカイブ名）をベースにユニークな
-        /// 展開フォルダ名を探す。書庫と同じ場所で探す
+        /// ファイル名（アーカイブ名）をベースにユニークな展開フォルダ名を探す。
+        /// 書庫と同じ場所で探す
         /// </summary>
         /// <param name="archiveName">書庫名</param>
         /// <returns></returns>
-        public static string getUniqueDirname(string archiveName)
+        public static string GetUniqueDirname(string archiveName)
         {
-            string ext = Path.GetExtension(archiveName);
+            //string ext = Path.GetExtension(archiveName);
             int trynum = 0;
 
             string tryBaseName = Path.Combine(
@@ -169,13 +160,16 @@ namespace Marmi
 
         public static Thread AsyncRecurseExtractAll(string archivename, string extractDir)
         {
-            ThreadStart tsAction = () =>
+            void tsAction()
             {
                 RecurseExtractAll(archivename, extractDir);
+            }
+
+            Thread th = new Thread(tsAction)
+            {
+                Name = "RecurseExtractAll",
+                IsBackground = true
             };
-            Thread th = new Thread(tsAction);
-            th.Name = "RecurseExtractAll";
-            th.IsBackground = true;
             th.Start();
 
             //注意書きを入れておく
@@ -220,8 +214,7 @@ namespace Marmi
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, @"一時フォルダの削除が出来ませんでした");
-                    //throw e;
+                    MessageBox.Show(e.Message, "一時フォルダの削除が出来ませんでした");
                 }
             }
         }

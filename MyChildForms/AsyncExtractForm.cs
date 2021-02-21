@@ -310,9 +310,9 @@ namespace Marmi
             string[] exfiles = Directory.GetFiles(targetDir);
             foreach (string file in exfiles)
             {
-                if (Uty.isAvailableArchiveFile(file))
+                if (Uty.IsSupportArchiveFile(file))
                 {
-                    string extDirName = Uty.getUniqueDirname(file);
+                    string extDirName = Uty.GetUniqueDirname(file);
                     Debug.WriteLine(file, extDirName);
                     RecurseExtractAll(file, extDirName);
                 }

@@ -17,7 +17,7 @@ namespace Marmi
         public static readonly int DEFAULT_THUMBNAIL_SIZE = 400;
 
         //現在見ているパッケージ情報
-        //public static PackageInfo g_pi = null;
+        public static PackageInfo g_pi = null;
 
         //コンフィグファイル名。XmlSerializeで利用
         //private const string CONFIGNAME = "Marmi.xml";
@@ -60,7 +60,6 @@ namespace Marmi
             internal static Cursor Right = new Cursor(iconRightFinger.Handle);
             internal static Cursor Loupe = new Cursor(iconLoope.Handle);
             internal static Cursor OpenHand = new Cursor(iconHandOpen.Handle);
-
         }
     }
 }

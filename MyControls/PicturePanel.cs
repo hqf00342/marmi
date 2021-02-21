@@ -218,14 +218,19 @@ namespace Marmi
         {
             //画面描写を停止
             BeginUpdate();
+
             //スクロールバーサイズを算出、設定
             AjustScrollMinSize();
+            
             //描写位置を決定、matに登録
             AjustViewLocation();
+            
             //matからスクロールバー位置を算出
             AjustScrollPosition();
+            
             //描写抑制を解除
             EndUpdate();
+            
             //描写
             this.Refresh();
         }
@@ -1067,7 +1072,7 @@ namespace Marmi
             int slideValueY = 0;
             slideValueX = (direction >= 0) ? 2 : -2;
 
-            if (!Form1.g_pi.PageDirectionIsLeft)
+            if (!App.g_pi.PageDirectionIsLeft)
                 slideValueX = -slideValueX;
 
             fastDraw = true;
@@ -1095,7 +1100,7 @@ namespace Marmi
             int slideValueX = (direction >= 0) ? 2 : -2;
             int slideValueY = 0;
 
-            if (!Form1.g_pi.PageDirectionIsLeft)
+            if (!App.g_pi.PageDirectionIsLeft)
                 slideValueX = -slideValueX;
 
             //新しい画像

@@ -404,7 +404,7 @@ namespace Marmi
                     Form1.PushLow(index, (Action)(() =>
                     {
                         var bmp = Form1.SyncGetBitmap(index);
-                        Form1.g_pi.ThumnailMaker(index, bmp);
+                        App.g_pi.ThumnailMaker(index, bmp);
                         CalcAllItemPos();
                         if (this.Visible)
                             this.Invalidate();

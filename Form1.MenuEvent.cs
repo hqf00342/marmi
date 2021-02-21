@@ -51,7 +51,7 @@ namespace Marmi
             g_ThumbPanel.Location = GetClientRectangle().Location;
             g_ThumbPanel.Size = GetClientRectangle().Size;
             g_ThumbPanel.Parent = this;
-            g_ThumbPanel.SaveThumbnail(g_pi.PackageName);
+            g_ThumbPanel.SaveThumbnail(App.g_pi.PackageName);
         }
 
         private void Menu_Exit_Click(object sender, EventArgs e)
@@ -87,12 +87,12 @@ namespace Marmi
 
         private void Menu_ViewEnd_Click(object sender, EventArgs e)
         {
-            SetViewPage(g_pi.Items.Count - 1);
+            SetViewPage(App.g_pi.Items.Count - 1);
         }
 
         private void Menu_ViewThumbnail_Click(object sender, EventArgs e)
         {
-            if (g_pi.Items.Count > 0)
+            if (App.g_pi.Items.Count > 0)
             {
                 //全画面であればメニュー系は全て非表示
                 if (App.Config.isFullScreen)
@@ -156,10 +156,10 @@ namespace Marmi
         {
             if (App.Config.dualView)
             {
-                if (g_pi.NowViewPage > 0)
+                if (App.g_pi.NowViewPage > 0)
                 {
                     //g_pi.NowViewPage -= 1;	//半ページ戻し
-                    SetViewPage(--g_pi.NowViewPage);    //ver0.988
+                    SetViewPage(--App.g_pi.NowViewPage);    //ver0.988
                 }
                 else
                 {
@@ -176,10 +176,10 @@ namespace Marmi
         {
             if (App.Config.dualView)
             {
-                if (g_pi.NowViewPage < g_pi.Items.Count)
+                if (App.g_pi.NowViewPage < App.g_pi.Items.Count)
                 {
-                    g_pi.NowViewPage += 1;  //半ページ戻し
-                    SetViewPage(g_pi.NowViewPage);  //ver0.988 2010年6月20日
+                    App.g_pi.NowViewPage += 1;  //半ページ戻し
+                    SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
                 }
                 else
                 {
@@ -197,26 +197,26 @@ namespace Marmi
         private void Menu_ViewPictureInfo_Click(object sender, EventArgs e)
         {
             //ver1.81 画像情報確認
-            if (g_pi.NowViewPage < 0 || g_pi.NowViewPage >= g_pi.Items.Count)
+            if (App.g_pi.NowViewPage < 0 || App.g_pi.NowViewPage >= App.g_pi.Items.Count)
                 return;
 
             FormPictureInfo p = new FormPictureInfo();
             if (g_viewPages == 1)
-                p.Show(this, g_pi.Items[g_pi.NowViewPage], null);
+                p.Show(this, App.g_pi.Items[App.g_pi.NowViewPage], null);
             else
-                p.Show(this, g_pi.Items[g_pi.NowViewPage], g_pi.Items[g_pi.NowViewPage + 1]);
+                p.Show(this, App.g_pi.Items[App.g_pi.NowViewPage], App.g_pi.Items[App.g_pi.NowViewPage + 1]);
         }
 
         private void Menu_ViewPackageInfo_Click(object sender, EventArgs e)
         {
             //ver1.81 画像数確認
-            if (g_pi.Items.Count <= 0)
+            if (App.g_pi.Items.Count <= 0)
                 return;
 
-            FormPackageInfo pif = new FormPackageInfo(this, g_pi);
+            FormPackageInfo pif = new FormPackageInfo(this, App.g_pi);
             pif.setSortMode(false);
             //pif.Show(g_pi.ViewPage);
-            pif.ShowDialog(g_pi.NowViewPage);
+            pif.ShowDialog(App.g_pi.NowViewPage);
         }
 
         private void Menu_ViewFitScreenSize_Click(object sender, EventArgs e)
@@ -244,14 +244,14 @@ namespace Marmi
             else
             {
                 //サイドバーオープン
-                g_Sidebar.Init(g_pi);
+                g_Sidebar.Init(App.g_pi);
                 if (App.Config != null)
                     g_Sidebar.Width = App.Config.sidebarWidth;
                 else
                     g_Sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
 
                 g_Sidebar.Visible = true;
-                g_Sidebar.SetItemToCenter(g_pi.NowViewPage);
+                g_Sidebar.SetItemToCenter(App.g_pi.NowViewPage);
                 App.Config.visibleNavibar = true;
             }
             AjustSidebarArrangement();
@@ -268,10 +268,10 @@ namespace Marmi
         private void Menu_View_LeftOpen_Click(object sender, EventArgs e)
         {
             //g_pi.PageDirectionisRight = !MenuItem_View_LeftOpen.Checked;
-            g_pi.PageDirectionIsLeft = !g_pi.PageDirectionIsLeft;
+            App.g_pi.PageDirectionIsLeft = !App.g_pi.PageDirectionIsLeft;
             if (App.Config.dualView)
             {
-                SetViewPage(g_pi.NowViewPage);
+                SetViewPage(App.g_pi.NowViewPage);
             }
         }
 
@@ -334,7 +334,7 @@ namespace Marmi
                 else
                 {
                     //通常画面を再描写
-                    SetViewPage(g_pi.NowViewPage);
+                    SetViewPage(App.g_pi.NowViewPage);
                 }
             }
         }
@@ -361,15 +361,15 @@ namespace Marmi
         private void Menu_RemakeThumbnail_Click(object sender, EventArgs e)
         {
             //ver1.81 画像数確認
-            if (g_pi.Items.Count <= 0)
+            if (App.g_pi.Items.Count <= 0)
                 return;
 
             //サムネイルをクリアする
-            for (int i = 0; i < g_pi.Items.Count; i++)
+            for (int i = 0; i < App.g_pi.Items.Count; i++)
             {
-                if (g_pi.Items[i].thumbnail != null)
-                    g_pi.Items[i].thumbnail.Dispose();
-                g_pi.Items[i].thumbnail = null;
+                if (App.g_pi.Items[i].thumbnail != null)
+                    App.g_pi.Items[i].thumbnail.Dispose();
+                App.g_pi.Items[i].thumbnail = null;
             }
             //ver 1.55再登録
             AsyncLoadImageInfo();
@@ -394,7 +394,7 @@ namespace Marmi
         private void Menu_DontEnlargeOver100percent_Click(object sender, EventArgs e)
         {
             App.Config.noEnlargeOver100p = !App.Config.noEnlargeOver100p;
-            SetViewPage(g_pi.NowViewPage);
+            SetViewPage(App.g_pi.NowViewPage);
         }
 
         // コンテキストメニュー  ********************************************************************
@@ -409,10 +409,10 @@ namespace Marmi
         private void Menu_SortByName_Click(object sender, EventArgs e)
         {
             //ファイルリストを並び替える
-            if (g_pi.Items.Count > 0)
+            if (App.g_pi.Items.Count > 0)
             {
                 NaturalOrderComparer2 noc = new NaturalOrderComparer2();
-                g_pi.Items.Sort(noc);
+                App.g_pi.Items.Sort(noc);
 
                 //サムネイル表示中であれば再描写させる
                 if (App.Config.isThumbnailView)
@@ -422,20 +422,20 @@ namespace Marmi
 
                 //ver1.38 ソート後に画面を書き直す
                 App.ScreenCache.Clear();
-                SetViewPage(g_pi.NowViewPage);
+                SetViewPage(App.g_pi.NowViewPage);
             }
         }
 
         private void Menu_SortByDate_Click(object sender, EventArgs e)
         {
             //ファイルリストを並び替える
-            if (g_pi.Items.Count > 0)
+            if (App.g_pi.Items.Count > 0)
             {
                 //StopThumbnailMakerThread();	//ソート中にスレッドが動いていないことを担保
                 //PauseThumbnailMakerThread();	//ver1.09 スレッド中断（Pause）
 
                 DateCompare dc = new DateCompare();
-                g_pi.Items.Sort(dc);
+                App.g_pi.Items.Sort(dc);
 
                 //サムネイル表示中であれば再描写させる
                 if (App.Config.isThumbnailView)
@@ -449,19 +449,19 @@ namespace Marmi
 
                 //ver1.38 ソート後に画面を書き直す
                 App.ScreenCache.Clear();
-                SetViewPage(g_pi.NowViewPage);
+                SetViewPage(App.g_pi.NowViewPage);
             }
         }
 
         private void Menu_SortCustom_Click(object sender, EventArgs e)
         {
-            FormPackageInfo pif = new FormPackageInfo(this, g_pi);
+            FormPackageInfo pif = new FormPackageInfo(this, App.g_pi);
             pif.setSortMode(true);
-            pif.ShowDialog(g_pi.NowViewPage);
+            pif.ShowDialog(App.g_pi.NowViewPage);
 
             //ver1.38 ソート後に画面を書き直す
             App.ScreenCache.Clear();
-            SetViewPage(g_pi.NowViewPage);
+            SetViewPage(App.g_pi.NowViewPage);
         }
 
         // メニューホバーイベント *******************************************************************
@@ -527,7 +527,7 @@ namespace Marmi
             //AddBookmarkMenuItem(MenuItem_ViewBookmarkList);
 
             //ver1.81 パッケージなしのときの対処
-            bool isPackageOpen = (g_pi.Items.Count > 0);
+            bool isPackageOpen = (App.g_pi.Items.Count > 0);
             Menu_ViewPictureInfo.Enabled = isPackageOpen;
             Menu_ViewPackageInfo.Enabled = isPackageOpen;
         }
@@ -542,7 +542,7 @@ namespace Marmi
             Menu_DontEnlargeOver100percent.Checked = App.Config.noEnlargeOver100p;
 
             //ファイルを閲覧していない場合のナビゲーション
-            if (g_pi.Items == null || g_pi.Items.Count <= 1)
+            if (App.g_pi.Items == null || App.g_pi.Items.Count <= 1)
             {
                 Menu_OptionReloadThumbnail.Enabled = false;
             }
@@ -564,9 +564,9 @@ namespace Marmi
         private void Menu_Page_DropDownOpening(object sender, EventArgs e)
         {
             //左開きにする
-            Menu_View_LeftOpen.Checked = !g_pi.PageDirectionIsLeft;
+            Menu_View_LeftOpen.Checked = !App.g_pi.PageDirectionIsLeft;
             //ファイルを閲覧していない場合のナビゲーション
-            if (g_pi == null || g_pi.Items == null || g_pi.Items.Count < 1)
+            if (App.g_pi == null || App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
                 //ファイルがない場合
                 Menu_ViewTop.Enabled = false;
@@ -585,7 +585,7 @@ namespace Marmi
                 Menu_SlideShow.Enabled = false;
                 return;
             }
-            else if (g_pi.Items.Count == 1)
+            else if (App.g_pi.Items.Count == 1)
             {
                 //ファイルが１枚
                 Menu_ViewTop.Enabled = false;
@@ -619,7 +619,7 @@ namespace Marmi
                 Menu_ViewThumbnail.Checked = App.Config.isThumbnailView;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
-                Menu_ViewHalfPageBack.Enabled = App.Config.dualView && (bool)(g_pi.NowViewPage != 0); //先頭ページチェック
+                Menu_ViewHalfPageBack.Enabled = App.Config.dualView && (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
                 Menu_ViewHalfPageForword.Enabled = App.Config.dualView && !IsLastPageViewing();       //最終ページチェック
 
                 //しおり機能
@@ -642,8 +642,8 @@ namespace Marmi
                 else
                 {
                     //ナビゲーションメニューの有効無効
-                    Menu_ViewTop.Enabled = (bool)(g_pi.NowViewPage != 0);   //先頭ページチェック
-                    Menu_ViewBack.Enabled = (bool)(g_pi.NowViewPage != 0);  //先頭ページチェック
+                    Menu_ViewTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);   //先頭ページチェック
+                    Menu_ViewBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
                     Menu_ViewEnd.Enabled = !IsLastPageViewing();        //最終ページチェック
                     Menu_ViewNext.Enabled = !IsLastPageViewing();       //最終ページチェック
                     Menu_View2Page.Enabled = true;
@@ -669,7 +669,7 @@ namespace Marmi
             Menu_ContextNavibar.Checked = g_Sidebar.Visible;
 
             //ファイルを閲覧していない場合のナビゲーション
-            if (g_pi.Items == null || g_pi.Items.Count < 1)
+            if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
                 //ファイルを閲覧していない場合のナビゲーション
                 Menu_ContextTop.Enabled = false;
@@ -686,7 +686,7 @@ namespace Marmi
                 Menu_ContextRedraw.Enabled = false;
                 return;
             }
-            else if (g_pi.Items.Count == 1)
+            else if (App.g_pi.Items.Count == 1)
             {
                 //ファイルを閲覧していない場合のナビゲーション
                 Menu_ContextTop.Enabled = false;
@@ -714,7 +714,7 @@ namespace Marmi
 
                 //しおり機能
                 Menu_ContextAddBookmark.Enabled = true;
-                if (g_pi.Items[g_pi.NowViewPage].isBookMark)
+                if (App.g_pi.Items[App.g_pi.NowViewPage].isBookMark)
                     Menu_ContextAddBookmark.Checked = true;
                 else
                     Menu_ContextAddBookmark.Checked = false;
@@ -725,7 +725,7 @@ namespace Marmi
                 Menu_ContextThumbnailView.Checked = App.Config.isThumbnailView;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
-                Menu_ContextHalfPageBack.Enabled = App.Config.dualView && (bool)(g_pi.NowViewPage != 0);  //先頭ページチェック
+                Menu_ContextHalfPageBack.Enabled = App.Config.dualView && (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
                 Menu_ContextHalfPageForword.Enabled = App.Config.dualView && !IsLastPageViewing();    //最終ページチェック
 
                 //サムネイル表示中
@@ -736,8 +736,8 @@ namespace Marmi
                 else
                 {
                     //ナビゲーションメニューの有効無効
-                    Menu_ContextTop.Enabled = (bool)(g_pi.NowViewPage != 0);        //先頭ページチェック
-                    Menu_ContextBack.Enabled = (bool)(g_pi.NowViewPage != 0);   //先頭ページチェック
+                    Menu_ContextTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);        //先頭ページチェック
+                    Menu_ContextBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);   //先頭ページチェック
                     Menu_ContextNext.Enabled = !IsLastPageViewing();        //最終ページチェック
                     Menu_ContextLast.Enabled = !IsLastPageViewing();        //最終ページチェック
                                                                             //MenuItem_ContextLast.Enabled = (bool)(g_pi.ViewPage != g_pi.Items.Count - 1);
@@ -755,7 +755,7 @@ namespace Marmi
                 this.toolStripSeparator11});
 
             //メニューを初期化
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 Bookmark_Add.Enabled = false;
                 BookMark_Clear.Enabled = false;
@@ -769,7 +769,7 @@ namespace Marmi
 
             //ver1.79 イメージを追加する
             int count = 0;
-            foreach (ImageInfo ii in g_pi.Items)
+            foreach (ImageInfo ii in App.g_pi.Items)
             {
                 if (ii.isBookMark)
                 {
@@ -796,7 +796,7 @@ namespace Marmi
         /// <param name="BookmarkMenu"></param>
         private void AddBookmarkMenuItem(ToolStripMenuItem BookmarkMenu)
         {
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 BookmarkMenu.Enabled = false;
                 return;
@@ -805,7 +805,7 @@ namespace Marmi
             int count = 0;
             BookmarkMenu.DropDownItems.Clear();
 
-            foreach (ImageInfo ii in g_pi.Items)
+            foreach (ImageInfo ii in App.g_pi.Items)
             {
                 if (ii.isBookMark)
                 {
@@ -830,17 +830,17 @@ namespace Marmi
         private void OnBookmarkList(object sender, EventArgs e)
         {
             var tsddi = (ToolStripDropDownItem)sender;
-            int index = g_pi.GetIndexFromFilename(tsddi.Text);
+            int index = App.g_pi.GetIndexFromFilename(tsddi.Text);
             if (index >= 0)
                 SetViewPage(index);
         }
 
         private void BookMark_Clear_Click(object sender, EventArgs e)
         {
-            int len = g_pi.Items.Count;
+            int len = App.g_pi.Items.Count;
             for (int i = 0; i < len; i++)
             {
-                g_pi.Items[i].isBookMark = false;
+                App.g_pi.Items[i].isBookMark = false;
             }
         }
 
@@ -848,7 +848,7 @@ namespace Marmi
 
         private void ReloadPage()
         {
-            if (g_pi == null || g_pi.Items.Count == 0)
+            if (App.g_pi == null || App.g_pi.Items.Count == 0)
                 return;
 
             //ver0.972 ナビバーがあればリサイズ
@@ -857,12 +857,12 @@ namespace Marmi
             if (App.Config.isThumbnailView)
                 g_ThumbPanel.ReDraw();
             else
-                SetViewPage(g_pi.NowViewPage);
+                SetViewPage(App.g_pi.NowViewPage);
         }
 
         private void Menu_Slideshow_Click(object sender, EventArgs e)
         {
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
                 return;
 
             if (SlideShowTimer.Enabled)

@@ -50,31 +50,31 @@ namespace Marmi
                     //画像読み込み
                     try //不意のファイルドロップによりindexがOutOfRangeになるため。効果なさそう
                     {
-                        if (!g_pi.Items[index].cacheImage.hasImage)
+                        if (!App.g_pi.Items[index].cacheImage.hasImage)
                         {
                             Uty.WriteLine("AsyncIOThread() index={0}, remain={1}", index, App.stack.Count);
                             //7zをOpenしていなければOpen
-                            if (g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
+                            if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.isOpen)
                             {
-                                AsyncSZ.Open(g_pi.PackageName);
+                                AsyncSZ.Open(App.g_pi.PackageName);
                                 Uty.WriteLine("非同期IO 7zOpen");
                             }
 
-                            if (g_pi.PackType == PackageType.Pdf)
+                            if (App.g_pi.PackType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
-                                byte[] b = App.susie.GetFile(g_pi.PackageName, index, (int)g_pi.Items[index].length);
+                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].length);
                                 //ImageConverter ic = new ImageConverter();
                                 //Bitmap _b = ic.ConvertFrom(b) as Bitmap;
                                 //g_pi.Items[index].cacheImage.Load(_b);
-                                g_pi.Items[index].cacheImage.Load(b);
-                                g_pi.Items[index].bmpsize = g_pi.Items[index].cacheImage.GetImageSize();
-                                g_pi.AsyncThumnailMaker(index);
+                                App.g_pi.Items[index].cacheImage.Load(b);
+                                App.g_pi.Items[index].bmpsize = App.g_pi.Items[index].cacheImage.GetImageSize();
+                                App.g_pi.AsyncThumnailMaker(index);
                             }
                             else
                             {
                                 //pdf以外の読み込み
-                                g_pi.LoadCache(index, AsyncSZ);
+                                App.g_pi.LoadCache(index, AsyncSZ);
                                 //ver1.75 サムネイル登録
                                 //ver1.81コメントアウト
                                 //サムネイル作成はあとでやる。

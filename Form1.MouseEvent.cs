@@ -59,7 +59,7 @@ namespace Marmi
             }
 
             //ファイルが1つもなければメッセージを表示
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 //ファイルをD&Dしてくださいと表示
                 g_ClearPanel.ShowAndClose(
@@ -97,7 +97,7 @@ namespace Marmi
             if (!App.Config.RightScrClickIsNextPic)
                 isForword = !isForword;
             //左開きなら入れ替え
-            if (!g_pi.PageDirectionIsLeft)
+            if (!App.g_pi.PageDirectionIsLeft)
                 isForword = !isForword;
             ////入れ替えがあるならさらに入れ替え ver1.65 commentout
             //if (App.Config.isReplaceArrowButton)
@@ -216,7 +216,7 @@ namespace Marmi
                 //ドラッグスクロール中
                 ChangeCursor(App.Cursors.OpenHand);
             }
-            else if (g_pi.Items.Count <= 1 | !GetClientRectangle().Contains(cursorPos))
+            else if (App.g_pi.Items.Count <= 1 | !GetClientRectangle().Contains(cursorPos))
             {
                 Cursor.Current = Cursors.Default;
             }

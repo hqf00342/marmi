@@ -140,7 +140,7 @@ namespace Marmi
         private void g_trackbar_ValueChanged(object sender, EventArgs e)
         {
             //Debug.WriteLine(g_trackbar.Value, "g_trackbar_ValueChanged");
-            if (g_trackbar.Value != g_pi.NowViewPage)
+            if (g_trackbar.Value != App.g_pi.NowViewPage)
             {
                 ////トラックバー用のツールチップを表示する。
                 //Point p = PointToClient(MousePosition);
@@ -164,7 +164,7 @@ namespace Marmi
         private void g_trackbar_MouseDown(object sender, MouseEventArgs e)
         {
             if (g_trackNaviPanel == null)
-                g_trackNaviPanel = new NaviBar3(g_pi);
+                g_trackNaviPanel = new NaviBar3(App.g_pi);
 
             //g_n3.Parent = this;
             //if(!this.Controls.Contains(g_n3))
@@ -184,14 +184,14 @@ namespace Marmi
                 if (App.Config.isFullScreen)
                     r.Y += toolStrip1.Height;
                 //Debug.WriteLine(r, "add navigatebar");
-                g_trackNaviPanel.OpenPanel(r, g_pi.NowViewPage);
+                g_trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
             else
             {
                 //ToolStripが下にいる
                 r.Y = r.Height - g_trackNaviPanel.Height;
                 if (r.Y < 0) r.Y = 0;
-                g_trackNaviPanel.OpenPanel(r, g_pi.NowViewPage);
+                g_trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
 
             g_trackbar_ValueChanged(null, null);
@@ -214,11 +214,11 @@ namespace Marmi
             }
 
             //マウスが離れたところで確定する
-            if (g_trackbar.Value != g_pi.NowViewPage)
+            if (g_trackbar.Value != App.g_pi.NowViewPage)
             {
                 //ページ位置確定
-                g_pi.NowViewPage = g_trackbar.Value;
-                SetViewPage(g_pi.NowViewPage);  //ver0.988 2010年6月20日
+                App.g_pi.NowViewPage = g_trackbar.Value;
+                SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
 
                 //ツールチップを隠す。
                 //g_toolTip.Hide();

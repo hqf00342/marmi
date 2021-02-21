@@ -10,7 +10,7 @@ namespace Marmi
 
         private void setStatusbarPages()
         {
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 Statusbar_PageLabel.Text = "0/0";
             }
@@ -19,14 +19,14 @@ namespace Marmi
                 if (g_viewPages == 1)
                     Statusbar_PageLabel.Text = String.Format(
                         "{0} / {1}pages",
-                        g_pi.NowViewPage + 1,
-                        g_pi.Items.Count);
+                        App.g_pi.NowViewPage + 1,
+                        App.g_pi.Items.Count);
                 else
                     Statusbar_PageLabel.Text = String.Format(
                         "[{0},{1}] / {2}pages",
-                        g_pi.NowViewPage + 1,
-                        g_pi.NowViewPage + 2,
-                        g_pi.Items.Count);
+                        App.g_pi.NowViewPage + 1,
+                        App.g_pi.NowViewPage + 2,
+                        App.g_pi.Items.Count);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Marmi
 
         private void setStatusbarFilename()
         {
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 Statusbar_InfoLabel.Text = "";
                 return;
@@ -55,22 +55,23 @@ namespace Marmi
 
             //if (g_viewPages == 1)
             //ver1.81 最終ページのときも1ページだけに変更
-            if (g_viewPages == 1 || g_pi.NowViewPage == g_pi.Items.Count - 1)
+            if (g_viewPages == 1 || App.g_pi.NowViewPage == App.g_pi.Items.Count - 1)
             {
-                Statusbar_InfoLabel.Text = g_pi.Items[g_pi.NowViewPage].filename;
+                Statusbar_InfoLabel.Text = App.g_pi.Items[App.g_pi.NowViewPage].filename;
             }
             else
             {
                 Statusbar_InfoLabel.Text =
-                    g_pi.Items[g_pi.NowViewPage + 1].filename
+                    App.g_pi.Items[App.g_pi.NowViewPage + 1].filename
                     + "  |  "
-                    + g_pi.Items[g_pi.NowViewPage].filename;
+                    + App.g_pi.Items[App.g_pi.NowViewPage].filename;
             }
         }
 
-        public void setStatusbarInfo(string s)
+        public void SetStatusbarInfo(string s)
         {
             Statusbar_InfoLabel.Text = s;
+            Application.DoEvents();
         }
 
         private void UpdateStatusbar()

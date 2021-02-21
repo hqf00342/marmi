@@ -702,7 +702,7 @@ namespace Marmi
         /// <returns></returns>
         public static Bitmap LoadImageFromFile(string filename)
         {
-            if (File.Exists(filename) && Uty.isPictureFilename(filename))
+            if (File.Exists(filename) && Uty.IsPictureFilename(filename))
             {
                 using (FileStream fs = File.OpenRead(filename))
                 {

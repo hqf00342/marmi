@@ -31,16 +31,16 @@ namespace Marmi
             setkey(App.Config.ka_prevpage2, NavigateToBack);
 
             //前後ページ移動（半分）
-            setkey(App.Config.ka_nexthalf1, () => SetViewPage(++g_pi.NowViewPage));
-            setkey(App.Config.ka_nexthalf2, () => SetViewPage(++g_pi.NowViewPage));
-            setkey(App.Config.ka_prevhalf1, () => SetViewPage(--g_pi.NowViewPage));
-            setkey(App.Config.ka_prevhalf2, () => SetViewPage(--g_pi.NowViewPage));
+            setkey(App.Config.ka_nexthalf1, () => SetViewPage(++App.g_pi.NowViewPage));
+            setkey(App.Config.ka_nexthalf2, () => SetViewPage(++App.g_pi.NowViewPage));
+            setkey(App.Config.ka_prevhalf1, () => SetViewPage(--App.g_pi.NowViewPage));
+            setkey(App.Config.ka_prevhalf2, () => SetViewPage(--App.g_pi.NowViewPage));
 
             //先頭最終ページ
             setkey(App.Config.ka_toppage1, () => SetViewPage(0));
             setkey(App.Config.ka_toppage2, () => SetViewPage(0));
-            setkey(App.Config.ka_lastpage1, () => SetViewPage(g_pi.Items.Count - 1));
-            setkey(App.Config.ka_lastpage2, () => SetViewPage(g_pi.Items.Count - 1));
+            setkey(App.Config.ka_lastpage1, () => SetViewPage(App.g_pi.Items.Count - 1));
+            setkey(App.Config.ka_lastpage2, () => SetViewPage(App.g_pi.Items.Count - 1));
 
             //ブックマーク
             setkey(App.Config.ka_bookmark1, ToggleBookmark);

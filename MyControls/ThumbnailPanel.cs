@@ -441,7 +441,7 @@ namespace Marmi
             //TODO いつかm_thumbnailSetをなくす。
             //ver1.41 m_thumbnailSetはここでセットする.
             if (Visible)
-                m_thumbnailSet = Form1.g_pi.Items;
+                m_thumbnailSet = App.g_pi.Items;
         }
 
         protected override void OnResize(EventArgs e)
@@ -555,7 +555,7 @@ namespace Marmi
                 "[{0}]{1}",
                 itemIndex + 1,
                 m_thumbnailSet[m_mouseHoverItem].filename);
-            Form1._instance.setStatusbarInfo(s);
+            Form1._instance.SetStatusbarInfo(s);
 
             //ToolTipを表示する
             //string sz = String.Format(
@@ -786,7 +786,7 @@ namespace Marmi
                 Form1.AsyncGetBitmap(item, () =>
                 {
                     //ver1.75 サムネイルがないので作る
-                    Form1.g_pi.AsyncThumnailMaker(item);
+                    App.g_pi.AsyncThumnailMaker(item);
 
                     if (this.Visible)
                     {

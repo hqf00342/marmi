@@ -14,23 +14,18 @@ namespace Marmi
 {
     public partial class Form1 : Form, IRemoteObject
     {
-        //コンフィグ。ただ１つだけ存在
+        //コンフィグ。ただ１つだけ存在。App.Configに移動
         //読み込みは Program.csで行っている。
         //public static AppGlobalConfig g_onfig;
+
+        //現在見ているパッケージ情報. Appクラスへ移動
+        //public static PackageInfo App.g_pi = null;
 
         //Form1参照用ハンドル
         public static Form1 _instance;
 
-        public static PackageInfo g_pi = null;              //現在見ているパッケージ情報
-
-        //画面表示関連
-        public int g_viewPages = 1;                     //今見ているページ数：１か２
-
-        //Susieプラグイン
-        //private Susie susie = new Susie();
-
-        //unrar.dllプラグイン ver1.76
-        //private Unrar unrar = new Unrar();
+        //画面表示関連：今見ているページ数：１か２
+        public int g_viewPages = 1;
 
         #region --- コントロール ---
 
@@ -58,10 +53,7 @@ namespace Marmi
         //ホバー中のメニュー/ツールアイテム。非Focusクリック対応
         private object g_hoverStripItem = null;
 
-        //private PicturePanel overlay = new PicturePanel();
-
         #endregion --- コントロール ---
-
 
         #region --- データクラス ---
 
@@ -151,7 +143,7 @@ namespace Marmi
             //
             //パッケージ情報 PackageInfo
             //
-            g_pi = new PackageInfo();
+            App.g_pi = new PackageInfo();
             //
             //PicturePanel
             //
@@ -203,10 +195,10 @@ namespace Marmi
             //
             g_ClearPanel = new ClearPanel(PicPanel);
 
-            //その他変数初期化
-            g_hoverStripItem = null;    //ホバー中のメニュー/ツールアイテム。非Focusクリック対応
-                                        //ver1.81 変更
-                                        //SetKeyConfig();
+            //ホバー中のメニュー/ツールアイテム。非Focusクリック対応
+            g_hoverStripItem = null;
+
+            //ver1.81 変更
             SetKeyConfig2();
 
             //ver1.35 スライドショータイマー
@@ -462,7 +454,7 @@ namespace Marmi
                 {
                     MakeScreenCache();
                     PurgeScreenCache();
-                    g_pi.FileCacheCleanUp2(App.Config.CacheSize);
+                    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 });
             }
         }
@@ -507,10 +499,10 @@ namespace Marmi
             UpdateMRUList();
 
             //ファイルがすでに開いているかどうかチェック
-            if (filenames.Length == 1 && filenames[0] == g_pi.PackageName)
+            if (filenames.Length == 1 && filenames[0] == App.g_pi.PackageName)
             {
-                string text = "おなじフォルダ/ファイルを開こうとしています。開きますか？";
-                string title = "同一フォルダ/ファイルオープンの確認";
+                const string text = "おなじフォルダ/ファイルを開こうとしています。開きますか？";
+                const string title = "同一フォルダ/ファイルオープンの確認";
                 if (MessageBox.Show(text, title, MessageBoxButtons.YesNo) == DialogResult.No)
                     return;
             }
@@ -518,8 +510,8 @@ namespace Marmi
             //ver1.41 非同期IOを停止
             App.stack.Clear();
             App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
-            g_pi.Initialize();
-            setStatusbarInfo("準備中・・・" + filenames[0]);
+            App.g_pi.Initialize();
+            SetStatusbarInfo("準備中・・・" + filenames[0]);
 
             //ver1.35スクリーンキャッシュをクリア
             App.ScreenCache.Clear();
@@ -529,7 +521,7 @@ namespace Marmi
 
             //ver1.78単一ファイルの場合、そのディレクトリを対象とする
             string onePicFile = string.Empty;
-            if (filenames.Length == 1 && Uty.isPictureFilename(filenames[0]))
+            if (filenames.Length == 1 && Uty.IsPictureFilename(filenames[0]))
             {
                 onePicFile = filenames[0];
                 filenames[0] = Path.GetDirectoryName(filenames[0]);
@@ -537,38 +529,44 @@ namespace Marmi
 
             //ファイル一覧を生成
             SevenZipWrapper.ClearPassword();    //書庫のパスワードをクリア
-            bool needRecurse = setPackageInfo(filenames);
+            bool needRecurse = SetPackageInfo(filenames);
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
             //if (needRecurse )
-            if (needRecurse || g_pi.isSolid || App.Config.AlwaysExtractArchive)
+            if (needRecurse || App.g_pi.isSolid || App.Config.AlwaysExtractArchive)
             {
                 using (AsyncExtractForm ae = new AsyncExtractForm())
                 {
-                    setStatusbarInfo("書庫を展開中です" + filenames[0]);
+                    SetStatusbarInfo("書庫を展開中です" + filenames[0]);
 
-                    //ver1.73 一時フォルダ指定対応でmakeTempDirName(bool isMakeDir)を変更
-                    g_pi.tempDirname = makeTempDirName(true);
-                    //ver1.79 一時フォルダが作れないときの対応
-                    if (string.IsNullOrEmpty(g_pi.tempDirname))
+                    //ver1.73 一時フォルダ作成
+                    try
                     {
+                        var tempDir = SuggestTempDirName();
+                        Directory.CreateDirectory(tempDir);
+                        DeleteDirList.Add(tempDir);
+                        App.g_pi.tempDirname = tempDir;
+                    }
+                    catch
+                    {
+                        //ver1.79 一時フォルダが作れないときの対応
                         MessageBox.Show("一時展開フォルダが作成できませんでした。設定を確認してください");
-                        g_pi.Initialize();
+                        App.g_pi.Initialize();
                         return;
                     }
 
                     //ダイアログを表示
                     ae.ArchivePath = filenames[0];
-                    ae.ExtractDir = g_pi.tempDirname;
+                    ae.ExtractDir = App.g_pi.tempDirname;
                     ae.ShowDialog(this);
 
                     //ダイアログの表示が終了
                     //ディレクトリをすべてg_piに読み込む
                     this.Cursor = Cursors.WaitCursor;
-                    g_pi.PackType = PackageType.Pictures;
-                    g_pi.Items.Clear();
-                    GetDirPictureList(g_pi.tempDirname, true);
+                    App.g_pi.PackType = PackageType.Pictures;
+                    App.g_pi.Items.Clear();
+                    GetDirPictureList(App.g_pi.tempDirname, true);
                     this.Cursor = Cursors.Arrow;
                 }
             }
@@ -581,38 +579,29 @@ namespace Marmi
             //UpdateMRUList();
 
             //pdfチェック
-            if (g_pi.PackType == PackageType.Pdf)
+            if (App.g_pi.PackType == PackageType.Pdf)
             {
                 if (!App.susie.isSupportedExtentions("pdf"))
                 {
-                    string str = "pdfファイルはサポートしていません";
+                    const string str = "pdfファイルはサポートしていません";
                     g_ClearPanel.ShowAndClose(str, 1000);
-                    setStatusbarInfo(str);
-                    g_pi.Initialize();
+                    SetStatusbarInfo(str);
+                    App.g_pi.Initialize();
                     return;
                 }
             }
 
-            //ver1.30 画面に読み込み状況を表示
-            //MaskPanel mp = new MaskPanel(PicPanel.Bounds);
-            //mp.addText("読み込み中" + filenames[0]);
-            //this.Controls.Add(mp);
-            //mp.BringToFront();
-            //mp.Refresh();
-
-            if (g_pi.Items.Count <= 0)
+            if (App.g_pi.Items.Count <= 0)
             {
                 //画面をクリア、準備中の文字を消す
-                string str = "表示できるファイルがありませんでした";
+                const string str = "表示できるファイルがありませんでした";
                 g_ClearPanel.ShowAndClose(str, 1000);
-                setStatusbarInfo(str);
+                SetStatusbarInfo(str);
                 return;
             }
-            //mp.addText("アイテム数チェック");
-            //mp.Refresh();
 
             //ページを初期化
-            g_pi.NowViewPage = 0;
+            App.g_pi.NowViewPage = 0;
             //CheckAndStart();
 
             //サムネイルDBがあれば読み込む
@@ -625,15 +614,15 @@ namespace Marmi
                 {
                     if (mru == null)
                         continue;
-                    else if (mru.Name == g_pi.PackageName
+                    else if (mru.Name == App.g_pi.PackageName
                         //ver1.79 コメントアウト
                         //&& g_pi.packType == PackageType.Archive)
                         )
                     {
                         //最終ページを設定する。
-                        g_pi.NowViewPage = mru.LastViewPage;
+                        App.g_pi.NowViewPage = mru.LastViewPage;
                         //Bookmarkを設定する
-                        g_pi.SetBookmarksFromCsv(mru.Bookmarks);
+                        App.g_pi.SetBookmarksFromCsv(mru.Bookmarks);
                         break;
                     }
                 }
@@ -643,28 +632,26 @@ namespace Marmi
             //最初に見るページをドロップしたファイルにする。
             if (!string.IsNullOrEmpty(onePicFile))
             {
-                int i = g_pi.Items.FindIndex(c => c.filename == onePicFile);
+                int i = App.g_pi.Items.FindIndex(c => c.filename == onePicFile);
                 if (i < 0) i = 0;
-                g_pi.NowViewPage = i;
+                App.g_pi.NowViewPage = i;
             }
 
             //トラックバーを初期化
             InitTrackbar();
 
             //SideBarへ登録
-            g_Sidebar.Init(g_pi);
+            g_Sidebar.Init(App.g_pi);
 
             //タイトルバーの設定
-            //this.Text = APPNAME + @" - " + g_pi.PackageName;
-            //ver1.79 フルパス表示をやめる
-            this.Text = App.APPNAME + @" - " + Path.GetFileName(g_pi.PackageName);
+            this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
             //サムネイルの作成
             AsyncLoadImageInfo();
 
             //画像を表示
             PicPanel.Message = string.Empty;
-            SetViewPage(g_pi.NowViewPage);
+            SetViewPage(App.g_pi.NowViewPage);
         }
 
         /// <summary>
@@ -672,30 +659,30 @@ namespace Marmi
         /// </summary>
         /// <param name="files">対象ファイル</param>
         /// <returns>書庫内書庫がある場合はtrue</returns>
-        private bool setPackageInfo(string[] files)
+        private static bool SetPackageInfo(string[] files)
         {
             //初期化
-            g_pi.Initialize();
+            App.g_pi.Initialize();
 
             if (files.Length == 1)
             {
                 //ドロップされたのは1つ
-                g_pi.PackageName = files[0];    //ディレクトリかZipファイル名を想定
+                App.g_pi.PackageName = files[0];    //ディレクトリかZipファイル名を想定
 
                 //ドロップされたファイルの詳細を探る
-                if (Directory.Exists(g_pi.PackageName))
+                if (Directory.Exists(App.g_pi.PackageName))
                 {
                     //ディレクトリの場合
-                    g_pi.PackType = PackageType.Directory;
+                    App.g_pi.PackType = PackageType.Directory;
                     GetDirPictureList(files[0], App.Config.isRecurseSearchDir);
                 }
-                else if (App.unrar.dllLoaded && files[0].ToLower().EndsWith(".rar"))
+                else if (App.unrar.dllLoaded && files[0].EndsWith(".rar", StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     //unrar.dllを使う。
                     //
-                    g_pi.PackType = PackageType.Archive;
-                    g_pi.isSolid = true;
+                    App.g_pi.PackType = PackageType.Archive;
+                    App.g_pi.isSolid = true;
 
                     //ファイルリストを構築
                     App.unrar.Open(files[0], Unrar.OpenMode.List);
@@ -704,7 +691,7 @@ namespace Marmi
                     {
                         if (!App.unrar.CurrentFile.IsDirectory)
                         {
-                            g_pi.Items.Add(new ImageInfo(
+                            App.g_pi.Items.Add(new ImageInfo(
                                 num++,
                                 App.unrar.CurrentFile.FileName,
                                 App.unrar.CurrentFile.FileTime,
@@ -718,10 +705,10 @@ namespace Marmi
                     //展開が必要なのでtrueを返す
                     return true;
                 }
-                else if (Uty.isAvailableArchiveFile(g_pi.PackageName))
+                else if (Uty.IsSupportArchiveFile(App.g_pi.PackageName))
                 {
                     // 書庫ファイル
-                    g_pi.PackType = PackageType.Archive;
+                    App.g_pi.PackType = PackageType.Archive;
                     bool needRecurse = GetArchivedFileInfo(files[0]);
                     //if (needRecurse)
                     //{
@@ -732,16 +719,16 @@ namespace Marmi
                     if (needRecurse)
                         return true;
                 }
-                else if (files[0].ToLower().EndsWith(".pdf"))
+                else if (files[0].EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                 {
                     //pdfファイル
-                    g_pi.PackType = PackageType.Pdf;
+                    App.g_pi.PackType = PackageType.Pdf;
                     if (App.susie.isSupportPdf())
                     {
                         var list = App.susie.GetArchiveInfo(files[0]);
                         foreach (var e in list)
                         {
-                            g_pi.Items.Add(new ImageInfo((int)e.position, e.filename, e.timestamp, e.filesize));
+                            App.g_pi.Items.Add(new ImageInfo((int)e.position, e.filename, e.timestamp, e.filesize));
                         }
                         return false;
                     }
@@ -755,33 +742,33 @@ namespace Marmi
                 else
                 {
                     //単一画像ファイル
-                    g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
-                    g_pi.PackType = PackageType.Pictures;
+                    App.g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
+                    App.g_pi.PackType = PackageType.Pictures;
 
                     //１つだけファイルを登録
-                    if (Uty.isPictureFilename(files[0]))
+                    if (Uty.IsPictureFilename(files[0]))
                     {
                         FileInfo fi = new FileInfo(files[0]);
                         //g_pi.Items.Add(new ImageInfo(files[0], fi.CreationTime, fi.Length));
-                        g_pi.Items.Add(new ImageInfo(0, files[0], fi.CreationTime, fi.Length));
+                        App.g_pi.Items.Add(new ImageInfo(0, files[0], fi.CreationTime, fi.Length));
                     }
                 }
             }
             else //if (files.Length == 1)
             {
                 //複数ファイル
-                g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
-                                                    //g_pi.isZip = false;
-                g_pi.PackType = PackageType.Pictures;
+                App.g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
+                                                        //g_pi.isZip = false;
+                App.g_pi.PackType = PackageType.Pictures;
 
                 //ファイルを追加する
                 int index = 0;
                 foreach (string filename in files)
                 {
-                    if (Uty.isPictureFilename(filename))
+                    if (Uty.IsPictureFilename(filename))
                     {
                         FileInfo fi = new FileInfo(filename);
-                        g_pi.Items.Add(new ImageInfo(index++, filename, fi.CreationTime, fi.Length));
+                        App.g_pi.Items.Add(new ImageInfo(index++, filename, fi.CreationTime, fi.Length));
                     }
                 }
             }//if (files.Length == 1)
@@ -794,7 +781,7 @@ namespace Marmi
         {
             //前に戻る
             long drawOrderTick = DateTime.Now.Ticks;
-            int prev = GetPrevPage(g_pi.NowViewPage);
+            int prev = GetPrevPageIndex(App.g_pi.NowViewPage);
             if (prev >= 0)
                 SetViewPage(prev, drawOrderTick);
             else
@@ -805,8 +792,8 @@ namespace Marmi
         {
             //ver1.35 ループ機能を実装
             long drawOrderTick = DateTime.Now.Ticks;
-            int now = g_pi.NowViewPage;
-            int next = GetNextPage(g_pi.NowViewPage);
+            int now = App.g_pi.NowViewPage;
+            int next = GetNextPageIndex(App.g_pi.NowViewPage);
             Uty.WriteLine("NavigateToForword() {0} -> {1}", now, next);
             //#if DEBUG
             //            StackFrame callerFrame = new StackFrame(1);
@@ -825,9 +812,9 @@ namespace Marmi
             else if (App.Config.lastPage_toNextArchive)
             {
                 //ver1.70 最終ページで次の書庫を開く
-                if (g_pi.PackType != PackageType.Directory)
+                if (App.g_pi.PackType != PackageType.Directory)
                 {
-                    string filename = g_pi.PackageName;
+                    string filename = App.g_pi.PackageName;
                     string dirname = Path.GetDirectoryName(filename);
                     string[] files = Directory.GetFiles(dirname);
                     Array.Sort(files, Uty.Compare_unsafeFast);
@@ -841,7 +828,7 @@ namespace Marmi
                         }
                         if (match)
                         {
-                            if (Uty.isAvailableFile(s))
+                            if (Uty.IsAvailableFile(s))
                             {
                                 g_ClearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
                                 Start(new string[] { s });
@@ -1080,20 +1067,20 @@ namespace Marmi
             //ClearScreenCache();
             App.ScreenCache.Clear();
 
-            SetViewPage(g_pi.NowViewPage);  //ver0.988 2010年6月20日
+            SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
 
         private void ToggleBookmark()
         {
-            if (g_pi.Items.Count > 0
-                && g_pi.NowViewPage >= 0)
+            if (App.g_pi.Items.Count > 0
+                && App.g_pi.NowViewPage >= 0)
             {
-                g_pi.Items[g_pi.NowViewPage].isBookMark
-                    = !g_pi.Items[g_pi.NowViewPage].isBookMark;
+                App.g_pi.Items[App.g_pi.NowViewPage].isBookMark
+                    = !App.g_pi.Items[App.g_pi.NowViewPage].isBookMark;
 
                 if (g_viewPages == 2)
-                    g_pi.Items[g_pi.NowViewPage + 1].isBookMark
-                        = !g_pi.Items[g_pi.NowViewPage + 1].isBookMark;
+                    App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark
+                        = !App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark;
             }
         }
 
@@ -1101,9 +1088,8 @@ namespace Marmi
         /// 一時フォルダの名前を返す。
         /// 作れない場合はnullが返る。
         /// </summary>
-        /// <param name="isMakeDir">名前だけでなく作成する場合はtrue。</param>
         /// <returns>一時フォルダのフルパス。作れない場合はnull</returns>
-        private string makeTempDirName(bool isMakeDir)
+        private static string SuggestTempDirName()
         {
             //存在しないランダムなフォルダ名を作る
             string tempDir;
@@ -1122,57 +1108,41 @@ namespace Marmi
                     "TEMP7Z" + Path.GetRandomFileName().Substring(0, 8));
             }
             while (Directory.Exists(tempDir));
-
-            //ディレクトリ作成フラグが立っていたら作成
-            if (isMakeDir)
-            {
-                //ディレクトリが作れないときはnullを返す
-                try
-                {
-                    Directory.CreateDirectory(tempDir);
-                    DeleteDirList.Add(tempDir);
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
             return tempDir;
         }
 
         private void AsyncLoadImageInfo()
         {
             //ver1.54 2013年5月7日
-            for (int cnt = 0; cnt < g_pi.Items.Count; cnt++)
+            for (int cnt = 0; cnt < App.g_pi.Items.Count; cnt++)
             {
                 //ラムダ式の外で文字列作成
-                string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, g_pi.Items.Count);
+                string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, App.g_pi.Items.Count);
 
                 //スタックに入れる
                 App.stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
                 {
-                    setStatusbarInfo(s);
+                    SetStatusbarInfo(s);
                     //読み込んだものをPurge対象にする
-                    g_pi.FileCacheCleanUp2(App.Config.CacheSize);
+                    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 })));
                 //Uty.WriteLine("{0}のサムネイル作成登録が終了", cnt);
             }
             //読み込み完了メッセージもPush
-            App.stack.PushLow(new KeyValuePair<int, Delegate>(g_pi.Items.Count - 1, (MethodInvoker)(() =>
+            App.stack.PushLow(new KeyValuePair<int, Delegate>(App.g_pi.Items.Count - 1, (MethodInvoker)(() =>
             {
-                setStatusbarInfo("事前画像情報読み込み完了");
+                SetStatusbarInfo("事前画像情報読み込み完了");
             })));
         }
 
         private void InitTrackbar()
         {
             g_trackbar.Minimum = 0;
-            if (g_pi.Items.Count > 0)
+            if (App.g_pi.Items.Count > 0)
             {
-                g_trackbar.Maximum = g_pi.Items.Count - 1;
+                g_trackbar.Maximum = App.g_pi.Items.Count - 1;
                 g_trackbar.Enabled = true;
-                g_trackbar.Value = g_pi.NowViewPage;
+                g_trackbar.Value = App.g_pi.NowViewPage;
             }
             else
             {
@@ -1224,7 +1194,7 @@ namespace Marmi
 
             //サムネイルをバックグラウンドで保存する
             //saveDBFile();
-            g_pi.Initialize();
+            App.g_pi.Initialize();
 
             //パッケージ情報を初期化
             //古いのはスレッド中で捨てるので新しいのを作る
@@ -1300,10 +1270,10 @@ namespace Marmi
         private void SortPackage()
         {
             //ファイルリストを並び替える
-            if (g_pi.Items.Count > 0)
+            if (App.g_pi.Items.Count > 0)
             {
                 NaturalOrderComparer2 noc = new NaturalOrderComparer2();
-                g_pi.Items.Sort(noc);
+                App.g_pi.Items.Sort(noc);
             }
             return;
         }
@@ -1313,7 +1283,7 @@ namespace Marmi
         /// </summary>
         /// <param name="filename"></param>
         /// <returns>書庫内書庫がある場合はtrye</returns>
-        private bool GetArchivedFileInfo(string filename)
+        private static bool GetArchivedFileInfo(string filename)
         {
             using (SevenZipWrapper szw = new SevenZipWrapper())
             {
@@ -1322,52 +1292,39 @@ namespace Marmi
                 if (szw.Open(filename) == false)
                 {
                     MessageBox.Show("エラーのため書庫は開けませんでした。");
-                    g_pi.Initialize();
+                    App.g_pi.Initialize();
                     Uty.ForceGC();      //書庫を開放・GCする必要がある
                     return false;
                 }
 
                 //Zipファイル情報を設定
-                g_pi.PackageName = filename;
-                FileInfo fi = new FileInfo(g_pi.PackageName);
-                g_pi.PackageSize = fi.Length;
-                g_pi.isSolid = szw.isSolid;
+                App.g_pi.PackageName = filename;
+                var fi = new FileInfo(App.g_pi.PackageName);
+                App.g_pi.PackageSize = fi.Length;
+                App.g_pi.isSolid = szw.isSolid;
 
                 //ver1.31 7zファイルなのにソリッドじゃないことがある！？
                 if (Path.GetExtension(filename) == ".7z")
-                    g_pi.isSolid = true;
+                    App.g_pi.isSolid = true;
 
                 //g_pi.isZip = true;
-                g_pi.PackType = PackageType.Archive;
+                App.g_pi.PackType = PackageType.Archive;
 
                 //ファイルをリストに追加
-                //TODO: IEnumerable を実装してforeachにしたい
-                g_pi.Items.Clear();
-                //for (int i = 0; i < szw.itemCount; i++)
-                //{
-                //    ArchiveItem ai = szw.Item(i);
-                //    if (!ai.isDirectory && Uty.isPictureFilename(ai.filename))
-                //        g_pi.Items.Add(new ImageInfo(ai.filename, ai.datetime, (long)ai.filesize));
-                //    else if (Uty.isAvailableArchiveFile(ai.filename))
-                //    {
-                //        //ver1.26 書庫内書庫を発見
-                //        //string extractDir = makeTempDirName(true);
-                //        //szw.ExtractFile(ai.filename, extractDir);
-                //    }
-                //}//for
+                App.g_pi.Items.Clear();
                 foreach (var item in szw.Items)
                 {
                     if (item.IsDirectory)
                         continue;
-                    if (Uty.isPictureFilename(item.FileName))
-                        g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
-                    else if (Uty.isAvailableArchiveFile(item.FileName))
+                    if (Uty.IsPictureFilename(item.FileName))
+                        App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
+                    else if (Uty.IsSupportArchiveFile(item.FileName))
                     {
                         retval = true;
                     }
                 }
                 return retval;
-            }//using
+            }
         }
 
         /// <summary>
@@ -1377,11 +1334,11 @@ namespace Marmi
         private void UpdateMRUList()
         {
             //なにも無ければ追加しない
-            if (string.IsNullOrEmpty(g_pi.PackageName))
+            if (string.IsNullOrEmpty(App.g_pi.PackageName))
                 return;
 
             //ディレクトリでも追加しない
-            if (g_pi.PackType == PackageType.Directory)
+            if (App.g_pi.PackType == PackageType.Directory)
                 return;
 
             //MRUに追加する必要があるか確認
@@ -1390,17 +1347,17 @@ namespace Marmi
             {
                 if (App.Config.mru[i] == null)
                     continue;
-                if (App.Config.mru[i].Name == g_pi.PackageName)
+                if (App.Config.mru[i].Name == App.g_pi.PackageName)
                 {
                     //登録済みのMRUを更新
                     //日付だけ更新
                     App.Config.mru[i].Date = DateTime.Now;
                     //最後に見たページも更新 v1.37
-                    App.Config.mru[i].LastViewPage = g_pi.NowViewPage;
+                    App.Config.mru[i].LastViewPage = App.g_pi.NowViewPage;
                     needMruAdd = false;
 
                     //ver1.77 Bookmarkも設定
-                    App.Config.mru[i].Bookmarks = g_pi.GetCsvFromBookmark();
+                    App.Config.mru[i].Bookmarks = App.g_pi.GetCsvFromBookmark();
                 }
             }
             if (needMruAdd)
@@ -1409,10 +1366,10 @@ namespace Marmi
                 //古い順に並べる→先頭に追加
                 Array.Sort(App.Config.mru);
                 App.Config.mru[0] = new MRUList(
-                                    g_pi.PackageName,
+                                    App.g_pi.PackageName,
                                     DateTime.Now,
-                                    g_pi.NowViewPage,
-                                    g_pi.GetCsvFromBookmark());
+                                    App.g_pi.NowViewPage,
+                                    App.g_pi.GetCsvFromBookmark());
             }
             Array.Sort(App.Config.mru);   //並べ直す
         }
@@ -1443,18 +1400,18 @@ namespace Marmi
         public void SetViewPage(int index, long drawOrderTick)
         {
             //ver1.09 オプションダイアログを閉じると必ずここに来ることに対するチェック
-            if (g_pi.Items == null || g_pi.Items.Count == 0)
+            if (App.g_pi.Items == null || App.g_pi.Items.Count == 0)
                 return;
 
             //ver1.36 Index範囲チェック
-            Debug.Assert(index >= 0 && index < g_pi.Items.Count);
+            Debug.Assert(index >= 0 && index < App.g_pi.Items.Count);
 
             // ページ進行方向 進む方向なら正、戻る方向なら負
             // アニメーションで利用する
-            int pageDirection = index - g_pi.NowViewPage;
+            int pageDirection = index - App.g_pi.NowViewPage;
 
             //ページ番号を更新
-            g_pi.NowViewPage = index;
+            App.g_pi.NowViewPage = index;
             g_trackbar.Value = index;
 
             //ver1.35 スクリーンキャッシュチェック
@@ -1473,22 +1430,21 @@ namespace Marmi
                     App.ScreenCache.Remove(index);
 
                 //ver1.50 読み込み中と表示
-                setStatusbarInfo("Now Loading ... " + (index + 1).ToString());
-                Application.DoEvents();
+                SetStatusbarInfo("Now Loading ... " + (index + 1).ToString());
 
                 //画像作成をスレッドプールに登録
                 ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    screenImage = MakeOriginalSizeImage(index);
+                    var img = MakeOriginalSizeImage(index);
                     this.Invoke((MethodInvoker)(() =>
                     {
-                        if (screenImage == null)
+                        if (img == null)
                         {
                             PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
                         }
                         else
                         {
-                            SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
+                            SetViewPage2(index, pageDirection, img, drawOrderTick);
                         }
                     }));
                 });
@@ -1500,13 +1456,6 @@ namespace Marmi
 
         private void SetViewPage2(int index, int pageDirection, Bitmap screenImage, long orderTime)
         {
-            //ver1.50 古かったら表示しない
-            //if (index != g_pi.NowViewPage)
-            //{
-            //    Uty.WriteLine("Skip SetViewPage2({0}) now = {1}", index, g_pi.NowViewPage);
-            //    return;
-            //}
-
             //ver1.55 drawOrderTickのチェック.
             // スレッドプールに入るため稀に順序が前後する。
             // 最新の描写でなければスキップ
@@ -1543,19 +1492,9 @@ namespace Marmi
                 PicPanel.AnimateSlideIn(screenImage, pageDirection);
             }
 
-            #region ページを描写
-
             PicPanel.bmp = screenImage;
             PicPanel.ResetView();
             PicPanel.fastDraw = false;
-
-            //ver1.78コメントアウト
-            ////常に画面切り替わり時はフィットモードで起動
-            //float r = PicPanel.FittingRatio;
-            //if (r > 1.0f && App.Config.noEnlargeOver100p)
-            //	r = 1.0f;
-            //PicPanel.ZoomRatio = r;
-            //PicPanel.AjustViewAndShow();
 
             //ver1.78 倍率をオプション指定できるように変更
             if (!App.Config.keepMagnification     //倍率維持モードではない
@@ -1568,16 +1507,13 @@ namespace Marmi
                 PicPanel.ZoomRatio = r;
             }
 
+            //ページを描写
             PicPanel.AjustViewAndShow();
-
-            #endregion ページを描写
 
             //1ページ表示か2ページ表示か
             //viewPages = CanDualView(index) ? 2 : 1;
             g_viewPages = (int)screenImage.Tag;
             PicPanel.State = PicturePanel.DrawStatus.idle;
-
-            #region 終了処理
 
             //カーソルを元に戻す
             this.Cursor = Cursors.Default;
@@ -1588,25 +1524,9 @@ namespace Marmi
 
             //サイドバーでアイテムを中心に
             if (g_Sidebar.Visible)
-                g_Sidebar.SetItemToCenter(g_pi.NowViewPage);
+                g_Sidebar.SetItemToCenter(App.g_pi.NowViewPage);
 
-            //ver1.37
-            //スクリーンキャッシュを取得
-            //さらに不要なメモリを解放し、GCする
-            //ThreadPool.QueueUserWorkItem(dummy =>
-            //{
-            //    // ver1.38 Idleで毎回やらずにSetViewPageの最後でやる
-            //    getScreenCache();
-            //    PurgeScreenCache();
-            //    //FileCacheもクリア
-            //    g_pi.FileCacheCleanUp2(App.Config.CacheSize);
-            //    //GC
-            //    //Uty.ForceGC();
-            //});
-            //ver1.51 Idle()で作るためのフラグ
             needMakeScreenCache = true;
-
-            #endregion 終了処理
 
             //PicPanel.Message = string.Empty;
             PicPanel.State = PicturePanel.DrawStatus.idle;
@@ -1614,13 +1534,13 @@ namespace Marmi
         }
 
         //ver1.35 前のページ番号。すでに先頭ページなら-1
-        private static int GetPrevPage(int index)
+        private static int GetPrevPageIndex(int index)
         {
             if (index > 0)
             {
                 int declimentPages = -1;
                 //2ページ減らすことが出来るか
-                if (CanDualView(g_pi.NowViewPage - 2))
+                if (CanDualView(App.g_pi.NowViewPage - 2))
                     declimentPages = -2;
 
                 int ret = index + declimentPages;
@@ -1632,11 +1552,11 @@ namespace Marmi
         }
 
         //ver1.36次のページ番号。すでに最終ページなら-1
-        private static int GetNextPage(int index)
+        private static int GetNextPageIndex(int index)
         {
             int pages = CanDualView(index) ? 2 : 1;
 
-            if (index + pages <= g_pi.Items.Count - 1)
+            if (index + pages <= App.g_pi.Items.Count - 1)
                 return (index + pages);
             else
                 //最終ページ
@@ -1646,7 +1566,7 @@ namespace Marmi
         public static void AsyncGetBitmap(int index, MethodInvoker action)
         {
             //キャッシュを持っていれば非同期しない
-            if (g_pi.hasCacheImage(index))
+            if (App.g_pi.hasCacheImage(index))
             {
                 action?.Invoke();
             }
@@ -1668,7 +1588,7 @@ namespace Marmi
 
         public static Bitmap SyncGetBitmap(int index)
         {
-            var bmp = g_pi.GetBitmapFromCache(index);
+            var bmp = App.g_pi.GetBitmapFromCache(index);
 
             if (bmp != null)
             {
@@ -1685,7 +1605,7 @@ namespace Marmi
                 sw.Stop();
 
                 if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    return g_pi.GetBitmapFromCache(index);
+                    return App.g_pi.GetBitmapFromCache(index);
                 else
                 {
                     Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
@@ -1702,8 +1622,8 @@ namespace Marmi
         /// <returns></returns>
         private static Size SyncGetBitmapSize(int index)
         {
-            if (g_pi.Items[index].hasInfo)
-                return g_pi.Items[index].bmpsize;
+            if (App.g_pi.Items[index].hasInfo)
+                return App.g_pi.Items[index].bmpsize;
             else
             {
                 //非同期のGetBitmap()を読み終わるまで待つ
@@ -1714,8 +1634,8 @@ namespace Marmi
                     Application.DoEvents();
                 sw.Stop();
 
-                if (g_pi.Items[index].hasInfo)
-                    return g_pi.Items[index].bmpsize;
+                if (App.g_pi.Items[index].hasInfo)
+                    return App.g_pi.Items[index].bmpsize;
                 else
                     return Size.Empty;
             }
@@ -1737,7 +1657,7 @@ namespace Marmi
             }
 
             //ver1.81 サムネイル登録
-            g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
+            App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
 
             if (App.Config.dualView && CanDualView(index))
             {
@@ -1751,7 +1671,7 @@ namespace Marmi
                 }
 
                 //ver1.81 サムネイル登録
-                g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
+                App.g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
 
                 //合成ページを作る
                 int width1 = bmp1.Width;
@@ -1765,7 +1685,7 @@ namespace Marmi
                 using (Graphics g = Graphics.FromImage(returnBmp))
                 {
                     g.Clear(App.Config.BackColor);
-                    if (g_pi.PageDirectionIsLeft)
+                    if (App.g_pi.PageDirectionIsLeft)
                     {
                         //左から右へ
                         //2枚目(左）を描写
@@ -1806,7 +1726,7 @@ namespace Marmi
             //Sidebar
             toolStripButton_Sidebar.Checked = g_Sidebar.Visible;
 
-            if (g_pi.Items == null || g_pi.Items.Count < 1)
+            if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
                 //ファイルを閲覧していない場合のツールバー
                 g_trackbar.Enabled = false;
@@ -1860,11 +1780,11 @@ namespace Marmi
                     {
                         //入れ替え
                         toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
-                        toolButtonRight.Enabled = (bool)(g_pi.NowViewPage != 0);    //先頭ページチェック
+                        toolButtonRight.Enabled = (bool)(App.g_pi.NowViewPage != 0);    //先頭ページチェック
                     }
                     else
                     {
-                        toolButtonLeft.Enabled = (bool)(g_pi.NowViewPage != 0); //先頭ページチェック
+                        toolButtonLeft.Enabled = (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
                         toolButtonRight.Enabled = !IsLastPageViewing();     //最終ページチェック
                     }
 
@@ -1875,11 +1795,13 @@ namespace Marmi
                     toolStripButton_ZoomFit.Checked = IsFitToScreen();
 
                     //Favorite
-                    if (g_pi.Items[g_pi.NowViewPage].isBookMark)
+                    if (App.g_pi.Items[App.g_pi.NowViewPage].isBookMark)
+                    {
                         toolStripButton_Favorite.Checked = true;
+                    }
                     else if (g_viewPages == 2
-                        && g_pi.NowViewPage < g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
-                        && g_pi.Items[g_pi.NowViewPage + 1].isBookMark) //
+                        && App.g_pi.NowViewPage < App.g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
+                        && App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark) //
                         toolStripButton_Favorite.Checked = true;
                     else
                         toolStripButton_Favorite.Checked = false;
@@ -1946,10 +1868,10 @@ namespace Marmi
             int index = 0;
             foreach (string name in files)
             {
-                if (Uty.isPictureFilename(name))
+                if (Uty.IsPictureFilename(name))
                 {
                     FileInfo fi = new FileInfo(name);
-                    g_pi.Items.Add(new ImageInfo(index++, name, fi.CreationTime, fi.Length));
+                    App.g_pi.Items.Add(new ImageInfo(index++, name, fi.CreationTime, fi.Length));
                 }
             }
 
@@ -1968,11 +1890,11 @@ namespace Marmi
         /// <returns>最終ページであればtrue</returns>
         private bool IsLastPageViewing()
         {
-            if (string.IsNullOrEmpty(g_pi.PackageName))
+            if (string.IsNullOrEmpty(App.g_pi.PackageName))
                 return false;
-            if (g_pi.Items.Count <= 1)
+            if (App.g_pi.Items.Count <= 1)
                 return false;
-            return (bool)(g_pi.NowViewPage + g_viewPages >= g_pi.Items.Count);
+            return (bool)(App.g_pi.NowViewPage + g_viewPages >= App.g_pi.Items.Count);
         }
 
         /// <summary>
@@ -2052,7 +1974,7 @@ namespace Marmi
         private static bool CanDualView(int index)
         {
             //最後のページになっていないか確認
-            if (index >= g_pi.Items.Count - 1 || index < 0)
+            if (index >= App.g_pi.Items.Count - 1 || index < 0)
                 return false;
 
             //コンフィグ条件を確認
@@ -2064,15 +1986,15 @@ namespace Marmi
                 return true;
 
             //1枚目チェック
-            if (!g_pi.Items[index].hasInfo)
+            if (!App.g_pi.Items[index].hasInfo)
                 SyncGetBitmapSize(index);
-            if (g_pi.Items[index].isFat)
+            if (App.g_pi.Items[index].isFat)
                 return false; //横長だった
 
             //２枚目チェック
-            if (!g_pi.Items[index + 1].hasInfo)
+            if (!App.g_pi.Items[index + 1].hasInfo)
                 SyncGetBitmapSize(index + 1);
-            if (g_pi.Items[index + 1].isFat)
+            if (App.g_pi.Items[index + 1].isFat)
                 return false; //横長だった
 
             //全て縦長だった時の処理
@@ -2081,7 +2003,7 @@ namespace Marmi
 
             //2画像の高さがほとんど変わらなければtrue
             const int ACCEPTABLE_RANGE = 200;
-            return Math.Abs(g_pi.Items[index].height - g_pi.Items[index + 1].height) < ACCEPTABLE_RANGE;
+            return Math.Abs(App.g_pi.Items[index].height - App.g_pi.Items[index + 1].height) < ACCEPTABLE_RANGE;
         }
 
         // ユーティリティ系：画像キャッシュ *********************************************/
@@ -2092,23 +2014,23 @@ namespace Marmi
         /// 前後ページの画面キャッシュを作成する
         /// 現在見ているページを中心とする
         /// </summary>
-        private void MakeScreenCache()
+        private static void MakeScreenCache()
         {
             //ver1.37 スレッドで使うことを前提にロック
             lock ((App.ScreenCache as ICollection).SyncRoot)
             {
                 //前のページ
-                int ix = GetPrevPage(g_pi.NowViewPage);
+                int ix = GetPrevPageIndex(App.g_pi.NowViewPage);
                 if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Prev");
                     var bmp = MakeOriginalSizeImage(ix);
-                    if(bmp!=null)
+                    if (bmp != null)
                         App.ScreenCache.Add(ix, bmp);
                 }
 
                 //前のページ
-                ix = GetNextPage(g_pi.NowViewPage);
+                ix = GetNextPageIndex(App.g_pi.NowViewPage);
                 if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Next");
@@ -2125,7 +2047,7 @@ namespace Marmi
         private static void PurgeScreenCache()
         {
             //削除候補をリストアップ
-            int now = g_pi.NowViewPage;
+            int now = App.g_pi.NowViewPage;
             const int DISTANCE = 2;
             List<int> deleteCandidate = new List<int>();
 
@@ -2209,20 +2131,20 @@ namespace Marmi
         private void RecycleBinNowPage()
         {
             //アイテムがなにもなければなにもしない
-            if (g_pi.Items.Count == 0)
+            if (App.g_pi.Items.Count == 0)
                 return;
             //2ページモードの時もなにもしない
             if (g_viewPages == 2)
                 return;
             //アーカイブに対してもなにもしない
-            if (g_pi.PackType == PackageType.Archive)
+            if (App.g_pi.PackType == PackageType.Archive)
                 return;
 
             //今のページ番号を保存
-            int now = g_pi.NowViewPage;
-            string nowfile = g_pi.Items[now].filename;
+            int now = App.g_pi.NowViewPage;
+            string nowfile = App.g_pi.Items[now].filename;
 
-            int next = GetNextPage(now);
+            int next = GetNextPageIndex(now);
             if (next != -1)
             {
                 //後ろにページがあるので後ろのページを表示
@@ -2230,7 +2152,7 @@ namespace Marmi
                 SetViewPage(next);
 
                 //削除されたためページ番号を戻す
-                g_pi.NowViewPage = now;
+                App.g_pi.NowViewPage = now;
             }
             else if (now > 0)
             {
@@ -2252,7 +2174,7 @@ namespace Marmi
             Debug.WriteLine(now.ToString() + "," + nowfile, "Delete");
 
             //piから削除
-            g_pi.Items.RemoveAt(now);
+            App.g_pi.Items.RemoveAt(now);
 
             //ScreenCacheから削除
             App.ScreenCache.Clear();
@@ -2271,7 +2193,7 @@ namespace Marmi
             }
             else
             {
-                if (g_pi.Items.Count == 0)
+                if (App.g_pi.Items.Count == 0)
                     return;
 
                 g_ClearPanel.ShowAndClose(
@@ -2285,7 +2207,7 @@ namespace Marmi
 
         private void SlideShowTimer_Tick(object sender, EventArgs e)
         {
-            if (GetNextPage(g_pi.NowViewPage) == -1)
+            if (GetNextPageIndex(App.g_pi.NowViewPage) == -1)
                 StopSlideShow();
             else
                 NavigateToForword();
