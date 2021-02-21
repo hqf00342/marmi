@@ -411,7 +411,7 @@ namespace Marmi
                     //}));
                     AsyncIO.AddJobLow(index, () =>
                     {
-                        var bmp = Form1.SyncGetBitmap(index);
+                        var bmp = Bmp.SyncGetBitmap(index);
                         App.g_pi.ThumnailMaker(index, bmp);
                         CalcAllItemPos();
                         if (this.Visible)

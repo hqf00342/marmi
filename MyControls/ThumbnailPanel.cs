@@ -783,7 +783,7 @@ namespace Marmi
             {
                 //画像がないときは非同期で取ってくる
                 //スタック型の非同期GetBitmapに変更
-                Form1.AsyncGetBitmap(item, () =>
+                Bmp.AsyncGetBitmap(item, () =>
                 {
                     //ver1.75 サムネイルがないので作る
                     App.g_pi.AsyncThumnailMaker(item);
@@ -1025,7 +1025,7 @@ namespace Marmi
                     //orgBitmap = ((Form1)Parent).GetBitmap(item);
                     //orgBitmap = Form1.g_pi.GetBitmap(item);
                     //ver1.50
-                    orgBitmap = Form1.SyncGetBitmap(item);
+                    orgBitmap = Bmp.SyncGetBitmap(item);
                 }));
             }
             else
@@ -1033,7 +1033,7 @@ namespace Marmi
                 //orgBitmap = ((Form1)Parent).GetBitmap(item);
                 //orgBitmap = Form1.g_pi.GetBitmap(item);
                 //ver1.50
-                orgBitmap = Form1.SyncGetBitmap(item);
+                orgBitmap = Bmp.SyncGetBitmap(item);
             }
 
             return orgBitmap;

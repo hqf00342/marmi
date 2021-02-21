@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Bmp.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\DefaultThumbSize.cs" />

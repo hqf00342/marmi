@@ -57,13 +57,12 @@ namespace Marmi
 
         #region --- データクラス ---
 
-        private List<string> DeleteDirList = new List<string>();    //削除候補ディレクトリ
+        private readonly List<string> DeleteDirList = new List<string>();    //削除候補ディレクトリ
 
         //ver1.35 スクリーンキャッシュ
         //private Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
 
         #endregion --- データクラス ---
-
 
         //非同期全展開用SevenZipWrapper
         private SevenZipWrapper m_AsyncSevenZip = null;
@@ -83,7 +82,7 @@ namespace Marmi
         private delegate void StatusbarRenew(string s);
 
         //ver1.35 スライドショータイマー
-        private System.Windows.Forms.Timer SlideShowTimer = new System.Windows.Forms.Timer();
+        private readonly System.Windows.Forms.Timer SlideShowTimer = new System.Windows.Forms.Timer();
 
         //スライドショー中かどうか
         public bool IsSlideShow => SlideShowTimer.Enabled;
@@ -251,10 +250,7 @@ namespace Marmi
             }
 
             //7z解凍をしていたら中断
-            if (m_AsyncSevenZip != null)
-            {
-                m_AsyncSevenZip.CancelAsyncExtractAll();
-            }
+            m_AsyncSevenZip?.CancelAsyncExtractAll();
 
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
@@ -1111,13 +1107,6 @@ namespace Marmi
                 string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, App.g_pi.Items.Count);
 
                 //スタックに入れる
-                //App.stack.PushLow(new KeyValuePair<int, Delegate>(cnt, (MethodInvoker)(() =>
-                //{
-                //    SetStatusbarInfo(s);
-                //    //読み込んだものをPurge対象にする
-                //    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
-                //})));
-
                 AsyncIO.AddJobLow(-1, () =>
                 {
                     SetStatusbarInfo(s);
@@ -1125,12 +1114,7 @@ namespace Marmi
                     App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 });
             }
-            //読み込み完了メッセージもPush
-            //App.stack.PushLow(new KeyValuePair<int, Delegate>(App.g_pi.Items.Count - 1, (MethodInvoker)(() =>
-            //{
-            //    SetStatusbarInfo("事前画像情報読み込み完了");
-            //})));
-
+            //読み込み完了メッセージ
             AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
         }
 
@@ -1155,12 +1139,8 @@ namespace Marmi
         /// D&Dやアプリ起動時に呼ばれる初期化ルーチン
         /// スレッドを止め、すべての状態を初期化する。
         /// 読み込み対象のファイルについては一切何もしない。
-        /// Form1_Load()
-        /// Form1_FormClosed()
-        /// OpenFileAndStart()
-        /// Form1_DragDrop()
+        /// Form1_Load(), Form1_FormClosed(), OpenFileAndStart(), Form1_DragDrop()
         /// </summary>
-        ///
         private void InitControls()
         {
             //サムネイルモードの解放
@@ -1200,10 +1180,7 @@ namespace Marmi
             //g_pi = new PackageInfo();
 
             //7z解凍をしていたら中断
-            if (m_AsyncSevenZip != null)
-            {
-                m_AsyncSevenZip.CancelAsyncExtractAll();
-            }
+            m_AsyncSevenZip?.CancelAsyncExtractAll();
             //tempフォルダがあれば削除
             //if (!string.IsNullOrEmpty(g_pi.tempDirname))
             //{
@@ -1243,30 +1220,6 @@ namespace Marmi
             //GC
             //Uty.ForceGC();
         }
-
-        //private void saveDBFile()
-        //{
-        //    if (App.Config.isSaveThumbnailCache && g_pi.Items.Count > 0)
-        //    {
-        //        saveThumbnailDBFile(g_pi);
-        //    }
-        //}
-        //private void saveDBFileOnThread()
-        //{
-        //    if (App.Config.isSaveThumbnailCache && g_pi.Items.Count > 0)
-        //    {
-        //        PackageInfo savedata = g_pi;
-        //        Thread t = new Thread(() =>
-        //        {
-        //            saveThumbnailDBFile(savedata);
-        //            savedata.Dispose();
-        //        });
-        //        t.Name = "SaveThumbnail Thread";
-        //        t.IsBackground = false;
-        //        setStatusbarInfo("サムネイル保存中");
-        //        t.Start();
-        //    }
-        //}
 
         private void SortPackage()
         {
@@ -1397,7 +1350,7 @@ namespace Marmi
         /// 前のページに戻らないようにdrawOrderTickを導入
         /// </summary>
         /// <param name="index">インデックス番号</param>
-        /// <param name="drawOrderTick">描写順序を示すオーダー時間</param>
+        /// <param name="drawOrderTick">描写順序を示すオーダー時間 = DateTime.Now.Ticks</param>
         public void SetViewPage(int index, long drawOrderTick)
         {
             //ver1.09 オプションダイアログを閉じると必ずここに来ることに対するチェック
@@ -1436,7 +1389,7 @@ namespace Marmi
                 //画像作成をスレッドプールに登録
                 ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    var img = MakeOriginalSizeImage(index);
+                    var img = Bmp.MakeOriginalSizeImage(index);
                     this.Invoke((MethodInvoker)(() =>
                     {
                         if (img == null)
@@ -1564,160 +1517,6 @@ namespace Marmi
                 return -1;
         }
 
-        public static void AsyncGetBitmap(int index, Action uiAction)
-        {
-            //キャッシュを持っていれば非同期しない
-            if (App.g_pi.hasCacheImage(index))
-            {
-                uiAction?.Invoke();
-            }
-
-            //ver1.54 HighQueueとして登録されているかどうか確認する。
-            //var array = App.stack.ToArrayHigh();
-            var array = AsyncIO.GetAllJob();
-            foreach (var elem in array)
-            {
-                if (elem.Key == index)
-                {
-                    Debug.WriteLine($"AsyncGetBitmap() : Skip. {index} is already queued.");
-                    return;
-                }
-            }
-
-            //非同期するためにPush
-            //App.stack.Push(new KeyValuePair<int, Delegate>(index, action));
-            AsyncIO.AddJob(index, uiAction);
-        }
-
-        public static Bitmap SyncGetBitmap(int index)
-        {
-            var bmp = App.g_pi.GetBitmapFromCache(index);
-
-            if (bmp != null)
-            {
-                return bmp;
-            }
-            else
-            {
-                bool asyncFinished = false;
-                Stopwatch sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, () => asyncFinished = true);
-
-                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    Application.DoEvents();
-                sw.Stop();
-
-                if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    return App.g_pi.GetBitmapFromCache(index);
-                else
-                {
-                    Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
-                    return null;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Bitmapサイズを取得する
-        /// Bitmap化しないだけ速いはず。
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        private static Size SyncGetBitmapSize(int index)
-        {
-            if (App.g_pi.Items[index].hasInfo)
-                return App.g_pi.Items[index].bmpsize;
-            else
-            {
-                //非同期のGetBitmap()を読み終わるまで待つ
-                bool asyncFinished = false;
-                var sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, () => asyncFinished = true);
-                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    Application.DoEvents();
-                sw.Stop();
-
-                if (App.g_pi.Items[index].hasInfo)
-                    return App.g_pi.Items[index].bmpsize;
-                else
-                    return Size.Empty;
-            }
-        }
-
-        private static Bitmap MakeOriginalSizeImage(int index)
-        {
-            Debug.WriteLine($"MakeOriginalSizeImage({index})");
-
-            //とりあえず1枚読め！
-            Bitmap bmp1 = SyncGetBitmap(index);
-            if (bmp1 == null)
-            {
-                //if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
-                //    PicPanel.Message = "画像ファイルを展開中です";
-                //else
-                //    PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
-                return null;
-            }
-
-            //ver1.81 サムネイル登録
-            App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
-
-            if (App.Config.dualView && CanDualView(index))
-            {
-                //2枚表示
-                Bitmap bmp2 = SyncGetBitmap(index + 1);
-                if (bmp2 == null)
-                {
-                    //2枚目の読み込みがエラーなので1枚表示にする
-                    bmp1.Tag = 1;
-                    return bmp1;
-                }
-
-                //ver1.81 サムネイル登録
-                App.g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
-
-                //合成ページを作る
-                int width1 = bmp1.Width;
-                int width2 = bmp2.Width;
-                int height1 = bmp1.Height;
-                int height2 = bmp2.Height;
-                Bitmap returnBmp = new Bitmap(
-                    width1 + width2,
-                    (height1 > height2) ? height1 : height2);
-
-                using (Graphics g = Graphics.FromImage(returnBmp))
-                {
-                    g.Clear(App.Config.BackColor);
-                    if (App.g_pi.PageDirectionIsLeft)
-                    {
-                        //左から右へ
-                        //2枚目(左）を描写
-                        g.DrawImage(bmp2, 0, 0, width2, height2);
-                        //1枚目（右）を描写
-                        g.DrawImage(bmp1, width2, 0, width1, height1);
-                    }
-                    else
-                    {
-                        //右から左へ
-                        //2枚目(左）を描写
-                        g.DrawImage(bmp1, 0, 0, width1, height1);
-                        //1枚目（右）を描写
-                        g.DrawImage(bmp2, width1, 0, width2, height2);
-                    }
-                }
-                bmp1.Dispose();
-                bmp2.Dispose();
-                returnBmp.Tag = 2;
-                return returnBmp;
-            }
-            else
-            {
-                //1枚表示
-                bmp1.Tag = 1;
-                return bmp1;
-            }
-        }
-
         // ユーティリティ系 *************************************************************/
         private void UpdateToolbar()
         {
@@ -1819,13 +1618,13 @@ namespace Marmi
             }
         }
 
-        //画面にフィットしているかどうか
+        /// <summary>表示中の画像が画面いっぱいにフィットしているかどうか</summary>
         private bool IsFitToScreen()
         {
             return Math.Abs(PicPanel.ZoomRatio - PicPanel.FittingRatio) < 0.001f;
         }
 
-        //100%表示かどうか
+        /// <summary>現在の表示が原寸かどうか</summary>
         private bool IsScreen100p()
         {
             return Math.Abs(PicPanel.ZoomRatio - 1.0f) < 0.001f;
@@ -1974,7 +1773,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス値</param>
         /// <returns>2画面表示できるときはtrue</returns>
-        private static bool CanDualView(int index)
+        public static bool CanDualView(int index)
         {
             //最後のページになっていないか確認
             if (index >= App.g_pi.Items.Count - 1 || index < 0)
@@ -1990,13 +1789,13 @@ namespace Marmi
 
             //1枚目チェック
             if (!App.g_pi.Items[index].hasInfo)
-                SyncGetBitmapSize(index);
+                Bmp.SyncGetBitmapSize(index);
             if (App.g_pi.Items[index].isFat)
                 return false; //横長だった
 
             //２枚目チェック
             if (!App.g_pi.Items[index + 1].hasInfo)
-                SyncGetBitmapSize(index + 1);
+                Bmp.SyncGetBitmapSize(index + 1);
             if (App.g_pi.Items[index + 1].isFat)
                 return false; //横長だった
 
@@ -2027,7 +1826,7 @@ namespace Marmi
                 if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Prev");
-                    var bmp = MakeOriginalSizeImage(ix);
+                    var bmp = Bmp.MakeOriginalSizeImage(ix);
                     if (bmp != null)
                         App.ScreenCache.Add(ix, bmp);
                 }
@@ -2037,7 +1836,7 @@ namespace Marmi
                 if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
                 {
                     Debug.WriteLine(ix, "getScreenCache() Add Next");
-                    var bmp = MakeOriginalSizeImage(ix);
+                    var bmp = Bmp.MakeOriginalSizeImage(ix);
                     if (bmp != null)
                         App.ScreenCache.Add(ix, bmp);
                 }
