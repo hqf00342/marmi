@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;	//ImageFormatter
+using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.Serialization;	//ISerializable
-
+using System.Runtime.Serialization;
+/*
+BitmapをJpegでシリアライズできるようにしたもの
+*/
 namespace Marmi
 {
-    /// <summary>
-    /// BitmapをJpegでシリアライズできるようにしたもの
-    /// </summary>
-
     [Serializable]
     internal class JpegSerializedImage : ISerializable
     {
@@ -17,13 +15,9 @@ namespace Marmi
         private Image _bmp;
 
         [NonSerialized]
-        private string SERIALISESTRING = "JPEG";
+        private readonly string SERIALISESTRING = "JPEG";
 
-        //[NonSerialized]
-        //ImageConverter ic = new ImageConverter();
-
-        //public Bitmap bitmap
-        public Image bitmap
+        public Image Bitmap
         {
             get { return _bmp; }
             set { _bmp = value; }
@@ -54,13 +48,15 @@ namespace Marmi
         protected JpegSerializedImage(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
-                throw new System.ArgumentNullException("info");
+                throw new System.ArgumentNullException(nameof(info));
             byte[] array = info.GetValue(SERIALISESTRING, typeof(byte[])) as byte[];
             //_bmp = ic.ConvertFrom(array) as Bitmap;
 
             //ver1.27 null対策。nullは0が1つだけ飛んでくる
             if (array.Length == 1 && array[0] == 0)
+            {
                 _bmp = null;
+            }
             else
             {
                 var ic = new ImageConverter();
@@ -73,27 +69,21 @@ namespace Marmi
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
-
-        #region ISerializable メンバ
-
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
-                throw new System.ArgumentNullException("info");
+                throw new ArgumentNullException(nameof(info));
 
             //ver1.27 nullのときは出力させないとしてみる
             //if (_bmp == null)
             //    return;
 
-            byte[] test = BitmapToByteArray(_bmp);
-
             //ver1.27 null対策。nullは0が1つだけ飛んでくる
+            var test = BitmapToByteArray(_bmp);
             if (test == null)
-                test = new byte[1] { 0 };
+                test = new byte[] { 0 };
             info.AddValue(SERIALISESTRING, test, test.GetType());
         }
-
-        #endregion ISerializable メンバ
 
         /// <summary>
         /// Serialize用コンバーター
@@ -105,7 +95,7 @@ namespace Marmi
             if (_bmp == null)
                 return null;
 
-            using (MemoryStream ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 bmp.Save(ms, ImageFormat.Jpeg);
                 ms.Close();

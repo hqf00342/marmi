@@ -367,9 +367,9 @@ namespace Marmi
             //サムネイルをクリアする
             for (int i = 0; i < App.g_pi.Items.Count; i++)
             {
-                if (App.g_pi.Items[i].thumbnail != null)
-                    App.g_pi.Items[i].thumbnail.Dispose();
-                App.g_pi.Items[i].thumbnail = null;
+                if (App.g_pi.Items[i].Thumbnail != null)
+                    App.g_pi.Items[i].Thumbnail.Dispose();
+                App.g_pi.Items[i].Thumbnail = null;
             }
             //ver 1.55再登録
             AsyncLoadImageInfo();
@@ -775,7 +775,7 @@ namespace Marmi
                 {
                     ToolStripMenuItem item = new ToolStripMenuItem();
                     item.Text = Path.GetFileName(ii.filename);
-                    item.Image = BitmapUty.MakeSquareThumbnailImage(ii.thumbnail, 40);
+                    item.Image = BitmapUty.MakeSquareThumbnailImage(ii.Thumbnail, 40);
                     item.ImageScaling = ToolStripItemImageScaling.None;
                     int ix = count;
                     item.Tag = count;

@@ -776,7 +776,7 @@ namespace Marmi
 
             //描写するビットマップを準備
             //bool isDrawFrame = true;
-            Bitmap drawBitmap = m_thumbnailSet[item].thumbnail as Bitmap;
+            Bitmap drawBitmap = m_thumbnailSet[item].Thumbnail as Bitmap;
             Rectangle imageRect = GetThumbImageRectangle(item);
 
             if (drawBitmap == null)
@@ -1090,7 +1090,7 @@ namespace Marmi
             int w;                      //描写画像の幅
             int h;                      //描写画像の高さ
 
-            Image drawBitmap = m_thumbnailSet[itemIndex].thumbnail;
+            Image drawBitmap = m_thumbnailSet[itemIndex].Thumbnail;
             if (drawBitmap == null)
             {
                 //まだサムネイルは準備できていないので画像マークを呼んでおく
@@ -1099,13 +1099,13 @@ namespace Marmi
                 w = drawBitmap.Width;
                 h = drawBitmap.Height;
             }
-            else if (m_thumbnailSet[itemIndex].width <= THUMBNAIL_SIZE
-                     && m_thumbnailSet[itemIndex].height <= THUMBNAIL_SIZE)
+            else if (m_thumbnailSet[itemIndex].Width <= THUMBNAIL_SIZE
+                     && m_thumbnailSet[itemIndex].Height <= THUMBNAIL_SIZE)
             {
                 //オリジナルが小さいのでリサイズしない。
                 //canExpand = false;
-                w = m_thumbnailSet[itemIndex].width;
-                h = m_thumbnailSet[itemIndex].height;
+                w = m_thumbnailSet[itemIndex].Width;
+                h = m_thumbnailSet[itemIndex].Height;
             }
             else
             {
@@ -1176,8 +1176,8 @@ namespace Marmi
             {
                 string s = String.Format(
                     "{0:#,0}x{1:#,0} px",
-                    m_thumbnailSet[item].width,
-                    m_thumbnailSet[item].height);
+                    m_thumbnailSet[item].Width,
+                    m_thumbnailSet[item].Height);
                 g.DrawString(s, m_font, new SolidBrush(m_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }

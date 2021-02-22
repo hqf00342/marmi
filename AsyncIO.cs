@@ -64,7 +64,7 @@ namespace Marmi
                     //画像読み込み
                     try //不意のファイルドロップによりindexがOutOfRangeになるため。効果なさそう
                     {
-                        if (!App.g_pi.Items[index].cacheImage.hasImage)
+                        if (!App.g_pi.Items[index].cacheImage.HasImage)
                         {
                             Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
                             //7zをOpenしていなければOpen

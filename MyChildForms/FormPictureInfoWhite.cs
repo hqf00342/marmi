@@ -147,12 +147,12 @@ namespace Marmi
             drawRect.Inflate(-PADDING, -PADDING);
             int x = drawRect.X;
             int y = drawRect.Y;
-            if (ImgInfo.thumbnail != null)
+            if (ImgInfo.Thumbnail != null)
             {
                 //サムネイルサイズが120ではないので倍率を計算
-                float mag = BitmapUty.GetMagnificationWithFixAspectRatio(ImgInfo.thumbnail.Size, THUMBSIZE);
-                int ThumbWidth = (int)(ImgInfo.thumbnail.Width * mag);
-                int ThumbHeight = (int)(ImgInfo.thumbnail.Height * mag);
+                float mag = BitmapUty.GetMagnificationWithFixAspectRatio(ImgInfo.Thumbnail.Size, THUMBSIZE);
+                int ThumbWidth = (int)(ImgInfo.Thumbnail.Width * mag);
+                int ThumbHeight = (int)(ImgInfo.Thumbnail.Height * mag);
 
                 Rectangle imgRect = new Rectangle(
                     x + (THUMBSIZE - ThumbWidth) / 2,     // X位置（左上の）
@@ -160,7 +160,7 @@ namespace Marmi
                     ThumbWidth,
                     ThumbHeight
                     );
-                g.DrawImage(ImgInfo.thumbnail, imgRect);
+                g.DrawImage(ImgInfo.Thumbnail, imgRect);
                 //x + (THUMBSIZE - ThumbWidth) / 2,     // X位置（左上の）
                 //y + (THUMBSIZE - ThumbHeight) / 2,      // Y位置（左上の）
                 //ThumbWidth,
@@ -192,8 +192,8 @@ namespace Marmi
             //文字の描写:ピクセル数
             sz = string.Format(
                 "{0:N0} x {1:N0} pixels",
-                ImgInfo.width,
-                ImgInfo.height
+                ImgInfo.Width,
+                ImgInfo.Height
                 );
             g.DrawString(sz, fontS, Brushes.Black, x, y);
             y += HeightS + LINEPADDING;

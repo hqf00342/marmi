@@ -342,8 +342,8 @@ namespace Marmi
                     m_packageInfo.Items[item].filename,
                     m_packageInfo.Items[item].createDate,
                     m_packageInfo.Items[item].length,
-                    m_packageInfo.Items[item].width,
-                    m_packageInfo.Items[item].height
+                    m_packageInfo.Items[item].Width,
+                    m_packageInfo.Items[item].Height
                 );
 
                 //ToolTip‚ÌˆÊ’u‚ğİ’è ver0.9833
@@ -578,10 +578,10 @@ namespace Marmi
 
             x = rect.X + PADDING + NUM_WIDTH;
             y = rect.Y + PADDING;
-            if (ImgInfo.thumbnail != null)
+            if (ImgInfo.Thumbnail != null)
             {
-                int ThumbWidth = ImgInfo.thumbnail.Width;
-                int ThumbHeight = ImgInfo.thumbnail.Height;
+                int ThumbWidth = ImgInfo.Thumbnail.Width;
+                int ThumbHeight = ImgInfo.Thumbnail.Height;
 
                 //Šg‘åk¬ˆ— {}‚ğ‚¿‚á‚ñ‚Æ‚Â‚¯‚È‚¢‚Æ‚¾‚ß
                 float ratio = 1.0F;
@@ -605,7 +605,7 @@ namespace Marmi
 
                 //ƒTƒ€ƒlƒCƒ‹‰æ‘œ‚Ì•`Ê
                 g.DrawImage(
-                    ImgInfo.thumbnail,
+                    ImgInfo.Thumbnail,
                     Rectangle.Round(drawImageRect));
 
                 //˜g‚Ì•`Ê
@@ -702,8 +702,8 @@ namespace Marmi
             //•¶š‚Ì•`Ê:ƒsƒNƒZƒ‹”
             sz = string.Format(
                 "{0:N0}x{1:N0}pixels",
-                ImgInfo.width,
-                ImgInfo.height
+                ImgInfo.Width,
+                ImgInfo.Height
                 );
             g.DrawString(sz, fontS, Brushes.RoyalBlue, strRect);
 

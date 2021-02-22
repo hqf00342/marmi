@@ -176,15 +176,15 @@ namespace Marmi
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             x = e.Bounds.X + PADDING + NUM_WIDTH;
             y = e.Bounds.Y + PADDING;
-            if (ImgInfo.thumbnail != null)
+            if (ImgInfo.Thumbnail != null)
             {
-                float mag = BitmapUty.GetMagnificationWithFixAspectRatio(ImgInfo.thumbnail.Size, THUMBSIZE);
-                int ThumbWidth = (int)(ImgInfo.thumbnail.Width * mag);
-                int ThumbHeight = (int)(ImgInfo.thumbnail.Height * mag);
+                float mag = BitmapUty.GetMagnificationWithFixAspectRatio(ImgInfo.Thumbnail.Size, THUMBSIZE);
+                int ThumbWidth = (int)(ImgInfo.Thumbnail.Width * mag);
+                int ThumbHeight = (int)(ImgInfo.Thumbnail.Height * mag);
 
                 //サムネイル画像の描写
                 g.DrawImage(
-                    ImgInfo.thumbnail,
+                    ImgInfo.Thumbnail,
                     x + (THUMBSIZE - ThumbWidth) / 2,     // X位置（左上の）
                     y + (THUMBSIZE - ThumbHeight) / 2,      // Y位置（左上の）
                     ThumbWidth,
@@ -237,8 +237,8 @@ namespace Marmi
             //文字の描写:ピクセル数
             sz = string.Format(
                 "{0:N0}x{1:N0}pixels",
-                ImgInfo.width,
-                ImgInfo.height
+                ImgInfo.Width,
+                ImgInfo.Height
                 );
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
             y += HeightS + PADDING;

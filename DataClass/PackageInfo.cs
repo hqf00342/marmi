@@ -107,7 +107,7 @@ namespace Marmi
             if (index < 0 || index >= Items.Count)
                 return false;
 
-            return Items[index].cacheImage.hasImage;
+            return Items[index].cacheImage.HasImage;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Marmi
             //ver1.73 index check
             if (index > Items.Count) return;
 
-            if (Items[index].cacheImage.hasImage)
+            if (Items[index].cacheImage.HasImage)
             {
                 ThreadPool.QueueUserWorkItem(dummy =>
                 {
@@ -180,7 +180,7 @@ namespace Marmi
                         Bitmap _bmp = Items[index].cacheImage.ToBitmap();
                         if (_bmp != null)
                         {
-                            Items[index].resisterThumbnailImage(_bmp);
+                            Items[index].ResisterThumbnailImage(_bmp);
 
                             //ver1.81コメントアウト。悪さしそう
                             //_bmp.Dispose();
@@ -205,7 +205,7 @@ namespace Marmi
 
             ThreadPool.QueueUserWorkItem(dummy =>
             {
-                Items[index].resisterThumbnailImage(orgBitmap);
+                Items[index].ResisterThumbnailImage(orgBitmap);
                 //TODO:画像をDispose()すべき
                 orgBitmap.Dispose();
             });
@@ -217,7 +217,7 @@ namespace Marmi
             if (index > Items.Count) return;
 
             if (bmp != null)
-                Items[index].resisterThumbnailImage(bmp);
+                Items[index].ResisterThumbnailImage(bmp);
         }
 
         /// <summary>

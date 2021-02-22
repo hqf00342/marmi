@@ -1791,15 +1791,15 @@ namespace Marmi
                 return true;
 
             //1枚目チェック
-            if (!App.g_pi.Items[index].hasInfo)
+            if (!App.g_pi.Items[index].HasInfo)
                 Bmp.SyncGetBitmapSize(index);
-            if (App.g_pi.Items[index].isFat)
+            if (App.g_pi.Items[index].IsFat)
                 return false; //横長だった
 
             //２枚目チェック
-            if (!App.g_pi.Items[index + 1].hasInfo)
+            if (!App.g_pi.Items[index + 1].HasInfo)
                 Bmp.SyncGetBitmapSize(index + 1);
-            if (App.g_pi.Items[index + 1].isFat)
+            if (App.g_pi.Items[index + 1].IsFat)
                 return false; //横長だった
 
             //全て縦長だった時の処理
@@ -1808,7 +1808,7 @@ namespace Marmi
 
             //2画像の高さがほとんど変わらなければtrue
             const int ACCEPTABLE_RANGE = 200;
-            return Math.Abs(App.g_pi.Items[index].height - App.g_pi.Items[index + 1].height) < ACCEPTABLE_RANGE;
+            return Math.Abs(App.g_pi.Items[index].Height - App.g_pi.Items[index + 1].Height) < ACCEPTABLE_RANGE;
         }
 
         // ユーティリティ系：画像キャッシュ *********************************************/

@@ -19,14 +19,11 @@ namespace Marmi
         private const int TIF_HEADERI = 0x4949;
         private const int TIF_HEADERM = 0x4d4d;
 
-        private byte[] _internalBuffer = null;
+        private byte[] _rawImage = null;
 
-        public int Length => _internalBuffer == null ? 0 : _internalBuffer.Length;
+        public int Length => (_rawImage?.Length) ?? 0;
 
-        public bool hasImage => _internalBuffer != null;
-
-        ////////////////////////////////////////////////////////////////////////////////
-        // publicメソッド
+        public bool HasImage => _rawImage != null;
 
         /// <summary>
         /// 指定したファイル名をメモリバッファに登録する
@@ -45,7 +42,7 @@ namespace Marmi
 
         public void Load(byte[] buffer)
         {
-            _internalBuffer = buffer;
+            _rawImage = buffer;
         }
 
         /// <summary>
@@ -54,35 +51,25 @@ namespace Marmi
         /// <param name="st">登録ストリーム</param>
         public void Load(Stream st)
         {
-            MemoryStream ms;
-            if (st is MemoryStream) 
+            if (st is MemoryStream mem)
             {
                 //このままbyte[]にするのでSeek()不要
-                //st.Seek(0, SeekOrigin.Begin);
-                ms = st as MemoryStream;
+                _rawImage = mem.ToArray();
             }
             else
             {
                 //Seekしないと末尾にあるのでコピーできない
                 st.Seek(0, SeekOrigin.Begin);
-                ms = new MemoryStream((int)st.Length);
+                var ms = new MemoryStream();
                 st.CopyTo(ms);
-                //int len;
-                //byte[] buf = new byte[4096];
-                //while ((len = st.Read(buf, 0, buf.Length)) > 0)
-                //    ms.Write(buf, 0, len);
+                _rawImage = ms.ToArray();
+                ms.Close();
             }
-
-            //ms.Close();
-            //2021年2月21日：ToArray()にすべき
-            //_internalBuffer = ms.GetBuffer();
-            _internalBuffer = ms.ToArray();
-            ms.Close();
         }
 
         /// <summary>
         /// BitmapをBufferに登録する。
-        /// メモリー節約のためJpegにエンコードしている
+        /// メモリー節約のため png にエンコードしている
         /// </summary>
         /// <param name="bitmap">登録するBitmap</param>
         public void Load(Bitmap bitmap)
@@ -93,18 +80,14 @@ namespace Marmi
                 Clear();
                 return;
             }
-            //システム設定のpngで保存
+            //pngで保存
             MemoryStream ms = new MemoryStream();
-            //bitmap.Save(ms, ImageFormat.Png);
-            bitmap.Save(ms, ImageFormat.Jpeg);
+            bitmap.Save(ms, ImageFormat.Png);
             ms.Close();
-
-            //メモリを最小化するためにGetBuffer()ではなくToArray()を使う
-            //msdn:このメソッドは、MemoryStream が閉じられているときに機能します。
-            _internalBuffer = ms.ToArray();
+            _rawImage = ms.ToArray();
         }
 
-        public void Clear() => _internalBuffer = null;
+        public void Clear() => _rawImage = null;
 
         /// <summary>
         /// Raw Image をBitmapに変換する
@@ -112,15 +95,19 @@ namespace Marmi
         /// <returns>Bitmap。データがない場合はnull</returns>
         public Bitmap ToBitmap()
         {
-            if (_internalBuffer == null || _internalBuffer.Length == 0)
+            if (_rawImage == null || _rawImage.Length == 0)
                 return null;
 
             try
             {
-                ImageConverter ic = new ImageConverter();
-                return ic.ConvertFrom(_internalBuffer) as Bitmap;
+                var ic = new ImageConverter();
+                return ic.ConvertFrom(_rawImage) as Bitmap;
             }
             catch (ArgumentException)
+            {
+                return null;
+            }
+            catch(NotSupportedException)
             {
                 return null;
             }
@@ -137,7 +124,7 @@ namespace Marmi
         {
             int width = 0;
             int height = 0;
-            byte[] bs = _internalBuffer;
+            byte[] bs = _rawImage;
             if (bs == null)
                 return Size.Empty;
 
@@ -163,11 +150,11 @@ namespace Marmi
                         byte mark = bs[p + 1];
                         if (mark >= JPG_SOF0 && mark <= JPG_SOF15)
                         {
-                            height = bs[p + 5] * 256 + bs[p + 6];
-                            width = bs[p + 7] * 256 + bs[p + 8];
+                            height = (bs[p + 5] * 256) + bs[p + 6];
+                            width = (bs[p + 7] * 256) + bs[p + 8];
                             break;
                         }
-                        int len = bs[p + 2] * 256 + bs[p + 3];
+                        int len = (bs[p + 2] * 256) + bs[p + 3];
                         p = p + len + 2;    //2バイトはマーカー分
                     }
                     break;

@@ -1,20 +1,13 @@
 using System;
-using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
-using System.Drawing.Imaging;			// fadePictureBox ColorMatrix
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text;
-
-//using System.Xml.Serialization;		// XmlSerializer
-
+/*
+サムネイル画像を保存するためのクラス
+Exifから画像データを収集するなど高速にサムネイルを取得する
+*/
 namespace Marmi
 {
-    /********************************************************************************/
-    //サムネイル画像を保存するためのクラス
-    /********************************************************************************/
-
-    /// <summary>
-    /// サムネイル画像を保存するためのクラス。
-    /// Exifから画像データを収集するなど高速にサムネイルを取得する
-    /// </summary>
     [Serializable()]
     public class ImageInfo : IDisposable
     {
@@ -29,10 +22,8 @@ namespace Marmi
         //オリジナル画像サイズ
         public Size bmpsize = Size.Empty;
 
-        public int width { get { return bmpsize.Width; } }
-        public int height { get { return bmpsize.Height; } }
-        //public int width = 0;
-        //public int height = 0;
+        public int Width { get { return bmpsize.Width; } }
+        public int Height { get { return bmpsize.Height; } }
 
         //作成日
         public DateTime createDate;
@@ -47,32 +38,14 @@ namespace Marmi
         [NonSerialized]
         public RawImage cacheImage = new RawImage();
 
-        //public Bitmap image {
-        //    get
-        //    {
-        //        if (cacheImage.Length == 0)
-        //            return null;
-        //        else
-        //            return cacheImage.bitmap;
-        //    }
-        //}
-
         //ver1.26 JpegでSerializeするために変更
-        private JpegSerializedImage _thumbImage = new JpegSerializedImage();
+        private readonly JpegSerializedImage _thumbImage = new JpegSerializedImage();
 
-        public Bitmap thumbnail
+        public Bitmap Thumbnail
         {
-            get { return _thumbImage.bitmap as Bitmap; }
-            set { _thumbImage.bitmap = value; }
+            get { return _thumbImage.Bitmap as Bitmap; }
+            set { _thumbImage.Bitmap = value; }
         }
-
-        //ver1.56 SmallBitmap版thumbnail
-        //private SmallBitmap _thumb = new SmallBitmap();
-        //public Bitmap thumbnail
-        //{
-        //    get { return _thumb.bitmap; }
-        //    set { _thumb.Add(value); }
-        //}
 
         //アニメーションタイマー DateTime.Now.Ticks
         [NonSerialized]
@@ -91,7 +64,7 @@ namespace Marmi
         //回転情報 2011年12月24日
         private int _rotate = 0;
 
-        public int rotate
+        public int Rotate
         {
             get { return _rotate; }
             set { _rotate = value % 360; }
@@ -100,26 +73,20 @@ namespace Marmi
         //ver1.36 表示させるかどうか
         public bool isVisible;
 
-        //サムネイルパネル内での位置
-        //[NonSerialized()]
-        //public Point ThumbnailPos;
-
         //ver1.51 画像情報を持っているか
-        public bool hasInfo { get { return width != 0; } }
+        public bool HasInfo { get { return Width != 0; } }
 
         //ver1.54 縦長かどうか
-        public bool isTall { get { return height > width; } }
+        public bool IsTall { get { return Height > Width; } }
 
         //var1.54 横長かどうか
-        public bool isFat { get { return width > height; } }
+        public bool IsFat { get { return Width > Height; } }
 
         public ImageInfo(int index, string name, DateTime date, long bytes)
         {
             //初期化
-            thumbnail = null;
+            Thumbnail = null;
             isVisible = true;
-            //width = 0;
-            //height = 0;
             bmpsize = Size.Empty;
             animateStartTime = 0;
 
@@ -136,9 +103,9 @@ namespace Marmi
 
         public void Dispose()
         {
-            if (thumbnail != null)
-                thumbnail.Dispose();
-            thumbnail = null;
+            if (Thumbnail != null)
+                Thumbnail.Dispose();
+            Thumbnail = null;
             if (cacheImage != null)
                 cacheImage.Clear();
         }
@@ -150,36 +117,35 @@ namespace Marmi
         /// ver1.10 サムネイル画像をオリジナル画像から登録する。
         /// 上のLoadImage()を使わなくするために作成
         /// </summary>
-        /// <param name="orgSizeBitmap"></param>
-        public void resisterThumbnailImage(Bitmap orgSizeBitmap)
+        /// <param name="orgImage">元画像</param>
+        public void ResisterThumbnailImage(Bitmap orgImage)
         {
             //登録済みなら何もしない
-            if (thumbnail != null)
+            if (Thumbnail != null)
                 return;
 
-            //念のため。登録画像がなければクリア
-            if (orgSizeBitmap == null)
+            if (orgImage == null)
             {
-                thumbnail = null;
-                //width = 0;
-                //height = 0;
-                return;
+                Thumbnail = null;
             }
-
-            //ver1.26 高さ固定のサムネイルを作る
-            this.thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgSizeBitmap, THUMBNAIL_HEIGHT);
-            //this.width = orgSizeBitmap.Width;
-            //this.height = orgSizeBitmap.Height;
-            GetExifInfo(orgSizeBitmap);
+            else
+            {
+                //ver1.26 高さ固定のサムネイルを作る
+                this.Thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgImage, THUMBNAIL_HEIGHT);
+                GetExifInfo(orgImage);
+            }
         }
 
-        private void GetExifInfo(Image orgImage)
+        /// <summary>
+        /// Exif情報の取得。
+        /// http://cachu.xrea.jp/perl/ExifTAG.html
+        /// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
+        /// http://exif.org/specifications.html
+        /// </summary>
+        /// <param name="img">対象の画像</param>
+        private void GetExifInfo(Image img)
         {
-            //Exif情報の取得。
-            //http://cachu.xrea.jp/perl/ExifTAG.html
-            //http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
-            //http://exif.org/specifications.html
-            foreach (PropertyItem pi in orgImage.PropertyItems)
+            foreach (PropertyItem pi in img.PropertyItems)
             {
                 switch (pi.Id)
                 {
@@ -187,22 +153,18 @@ namespace Marmi
                         ExifISO = BitConverter.ToUInt16(pi.Value, 0);
                         break;
 
-                    case 0x9003: //撮影日時
-                                 //「YYYY:MM:DD HH:MM:SS」形式19文字
+                    case 0x9003: //撮影日時「YYYY:MM:DD HH:MM:SS」形式19文字
                         ExifDate = Encoding.ASCII.GetString(pi.Value, 0, 19);
-                        //date = date.Replace(':', '-').Replace(' ', '_');
                         break;
-                    //DateTime dt = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
                     case 0x010f: //Make
                         ExifMake = Encoding.ASCII.GetString(pi.Value);
                         ExifMake = ExifMake.Trim(new char[] { '\0' });
                         break;
 
                     case 0x0110: //Model
-                        ExifModel = Encoding.ASCII.GetString(pi.Value);
-                        ExifModel = ExifModel.Trim(new char[] { '\0' });
+                        ExifModel = Encoding.ASCII.GetString(pi.Value).Trim(new char[] { '\0' });
                         break;
-                }//switch
+                }
             }
         }
     }

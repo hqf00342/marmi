@@ -299,9 +299,9 @@ namespace Marmi
                     ItemPos item = new ItemPos();
                     item.pos.X = X;
                     item.pos.Y = PADDING;
-                    if (m_packageInfo.Items[i].thumbnail != null)
+                    if (m_packageInfo.Items[i].Thumbnail != null)
                     {
-                        item.size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].thumbnail.Size, THUMBSIZE);
+                        item.size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
                     }
                     else
                         item.size = new System.Drawing.Size(THUMBSIZE * 2 / 3, THUMBSIZE);
@@ -318,8 +318,8 @@ namespace Marmi
                     //ItemPos item = thumbnailPos[i];
                     thumbnailPos[i].pos.X = X;
                     thumbnailPos[i].pos.Y = PADDING;
-                    if (m_packageInfo.Items[i].thumbnail != null)
-                        thumbnailPos[i].size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].thumbnail.Size, THUMBSIZE);
+                    if (m_packageInfo.Items[i].Thumbnail != null)
+                        thumbnailPos[i].size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
                     else
                         thumbnailPos[i].size = new System.Drawing.Size(THUMBSIZE * 2 / 3, THUMBSIZE);
                     X += thumbnailPos[i].size.Width + PADDING;
@@ -365,7 +365,7 @@ namespace Marmi
 
             //ÉTÉCÉYí≤êÆ
             Bitmap img = BitmapUty.MakeHeightFixThumbnailImage(
-                m_packageInfo.Items[index].thumbnail as Bitmap,
+                m_packageInfo.Items[index].Thumbnail as Bitmap,
                 THUMBSIZE);
 
             if (img == null)
