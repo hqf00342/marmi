@@ -305,7 +305,7 @@ namespace Marmi
         {
             base.OnDragDrop(drgevent);
 
-            Uty.WriteLine("OnDragDrop() Start");
+            Debug.WriteLine("OnDragDrop() Start");
 
             //ドロップされた物がファイルかどうかチェック
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
@@ -315,14 +315,14 @@ namespace Marmi
                 string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
                 //Start(files);
                 AsyncStart(files);
-                Uty.WriteLine("OnDragDrop() End");
+                Debug.WriteLine("OnDragDrop() End");
             }
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            Uty.WriteLine("OnResize()");
+            Debug.WriteLine("OnResize()");
 
             //初期化が出来ていないときも帰れ
             //フォームが生成される前にもResize()は呼ばれる可能性がある。
@@ -801,10 +801,15 @@ namespace Marmi
                 //ver1.70 最終ページで次の書庫を開く
                 if (App.g_pi.PackType != PackageType.Directory)
                 {
+                    //次の書庫を探す
                     string filename = App.g_pi.PackageName;
                     string dirname = Path.GetDirectoryName(filename);
                     string[] files = Directory.GetFiles(dirname);
-                    Array.Sort(files, Uty.Compare_unsafeFast);
+
+                    //ファイル名でソートする
+                    //Array.Sort(files, Uty.Compare_unsafeFast);
+                    Array.Sort(files, NaturalStringComparer.CompareS);
+                    
                     bool match = false;
                     foreach (var s in files)
                     {
@@ -1226,8 +1231,8 @@ namespace Marmi
             //ファイルリストを並び替える
             if (App.g_pi.Items.Count > 0)
             {
-                NaturalOrderComparer2 noc = new NaturalOrderComparer2();
-                App.g_pi.Items.Sort(noc);
+                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
+                App.g_pi.Items.Sort(comparer);
             }
             return;
         }

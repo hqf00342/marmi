@@ -122,5 +122,14 @@ namespace Marmi
         }
 
         #endregion gdi32.dll
+
+        #region shlwapi.dll
+
+        //Natural Sortで利用
+        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+        public static extern int StrCmpLogicalW(string psz1, string psz2);
+
+        #endregion
+
     }
 }

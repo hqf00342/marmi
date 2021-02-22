@@ -411,8 +411,8 @@ namespace Marmi
             //ファイルリストを並び替える
             if (App.g_pi.Items.Count > 0)
             {
-                NaturalOrderComparer2 noc = new NaturalOrderComparer2();
-                App.g_pi.Items.Sort(noc);
+                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
+                App.g_pi.Items.Sort(comparer);
 
                 //サムネイル表示中であれば再描写させる
                 if (App.Config.isThumbnailView)
@@ -434,8 +434,8 @@ namespace Marmi
                 //StopThumbnailMakerThread();	//ソート中にスレッドが動いていないことを担保
                 //PauseThumbnailMakerThread();	//ver1.09 スレッド中断（Pause）
 
-                DateCompare dc = new DateCompare();
-                App.g_pi.Items.Sort(dc);
+                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.CreateDate);
+                App.g_pi.Items.Sort(comparer);
 
                 //サムネイル表示中であれば再描写させる
                 if (App.Config.isThumbnailView)

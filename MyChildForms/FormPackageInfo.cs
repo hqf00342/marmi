@@ -309,8 +309,8 @@ namespace Marmi
 
         private void buttonSortByName_Click(object sender, EventArgs e)
         {
-            NaturalOrderComparer2 noc = new NaturalOrderComparer2();
-            m_packageInfo.Items.Sort(noc);
+            var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
+            m_packageInfo.Items.Sort(comparer);
 
             //ListBoxを更新
             listBox1.TabIndex = listBox1.SelectedIndex;
@@ -322,8 +322,8 @@ namespace Marmi
 
         private void buttonSortByDate_Click(object sender, EventArgs e)
         {
-            DateCompare dc = new DateCompare();
-            m_packageInfo.Items.Sort(dc);
+            var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
+            m_packageInfo.Items.Sort(comparer);
 
             //ListBoxを更新
             listBox1.TabIndex = listBox1.SelectedIndex;
@@ -335,8 +335,8 @@ namespace Marmi
 
         private void buttonSortOrg_Click(object sender, EventArgs e)
         {
-            CustomSortCompare cs = new CustomSortCompare();
-            m_packageInfo.Items.Sort(cs);
+            var comparer = new ImageInfoComparer(ImageInfoComparer.Target.OriginalIndex);
+            m_packageInfo.Items.Sort(comparer);
 
             //ListBoxを更新
             listBox1.TabIndex = listBox1.SelectedIndex;
@@ -350,8 +350,10 @@ namespace Marmi
         {
             //元の順序にソート
             if (checkBoxSort.Enabled)
-                m_packageInfo.Items.Sort(new CustomSortCompare());
-
+            {
+                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.OriginalIndex);
+                m_packageInfo.Items.Sort(comparer);
+            }
             this.Close();
         }
 

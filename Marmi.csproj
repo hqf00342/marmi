@@ -98,6 +98,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />
+    <Compile Include="Uty\NaturalStringComparer.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\DefaultThumbSize.cs" />
@@ -128,7 +129,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataClass\AppGlobalConfig.cs" />
-    <Compile Include="DataClass\CompareClass.cs" />
+    <Compile Include="Uty\ImageInfoComparer.cs" />
     <Compile Include="DataClass\ImageInfo.cs" />
     <Compile Include="DataClass\MRUList.cs" />
     <Compile Include="DataClass\PrioritySafeQueue.cs" />

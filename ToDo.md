@@ -9,6 +9,7 @@
 - BmpからRawImage作るとき、jpegではなくpngにする
 - Task/ValueTask化の推進
 - 7zipライブラリの更新・併用
-  
+- Utyクラスの整理
+- Sortバグを修正
 
 ## 完了
