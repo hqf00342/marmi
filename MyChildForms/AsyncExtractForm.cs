@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Diagnostics;	//Trace
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;			//Path
-using System.Threading;		//Thread
+using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -202,7 +202,7 @@ namespace Marmi
             progressArchiveName = Path.GetFileName(archivename);
 
             //if(SupportUnrar5 && archivename.ToLower().EndsWith(".rar"))
-            if (Unrar.DllCheck() && archivename.ToLower().EndsWith(".rar"))
+            if (Unrar.DllCheck() && archivename.EndsWith(".rar", StringComparison.OrdinalIgnoreCase))
             {
                 //unrar5で展開する
                 //ファイル一覧を読み込む。
@@ -241,21 +241,16 @@ namespace Marmi
             else
             {
                 //7zipで展開
-                using (SevenZipWrapper sz = new SevenZipWrapper(archivename))
-                {
-                    //キャンセル処理のため登録
-                    now7z = sz;
-                    //イベント登録
-                    sz.ExtractEventHandler += new Action<string>(FileExtracting);
-                    //書庫内ファイル数
-                    TargetFileCount += sz.Items.Count;
-                    //展開開始
-                    sz.ExtractAll(extractDir);
-
-                    ////ver1.34展開したディレクトリ内を走査する
-                    //ver1.77 usingの外に移動
-                    //RecurseDir(extractDir);
-                }
+                var sz = new SevenZipWrapper();
+                sz.Open(archivename);
+                //キャンセル処理のため登録
+                now7z = sz;
+                //イベント登録
+                sz.ExtractEventHandler += new Action<string>(FileExtracting);
+                //書庫内ファイル数
+                TargetFileCount += sz.Items.Count;
+                //展開開始
+                sz.ExtractAll(extractDir);
             }
 
             //ver1.34展開したディレクトリ内を走査する
@@ -263,9 +258,7 @@ namespace Marmi
             RecurseDir(extractDir);
         }
 
-        /// <summary>
-        /// rar用のパスワード処理イベント実装
-        /// </summary>
+        /// <summary>rar用のパスワード処理イベント実装</summary>
         private void rar_PasswordRequired(object sender, PasswordRequiredEventArgs e)
         {
             FormPassword fp = new FormPassword();

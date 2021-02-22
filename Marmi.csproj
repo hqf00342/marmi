@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
+    <Compile Include="Interfaces\I7zipWrapper.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\DefaultThumbSize.cs" />
@@ -333,6 +334,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="7z64.dll" />
+    <None Include="ToDo.md" />
     <None Include="配布物\使い方%28詳細版%29.txt" />
     <None Include="配布物\SevenZipSharp.dll" />
     <Content Include="zic.ico" />

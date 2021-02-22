@@ -109,24 +109,23 @@ namespace Marmi
         /// </summary>
         /// <param name="archivename">書庫名</param>
         /// <param name="extractDir">展開先</param>
-        public static void RecurseExtractAll(string archivename, string extractDir)
-        {
-            using (SevenZipWrapper sz = new SevenZipWrapper(archivename))
-            {
-                sz.ExtractAll(extractDir);
+        //public static void RecurseExtractAll(string archivename, string extractDir)
+        //{
+        //    var sz = new SevenZipWrapper();
+        //    sz.Open(archivename);
+        //    sz.ExtractAll(extractDir);
 
-                string[] exfiles = Directory.GetFiles(extractDir);
-                foreach (string file in exfiles)
-                {
-                    if (IsSupportArchiveFile(file))
-                    {
-                        string extDirName = GetUniqueDirname(file);
-                        Debug.WriteLine(file, extDirName);
-                        RecurseExtractAll(file, extDirName);
-                    }
-                }
-            }
-        }
+        //    string[] exfiles = Directory.GetFiles(extractDir);
+        //    foreach (string file in exfiles)
+        //    {
+        //        if (IsSupportArchiveFile(file))
+        //        {
+        //            string extDirName = GetUniqueDirname(file);
+        //            Debug.WriteLine(file, extDirName);
+        //            RecurseExtractAll(file, extDirName);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// ファイル名（アーカイブ名）をベースにユニークな展開フォルダ名を探す。
@@ -158,26 +157,26 @@ namespace Marmi
             }
         }
 
-        public static Thread AsyncRecurseExtractAll(string archivename, string extractDir)
-        {
-            void tsAction()
-            {
-                RecurseExtractAll(archivename, extractDir);
-            }
+        //public static Thread AsyncRecurseExtractAll(string archivename, string extractDir)
+        //{
+        //    void tsAction()
+        //    {
+        //        RecurseExtractAll(archivename, extractDir);
+        //    }
 
-            Thread th = new Thread(tsAction)
-            {
-                Name = "RecurseExtractAll",
-                IsBackground = true
-            };
-            th.Start();
+        //    Thread th = new Thread(tsAction)
+        //    {
+        //        Name = "RecurseExtractAll",
+        //        IsBackground = true
+        //    };
+        //    th.Start();
 
-            //注意書きを入れておく
-            MakeAttentionTextfile(extractDir);
+        //    //注意書きを入れておく
+        //    MakeAttentionTextfile(extractDir);
 
-            //Threadを返す
-            return th;
-        }
+        //    //Threadを返す
+        //    return th;
+        //}
 
         public static void MakeAttentionTextfile(string extractFolder)
         {

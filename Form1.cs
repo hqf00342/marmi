@@ -250,7 +250,7 @@ namespace Marmi
             }
 
             //7z解凍をしていたら中断
-            m_AsyncSevenZip?.CancelAsyncExtractAll();
+            m_AsyncSevenZip?.CancelExtractAll();
 
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
@@ -1180,7 +1180,7 @@ namespace Marmi
             //g_pi = new PackageInfo();
 
             //7z解凍をしていたら中断
-            m_AsyncSevenZip?.CancelAsyncExtractAll();
+            m_AsyncSevenZip?.CancelExtractAll();
             //tempフォルダがあれば削除
             //if (!string.IsNullOrEmpty(g_pi.tempDirname))
             //{
@@ -1239,46 +1239,44 @@ namespace Marmi
         /// <returns>書庫内書庫がある場合はtrye</returns>
         private static bool GetArchivedFileInfo(string filename)
         {
-            using (SevenZipWrapper szw = new SevenZipWrapper())
+            var szw = new SevenZipWrapper();
+            bool retval = false;
+
+            if (szw.Open(filename) == false)
             {
-                bool retval = false;
-
-                if (szw.Open(filename) == false)
-                {
-                    MessageBox.Show("エラーのため書庫は開けませんでした。");
-                    App.g_pi.Initialize();
-                    Uty.ForceGC();      //書庫を開放・GCする必要がある
-                    return false;
-                }
-
-                //Zipファイル情報を設定
-                App.g_pi.PackageName = filename;
-                var fi = new FileInfo(App.g_pi.PackageName);
-                App.g_pi.PackageSize = fi.Length;
-                App.g_pi.isSolid = szw.IsSolid;
-
-                //ver1.31 7zファイルなのにソリッドじゃないことがある！？
-                if (Path.GetExtension(filename) == ".7z")
-                    App.g_pi.isSolid = true;
-
-                //g_pi.isZip = true;
-                App.g_pi.PackType = PackageType.Archive;
-
-                //ファイルをリストに追加
-                App.g_pi.Items.Clear();
-                foreach (var item in szw.Items)
-                {
-                    if (item.IsDirectory)
-                        continue;
-                    if (Uty.IsPictureFilename(item.FileName))
-                        App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
-                    else if (Uty.IsSupportArchiveFile(item.FileName))
-                    {
-                        retval = true;
-                    }
-                }
-                return retval;
+                MessageBox.Show("エラーのため書庫は開けませんでした。");
+                App.g_pi.Initialize();
+                Uty.ForceGC();      //書庫を開放・GCする必要がある
+                return false;
             }
+
+            //Zipファイル情報を設定
+            App.g_pi.PackageName = filename;
+            var fi = new FileInfo(App.g_pi.PackageName);
+            App.g_pi.PackageSize = fi.Length;
+            App.g_pi.isSolid = szw.IsSolid;
+
+            //ver1.31 7zファイルなのにソリッドじゃないことがある！？
+            if (Path.GetExtension(filename) == ".7z")
+                App.g_pi.isSolid = true;
+
+            //g_pi.isZip = true;
+            App.g_pi.PackType = PackageType.Archive;
+
+            //ファイルをリストに追加
+            App.g_pi.Items.Clear();
+            foreach (var item in szw.Items)
+            {
+                if (item.IsDirectory)
+                    continue;
+                if (Uty.IsPictureFilename(item.FileName))
+                    App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
+                else if (Uty.IsSupportArchiveFile(item.FileName))
+                {
+                    retval = true;
+                }
+            }
+            return retval;
         }
 
         /// <summary>
