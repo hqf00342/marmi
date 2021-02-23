@@ -35,14 +35,14 @@ namespace Marmi
             {
                 case Target.Filename:
                     //Windows‚Ì‹@”\‚ð—˜—p‚·‚é
-                    return Win32.StrCmpLogicalW(x.filename, y.filename);
+                    return Win32.StrCmpLogicalW(x.Filename, y.Filename);
 
                 case Target.CreateDate:
-                    return DateTime.Compare(x.createDate, y.createDate);
+                    return DateTime.Compare(x.CreateDate, y.CreateDate);
 
                 case Target.OriginalIndex:
                 default:
-                    return x.nOrgIndex - y.nOrgIndex;
+                    return x.OrgIndex - y.OrgIndex;
             }
         }
     }

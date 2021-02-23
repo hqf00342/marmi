@@ -57,14 +57,14 @@ namespace Marmi
             //ver1.81 最終ページのときも1ページだけに変更
             if (g_viewPages == 1 || App.g_pi.NowViewPage == App.g_pi.Items.Count - 1)
             {
-                Statusbar_InfoLabel.Text = App.g_pi.Items[App.g_pi.NowViewPage].filename;
+                Statusbar_InfoLabel.Text = App.g_pi.Items[App.g_pi.NowViewPage].Filename;
             }
             else
             {
                 Statusbar_InfoLabel.Text =
-                    App.g_pi.Items[App.g_pi.NowViewPage + 1].filename
+                    App.g_pi.Items[App.g_pi.NowViewPage + 1].Filename
                     + "  |  "
-                    + App.g_pi.Items[App.g_pi.NowViewPage].filename;
+                    + App.g_pi.Items[App.g_pi.NowViewPage].Filename;
             }
         }
 

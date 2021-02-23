@@ -774,7 +774,7 @@ namespace Marmi
                 if (ii.isBookMark)
                 {
                     ToolStripMenuItem item = new ToolStripMenuItem();
-                    item.Text = Path.GetFileName(ii.filename);
+                    item.Text = Path.GetFileName(ii.Filename);
                     item.Image = BitmapUty.MakeSquareThumbnailImage(ii.Thumbnail, 40);
                     item.ImageScaling = ToolStripItemImageScaling.None;
                     int ix = count;
@@ -811,7 +811,7 @@ namespace Marmi
                 {
                     count++;
                     BookmarkMenu.DropDownItems.Add(
-                        ii.filename,    //ファイル名
+                        ii.Filename,    //ファイル名
                         null,
                         new System.EventHandler(OnBookmarkList) //イベント
                         );

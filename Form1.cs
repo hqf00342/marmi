@@ -619,7 +619,7 @@ namespace Marmi
             //最初に見るページをドロップしたファイルにする。
             if (!string.IsNullOrEmpty(onePicFile))
             {
-                int i = App.g_pi.Items.FindIndex(c => c.filename == onePicFile);
+                int i = App.g_pi.Items.FindIndex(c => c.Filename == onePicFile);
                 if (i < 0) i = 0;
                 App.g_pi.NowViewPage = i;
             }
@@ -1947,7 +1947,7 @@ namespace Marmi
 
             //今のページ番号を保存
             int now = App.g_pi.NowViewPage;
-            string nowfile = App.g_pi.Items[now].filename;
+            string nowfile = App.g_pi.Items[now].Filename;
 
             int next = GetNextPageIndex(now);
             if (next != -1)

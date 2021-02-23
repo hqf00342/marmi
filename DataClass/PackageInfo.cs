@@ -75,7 +75,7 @@ namespace Marmi
 
             //ファイルキャッシュをクリア
             foreach (var item in Items)
-                item.cacheImage.Clear();
+                item.CacheImage.Clear();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Marmi
         public int GetIndexFromFilename(string filename)
         {
             for (int i = 0; i < Items.Count; i++)
-                if (Items[i].filename == filename)
+                if (Items[i].Filename == filename)
                     return i;
             return -1;
         }
@@ -99,7 +99,7 @@ namespace Marmi
         /// <returns>Bitmap 無ければcacheがなければnull</returns>
         public Bitmap GetBitmapFromCache(int index)
         {
-            return hasCacheImage(index) ? Items[index].cacheImage.ToBitmap() : null;
+            return hasCacheImage(index) ? Items[index].CacheImage.ToBitmap() : null;
         }
 
         public bool hasCacheImage(int index)
@@ -107,7 +107,7 @@ namespace Marmi
             if (index < 0 || index >= Items.Count)
                 return false;
 
-            return Items[index].cacheImage.HasImage;
+            return Items[index].CacheImage.HasImage;
         }
 
         /// <summary>
@@ -121,18 +121,18 @@ namespace Marmi
             if (index < 0 || index >= Items.Count)
                 return false;
 
-            string filename = Items[index].filename;
+            string filename = Items[index].Filename;
 
             if (PackType != PackageType.Archive)
             {
                 //通常ファイルからの読み込み
-                Items[index].cacheImage.Load(filename);
+                Items[index].CacheImage.Load(filename);
             }
             else if (isSolid && App.Config.isExtractIfSolidArchive)
             {
                 //ver1.10 ソリッド書庫 一時フォルダから読み取りを試みる
                 string tempname = Path.Combine(tempDirname, filename);
-                Items[index].cacheImage.Load(tempname);
+                Items[index].CacheImage.Load(tempname);
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Marmi
                         _7z = new SevenZipWrapper();
                     if (_7z.Open(PackageName))
                     {
-                        Items[index].cacheImage.Load(_7z.GetStream(filename));
+                        Items[index].CacheImage.Load(_7z.GetStream(filename));
                     }
                     else
                         return false;
@@ -157,7 +157,7 @@ namespace Marmi
                 }
             }
             //画像サイズを設定
-            Items[index].bmpsize = Items[index].cacheImage.GetImageSize();
+            Items[index].bmpsize = Items[index].CacheImage.GetImageSize();
 
             //サムネイル登録はThreadPoolで
             //AsyncThumnailMaker(index);
@@ -170,14 +170,14 @@ namespace Marmi
             //ver1.73 index check
             if (index > Items.Count) return;
 
-            if (Items[index].cacheImage.HasImage)
+            if (Items[index].CacheImage.HasImage)
             {
                 ThreadPool.QueueUserWorkItem(dummy =>
                 {
                     try
                     {
                         //ver1.10 サムネイル登録も行う
-                        Bitmap _bmp = Items[index].cacheImage.ToBitmap();
+                        Bitmap _bmp = Items[index].CacheImage.ToBitmap();
                         if (_bmp != null)
                         {
                             Items[index].ResisterThumbnailImage(_bmp);
@@ -232,7 +232,7 @@ namespace Marmi
                 case MemoryModel.Small:
                     //すべてのキャッシュをクリアする
                     foreach (var i in Items)
-                        i.cacheImage.Clear();
+                        i.CacheImage.Clear();
                     break;
 
                 case MemoryModel.Large:
@@ -243,7 +243,7 @@ namespace Marmi
                     //現在のサイズを計算
                     int nowBufferSize = 0;
                     foreach (var i in Items)
-                        nowBufferSize += i.cacheImage.Length;
+                        nowBufferSize += i.CacheImage.Length;
                     if (nowBufferSize <= MaxCacheSize)
                         break;
 
@@ -259,26 +259,26 @@ namespace Marmi
                     {
                         if (nowup >= 0)
                         {
-                            sumBytes += Items[nowup].cacheImage.Length;
+                            sumBytes += Items[nowup].CacheImage.Length;
                             if (sumBytes > thresholdSize)
                             {
-                                if (Items[nowup].cacheImage.Length > 0)
+                                if (Items[nowup].CacheImage.Length > 0)
                                 {
                                     Uty.WriteLine("FileCacheCleanUp():target={0}", nowup);
-                                    Items[nowup].cacheImage.Clear();
+                                    Items[nowup].CacheImage.Clear();
                                 }
                             }
                             nowup--;
                         }
                         if (nowdown < Items.Count)
                         {
-                            sumBytes += Items[nowdown].cacheImage.Length;
+                            sumBytes += Items[nowdown].CacheImage.Length;
                             if (sumBytes > thresholdSize)
                             {
-                                if (Items[nowdown].cacheImage.Length > 0)
+                                if (Items[nowdown].CacheImage.Length > 0)
                                 {
                                     Uty.WriteLine("FileCacheCleanUp():target={0}", nowdown);
-                                    Items[nowdown].cacheImage.Clear();
+                                    Items[nowdown].CacheImage.Clear();
                                 }
                             }
                             nowdown++;
@@ -286,7 +286,7 @@ namespace Marmi
                     }//while
                     nowBufferSize = 0;
                     foreach (var i in Items)
-                        nowBufferSize += i.cacheImage.Length;
+                        nowBufferSize += i.CacheImage.Length;
                     Uty.WriteLine("FileCacheCleanUp() end: {0:N0}bytes", nowBufferSize);
                     Uty.ForceGC();
                     break;
@@ -299,7 +299,7 @@ namespace Marmi
         public string GetCsvFromBookmark()
         {
             //bookmarkされたorgIndexを拾ってくる。
-            var bookmarks = Items.Where(c => c.isBookMark).Select(c => c.nOrgIndex);
+            var bookmarks = Items.Where(c => c.isBookMark).Select(c => c.OrgIndex);
 
             //Int配列をcsvに変換
             return string.Join(",", bookmarks.Select(c => c.ToString()).ToArray());
@@ -316,7 +316,7 @@ namespace Marmi
             //g_piに適用
             for (int i = 0; i < Items.Count; i++)
             {
-                if (bm.Contains(Items[i].nOrgIndex))
+                if (bm.Contains(Items[i].OrgIndex))
                     Items[i].isBookMark = true;
             }
         }

@@ -210,7 +210,6 @@
     <Compile Include="MyControls\MomentumScrollPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataClass\SafeQueue.cs" />
     <Compile Include="DataClass\NamedBuffer.cs" />
     <Compile Include="MyControls\SideBar.cs">
       <SubType>UserControl</SubType>
@@ -224,7 +223,6 @@
     <Compile Include="MyControls\PicturePanel.designer.cs">
       <DependentUpon>PicturePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataClass\SafeStack.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

@@ -32,10 +32,7 @@ namespace Marmi
             _cache.Add(key, obj);
         }
 
-        public void Delete(TKey key)
-        {
-            _cache.Remove(key);
-        }
+        public void Delete(TKey key) => _cache.Remove(key);
 
         /// <summary>
         /// 指定したキーのアイテムを返す
@@ -48,25 +45,18 @@ namespace Marmi
             {
                 try
                 {
-                    TValue d = (TValue)_cache[key];
-                    return d;
+                    return _cache[key];
                 }
                 catch
                 {
                     // キーが存在しない場合など
-                    return default(TValue);
+                    return default;
                 }
             }
         }
 
-        public bool ContainsKey(TKey key)
-        {
-            return _cache.ContainsKey(key);
-        }
+        public bool ContainsKey(TKey key) => _cache.ContainsKey(key);
 
-        public void Clear()
-        {
-            _cache.Clear();
-        }
+        public void Clear() => _cache.Clear();
     }
 }

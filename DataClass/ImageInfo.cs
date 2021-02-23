@@ -12,12 +12,12 @@ namespace Marmi
     public class ImageInfo : IDisposable
     {
         //サムネイル画像のサイズ。最大値
-        private int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
+        private readonly int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
 
-        private int THUMBNAIL_HEIGHT = App.DEFAULT_THUMBNAIL_SIZE;
+        private readonly int THUMBNAIL_HEIGHT = App.DEFAULT_THUMBNAIL_SIZE;
 
         //ファイル名
-        public string filename;
+        public string Filename { get; set; }
 
         //オリジナル画像サイズ
         public Size bmpsize = Size.Empty;
@@ -26,17 +26,17 @@ namespace Marmi
         public int Height { get { return bmpsize.Height; } }
 
         //作成日
-        public DateTime createDate;
+        public DateTime CreateDate { get; set; }
 
         //バイト数
-        public long length;
+        public long Length { get; set; }
 
         //ソート前の順番
-        public int nOrgIndex;
+        public int OrgIndex { get; set; }
 
         //キャッシュをこちらに持つ 2013/01/13
         [NonSerialized]
-        public RawImage cacheImage = new RawImage();
+        public RawImage CacheImage = new RawImage();
 
         //ver1.26 JpegでSerializeするために変更
         private readonly JpegSerializedImage _thumbImage = new JpegSerializedImage();
@@ -52,14 +52,13 @@ namespace Marmi
         public long animateStartTime = 0;
 
         //EXIF
-        public int ExifISO;
-
-        public string ExifDate;
-        public string ExifMake;
-        public string ExifModel;
+        public int ExifISO { get; set; }
+        public string ExifDate { get; set; }
+        public string ExifMake { get; set; }
+        public string ExifModel { get; set; }
 
         //しおり 2011年10月2日
-        public bool isBookMark = false;
+        public bool isBookMark { get; set; } = false;
 
         //回転情報 2011年12月24日
         private int _rotate = 0;
@@ -90,10 +89,10 @@ namespace Marmi
             bmpsize = Size.Empty;
             animateStartTime = 0;
 
-            nOrgIndex = index;
-            filename = name;
-            createDate = date;
-            length = bytes;
+            OrgIndex = index;
+            Filename = name;
+            CreateDate = date;
+            Length = bytes;
         }
 
         ~ImageInfo()
@@ -106,8 +105,8 @@ namespace Marmi
             if (Thumbnail != null)
                 Thumbnail.Dispose();
             Thumbnail = null;
-            if (cacheImage != null)
-                cacheImage.Clear();
+            if (CacheImage != null)
+                CacheImage.Clear();
         }
 
         //-------------------------------------------

@@ -64,7 +64,7 @@ namespace Marmi
                     //画像読み込み
                     try //不意のファイルドロップによりindexがOutOfRangeになるため。効果なさそう
                     {
-                        if (!App.g_pi.Items[index].cacheImage.HasImage)
+                        if (!App.g_pi.Items[index].CacheImage.HasImage)
                         {
                             Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
                             //7zをOpenしていなければOpen
@@ -77,9 +77,9 @@ namespace Marmi
                             if (App.g_pi.PackType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
-                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].length);
-                                App.g_pi.Items[index].cacheImage.Load(b);
-                                App.g_pi.Items[index].bmpsize = App.g_pi.Items[index].cacheImage.GetImageSize();
+                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].Length);
+                                App.g_pi.Items[index].CacheImage.Load(b);
+                                App.g_pi.Items[index].bmpsize = App.g_pi.Items[index].CacheImage.GetImageSize();
                                 App.g_pi.AsyncThumnailMaker(index);
                             }
                             else

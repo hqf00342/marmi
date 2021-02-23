@@ -83,7 +83,7 @@ namespace Marmi
             for (int i = 0; i < m_packageInfo.Items.Count; i++)
             {
                 listBox1.Items.Add(m_packageInfo.Items[i]);
-                m_packageInfo.Items[i].nOrgIndex = i;       //元の順序を保存しておく
+                m_packageInfo.Items[i].OrgIndex = i;       //元の順序を保存しておく
             }
         }
 
@@ -202,13 +202,13 @@ namespace Marmi
 
             //文字の描写:ファイル名
             x += PADDING + NUM_WIDTH + THUMBSIZE;
-            sz = string.Format("{0}", Path.GetFileName(ImgInfo.filename));
+            sz = string.Format("{0}", Path.GetFileName(ImgInfo.Filename));
             g.DrawString(sz, fontL, Brushes.Black, x, y);
             y += HeightL + PADDING;
 
             //文字の描写:パス
             x += 10;
-            sz = Path.GetDirectoryName(ImgInfo.filename);
+            sz = Path.GetDirectoryName(ImgInfo.Filename);
             if (!string.IsNullOrEmpty(sz))
             {
                 StringFormat sf = new StringFormat();
@@ -226,8 +226,8 @@ namespace Marmi
             //文字の描写:サイズ, 日付
             sz = string.Format(
                 "{0:N0}bytes,   {1}",
-                ImgInfo.length,
-                ImgInfo.createDate
+                ImgInfo.Length,
+                ImgInfo.CreateDate
                 );
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
             size = g.MeasureString(sz, fontS, e.Bounds.Width - x);

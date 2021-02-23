@@ -367,7 +367,7 @@ namespace Marmi
                 Bookmarks.DropDownItems.Clear();
                 foreach (ImageInfo i in m_thumbnailSet)
                     if (i.isBookMark)
-                        Bookmarks.DropDownItems.Add(i.filename);
+                        Bookmarks.DropDownItems.Add(i.Filename);
             });
             m_ContextMenu.ItemClicked += new ToolStripItemClickedEventHandler(m_ContextMenu_ItemClicked);
         }
@@ -554,7 +554,7 @@ namespace Marmi
             string s = string.Format(
                 "[{0}]{1}",
                 itemIndex + 1,
-                m_thumbnailSet[m_mouseHoverItem].filename);
+                m_thumbnailSet[m_mouseHoverItem].Filename);
             Form1._instance.SetStatusbarInfo(s);
 
             //ToolTipを表示する
@@ -1155,7 +1155,7 @@ namespace Marmi
             //ファイル名を書く
             if (App.Config.isShowTPFileName)
             {
-                string filename = Path.GetFileName(m_thumbnailSet[item].filename);
+                string filename = Path.GetFileName(m_thumbnailSet[item].Filename);
                 if (filename != null)
                 {
                     g.DrawString(filename, m_font, new SolidBrush(m_fontColor), textRect, sf);
@@ -1166,7 +1166,7 @@ namespace Marmi
             //ファイルサイズを書く
             if (App.Config.isShowTPFileSize)
             {
-                string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].length);
+                string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].Length);
                 g.DrawString(s, m_font, new SolidBrush(m_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }
@@ -1313,7 +1313,7 @@ namespace Marmi
 
                     ThumbnailEventArgs ev = new ThumbnailEventArgs();
                     ev.HoverItemNumber = item;
-                    ev.HoverItemName = m_thumbnailSet[item].filename;
+                    ev.HoverItemName = m_thumbnailSet[item].Filename;
 
                     //ver1.31 nullチェック
                     if (SavedItemChanged != null)

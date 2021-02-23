@@ -173,7 +173,7 @@ namespace Marmi
 
             //文字の描写:ファイル名
             x += THUMBSIZE + PADDING;
-            sz = string.Format("{0}", Path.GetFileName(ImgInfo.filename));
+            sz = string.Format("{0}", Path.GetFileName(ImgInfo.Filename));
             size = g.MeasureString(sz, fontL, drawRect.Width - x, sf);
             Rectangle FilenameRect = new Rectangle(
                 x, y,
@@ -185,7 +185,7 @@ namespace Marmi
             x += 10;
 
             ////文字の描写:サイズ
-            sz = string.Format("{0:N0}bytes", ImgInfo.length);
+            sz = string.Format("{0:N0}bytes", ImgInfo.Length);
             g.DrawString(sz, fontS, Brushes.Black, x, y);
             y += HeightS + LINEPADDING;
 
@@ -199,7 +199,7 @@ namespace Marmi
             y += HeightS + LINEPADDING;
 
             //文字の描写:ファイルパス
-            sz = Path.GetDirectoryName(ImgInfo.filename);
+            sz = Path.GetDirectoryName(ImgInfo.Filename);
             if (!string.IsNullOrEmpty(sz))
             {
                 //描写サイズを確認
@@ -210,7 +210,7 @@ namespace Marmi
             }
 
             //文字の描写:日付
-            sz = string.Format("{0}", ImgInfo.createDate);
+            sz = string.Format("{0}", ImgInfo.CreateDate);
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
             y += HeightS + LINEPADDING;
 

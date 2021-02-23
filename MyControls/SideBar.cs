@@ -339,9 +339,9 @@ namespace Marmi
                 //ToolTip用の文字を設定
                 string sz = String.Format(
                     "{0}\n 日付: {1:yyyy年M月d日 H:m:s}\n 大きさ: {2:N0}bytes\n サイズ: {3:N0}x{4:N0}ピクセル",
-                    m_packageInfo.Items[item].filename,
-                    m_packageInfo.Items[item].createDate,
-                    m_packageInfo.Items[item].length,
+                    m_packageInfo.Items[item].Filename,
+                    m_packageInfo.Items[item].CreateDate,
+                    m_packageInfo.Items[item].Length,
                     m_packageInfo.Items[item].Width,
                     m_packageInfo.Items[item].Height
                 );
@@ -682,7 +682,7 @@ namespace Marmi
             strRect.Width = rect.Width - strRect.Left;
             strRect.Y = y;
             strRect.Height = HeightL;
-            sz = string.Format("{0}", Path.GetFileName(ImgInfo.filename));
+            sz = string.Format("{0}", Path.GetFileName(ImgInfo.Filename));
             g.DrawString(sz, fontL, Brushes.White, strRect);
             strRect.Y += HeightL + PADDING;
 
@@ -693,8 +693,8 @@ namespace Marmi
             strRect.Height = HeightS;
             sz = string.Format(
                 "{0:N0}bytes,   {1}",
-                ImgInfo.length,
-                ImgInfo.createDate
+                ImgInfo.Length,
+                ImgInfo.CreateDate
                 );
             g.DrawString(sz, fontS, Brushes.LightGray, strRect);
             strRect.Y += HeightS + PADDING;
