@@ -1,83 +1,72 @@
 ﻿using System.Collections.Generic;
-
+/*
+High/Low ２つのキューを持つクラス。
+Popする際にHighがあればHighを優先、なければLowからも供出する。
+タスク管理に利用しているため、同時アクセス対応としてlockしている。
+*/
 namespace Marmi
 {
     internal class PrioritySafeQueue<T>
     {
-        private Queue<T> m_highQueue = new Queue<T>();
-        private Queue<T> m_lowQueue = new Queue<T>();
-        private object syncRoot = new object();
+        private readonly Queue<T> _highQueue = new Queue<T>();
 
-        public PrioritySafeQueue()
-        {
-        }
+        private readonly Queue<T> _lowQueue = new Queue<T>();
 
-        public int Count { get { return m_highQueue.Count + m_lowQueue.Count; } }
+        private readonly object _syncRoot = new object();
 
-        public void Push(T t)
-        {
-            PushHigh(t);
-        }
+        public int Count => _highQueue.Count + _lowQueue.Count;
 
         public void PushHigh(T t)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                m_highQueue.Enqueue(t);
+                _highQueue.Enqueue(t);
             }
         }
 
         public void PushLow(T t)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                m_lowQueue.Enqueue(t);
+                _lowQueue.Enqueue(t);
             }
         }
 
         public T Pop()
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                if (m_highQueue.Count > 0)
-                    return m_highQueue.Dequeue();
+                if (_highQueue.Count > 0)
+                    return _highQueue.Dequeue();
                 else
-                    return m_lowQueue.Dequeue();
+                    return _lowQueue.Dequeue();
             }
         }
 
         public void Clear()
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                m_highQueue.Clear();
-                m_lowQueue.Clear();
+                _highQueue.Clear();
+                _lowQueue.Clear();
             }
         }
 
-        //public T Peek()
-        //{
-        //    lock (syncRoot)
-        //    {
-        //        return m_highQueue.Peek();
-        //    }
-        //}
-
         public T[] ToArrayHigh()
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                return m_highQueue.ToArray();
+                return _highQueue.ToArray();
             }
         }
 
         public T[] ToArray()
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                T[] temp = new T[m_highQueue.Count + m_lowQueue.Count];
-                m_highQueue.ToArray().CopyTo(temp, 0);
-                m_lowQueue.ToArray().CopyTo(temp, m_highQueue.Count);
+                T[] temp = new T[_highQueue.Count + _lowQueue.Count];
+                _highQueue.ToArray().CopyTo(temp, 0);
+                _lowQueue.ToArray().CopyTo(temp, _highQueue.Count);
                 return temp;
             }
         }
