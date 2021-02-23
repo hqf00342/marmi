@@ -45,10 +45,6 @@ namespace Marmi
         //ver0.994 サムネイルモード
         //private ThumnailMode m_thumbnailMode;
 
-        //大きなサムネイル用キャッシュ
-        private NamedBuffer<int, Bitmap> m_HQcache
-            = new NamedBuffer<int, Bitmap>();
-
         private const long ANIMATE_DURATION = 1000; //フェードインアニメーション時間
         private const int PADDING = 10;     //2014年3月23日変更。間隔狭すぎた
         private int THUMBNAIL_SIZE;         //サムネイルの大きさ。幅と高さは同一値
@@ -128,10 +124,6 @@ namespace Marmi
         ~ThumbnailPanel()
         {
             m_font.Dispose();
-            //m_tooltip.Dispose();
-            m_HQcache.Clear();
-            //m_timer.Tick -= new EventHandler(m_timer_Tick);
-            //m_timer.Dispose();
         }
 
         #endregion コンストラクタ
@@ -142,10 +134,6 @@ namespace Marmi
 
         public void Init()
         {
-            //m_needHQDraw = false;
-            m_HQcache.Clear();          //ver0.974
-                                        //m_thumbnailSet.Clear();		//ver0.974 ポインタを貰っているだけなのでここでやらない
-
             //スクロール位置の初期化
             AutoScrollPosition = Point.Empty;
         }
@@ -165,10 +153,6 @@ namespace Marmi
             if (THUMBNAIL_SIZE != thumbnailSize)
             {
                 THUMBNAIL_SIZE = thumbnailSize;
-
-                //高解像度キャッシュをクリア
-                if (m_HQcache != null)
-                    m_HQcache.Clear();
             }
 
             //BOXサイズを確定
