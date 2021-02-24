@@ -149,7 +149,6 @@
     <Compile Include="Form1.Toolbar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataClass\JpegSerializedImage.cs" />
     <Compile Include="MyChildForms\AsyncExtractForm.cs">
       <SubType>Form</SubType>
     </Compile>

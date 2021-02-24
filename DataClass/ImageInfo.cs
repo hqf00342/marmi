@@ -39,13 +39,17 @@ namespace Marmi
         public RawImage CacheImage = new RawImage();
 
         //ver1.26 JpegでSerializeするために変更
-        private readonly JpegSerializedImage _thumbImage = new JpegSerializedImage();
+        //private readonly JpegSerializedImage _thumbImage = new JpegSerializedImage();
 
-        public Bitmap Thumbnail
-        {
-            get { return _thumbImage.Bitmap as Bitmap; }
-            set { _thumbImage.Bitmap = value; }
-        }
+        //public Bitmap Thumbnail
+        //{
+        //    get { return _thumbImage.Bitmap as Bitmap; }
+        //    set { _thumbImage.Bitmap = value; }
+        //}
+
+        /// <summary>サムネイル画像</summary>
+        [field: NonSerialized]
+        public Bitmap Thumbnail { get; set; }
 
         /// <summary>アニメーションタイマー DateTime.Now.Ticks</summary>
         [field: NonSerialized]
