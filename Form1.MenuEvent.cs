@@ -28,7 +28,7 @@ namespace Marmi
                 MessageBox.Show(sz, "ファイルオープンエラー");
 
                 //MRUリストから削除
-                for (int i = 0; i < App.Config.mru.Length; i++)
+                for (int i = 0; i < App.Config.mru.Count; i++)
                 {
                     if (App.Config.mru[i] != null && App.Config.mru[i].Name == tsddi.Text)
                     {
@@ -62,10 +62,11 @@ namespace Marmi
 
         private void Menu_ClearMRU_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < App.Config.mru.Length; i++)
-            {
-                App.Config.mru[i] = null;
-            }
+            App.Config.mru.Clear();
+            //for (int i = 0; i < App.Config.mru.Length; i++)
+            //{
+            //    App.Config.mru[i] = null;
+            //}
         }
 
         //表示メニュー******************************************************************************

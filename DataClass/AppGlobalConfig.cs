@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
 using System.IO;
@@ -23,7 +24,8 @@ namespace Marmi
         public bool dualView;                       //2画面並べて表示
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
-        public MRU[] mru = new MRU[50];     //MRUリスト用配列
+        //public MRU[] mru = new MRU[50];     //MRUリスト用配列
+        public List<MRU> mru = new List<MRU>();     //MRUリスト用配列
         public bool visibleMenubar;                 //メニューバーの表示
         public bool visibleToolBar;                 //ツールバーの表示
         public bool visibleStatusBar;               //ステータスバーの表示

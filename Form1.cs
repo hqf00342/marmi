@@ -809,7 +809,7 @@ namespace Marmi
                     //ファイル名でソートする
                     //Array.Sort(files, Uty.Compare_unsafeFast);
                     Array.Sort(files, NaturalStringComparer.CompareS);
-                    
+
                     bool match = false;
                     foreach (var s in files)
                     {
@@ -1300,7 +1300,7 @@ namespace Marmi
 
             //MRUに追加する必要があるか確認
             bool needMruAdd = true;
-            for (int i = 0; i < App.Config.mru.Length; i++)
+            for (int i = 0; i < App.Config.mru.Count; i++)
             {
                 if (App.Config.mru[i] == null)
                     continue;
@@ -1321,14 +1321,11 @@ namespace Marmi
             {
                 //MRUを新しく登録
                 //古い順に並べる→先頭に追加
-                Array.Sort(App.Config.mru);
-                App.Config.mru[0] = new MRU(
-                                    App.g_pi.PackageName,
-                                    DateTime.Now,
-                                    App.g_pi.NowViewPage,
-                                    App.g_pi.GetCsvFromBookmark());
+                //Array.Sort(App.Config.mru);
+                //App.Config.mru[0] = new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark());
+                App.Config.mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark()));
             }
-            Array.Sort(App.Config.mru);   //並べ直す
+            //Array.Sort(App.Config.mru);   //並べ直す
         }
 
         //*****************************************************************
@@ -1641,12 +1638,13 @@ namespace Marmi
         {
             MenuItem_FileRecent.DropDownItems.Clear();
 
-            Array.Sort(App.Config.mru);
+            //Array.Sort(App.Config.mru);
+            App.Config.mru = App.Config.mru.OrderBy(a => a.Date).ToList();
 
             int menuCount = 0;
 
             //新しい順にする
-            for (int i = App.Config.mru.Length - 1; i >= 0; i--)
+            for (int i = App.Config.mru.Count - 1; i >= 0; i--)
             {
                 if (App.Config.mru[i] == null)
                     continue;
@@ -1901,7 +1899,7 @@ namespace Marmi
 
                 //MRUリストをチェック
                 //MRUリストにないキャッシュファイルは削除する。
-                int mruCount = App.Config.mru.Length;
+                int mruCount = App.Config.mru.Count;
                 for (int i = 0; i < mruCount; i++)
                 {
                     //NullException対応。Nullの可能性有 ver0.982
