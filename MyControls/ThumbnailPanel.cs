@@ -304,7 +304,7 @@ namespace Marmi
                 {
                     //filename.Text = Path.GetFileName(m_thumbnailSet[index].filename);
                     //filename.Enabled = true;
-                    addBookmark.Checked = m_thumbnailSet[index].isBookMark;
+                    addBookmark.Checked = m_thumbnailSet[index].IsBookMark;
                     addBookmark.Enabled = true;
                 }
                 else
@@ -350,7 +350,7 @@ namespace Marmi
                 //しおり一覧
                 Bookmarks.DropDownItems.Clear();
                 foreach (ImageInfo i in m_thumbnailSet)
-                    if (i.isBookMark)
+                    if (i.IsBookMark)
                         Bookmarks.DropDownItems.Add(i.Filename);
             });
             m_ContextMenu.ItemClicked += new ToolStripItemClickedEventHandler(m_ContextMenu_ItemClicked);
@@ -397,7 +397,7 @@ namespace Marmi
 
                 case "しおりをはさむ":
                     int index = (int)m_ContextMenu.Tag;
-                    m_thumbnailSet[index].isBookMark = !m_thumbnailSet[index].isBookMark;
+                    m_thumbnailSet[index].IsBookMark = !m_thumbnailSet[index].IsBookMark;
                     //this.Invalidate();
                     break;
 
@@ -777,14 +777,14 @@ namespace Marmi
                         if (App.Config.isThumbFadein)
                         {
                             //フェードインアニメーションで表示
-                            m_thumbnailSet[item].animateStartTime = DateTime.Now.Ticks;
+                            m_thumbnailSet[item].AnimateStartTime = DateTime.Now.Ticks;
                             var timer = new System.Windows.Forms.Timer();
                             timer.Interval = 50;
                             timer.Tick += (s, e) =>
                             {
                                 this.Invalidate(GetThumbboxRectanble(item));
                                 //this.Update();
-                                TimeSpan tp = new TimeSpan(DateTime.Now.Ticks - m_thumbnailSet[item].animateStartTime);
+                                TimeSpan tp = new TimeSpan(DateTime.Now.Ticks - m_thumbnailSet[item].AnimateStartTime);
                                 if (tp.TotalMilliseconds > ANIMATE_DURATION)
                                 {
                                     timer.Stop();
@@ -810,11 +810,11 @@ namespace Marmi
             }
 
             //画像を描写
-            TimeSpan diff = new TimeSpan(DateTime.Now.Ticks - m_thumbnailSet[item].animateStartTime);
+            TimeSpan diff = new TimeSpan(DateTime.Now.Ticks - m_thumbnailSet[item].AnimateStartTime);
             if (diff.TotalMilliseconds < 0 || diff.TotalMilliseconds > ANIMATE_DURATION)
             {
                 //通常描写
-                m_thumbnailSet[item].animateStartTime = 0;
+                m_thumbnailSet[item].AnimateStartTime = 0;
 
                 //影の描写
                 Rectangle frameRect = imageRect;
@@ -834,7 +834,7 @@ namespace Marmi
                 }
 
                 //Bookmarkを示すマークを描く
-                if (m_thumbnailSet[item].isBookMark)
+                if (m_thumbnailSet[item].IsBookMark)
                 {
                     using (Pen p = new Pen(Color.DarkRed, 2f))
                         g.DrawRectangle(p, frameRect);
@@ -1150,7 +1150,7 @@ namespace Marmi
             //ファイルサイズを書く
             if (App.Config.isShowTPFileSize)
             {
-                string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].Length);
+                string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].FileLength);
                 g.DrawString(s, m_font, new SolidBrush(m_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }

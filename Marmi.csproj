@@ -131,7 +131,7 @@
     <Compile Include="DataClass\AppGlobalConfig.cs" />
     <Compile Include="Uty\ImageInfoComparer.cs" />
     <Compile Include="DataClass\ImageInfo.cs" />
-    <Compile Include="DataClass\MRUList.cs" />
+    <Compile Include="DataClass\MRU.cs" />
     <Compile Include="DataClass\PrioritySafeQueue.cs" />
     <Compile Include="DataClass\RawImage.cs" />
     <Compile Include="Form1.MenuEvent.cs">

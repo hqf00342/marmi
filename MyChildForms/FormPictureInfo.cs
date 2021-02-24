@@ -186,7 +186,7 @@ namespace Marmi
                 "{0:N0} x {1:N0} pixels, {2:N0}bytes",
                 imgInfo.Width,
                 imgInfo.Height,
-                imgInfo.Length);
+                imgInfo.FileLength);
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
             y += HeightS + LINEPADDING;
 

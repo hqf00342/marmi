@@ -23,7 +23,7 @@ namespace Marmi
         public bool dualView;                       //2画面並べて表示
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
-        public MRUList[] mru = new MRUList[50];     //MRUリスト用配列
+        public MRU[] mru = new MRU[50];     //MRUリスト用配列
         public bool visibleMenubar;                 //メニューバーの表示
         public bool visibleToolBar;                 //ツールバーの表示
         public bool visibleStatusBar;               //ステータスバーの表示

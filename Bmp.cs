@@ -81,7 +81,7 @@ namespace Marmi
         internal static Size SyncGetBitmapSize(int index)
         {
             if (App.g_pi.Items[index].HasInfo)
-                return App.g_pi.Items[index].bmpsize;
+                return App.g_pi.Items[index].ImgSize;
             else
             {
                 //非同期のGetBitmap()を読み終わるまで待つ
@@ -93,7 +93,7 @@ namespace Marmi
                 sw.Stop();
 
                 if (App.g_pi.Items[index].HasInfo)
-                    return App.g_pi.Items[index].bmpsize;
+                    return App.g_pi.Items[index].ImgSize;
                 else
                     return Size.Empty;
             }

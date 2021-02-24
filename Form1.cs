@@ -1067,12 +1067,12 @@ namespace Marmi
             if (App.g_pi.Items.Count > 0
                 && App.g_pi.NowViewPage >= 0)
             {
-                App.g_pi.Items[App.g_pi.NowViewPage].isBookMark
-                    = !App.g_pi.Items[App.g_pi.NowViewPage].isBookMark;
+                App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark
+                    = !App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark;
 
                 if (g_viewPages == 2)
-                    App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark
-                        = !App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark;
+                    App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark
+                        = !App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark;
             }
         }
 
@@ -1322,7 +1322,7 @@ namespace Marmi
                 //MRUを新しく登録
                 //古い順に並べる→先頭に追加
                 Array.Sort(App.Config.mru);
-                App.Config.mru[0] = new MRUList(
+                App.Config.mru[0] = new MRU(
                                     App.g_pi.PackageName,
                                     DateTime.Now,
                                     App.g_pi.NowViewPage,
@@ -1600,13 +1600,13 @@ namespace Marmi
                     toolStripButton_ZoomFit.Checked = IsFitToScreen();
 
                     //Favorite
-                    if (App.g_pi.Items[App.g_pi.NowViewPage].isBookMark)
+                    if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
                     {
                         toolStripButton_Favorite.Checked = true;
                     }
                     else if (g_viewPages == 2
                         && App.g_pi.NowViewPage < App.g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
-                        && App.g_pi.Items[App.g_pi.NowViewPage + 1].isBookMark) //
+                        && App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark) //
                         toolStripButton_Favorite.Checked = true;
                     else
                         toolStripButton_Favorite.Checked = false;

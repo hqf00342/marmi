@@ -9,32 +9,32 @@ Exifから画像データを収集するなど高速にサムネイルを取得する
 namespace Marmi
 {
     [Serializable()]
-    public class ImageInfo : IDisposable
+    public class ImageInfo //: IDisposable
     {
         //サムネイル画像のサイズ。最大値
-        private readonly int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
+        //private readonly int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
 
         private readonly int THUMBNAIL_HEIGHT = App.DEFAULT_THUMBNAIL_SIZE;
 
-        //ファイル名
-        public string Filename { get; set; }
+        /// <summary>ファイル名</summary>
+        public string Filename { get; }
 
-        //オリジナル画像サイズ
-        public Size bmpsize = Size.Empty;
+        /// <summary>オリジナル画像サイズ</summary>
+        public Size ImgSize { get; set; } = Size.Empty;
 
-        public int Width { get { return bmpsize.Width; } }
-        public int Height { get { return bmpsize.Height; } }
+        public int Width => ImgSize.Width;
+        public int Height => ImgSize.Height;
 
-        //作成日
-        public DateTime CreateDate { get; set; }
+        /// <summary>ファイル作成日</summary>
+        public DateTime CreateDate { get; }
 
-        //バイト数
-        public long Length { get; set; }
+        /// <summary>バイト長</summary>
+        public long FileLength { get; }
 
-        //ソート前の順番
-        public int OrgIndex { get; set; }
+        /// <summary>書庫内の順番</summary>
+        public int OrgIndex { get; }
 
-        //キャッシュをこちらに持つ 2013/01/13
+        /// <summary>画像キャッシュ。キャッシュをこちらに持つ 2013/01/13</summary>
         [NonSerialized]
         public RawImage CacheImage = new RawImage();
 
@@ -47,67 +47,72 @@ namespace Marmi
             set { _thumbImage.Bitmap = value; }
         }
 
-        //アニメーションタイマー DateTime.Now.Ticks
-        [NonSerialized]
-        public long animateStartTime = 0;
+        /// <summary>アニメーションタイマー DateTime.Now.Ticks</summary>
+        [field: NonSerialized]
+        public long AnimateStartTime { get; set; } = 0;
 
-        //EXIF
+        /// <summary>EXIF: ISO値</summary>
         public int ExifISO { get; set; }
+
+        /// <summary>EXIF: 撮影日</summary>
         public string ExifDate { get; set; }
+
+        /// <summary>EXIF: メーカー</summary>
         public string ExifMake { get; set; }
+
+        /// <summary>EXIF: モデル</summary>
         public string ExifModel { get; set; }
 
-        //しおり 2011年10月2日
-        public bool isBookMark { get; set; } = false;
+        /// <summary>しおり 2011年10月2日</summary>
+        public bool IsBookMark { get; set; } = false;
 
         //回転情報 2011年12月24日
-        private int _rotate = 0;
-
-        public int Rotate
-        {
-            get { return _rotate; }
-            set { _rotate = value % 360; }
-        }
+        //private int _rotate = 0;
+        //public int Rotate
+        //{
+        //    get { return _rotate; }
+        //    set { _rotate = value % 360; }
+        //}
 
         //ver1.36 表示させるかどうか
-        public bool isVisible;
+        public bool IsVisible { get; set; }
 
         //ver1.51 画像情報を持っているか
-        public bool HasInfo { get { return Width != 0; } }
+        public bool HasInfo => Width != 0;
 
         //ver1.54 縦長かどうか
-        public bool IsTall { get { return Height > Width; } }
+        public bool IsTall => Height > Width;
 
         //var1.54 横長かどうか
-        public bool IsFat { get { return Width > Height; } }
+        public bool IsFat => Width > Height;
 
         public ImageInfo(int index, string name, DateTime date, long bytes)
         {
             //初期化
             Thumbnail = null;
-            isVisible = true;
-            bmpsize = Size.Empty;
-            animateStartTime = 0;
+            IsVisible = true;
+            ImgSize = Size.Empty;
+            AnimateStartTime = 0;
 
             OrgIndex = index;
             Filename = name;
             CreateDate = date;
-            Length = bytes;
+            FileLength = bytes;
         }
 
-        ~ImageInfo()
-        {
-            Dispose();
-        }
+        //~ImageInfo()
+        //{
+        //    Dispose();
+        //}
 
-        public void Dispose()
-        {
-            if (Thumbnail != null)
-                Thumbnail.Dispose();
-            Thumbnail = null;
-            if (CacheImage != null)
-                CacheImage.Clear();
-        }
+        //public void Dispose()
+        //{
+        //    if (Thumbnail != null)
+        //        Thumbnail.Dispose();
+        //    Thumbnail = null;
+        //    if (CacheImage != null)
+        //        CacheImage.Clear();
+        //}
 
         //-------------------------------------------
         // メソッド

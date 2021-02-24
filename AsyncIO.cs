@@ -77,9 +77,9 @@ namespace Marmi
                             if (App.g_pi.PackType == PackageType.Pdf)
                             {
                                 //pdfファイルの読み込み
-                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].Length);
+                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].FileLength);
                                 App.g_pi.Items[index].CacheImage.Load(b);
-                                App.g_pi.Items[index].bmpsize = App.g_pi.Items[index].CacheImage.GetImageSize();
+                                App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
                                 App.g_pi.AsyncThumnailMaker(index);
                             }
                             else

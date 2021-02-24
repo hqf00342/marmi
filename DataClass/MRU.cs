@@ -8,7 +8,7 @@ using System;
 namespace Marmi
 {
     [Serializable]
-    public class MRUList : IComparable
+    public class MRU : IComparable
     {
         /// <summary>ファイル名</summary>
         public string Name;
@@ -23,11 +23,11 @@ namespace Marmi
         public string Bookmarks { get; set; }
 
         /// <summary>シリアライズのために必要</summary>
-        public MRUList()
+        public MRU()
         {
         }
 
-        public MRUList(string filename, DateTime date, int lastViewPage, string bookmarks)
+        public MRU(string filename, DateTime date, int lastViewPage, string bookmarks)
         {
             Name = filename;
             Date = date;
@@ -36,6 +36,6 @@ namespace Marmi
         }
 
         /// <summary>日付でソート(古い順)</summary>
-        int IComparable.CompareTo(object obj) => DateTime.Compare(Date, (obj as MRUList).Date);
+        int IComparable.CompareTo(object obj) => DateTime.Compare(Date, (obj as MRU).Date);
     }
 }

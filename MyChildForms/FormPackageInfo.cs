@@ -83,7 +83,7 @@ namespace Marmi
             for (int i = 0; i < m_packageInfo.Items.Count; i++)
             {
                 listBox1.Items.Add(m_packageInfo.Items[i]);
-                m_packageInfo.Items[i].OrgIndex = i;       //元の順序を保存しておく
+                //m_packageInfo.Items[i].OrgIndex = i; //2021年2月24日コメントアウト。不要なはず      //元の順序を保存しておく
             }
         }
 
@@ -226,7 +226,7 @@ namespace Marmi
             //文字の描写:サイズ, 日付
             sz = string.Format(
                 "{0:N0}bytes,   {1}",
-                ImgInfo.Length,
+                ImgInfo.FileLength,
                 ImgInfo.CreateDate
                 );
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);

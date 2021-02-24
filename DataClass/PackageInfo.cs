@@ -66,12 +66,12 @@ namespace Marmi
 
             PageDirectionIsLeft = true;
 
-            if (Items.Count > 0)
-            {
-                for (int i = 0; i < Items.Count; i++)
-                    Items[i].Dispose(); //サムネイル画像をクリア
-                Items.Clear();
-            }
+            //if (Items.Count > 0)
+            //{
+            //    for (int i = 0; i < Items.Count; i++)
+            //        Items[i].Dispose(); //サムネイル画像をクリア
+            //}
+            Items.Clear();
 
             //ファイルキャッシュをクリア
             foreach (var item in Items)
@@ -157,7 +157,7 @@ namespace Marmi
                 }
             }
             //画像サイズを設定
-            Items[index].bmpsize = Items[index].CacheImage.GetImageSize();
+            Items[index].ImgSize = Items[index].CacheImage.GetImageSize();
 
             //サムネイル登録はThreadPoolで
             //AsyncThumnailMaker(index);
@@ -299,7 +299,7 @@ namespace Marmi
         public string GetCsvFromBookmark()
         {
             //bookmarkされたorgIndexを拾ってくる。
-            var bookmarks = Items.Where(c => c.isBookMark).Select(c => c.OrgIndex);
+            var bookmarks = Items.Where(c => c.IsBookMark).Select(c => c.OrgIndex);
 
             //Int配列をcsvに変換
             return string.Join(",", bookmarks.Select(c => c.ToString()).ToArray());
@@ -317,7 +317,7 @@ namespace Marmi
             for (int i = 0; i < Items.Count; i++)
             {
                 if (bm.Contains(Items[i].OrgIndex))
-                    Items[i].isBookMark = true;
+                    Items[i].IsBookMark = true;
             }
         }
     }

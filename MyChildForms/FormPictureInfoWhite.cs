@@ -185,7 +185,7 @@ namespace Marmi
             x += 10;
 
             ////文字の描写:サイズ
-            sz = string.Format("{0:N0}bytes", ImgInfo.Length);
+            sz = string.Format("{0:N0}bytes", ImgInfo.FileLength);
             g.DrawString(sz, fontS, Brushes.Black, x, y);
             y += HeightS + LINEPADDING;
 

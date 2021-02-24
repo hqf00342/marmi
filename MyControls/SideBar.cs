@@ -341,7 +341,7 @@ namespace Marmi
                     "{0}\n 日付: {1:yyyy年M月d日 H:m:s}\n 大きさ: {2:N0}bytes\n サイズ: {3:N0}x{4:N0}ピクセル",
                     m_packageInfo.Items[item].Filename,
                     m_packageInfo.Items[item].CreateDate,
-                    m_packageInfo.Items[item].Length,
+                    m_packageInfo.Items[item].FileLength,
                     m_packageInfo.Items[item].Width,
                     m_packageInfo.Items[item].Height
                 );
@@ -693,7 +693,7 @@ namespace Marmi
             strRect.Height = HeightS;
             sz = string.Format(
                 "{0:N0}bytes,   {1}",
-                ImgInfo.Length,
+                ImgInfo.FileLength,
                 ImgInfo.CreateDate
                 );
             g.DrawString(sz, fontS, Brushes.LightGray, strRect);

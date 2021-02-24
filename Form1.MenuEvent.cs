@@ -714,7 +714,7 @@ namespace Marmi
 
                 //‚µ‚¨‚è‹@”\
                 Menu_ContextAddBookmark.Enabled = true;
-                if (App.g_pi.Items[App.g_pi.NowViewPage].isBookMark)
+                if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
                     Menu_ContextAddBookmark.Checked = true;
                 else
                     Menu_ContextAddBookmark.Checked = false;
@@ -771,7 +771,7 @@ namespace Marmi
             int count = 0;
             foreach (ImageInfo ii in App.g_pi.Items)
             {
-                if (ii.isBookMark)
+                if (ii.IsBookMark)
                 {
                     ToolStripMenuItem item = new ToolStripMenuItem();
                     item.Text = Path.GetFileName(ii.Filename);
@@ -807,7 +807,7 @@ namespace Marmi
 
             foreach (ImageInfo ii in App.g_pi.Items)
             {
-                if (ii.isBookMark)
+                if (ii.IsBookMark)
                 {
                     count++;
                     BookmarkMenu.DropDownItems.Add(
@@ -840,7 +840,7 @@ namespace Marmi
             int len = App.g_pi.Items.Count;
             for (int i = 0; i < len; i++)
             {
-                App.g_pi.Items[i].isBookMark = false;
+                App.g_pi.Items[i].IsBookMark = false;
             }
         }
 
