@@ -669,7 +669,8 @@ namespace Marmi
                     AsyncIO.AddJobLow(index, () =>
                     {
                         var bmp = Bmp.SyncGetBitmap(index);
-                        App.g_pi.ThumnailMaker(index, bmp);
+                        //2021年2月25日コメントアウト：サムネイル作成は1か所
+                        //App.g_pi.ThumnailMaker(index, bmp);
                         if (this.Visible)
                             this.Invalidate();
                     });

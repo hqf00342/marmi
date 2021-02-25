@@ -9,6 +9,7 @@
 - Task/ValueTask化の推進
 - 7zipライブラリの更新・併用
 - Utyクラスの整理
+- サムネイル画面で描写中にアプリ終了すると例外。indexがoutOfRange
 
 ## 完了
 

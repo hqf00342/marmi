@@ -14,32 +14,32 @@ namespace Marmi
     [Serializable]
     public class PackageInfo // : IDisposable
     {
-        //Zipファイル名、もしくはディレクトリ名
+        /// <summary>Zipファイル名、もしくはディレクトリ名</summary>
         public string PackageName { get; set; }
 
-        //現在見ているアイテム番号
+        /// <summary>現在見ているアイテム番号</summary>
         public int NowViewPage { get; set; }
 
-        //Zipファイルサイズ
+        /// <summary>Zipファイルサイズ</summary>
         public long PackageSize { get; set; }
 
-        //Zipファイル作成日
+        /// <summary>Zipファイル作成日</summary>
         public DateTime CreateDate { get; set; }
 
-        //サムネイル画像集
+        /// <summary>サムネイル画像集</summary>
         public List<ImageInfo> Items { get; } = new List<ImageInfo>();
 
-        //ver1.31 パッケージのタイプ
+        /// <summary>ver1.31 パッケージのタイプ</summary>
         public PackageType PackType { get; set; } = PackageType.None;
 
-        //ver1.30 ページ送り方向
+        /// <summary>ver1.30 ページ送り方向</summary>
         public bool PageDirectionIsLeft { get; set; }
 
-        //ver1.09 書庫のモード
+        /// <summary>ver1.09 書庫のモード</summary>
         [NonSerialized]
         public bool isSolid;
 
-        //書庫一時展開先
+        /// <summary>書庫一時展開先ディレクトリ</summary>
         [NonSerialized]
         public string tempDirname;
 
@@ -112,11 +112,12 @@ namespace Marmi
 
         /// <summary>
         /// キャッシュにファイルを読み込む
+        /// AsyncIOから呼ばれている画像読み込み本体。
         /// </summary>
         /// <param name="index"></param>
         /// <param name="_7z"></param>
         /// <returns></returns>
-        public bool LoadCache(int index, SevenZipWrapper _7z)
+        public bool LoadImageToCache(int index, SevenZipWrapper _7z)
         {
             if (index < 0 || index >= Items.Count)
                 return false;
@@ -130,7 +131,8 @@ namespace Marmi
             }
             else if (isSolid && App.Config.isExtractIfSolidArchive)
             {
-                //ver1.10 ソリッド書庫 一時フォルダから読み取りを試みる
+                //ver1.10 ソリッド書庫
+                //一時フォルダの画像ファイルから読取り
                 string tempname = Path.Combine(tempDirname, filename);
                 Items[index].CacheImage.Load(tempname);
             }
@@ -156,6 +158,7 @@ namespace Marmi
                     return false;
                 }
             }
+
             //画像サイズを設定
             Items[index].ImgSize = Items[index].CacheImage.GetImageSize();
 
@@ -211,13 +214,31 @@ namespace Marmi
             });
         }
 
-        public void ThumnailMaker(int index, Bitmap bmp)
+        /// <summary>
+        /// サムネイルの作成・登録
+        /// ここ1か所で行う。
+        /// 現在はAsyncIOで行っているが本来はCache登録処理内で行いたい。
+        /// </summary>
+        /// <param name="index"></param>
+        public void ThumnailMaker(int index)
         {
-            //ver1.73 index check
-            if (index > Items.Count) return;
+            if (index < 0 || index >= Items.Count) return;
 
-            if (bmp != null)
-                Items[index].ResisterThumbnailImage(bmp);
+            try
+            {
+                if (Items[index].CacheImage.HasImage)
+                {
+                    //ver1.10 サムネイル登録も行う
+                    Bitmap _bmp = Items[index].CacheImage.ToBitmap();
+                    if (_bmp != null)
+                    {
+                        Items[index].ResisterThumbnailImage(_bmp);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -296,7 +317,7 @@ namespace Marmi
             }
         }
 
-        public string GetCsvFromBookmark()
+        public string CreateBookmarkString()
         {
             //bookmarkされたorgIndexを拾ってくる。
             var bookmarks = Items.Where(c => c.IsBookMark).Select(c => c.OrgIndex);
@@ -305,7 +326,7 @@ namespace Marmi
             return string.Join(",", bookmarks.Select(c => c.ToString()).ToArray());
         }
 
-        public void SetBookmarksFromCsv(string csv)
+        public void LoadBookmarkString(string csv)
         {
             if (string.IsNullOrEmpty(csv))
                 return;

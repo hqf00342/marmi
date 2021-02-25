@@ -114,8 +114,8 @@ namespace Marmi
                 return null;
             }
 
-            //ver1.81 サムネイル登録
-            App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
+            //ver1.81 サムネイル登録：2021年2月25日コメントアウト
+            //App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
 
             if (App.Config.dualView && Form1.CanDualView(index))
             {
@@ -128,8 +128,8 @@ namespace Marmi
                     return bmp1;
                 }
 
-                //ver1.81 サムネイル登録
-                App.g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
+                //ver1.81 サムネイル登録：2021年2月25日コメントアウト
+                //App.g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
 
                 //合成ページを作る
                 int width1 = bmp1.Width;

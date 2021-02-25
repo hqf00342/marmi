@@ -67,6 +67,7 @@ namespace Marmi
                         if (!App.g_pi.Items[index].CacheImage.HasImage)
                         {
                             Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
+
                             //7zをOpenしていなければOpen
                             if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.IsOpen)
                             {
@@ -80,17 +81,21 @@ namespace Marmi
                                 byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].FileLength);
                                 App.g_pi.Items[index].CacheImage.Load(b);
                                 App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
-                                App.g_pi.AsyncThumnailMaker(index);
+                                //App.g_pi.AsyncThumnailMaker(index);
                             }
                             else
                             {
                                 //pdf以外の読み込み
-                                App.g_pi.LoadCache(index, AsyncSZ);
+                                App.g_pi.LoadImageToCache(index, AsyncSZ);
                                 //ver1.75 サムネイル登録
                                 //ver1.81コメントアウト
                                 //サムネイル作成はあとでやる。
                                 //g_pi.ThumnailMaker(index, g_pi.Items[index].cacheImage.bitmap);
                             }
+
+                            //サムネイルの作成。ここ1か所に集約(2021年2月25日)
+                            //App.g_pi.AsyncThumnailMaker(index);
+                            App.g_pi.ThumnailMaker(index);
                         }
 
                         //Invoke(action)を実行

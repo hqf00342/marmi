@@ -770,7 +770,8 @@ namespace Marmi
                 Bmp.AsyncGetBitmap(item, () =>
                 {
                     //ver1.75 サムネイルがないので作る
-                    App.g_pi.AsyncThumnailMaker(item);
+                    //2021年2月25日コメントアウト：サムネイル作成は1か所
+                    //App.g_pi.AsyncThumnailMaker(item);
 
                     if (this.Visible)
                     {

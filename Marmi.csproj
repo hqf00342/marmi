@@ -132,7 +132,7 @@
     <Compile Include="Uty\ImageInfoComparer.cs" />
     <Compile Include="DataClass\ImageInfo.cs" />
     <Compile Include="DataClass\MRU.cs" />
-    <Compile Include="DataClass\PrioritySafeQueue.cs" />
+    <Compile Include="Uty\PrioritySafeQueue.cs" />
     <Compile Include="DataClass\RawImage.cs" />
     <Compile Include="Form1.MenuEvent.cs">
       <SubType>Form</SubType>
@@ -164,7 +164,7 @@
     <Compile Include="MyChildForms\FormSaveThumbnail.Designer.cs">
       <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataClass\BitmapUty.cs" />
+    <Compile Include="Uty\BitmapUty.cs" />
     <Compile Include="MyControls\ClearPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -202,7 +202,7 @@
       <DependentUpon>FormPictureInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="DataClass\PackageInfo.cs" />
-    <Compile Include="DataClass\SevenZipWrapper.cs" />
+    <Compile Include="Uty\SevenZipWrapper.cs" />
     <Compile Include="MyControls\MaskPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -332,6 +332,7 @@
     </None>
     <None Include="7z64.dll" />
     <None Include="ToDo.md" />
+    <None Include="配布物\axpdf.spi" />
     <None Include="配布物\使い方%28詳細版%29.txt" />
     <None Include="配布物\SevenZipSharp.dll" />
     <Content Include="zic.ico" />

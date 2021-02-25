@@ -609,7 +609,7 @@ namespace Marmi
                         //最終ページを設定する。
                         App.g_pi.NowViewPage = mru.LastViewPage;
                         //Bookmarkを設定する
-                        App.g_pi.SetBookmarksFromCsv(mru.Bookmarks);
+                        App.g_pi.LoadBookmarkString(mru.Bookmarks);
                         break;
                     }
                 }
@@ -1314,7 +1314,7 @@ namespace Marmi
                     needMruAdd = false;
 
                     //ver1.77 Bookmarkも設定
-                    App.Config.mru[i].Bookmarks = App.g_pi.GetCsvFromBookmark();
+                    App.Config.mru[i].Bookmarks = App.g_pi.CreateBookmarkString();
                 }
             }
             if (needMruAdd)
@@ -1323,7 +1323,7 @@ namespace Marmi
                 //古い順に並べる→先頭に追加
                 //Array.Sort(App.Config.mru);
                 //App.Config.mru[0] = new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark());
-                App.Config.mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark()));
+                App.Config.mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.CreateBookmarkString()));
             }
             //Array.Sort(App.Config.mru);   //並べ直す
         }
