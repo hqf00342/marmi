@@ -1,32 +1,33 @@
 using System;
 using System.Diagnostics;
-using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
-using System.Windows.Forms;				//UserControl
+using System.Drawing;
+using System.Windows.Forms;
+
+/*
+半透明のBitmapをパネルとして利用するクラス
+フェードイン・フェードアウトしながら表示する。
+
+2021年2月26日 半透明やめた。メモリーリーク半端ない
+
+半透明について 2011年7月19日
+http://youryella.wankuma.com/Library/Extensions/Control/Transparent.aspx
+*/
 
 namespace Marmi
 {
-    /// <summary>
-    /// 半透明のBitmapをパネルとして利用するクラス
-    /// フェードイン・フェードアウトしながら表示する。
-    /// 2021年2月26日 半透明やめた。メモリーリーク半端ない
-    /// </summary>
     internal class ClearPanel : UserControl
     {
         //画面に表示されるイメージ。
         private Bitmap _screenImage = null;
 
-        //閉じるタイミングのためのタイマー
+        //一定時間で非表示にするタイマー
         private readonly Timer _hideTimer;
-
-        // 初期化 ***********************************************************************/
 
         public ClearPanel(Control parent)
         {
-            //半透明について 2011年7月19日
-            //http://youryella.wankuma.com/Library/Extensions/Control/Transparent.aspx
-
+            //初期状態は非表示、背景は透明に。重要
             this.Visible = false;
-            this.BackColor = Color.Transparent;     //背景は透明に。重要設定
+            this.BackColor = Color.Transparent;
 
             //ver1.19 フォーカスを当てないようにする
             this.SetStyle(ControlStyles.Selectable, false);
@@ -43,13 +44,16 @@ namespace Marmi
         ~ClearPanel()
         {
             this.Visible = false;
+            _screenImage?.Dispose();
+
             if (Parent.Controls.Contains(this))
                 Parent.Controls.Remove(this);
-            _screenImage?.Dispose();
+
             if (_hideTimer != null)
             {
                 _hideTimer.Stop();
                 _hideTimer.Dispose();
+                _hideTimer.Tick -= HideTimer_Tick;
             }
         }
 
@@ -82,7 +86,7 @@ namespace Marmi
         /// <param name="holdtime">表示時間（フェード時間は除く）。0以上のミリ秒</param>
         public void ShowAndClose(string text, int holdtime)
         {
-            if(_hideTimer.Enabled)
+            if (_hideTimer.Enabled)
             {
                 _hideTimer.Stop();
             }
@@ -99,9 +103,8 @@ namespace Marmi
                 (this.Parent.Height - this.Height) / 2);
             this.Visible = true;
 
-            //一定時間で非表示にする
-            if (holdtime <= 0) holdtime = 1000;
-            _hideTimer.Interval = holdtime;
+            //一定時間で非表示にするタイマーを起動
+            _hideTimer.Interval = holdtime <= 100 ? 1000 : holdtime;
             _hideTimer.Start();
         }
     }
