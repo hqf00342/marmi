@@ -73,7 +73,7 @@ namespace Marmi
         //マウスクリックされた位置を保存。ドラッグ操作用
         private Point g_LastClickPoint = Point.Empty;
 
-        private static volatile ThreadStatus tsThumbnail = ThreadStatus.STOP;   //スレッドの状況を見る
+        //private static volatile ThreadStatus tsThumbnail = ThreadStatus.STOP;   //スレッドの状況を見る
 
         //ver1.51 事前のScreenCacheを作るかどうかのフラグ
         private bool needMakeScreenCache = false;
@@ -157,7 +157,7 @@ namespace Marmi
             //g_Sidebar.Width = SIDEBAR_DEFAULT_WIDTH
             g_Sidebar.Width = App.Config.sidebarWidth;
             g_Sidebar.Dock = DockStyle.Left;
-            g_Sidebar.SidebarSizeChanged += g_Sidebar_SidebarSizeChanged;
+            g_Sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
             //
             //TrackBar
             //
@@ -315,27 +315,25 @@ namespace Marmi
                 string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
                 //Start(files);
                 AsyncStart(files);
-                Debug.WriteLine("OnDragDrop() End");
             }
+            Debug.WriteLine("OnDragDrop() End");
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            Debug.WriteLine("OnResize()");
+            //Debug.WriteLine("OnResize()");
 
-            //初期化が出来ていないときも帰れ
-            //フォームが生成される前にもResize()は呼ばれる可能性がある。
+            //初期化前なら何もしない。
+            //フォーム生成前にResize()は呼ばれる可能性がある。
             if (App.Config == null)
                 return;
 
-            //最小化時には何もしないで帰れ
+            //最小化時には何もしない
             if (this.WindowState == FormWindowState.Minimized)
-            {
                 return;
-            }
 
-            //ver0.972 ナビバーがあればナビバーをリサイズ
+            //ver0.972 Sidebarをリサイズ
             AjustSidebarArrangement();
 
             //サムネイルか？
@@ -367,24 +365,15 @@ namespace Marmi
         protected override void OnResizeEnd(EventArgs e)
         {
             base.OnResizeEnd(e);
-            Uty.WriteLine("OnResizeEnd()");
+            //Debug.WriteLine("OnResizeEnd()");
 
-            //サムネイル表示モードか
             if (g_ThumbPanel != null && App.Config.isThumbnailView)
             {
-                //サムネイルパネルが表示されている場合はそちらを実施
-                //表示する
-                //ThumbPanel.thumbnailImageSet = g_pi.Items;
-                //Rectangle rect = GetClientRectangle();
-                //ThumbPanel.Location = rect.Location;
-                //ThumbPanel.Size = rect.Size;
-                //ThumbPanel.drawThumbnailToOffScreen();
-
-                //スレッド版にしたため不要
-                //ThumbPanel.MakeThumbnailScreen(true);
+                //サムネイル表示モード中
             }
             else
             {
+                //通常画面
                 //ResizeEndでスクロールバーを表示
                 //UpdateFormScrollbar();
 
@@ -578,7 +567,7 @@ namespace Marmi
                 }
             }
 
-            if (App.g_pi.Items.Count <= 0)
+            if (App.g_pi.Items.Count == 0)
             {
                 //画面をクリア、準備中の文字を消す
                 const string str = "表示できるファイルがありませんでした";
@@ -600,7 +589,9 @@ namespace Marmi
                 foreach (var mru in App.Config.mru)
                 {
                     if (mru == null)
+                    {
                         continue;
+                    }
                     else if (mru.Name == App.g_pi.PackageName
                         //ver1.79 コメントアウト
                         //&& g_pi.packType == PackageType.Archive)
@@ -1071,8 +1062,10 @@ namespace Marmi
                     = !App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark;
 
                 if (g_viewPages == 2)
+                {
                     App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark
                         = !App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark;
+                }
             }
         }
 
@@ -1247,7 +1240,7 @@ namespace Marmi
             var szw = new SevenZipWrapper();
             bool retval = false;
 
-            if (szw.Open(filename) == false)
+            if (!szw.Open(filename))
             {
                 MessageBox.Show("エラーのため書庫は開けませんでした。");
                 App.g_pi.Initialize();
@@ -1276,7 +1269,9 @@ namespace Marmi
                 if (item.IsDirectory)
                     continue;
                 if (Uty.IsPictureFilename(item.FileName))
+                {
                     App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
+                }
                 else if (Uty.IsSupportArchiveFile(item.FileName))
                 {
                     retval = true;
@@ -1370,8 +1365,7 @@ namespace Marmi
             g_trackbar.Value = index;
 
             //ver1.35 スクリーンキャッシュチェック
-            Bitmap screenImage = null;
-            if (App.ScreenCache.TryGetValue(index, out screenImage))
+            if (App.ScreenCache.TryGetValue(index, out Bitmap screenImage))
             {
                 //スクリーンキャッシュあったのですぐに描写
                 SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
@@ -1504,8 +1498,10 @@ namespace Marmi
                 return ret >= 0 ? ret : 0;
             }
             else
+            {
                 //すでに先頭ページなので-1を返す
                 return -1;
+            }
         }
 
         //ver1.36次のページ番号。すでに最終ページなら-1
@@ -1514,10 +1510,14 @@ namespace Marmi
             int pages = CanDualView(index) ? 2 : 1;
 
             if (index + pages <= App.g_pi.Items.Count - 1)
-                return (index + pages);
+            {
+                return index + pages;
+            }
             else
+            {
                 //最終ページ
                 return -1;
+            }
         }
 
         // ユーティリティ系 *************************************************************/
@@ -1607,9 +1607,13 @@ namespace Marmi
                     else if (g_viewPages == 2
                         && App.g_pi.NowViewPage < App.g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
                         && App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark) //
+                    {
                         toolStripButton_Favorite.Checked = true;
+                    }
                     else
+                    {
                         toolStripButton_Favorite.Checked = false;
+                    }
 
                     //Sidebar
                     toolStripButton_Sidebar.Checked = g_Sidebar.Visible;
@@ -1764,7 +1768,7 @@ namespace Marmi
         /// </summary>
         /// <param name="sender">利用せず</param>
         /// <param name="e">利用せず</param>
-        private void g_Sidebar_SidebarSizeChanged(object sender, EventArgs e)
+        private void Sidebar_SidebarSizeChanged(object sender, EventArgs e)
         {
             OnResizeEnd(null);
         }
@@ -1875,14 +1879,15 @@ namespace Marmi
                     //Bitmap tempBmp = ScreenCache[key];
                     //ScreenCache.Remove(key);
                     //tempBmp.Dispose();
-                    Bitmap tempBmp = null;
-                    if (App.ScreenCache.TryGetValue(ix, out tempBmp))
+                    if (App.ScreenCache.TryGetValue(ix, out Bitmap tempBmp))
                     {
                         App.ScreenCache.Remove(ix);
                         Uty.WriteLine("PurgeScreenCache({0})", ix);
                     }
                     else
+                    {
                         Uty.WriteLine("PurgeScreenCache({0})失敗", ix);
+                    }
                 }
             }
             //ver1.37GC

@@ -217,9 +217,9 @@ namespace Marmi
                     //再帰的に消す
                     Directory.Delete(tempDirName, true);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    MessageBox.Show(e.Message, "一時フォルダの削除が出来ませんでした");
+                    MessageBox.Show($"{tempDirName}の削除が出来ませんでした", "フォルダ削除エラー");
                 }
             }
         }

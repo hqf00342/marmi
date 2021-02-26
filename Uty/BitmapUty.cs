@@ -243,14 +243,16 @@ namespace Marmi
         //半透明版のDrawImage
         public static void alphaDrawImage(Graphics g, Image img, float alpha)
         {
-            ColorMatrix cm = new ColorMatrix();
-            cm.Matrix00 = 1;
-            cm.Matrix11 = 1;
-            cm.Matrix22 = 1;
-            cm.Matrix33 = alpha;
-            cm.Matrix44 = 1;
+            var cm = new ColorMatrix
+            {
+                Matrix00 = 1,
+                Matrix11 = 1,
+                Matrix22 = 1,
+                Matrix33 = alpha,
+                Matrix44 = 1
+            };
 
-            ImageAttributes ia = new ImageAttributes();
+            var ia = new ImageAttributes();
             ia.SetColorMatrix(cm);
 
             //アルファブレンドしながら描写
@@ -266,14 +268,16 @@ namespace Marmi
         //半透明版のDrawImage
         public static void alphaDrawImage(Graphics g, Image img, Rectangle rect, float alpha)
         {
-            ColorMatrix cm = new ColorMatrix();
-            cm.Matrix00 = 1;
-            cm.Matrix11 = 1;
-            cm.Matrix22 = 1;
-            cm.Matrix33 = alpha;
-            cm.Matrix44 = 1;
+            var cm = new ColorMatrix
+            {
+                Matrix00 = 1,
+                Matrix11 = 1,
+                Matrix22 = 1,
+                Matrix33 = alpha,
+                Matrix44 = 1
+            };
 
-            ImageAttributes ia = new ImageAttributes();
+            var ia = new ImageAttributes();
             ia.SetColorMatrix(cm);
 
             //アルファブレンドしながら描写
