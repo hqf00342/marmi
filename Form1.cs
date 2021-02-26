@@ -1222,8 +1222,8 @@ namespace Marmi
             PicPanel.Message = string.Empty;
             PicPanel.bmp = null;
 
-            //GC
-            //Uty.ForceGC();
+            //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
+            Uty.ForceGC();
         }
 
         private void SortPackage()
@@ -1251,7 +1251,8 @@ namespace Marmi
             {
                 MessageBox.Show("エラーのため書庫は開けませんでした。");
                 App.g_pi.Initialize();
-                Uty.ForceGC();      //書庫を開放・GCする必要がある
+                //2021年2月26日 GCをやめる
+                //Uty.ForceGC();      //書庫を開放・GCする必要がある
                 return false;
             }
 
@@ -1484,7 +1485,9 @@ namespace Marmi
 
             //PicPanel.Message = string.Empty;
             PicPanel.State = PicturePanel.DrawStatus.idle;
-            Uty.ForceGC();
+            //2021年2月26日 GCをやめる
+            //ToDo:ここだけはあったほうがいいかもしれないがLOHの扱いも同時にすべき
+            //Uty.ForceGC();
         }
 
         //ver1.35 前のページ番号。すでに先頭ページなら-1
@@ -2059,6 +2062,11 @@ namespace Marmi
             //this.Invalidate();
             //SetViewPage(g_pi.NowViewPage);
             PicPanel.Invalidate();
+        }
+
+        private void Menu_Help_GC_Clicked(object sender, EventArgs e)
+        {
+            Uty.ForceGC();
         }
     } // Class Form1
 }

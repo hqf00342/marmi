@@ -64,11 +64,17 @@ namespace Marmi
         /// </summary>
         public static void ForceGC()
         {
-            long before = GC.GetTotalMemory(false);
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
-            System.GC.Collect();
-            Uty.WriteLine("ForceGC {0:N0} -> {1:N0}", before, GC.GetTotalMemory(false));
+            //2021年2月26日
+            // GCしたいのならば
+            //85KB以上のObjectはLargeObjectHeapにあるのでLOHを圧縮する設定をどこかでしたほうがいい
+            //System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+
+            var before = GC.GetTotalMemory(false);
+            GC.Collect();                   // 全ジェネレーションのGC
+            GC.WaitForPendingFinalizers();  // ファイナライズ終了まで待つ
+            GC.Collect();                   // ファイナライズされたObjをGC
+
+            Debug.WriteLine($"ForceGC {before:N0}byte to {GC.GetTotalMemory(false):N0}byte");
         }
 
         /// <summary>

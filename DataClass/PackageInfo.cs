@@ -168,55 +168,55 @@ namespace Marmi
             return true;
         }
 
-        public void AsyncThumnailMaker(int index)
-        {
-            //ver1.73 index check
-            if (index > Items.Count) return;
+        //public void AsyncThumnailMaker(int index)
+        //{
+        //    //ver1.73 index check
+        //    if (index > Items.Count) return;
 
-            if (Items[index].CacheImage.HasImage)
-            {
-                ThreadPool.QueueUserWorkItem(dummy =>
-                {
-                    try
-                    {
-                        //ver1.10 サムネイル登録も行う
-                        Bitmap _bmp = Items[index].CacheImage.ToBitmap();
-                        if (_bmp != null)
-                        {
-                            Items[index].ResisterThumbnailImage(_bmp);
+        //    if (Items[index].CacheImage.HasImage)
+        //    {
+        //        ThreadPool.QueueUserWorkItem(dummy =>
+        //        {
+        //            try
+        //            {
+        //                //ver1.10 サムネイル登録も行う
+        //                Bitmap _bmp = Items[index].CacheImage.ToBitmap();
+        //                if (_bmp != null)
+        //                {
+        //                    Items[index].ResisterThumbnailImage(_bmp);
 
-                            //ver1.81コメントアウト。悪さしそう
-                            //_bmp.Dispose();
-                        }
-                    }
-                    catch { }
-                });
-            }
-        }
+        //                    //ver1.81コメントアウト。悪さしそう
+        //                    //_bmp.Dispose();
+        //                }
+        //            }
+        //            catch { }
+        //        });
+        //    }
+        //}
 
-        /// <summary>
-        /// サムネイル登録
-        /// すでに画像を持っている場合はこれを使う
-        /// </summary>
-        /// <param name="index">画像のインデックス</param>
-        /// <param name="orgBitmap">元画像</param>
-        public void AsyncThumnailMaker(int index, Bitmap orgBitmap)
-        {
-            //ver1.73 index check
-            if (index > Items.Count) return;
-            if (orgBitmap == null) return;
+        ///// <summary>
+        ///// サムネイル登録
+        ///// すでに画像を持っている場合はこれを使う
+        ///// </summary>
+        ///// <param name="index">画像のインデックス</param>
+        ///// <param name="orgBitmap">元画像</param>
+        //public void AsyncThumnailMaker(int index, Bitmap orgBitmap)
+        //{
+        //    //ver1.73 index check
+        //    if (index > Items.Count) return;
+        //    if (orgBitmap == null) return;
 
-            ThreadPool.QueueUserWorkItem(dummy =>
-            {
-                Items[index].ResisterThumbnailImage(orgBitmap);
-                //TODO:画像をDispose()すべき
-                orgBitmap.Dispose();
-            });
-        }
+        //    ThreadPool.QueueUserWorkItem(dummy =>
+        //    {
+        //        Items[index].ResisterThumbnailImage(orgBitmap);
+        //        //TODO:画像をDispose()すべき
+        //        orgBitmap.Dispose();
+        //    });
+        //}
 
         /// <summary>
         /// サムネイルの作成・登録
-        /// ここ1か所で行う。
+        /// ここ1か所で行う。(2021年2月25日)
         /// 現在はAsyncIOで行っているが本来はCache登録処理内で行いたい。
         /// </summary>
         /// <param name="index"></param>
@@ -309,7 +309,8 @@ namespace Marmi
                     foreach (var i in Items)
                         nowBufferSize += i.CacheImage.Length;
                     Uty.WriteLine("FileCacheCleanUp() end: {0:N0}bytes", nowBufferSize);
-                    Uty.ForceGC();
+                    //2021年2月26日 GCをやめる
+                    //Uty.ForceGC();
                     break;
 
                 default:
@@ -317,15 +318,20 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// ブックマーク一覧CSVを作成する
+        /// </summary>
+        /// <returns>CSV化されたブックマーク。ページ番号の羅列</returns>
         public string CreateBookmarkString()
         {
-            //bookmarkされたorgIndexを拾ってくる。
             var bookmarks = Items.Where(c => c.IsBookMark).Select(c => c.OrgIndex);
-
-            //Int配列をcsvに変換
             return string.Join(",", bookmarks.Select(c => c.ToString()).ToArray());
         }
 
+        /// <summary>
+        /// ブックマークCSV文字列を読み込みブックマークとする
+        /// </summary>
+        /// <param name="csv">ブックマーク文字列。CreateBookmarkString()で生成されたもの</param>
         public void LoadBookmarkString(string csv)
         {
             if (string.IsNullOrEmpty(csv))
