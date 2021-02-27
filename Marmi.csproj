@@ -97,11 +97,12 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
+    <Compile Include="DataClass\ThumbnailEventArgs.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />
     <Compile Include="Uty\NaturalStringComparer.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
-    <Compile Include="enums\DefaultThumbSize.cs" />
+    <Compile Include="enums\ThumbnailSize.cs" />
     <Compile Include="enums\DiagLocate.cs" />
     <Compile Include="enums\MemoryModel.cs" />
     <Compile Include="enums\PackageType.cs" />

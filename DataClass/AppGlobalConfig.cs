@@ -104,7 +104,8 @@ namespace Marmi
         public int slideShowTime { get; set; }
 
         //ver1.42 サムネイルのフェードイン
-        public bool isThumbFadein;
+        [Obsolete]
+        public bool isThumbFadein { get; set; }
 
         //ver1.49 ウィンドウの初期位置
         public bool isWindowPosCenter;
@@ -342,7 +343,7 @@ namespace Marmi
             isShowTPFileName = true;                        //画像名を表示するか
             isShowTPFileSize = false;                       //画像のファイルサイズを表示するか
             isShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
-            isThumbFadein = true;
+            isThumbFadein = false;
 
             //ルーペタブ
             loupeMagnifcant = 3;

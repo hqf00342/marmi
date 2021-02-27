@@ -14,17 +14,17 @@ namespace Marmi
 {
     public class BitmapUty
     {
-        private static int BoxMargin = 20;                      //ボックス外周部のマージン
-        private static int padding = 5;                         //Key-Value間のPadding
-        private static string SepareteString = " : ";           //2列表示実施時のセパレーター文字列
-        private static float LinePadding = 1f;                  //行間
+        private const int BOX_MARGIN = 20;                      //ボックス外周部のマージン
+        private const int PADDING = 5;                         //Key-Value間のPadding
+        private const string SepareteString = " : ";           //2列表示実施時のセパレーター文字列
+        private const float LinePadding = 1f;                  //行間
 
-        private static string FontName = "MS PGothic";          //フォント名
-        private static int FontPoint = 10;                      //フォントのポイント
-        private static Color FontColorKey = Color.RoyalBlue;    //キーの色
-        private static Color FontColorValue = Color.Black;      //値の色（通常の色）
-        private static Color BackColor = Color.White;           //背景色
-        private static Color BorderColor = Color.DarkGray;      //ボーダーカラー
+        private const string FONT_NAME = "MS PGothic";          //フォント名
+        private const int FONT_POINT = 10;                      //フォントのポイント
+        private static readonly Color FONTCOLOR_KEY = Color.RoyalBlue;    //キーの色
+        private static readonly Color FONTCOLOR_VALUE = Color.Black;      //値の色（通常の色）
+        private static readonly Color BackColor = Color.White;           //背景色
+        private static readonly Color BorderColor = Color.DarkGray;      //ボーダーカラー
 
         public static Bitmap Text2Bitmap(string str, bool isRoundCorner)
         {
@@ -37,7 +37,7 @@ namespace Marmi
             float height = 0f;      //計測された高さ
             float width = 0f;       //計測された幅
 
-            using (Font font = new Font(FontName, FontPoint))
+            using (Font font = new Font(FONT_NAME, FONT_POINT))
             {
                 //サイズを測る
                 using (Bitmap b = new Bitmap(10, 10))
@@ -52,16 +52,16 @@ namespace Marmi
                     }
                 }
 
-                height += BoxMargin * 2;
-                width += BoxMargin * 2;
+                height += BOX_MARGIN * 2;
+                width += BOX_MARGIN * 2;
 
                 //Bitmapを作る
                 Bitmap returnbmp = new Bitmap((int)width, (int)height);
                 using (Graphics g = Graphics.FromImage(returnbmp))
                 {
-                    float y = BoxMargin;
+                    float y = BOX_MARGIN;
                     //Brush brush = Brushes.Black;
-                    SolidBrush brush = new SolidBrush(FontColorValue);
+                    SolidBrush brush = new SolidBrush(FONTCOLOR_VALUE);
 
                     //箱の初期化
                     InitBackImage(g, width, height, isRoundCorner);
@@ -70,7 +70,7 @@ namespace Marmi
                     {
                         SizeF sizef = g.MeasureString(s, font);
 
-                        g.DrawString(s, font, brush, BoxMargin, y);
+                        g.DrawString(s, font, brush, BOX_MARGIN, y);
                         y += sizef.Height + LinePadding;
                     }
                 }
@@ -78,92 +78,92 @@ namespace Marmi
             }//using font
         }
 
-        public static Bitmap Text2Bitmap(KeyValuePair<string, string>[] kv, bool isRoundCorner)
-        {
-            float keyWidth = 0;
-            float keyHeight = 0;
-            float valueWidth = 0;
-            float valueHeight = 0;
+        //public static Bitmap Text2Bitmap(KeyValuePair<string, string>[] kv, bool isRoundCorner)
+        //{
+        //    float keyWidth = 0;
+        //    float keyHeight = 0;
+        //    float valueWidth = 0;
+        //    float valueHeight = 0;
 
-            using (Font font = new Font(FontName, FontPoint))
-            {
-                using (Bitmap TempBmp = new Bitmap(10, 10))
-                using (Graphics g = Graphics.FromImage(TempBmp))
-                {
-                    SizeF size;
-                    foreach (KeyValuePair<string, string> s in kv)
-                    {
-                        //if (s == null)
-                        //    continue;
+        //    using (var font = new Font(FONT_NAME, FONT_POINT))
+        //    {
+        //        using (var tempBmp = new Bitmap(10, 10))
+        //        using (var g = Graphics.FromImage(tempBmp))
+        //        {
+        //            SizeF size;
+        //            foreach (KeyValuePair<string, string> s in kv)
+        //            {
+        //                //if (s == null)
+        //                //    continue;
 
-                        //Keyの大きさを確認
-                        size = g.MeasureString(s.Key + SepareteString, font);
-                        keyWidth = (keyWidth > size.Width) ? keyWidth : size.Width;
-                        keyHeight = (keyHeight > size.Height) ? keyHeight : size.Height;
+        //                //Keyの大きさを確認
+        //                size = g.MeasureString(s.Key + SepareteString, font);
+        //                keyWidth = (keyWidth > size.Width) ? keyWidth : size.Width;
+        //                keyHeight = (keyHeight > size.Height) ? keyHeight : size.Height;
 
-                        //Valueの大きさを確認
-                        size = g.MeasureString(s.Value, font);
-                        valueWidth = (valueWidth > size.Width) ? valueWidth : size.Width;
-                        valueHeight = (valueHeight > size.Height) ? valueHeight : size.Height;
-                    }
-                }
+        //                //Valueの大きさを確認
+        //                size = g.MeasureString(s.Value, font);
+        //                valueWidth = (valueWidth > size.Width) ? valueWidth : size.Width;
+        //                valueHeight = (valueHeight > size.Height) ? valueHeight : size.Height;
+        //            }
+        //        }
 
-                float height = (valueHeight > keyHeight) ? valueHeight : keyHeight;
-                RectangleF rcKey = new RectangleF(0, 0, keyWidth, height);
-                RectangleF rcValue = new RectangleF(0, 0, valueWidth, height);
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Far;
-                sf.LineAlignment = StringAlignment.Near;
+        //        float height = (valueHeight > keyHeight) ? valueHeight : keyHeight;
+        //        RectangleF rcKey = new RectangleF(0, 0, keyWidth, height);
+        //        RectangleF rcValue = new RectangleF(0, 0, valueWidth, height);
+        //        StringFormat sf = new StringFormat();
+        //        sf.Alignment = StringAlignment.Far;
+        //        sf.LineAlignment = StringAlignment.Near;
 
-                Bitmap returnBitmap = new Bitmap(
-                    (int)(keyWidth + valueWidth + padding + BoxMargin * 2),
-                    (int)((height + LinePadding) * kv.Length + BoxMargin * 2));
+        //        Bitmap returnBitmap = new Bitmap(
+        //            (int)(keyWidth + valueWidth + PADDING + BOX_MARGIN * 2),
+        //            (int)((height + LinePadding) * kv.Length + BOX_MARGIN * 2));
 
-                using (Graphics g = Graphics.FromImage(returnBitmap))
-                {
-                    //箱の初期化
-                    InitBackImage(g, returnBitmap.Width, returnBitmap.Height, isRoundCorner);
+        //        using (Graphics g = Graphics.FromImage(returnBitmap))
+        //        {
+        //            //箱の初期化
+        //            InitBackImage(g, returnBitmap.Width, returnBitmap.Height, isRoundCorner);
 
-                    SolidBrush keyBrush = new SolidBrush(FontColorKey);
-                    SolidBrush valueBrush = new SolidBrush(FontColorValue);
+        //            var keyBrush = new SolidBrush(FONTCOLOR_KEY);
+        //            var valueBrush = new SolidBrush(FONTCOLOR_VALUE);
 
-                    //文字を描く
-                    for (int i = 0; i < kv.Length; i++)
-                    {
-                        //if (sd[i] == null)
-                        //    continue;
+        //            //文字を描く
+        //            for (int i = 0; i < kv.Length; i++)
+        //            {
+        //                //if (sd[i] == null)
+        //                //    continue;
 
-                        //g.DrawString(
-                        //    sd[i].Key,
-                        //    font,
-                        //    Brushes.SteelBlue,
-                        //    BoxMargin,
-                        //    height * i);
+        //                //g.DrawString(
+        //                //    sd[i].Key,
+        //                //    font,
+        //                //    Brushes.SteelBlue,
+        //                //    BoxMargin,
+        //                //    height * i);
 
-                        rcKey.X = BoxMargin;
-                        rcKey.Y = (height + LinePadding) * i + BoxMargin;
+        //                rcKey.X = BOX_MARGIN;
+        //                rcKey.Y = (height + LinePadding) * i + BOX_MARGIN;
 
-                        //Keyを描写
-                        g.DrawString(
-                            kv[i].Key + SepareteString,
-                            font,
-                            //Brushes.SteelBlue,
-                            keyBrush,
-                            rcKey,
-                            sf);
+        //                //Keyを描写
+        //                g.DrawString(
+        //                    kv[i].Key + SepareteString,
+        //                    font,
+        //                    //Brushes.SteelBlue,
+        //                    keyBrush,
+        //                    rcKey,
+        //                    sf);
 
-                        //Valueを描写
-                        g.DrawString(
-                            kv[i].Value,
-                            font,
-                            valueBrush,
-                            BoxMargin + keyWidth + padding,
-                            (height + LinePadding) * i + BoxMargin);
-                    }
-                }
-                return returnBitmap;
-            }//using font
-        }
+        //                //Valueを描写
+        //                g.DrawString(
+        //                    kv[i].Value,
+        //                    font,
+        //                    valueBrush,
+        //                    BOX_MARGIN + keyWidth + PADDING,
+        //                    (height + LinePadding) * i + BOX_MARGIN);
+        //            }
+        //        }
+        //        return returnBitmap;
+        //    }//using font
+        //}
 
         //Text2Bitmap()から呼び出される背景作成ルーチン
         private static void InitBackImage(Graphics g, float width, float height, bool isRoundCorner)
@@ -202,43 +202,43 @@ namespace Marmi
             return path;
         }
 
-        public static GraphicsPath GetRoundRect(Rectangle rect, int radius)
-        {
-            GraphicsPath path = new GraphicsPath();
-            path.StartFigure();
+        //public static GraphicsPath GetRoundRect(Rectangle rect, int radius)
+        //{
+        //    GraphicsPath path = new GraphicsPath();
+        //    path.StartFigure();
 
-            // 左上の角丸
-            path.AddArc(rect.Left, rect.Top, radius * 2, radius * 2,
-                180, 90);
-            // 上の線
-            path.AddLine(rect.Left + radius, rect.Top,
-                rect.Right - radius, rect.Top);
-            // 右上の角丸
-            path.AddArc(rect.Right - radius * 2, rect.Top,
-                radius * 2, radius * 2,
-                270, 90);
-            // 右の線
-            path.AddLine(rect.Right, rect.Top + radius,
-                rect.Right, rect.Bottom - radius);
-            // 右下の角丸
-            path.AddArc(rect.Right - radius * 2, rect.Bottom - radius * 2,
-                radius * 2, radius * 2,
-                0, 90);
-            // 下の線
-            path.AddLine(rect.Right - radius, rect.Bottom,
-                rect.Left + radius, rect.Bottom);
-            // 左下の角丸
-            path.AddArc(rect.Left, rect.Bottom - radius * 2,
-                radius * 2, radius * 2,
-                90, 90);
-            // 左の線
-            path.AddLine(rect.Left, rect.Bottom - radius,
-                rect.Left, rect.Top + radius);
+        //    // 左上の角丸
+        //    path.AddArc(rect.Left, rect.Top, radius * 2, radius * 2,
+        //        180, 90);
+        //    // 上の線
+        //    path.AddLine(rect.Left + radius, rect.Top,
+        //        rect.Right - radius, rect.Top);
+        //    // 右上の角丸
+        //    path.AddArc(rect.Right - radius * 2, rect.Top,
+        //        radius * 2, radius * 2,
+        //        270, 90);
+        //    // 右の線
+        //    path.AddLine(rect.Right, rect.Top + radius,
+        //        rect.Right, rect.Bottom - radius);
+        //    // 右下の角丸
+        //    path.AddArc(rect.Right - radius * 2, rect.Bottom - radius * 2,
+        //        radius * 2, radius * 2,
+        //        0, 90);
+        //    // 下の線
+        //    path.AddLine(rect.Right - radius, rect.Bottom,
+        //        rect.Left + radius, rect.Bottom);
+        //    // 左下の角丸
+        //    path.AddArc(rect.Left, rect.Bottom - radius * 2,
+        //        radius * 2, radius * 2,
+        //        90, 90);
+        //    // 左の線
+        //    path.AddLine(rect.Left, rect.Bottom - radius,
+        //        rect.Left, rect.Top + radius);
 
-            path.CloseFigure();
+        //    path.CloseFigure();
 
-            return path;
-        }
+        //    return path;
+        //}
 
         //半透明版のDrawImage
         public static void alphaDrawImage(Graphics g, Image img, float alpha)
@@ -754,8 +754,8 @@ namespace Marmi
             Bitmap _bmp = new Bitmap(bmpwidth, bmpheight);
 
             using (Graphics g = Graphics.FromImage(_bmp))
-            using (Font font = new Font(FontName, FontPoint))
-            using (SolidBrush brush = new SolidBrush(FontColorValue))
+            using (Font font = new Font(FONT_NAME, FONT_POINT))
+            using (SolidBrush brush = new SolidBrush(FONTCOLOR_VALUE))
             {
                 g.Clear(backColor);
 

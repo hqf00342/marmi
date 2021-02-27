@@ -63,7 +63,7 @@ namespace Marmi
             this.Visible = false;
             _screenImage?.Dispose();
             _screenImage = null;
-            Uty.ForceGC();
+            //Uty.ForceGC();
         }
 
         protected override void OnPaint(PaintEventArgs e)

@@ -415,10 +415,10 @@ namespace Marmi
             //ClearScreenCache();
 
             //サムネイルモードのApplication_Idle()へ
-            if (App.Config.isThumbnailView)
-            {
-                g_ThumbPanel.Application_Idle();
-            }
+            //if (App.Config.isThumbnailView)
+            //{
+            //    g_ThumbPanel.Application_Idle();
+            //}
 
             //ScreenCacheを作る必要があれば作成。
             if (needMakeScreenCache)

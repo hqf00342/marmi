@@ -19,20 +19,17 @@ namespace Marmi
         private ThumbnailPanel m_tPanel = null;     //親のパネルを表す
         private bool m_Saving = false;              //保存処理中かどうかを表すフラグ
 
-        public bool isCancel
-        {
-            get { return !m_Saving; }
-        }
+        public bool IsCancel => !m_Saving;
 
         public FormSaveThumbnail(ThumbnailPanel tp, List<ImageInfo> lii, string Filename)
         {
             InitializeComponent();
             m_thumbnailSet = lii;
             m_tPanel = tp;
-            m_tPanel.SavedItemChanged += new ThumbnailPanel.ThumbnailEventHandler(tPanel_SavedItemChanged);
+            m_tPanel.SavedItemChanged += tPanel_SavedItemChanged;
 
             //保存ファイル名
-            savename = suggestFilename(Filename);
+            savename = SuggestFilename(Filename);
 
             //グローバルコンフィグを一時保存
             saveConf_isDrawFilename = App.Config.isShowTPFileName;
@@ -42,7 +39,7 @@ namespace Marmi
 
         ~FormSaveThumbnail()
         {
-            m_tPanel.SavedItemChanged -= new ThumbnailPanel.ThumbnailEventHandler(tPanel_SavedItemChanged);
+            m_tPanel.SavedItemChanged -= tPanel_SavedItemChanged;
         }
 
         private void FormSaveThumbnail_Load(object sender, EventArgs e)
@@ -135,16 +132,14 @@ namespace Marmi
             this.Close();
         }
 
-        private string suggestFilename(string orgName)
+        private string SuggestFilename(string orgName)
         {
-            //拡張子pngを提案する。
-
-            //何もないときはデスクトップ/thumbnaul.pngを提案
+            //指定ないときはデスクトップ/thumbnaul.pngを提案
             if (string.IsNullOrEmpty(orgName))
             {
-                string sz = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                sz += @"\Thumbnail.png";
-                return sz;
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                    "Thumbnail.png");
             }
 
             //拡張子を切り出し
