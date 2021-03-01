@@ -17,6 +17,7 @@ namespace Marmi
         [STAThread]
         private static void Main()
         {
+            // Mutex内に移動
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());

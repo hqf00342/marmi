@@ -93,6 +93,10 @@ namespace Marmi
             this.Name = App.APPNAME;
             _instance = this;
 
+            //DpiAware 2021年3月1日
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+            //this.DpiChanged += Form1_DpiChanged;
+
             ////設定ファイルの読み込みはProgram.csで実施
             ////App.Config = (AppGlobalConfig)LoadFromXmlFile();
 
@@ -194,7 +198,12 @@ namespace Marmi
             SlideShowTimer.Tick += SlideShowTimer_Tick;
         }
 
-        // フォームイベント *************************************************************/
+        #region Event
+
+        //protected override void OnDpiChanged(DpiChangedEventArgs e)
+        //{
+        //    base.OnDpiChanged(e);
+        //}
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -451,6 +460,8 @@ namespace Marmi
                     break;
             }
         }
+
+        #endregion
 
         // 非同期スタート ***************************************************************/
         /// <summary>
