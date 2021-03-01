@@ -783,11 +783,7 @@ namespace Marmi
             long drawOrderTick = DateTime.Now.Ticks;
             int now = App.g_pi.NowViewPage;
             int next = GetNextPageIndex(App.g_pi.NowViewPage);
-            Uty.WriteLine("NavigateToForword() {0} -> {1}", now, next);
-            //#if DEBUG
-            //            StackFrame callerFrame = new StackFrame(1);
-            //            Uty.WriteLine("StackFrame: {0}", callerFrame.GetMethod().Name);
-            //#endif
+            Debug.WriteLine($"NavigateToForword() {now} -> {next}");
             if (next >= 0)
             {
                 SetViewPage(next, drawOrderTick);
@@ -1421,10 +1417,7 @@ namespace Marmi
             // 最新の描写でなければスキップ
             if (PicPanel.drawOrderTime > orderTime)
             {
-                Uty.WriteLine("Skip SetViewPage2({0}) too old order={1} < now={2}",
-                    index,
-                    orderTime,
-                    PicPanel.drawOrderTime);
+                Debug.WriteLine($"Skip SetViewPage2({index}) too old order={orderTime} < now={PicPanel.drawOrderTime}");
                 return;
             }
 
@@ -1434,7 +1427,7 @@ namespace Marmi
 
             if (screenImage == null)
             {
-                Uty.WriteLine("bmpがnull(index={0})", index);
+                Debug.WriteLine($"bmpがnull(index={index})");
                 PicPanel.State = PicturePanel.DrawStatus.idle;
                 PicPanel.Message = "表示エラー 再度表示してみてください" + index.ToString();
                 PicPanel.Refresh();
@@ -1682,16 +1675,13 @@ namespace Marmi
         /// <param name="isRecurse">再帰的に走査する場合はtrue</param>
         private static void GetDirPictureList(string dirName, bool isRecurse)
         {
-            string[] files = Directory.GetFiles(dirName);
-
             //画像ファイルだけを追加する
-            //g_filelist.AddRange(f);
             int index = 0;
-            foreach (string name in files)
+            foreach (string name in Directory.EnumerateFiles(dirName))
             {
                 if (Uty.IsPictureFilename(name))
                 {
-                    FileInfo fi = new FileInfo(name);
+                    var fi = new FileInfo(name);
                     App.g_pi.Items.Add(new ImageInfo(index++, name, fi.CreationTime, fi.Length));
                 }
             }
@@ -1727,7 +1717,7 @@ namespace Marmi
         /// <returns>クライアント位置、サイズを表すRectangle</returns>
         public Rectangle GetClientRectangle()
         {
-            Rectangle rect = this.ClientRectangle; // this.Bounds;
+            var rect = this.ClientRectangle; // this.Bounds;
 
             //ツールバーの高さ
             int toolbarHeight = (toolStrip1.Visible && !App.Config.isFullScreen) ? toolStrip1.Height : 0;
@@ -1827,8 +1817,6 @@ namespace Marmi
             return Math.Abs(App.g_pi.Items[index].Height - App.g_pi.Items[index + 1].Height) < ACCEPTABLE_RANGE;
         }
 
-        // ユーティリティ系：画像キャッシュ *********************************************/
-
         #region スクリーンキャッシュ
 
         /// <summary>
@@ -1893,11 +1881,11 @@ namespace Marmi
                     if (App.ScreenCache.TryGetValue(ix, out Bitmap tempBmp))
                     {
                         App.ScreenCache.Remove(ix);
-                        Uty.WriteLine("PurgeScreenCache({0})", ix);
+                        Debug.WriteLine($"PurgeScreenCache({ix})");
                     }
                     else
                     {
-                        Uty.WriteLine("PurgeScreenCache({0})失敗", ix);
+                        Debug.WriteLine($"PurgeScreenCache({ix})失敗");
                     }
                 }
             }
@@ -1948,28 +1936,28 @@ namespace Marmi
         }
 
         /// <summary>
-        /// ver1.35 現在のページをゴミ箱に入れる
+        /// 現在のページをゴミ箱に入れる。削除後にページ遷移を行う。(ver1.35)
         /// </summary>
         private void RecycleBinNowPage()
         {
             //アイテムがなにもなければなにもしない
-            if (App.g_pi.Items.Count == 0)
-                return;
+            if (App.g_pi.Items.Count == 0) return;
+
             //2ページモードの時もなにもしない
-            if (g_viewPages == 2)
-                return;
+            if (g_viewPages == 2) return;
+
             //アーカイブに対してもなにもしない
-            if (App.g_pi.PackType == PackageType.Archive)
-                return;
+            if (App.g_pi.PackType == PackageType.Archive) return;
 
             //今のページ番号を保存
             int now = App.g_pi.NowViewPage;
             string nowfile = App.g_pi.Items[now].Filename;
 
+            //ページ遷移
             int next = GetNextPageIndex(now);
             if (next != -1)
             {
-                //後ろにページがあるので後ろのページを表示
+                //次ページがあるので次ページを表示
                 //Screenキャッシュを有効に使うため先にページ変更
                 SetViewPage(next);
 
@@ -1984,7 +1972,7 @@ namespace Marmi
             }
             else
             {
-                //最後のページを消した
+                //next=0 : 最後のページを消した
                 Debug.WriteLine("最後のページを消した");
                 PicPanel.bmp = null;
                 PicPanel.ResetView();
@@ -2005,8 +1993,8 @@ namespace Marmi
             InitTrackbar();
         }
 
-        //*****************************************************************
-        // スライドショー関連
+        #region スライドショー
+
         private void Menu_SlideShow_Click(object sender, EventArgs e)
         {
             if (SlideShowTimer.Enabled)
@@ -2045,10 +2033,11 @@ namespace Marmi
             }
         }
 
+        #endregion
+
         /// <summary>
         /// IPCで呼ばれるインターフェースメソッド
-        /// コマンドライン引数が入ってくるので
-        /// それを起動。
+        /// コマンドライン引数が入ってくるのでそれを起動。
         /// ただし、このメソッドが呼ばれるときはフォームのスレッドではないので
         /// Invokeが必要
         /// </summary>
@@ -2061,9 +2050,9 @@ namespace Marmi
                 this.Activate();
 
                 //表示対象ファイルを取得
+                //1つめに自分のexeファイル名が入っているので除く
                 if (args.Length > 1)
                 {
-                    //1つめに自分のexeファイル名が入っているので除く
                     AsyncStart(args.Skip(1).ToArray());
                 }
             }));
@@ -2075,14 +2064,9 @@ namespace Marmi
             MenuItem_Unsharp.Checked = App.Config.useUnsharpMask;
 
             //再描写
-            //this.Invalidate();
-            //SetViewPage(g_pi.NowViewPage);
             PicPanel.Invalidate();
         }
 
-        private void Menu_Help_GC_Clicked(object sender, EventArgs e)
-        {
-            Uty.ForceGC();
-        }
+        private void Menu_Help_GC_Clicked(object sender, EventArgs e) => Uty.ForceGC();
     } // Class Form1
 }

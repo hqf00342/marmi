@@ -55,7 +55,7 @@ namespace Marmi
                         Debug.WriteLine("AsyncIO : 7z解放信号受信");
                         if (AsyncSZ.IsOpen)
                         {
-                            Uty.WriteLine("AsyncIO : {0}解放", AsyncSZ.Filename);
+                            Debug.WriteLine($"AsyncIO : {AsyncSZ.Filename}解放");
                             AsyncSZ.Close();
                         }
                         continue;
@@ -128,6 +128,5 @@ namespace Marmi
 
         /// <summary>Job一覧を取得</summary>
         public static KeyValuePair<int, Action>[] GetAllJob() => _queue.ToArrayHigh();
-
     }
 }

@@ -79,7 +79,7 @@ namespace Marmi
             Application.Idle += new EventHandler(Application_Idle);
 
             //注意書きファイルを入れておく
-            Uty.MakeAttentionTextfile(ExtractDir);
+            Uty.CreateAnnotationFile(ExtractDir);
 
             //アニメーションタイマースタート
             animateTimer.Interval = 30;

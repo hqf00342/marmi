@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -110,7 +111,7 @@ namespace Marmi
         /// <returns></returns>
         private string KeydataToString(Keys kd)
         {
-            Uty.WriteLine(kd.ToString());
+            Debug.WriteLine(kd.ToString());
 
             if (kd == Keys.None)
                 return "";
@@ -198,7 +199,7 @@ namespace Marmi
                 keyData = e.KeyData;
             //keyData = e.KeyData;
 
-            Uty.WriteLine(keyData.ToString());
+            Debug.WriteLine(keyData.ToString());
             //タブや矢印を普通の入力としてコントロール移動させない
             e.IsInputKey = true;
             this.Invalidate();

@@ -30,7 +30,7 @@ namespace Marmi
                     trackbarWidth -= o.Width;
             }
 
-            Uty.WriteLine("ResizeTrackbar:{0}", trackbarWidth);
+            Debug.WriteLine($"ResizeTrackbar:{trackbarWidth}");
 
             toolStrip1.CanOverflow = false;
             if (g_trackbar != null) //起動時にエラーが出るので

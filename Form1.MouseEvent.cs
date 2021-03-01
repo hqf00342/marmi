@@ -37,7 +37,7 @@ namespace Marmi
         {
             base.OnMouseClick(e);
 
-            Uty.WriteLine("OnMouseClick: {0}", e.Button);
+            Debug.WriteLine($"OnMouseClick: {e.Button}");
 
             //スライドショー中だったら中断させる
             if (IsSlideShow)
@@ -106,7 +106,6 @@ namespace Marmi
             if (isForword)
             {
                 NavigateToForword();
-                //Uty.WriteLine("OnMouseClick end ({0}) {1}", g_pi.NowViewPage, tick);
             }
             else
                 NavigateToBack();

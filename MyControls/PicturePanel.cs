@@ -292,7 +292,7 @@ namespace Marmi
             //ver1.63 後ろに移動
             if (!string.IsNullOrEmpty(Message))
             {
-                Uty.WriteLine("PicPanel Message({0})", Message);
+                Debug.WriteLine($"PicPanel Message({Message})");
                 DrawTextBottomRight(e.Graphics, Message, MessageFont);
                 return;
             }

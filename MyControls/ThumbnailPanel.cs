@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -19,7 +20,7 @@ namespace Marmi
         private int m_mouseHoverItem = -1;          //現在マウスがホバーしているアイテム
 
         //フェードインアニメーション時間
-        private const long ANIMATE_DURATION = 1000;
+        //private const long ANIMATE_DURATION = 1000;
 
         //サムネイルの余白。2014年3月23日変更。間隔狭すぎた
         private const int PADDING = 10;
@@ -386,7 +387,7 @@ namespace Marmi
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Uty.WriteLine("ThumbnailPanel::OnPaint() ClipRect={0}", e.ClipRectangle);
+            Debug.WriteLine($"ThumbnailPanel::OnPaint() ClipRect={e.ClipRectangle}");
 
             //背景色塗り
             e.Graphics.Clear(this.BackColor);
@@ -616,9 +617,9 @@ namespace Marmi
             //描写領域の大きさ。まずは自分のクライアント領域を得る
             Size virtualScreenSize = CalcScreenSize();
             this.AutoScrollMinSize = new Size(1, virtualScreenSize.Height);
-            Uty.WriteLine("virtualScreenSize" + virtualScreenSize.ToString());
-            Uty.WriteLine("AutoScrollMinSize=" + this.AutoScrollMinSize.ToString());
-            Uty.WriteLine("this.clientrect=" + this.ClientRectangle.ToString());
+            Debug.WriteLine("virtualScreenSize" + virtualScreenSize.ToString());
+            Debug.WriteLine("AutoScrollMinSize=" + this.AutoScrollMinSize.ToString());
+            Debug.WriteLine("this.clientrect=" + this.ClientRectangle.ToString());
         }
 
         /// <summary>

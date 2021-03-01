@@ -99,10 +99,10 @@ namespace Marmi
         /// <returns>Bitmap 無ければcacheがなければnull</returns>
         public Bitmap GetBitmapFromCache(int index)
         {
-            return hasCacheImage(index) ? Items[index].CacheImage.ToBitmap() : null;
+            return HasCacheImage(index) ? Items[index].CacheImage.ToBitmap() : null;
         }
 
-        public bool hasCacheImage(int index)
+        public bool HasCacheImage(int index)
         {
             if (index < 0 || index >= Items.Count)
                 return false;
@@ -148,7 +148,9 @@ namespace Marmi
                         Items[index].CacheImage.Load(_7z.GetStream(filename));
                     }
                     else
+                    {
                         return false;
+                    }
                 }
                 catch (IOException e)
                 {
@@ -275,7 +277,7 @@ namespace Marmi
                     int sumBytes = 0;
                     int thresholdSize = MaxCacheSize / 2;//半分のサイズまで解放
 
-                    Uty.WriteLine("FileCacheCleanUp() start: {0:N0}bytes", nowBufferSize);
+                    Debug.WriteLine($"FileCacheCleanUp() start: {nowBufferSize:N0}bytes");
                     while (nowup >= 0 || nowdown < Items.Count)
                     {
                         if (nowup >= 0)
@@ -285,7 +287,7 @@ namespace Marmi
                             {
                                 if (Items[nowup].CacheImage.Length > 0)
                                 {
-                                    Uty.WriteLine("FileCacheCleanUp():target={0}", nowup);
+                                    Debug.WriteLine($"FileCacheCleanUp():target={nowup}");
                                     Items[nowup].CacheImage.Clear();
                                 }
                             }
@@ -298,7 +300,7 @@ namespace Marmi
                             {
                                 if (Items[nowdown].CacheImage.Length > 0)
                                 {
-                                    Uty.WriteLine("FileCacheCleanUp():target={0}", nowdown);
+                                    Debug.WriteLine($"FileCacheCleanUp():target={nowdown}");
                                     Items[nowdown].CacheImage.Clear();
                                 }
                             }
@@ -308,7 +310,7 @@ namespace Marmi
                     nowBufferSize = 0;
                     foreach (var i in Items)
                         nowBufferSize += i.CacheImage.Length;
-                    Uty.WriteLine("FileCacheCleanUp() end: {0:N0}bytes", nowBufferSize);
+                    Debug.WriteLine($"FileCacheCleanUp() end: {nowBufferSize:N0}bytes");
                     //2021年2月26日 GCをやめる
                     //Uty.ForceGC();
                     break;

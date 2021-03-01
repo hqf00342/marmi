@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -657,7 +658,7 @@ namespace Marmi
                 //その後サムネイル登録.タイマーが止まってから実行
                 if (m_scrollTimer == null || !m_scrollTimer.Enabled)
                 {
-                    Uty.WriteLine("Sidebar AsyncGetBitmap()");
+                    Debug.WriteLine("Sidebar AsyncGetBitmap()");
                     //Form1.PushLow(index, (Action)(() =>
                     //{
                     //    //Form1.g_pi.AsyncThumnailMaker(index);

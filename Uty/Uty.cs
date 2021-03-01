@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.FileIO;
 
@@ -78,62 +77,6 @@ namespace Marmi
         }
 
         /// <summary>
-        /// ファイルのMD5を計算する。
-        /// </summary>
-        /// <param name="filename">対象のファイル</param>
-        /// <returns>16進数文字列</returns>
-        public static string CalcMd5(string filename)
-        {
-            //ファイルを開く
-            System.IO.FileStream fs = File.OpenRead(filename);
-
-            //ハッシュ値を計算する
-            var md5 = System.Security.Cryptography.MD5.Create();
-            byte[] bs = md5.ComputeHash(fs);
-
-            //ファイルを閉じる
-            fs.Close();
-
-            return BitConverter.ToString(bs).ToLower().Replace("-", "");
-        }
-
-        //public static string TryMakedir(string dirname)
-        //{
-        //    string trydir = dirname;
-        //    int trynum = 0;
-
-        //    while (!Directory.Exists(trydir))
-        //        trydir = string.Format("{0}{1}", dirname, trynum++);
-
-        //    Directory.CreateDirectory(trydir);
-        //    return trydir;
-        //}
-
-        /// <summary>
-        /// 再帰的に書庫を展開
-        /// 単独で利用するとブロックするのでスレッド内で利用されることを想定
-        /// </summary>
-        /// <param name="archivename">書庫名</param>
-        /// <param name="extractDir">展開先</param>
-        //public static void RecurseExtractAll(string archivename, string extractDir)
-        //{
-        //    var sz = new SevenZipWrapper();
-        //    sz.Open(archivename);
-        //    sz.ExtractAll(extractDir);
-
-        //    string[] exfiles = Directory.GetFiles(extractDir);
-        //    foreach (string file in exfiles)
-        //    {
-        //        if (IsSupportArchiveFile(file))
-        //        {
-        //            string extDirName = GetUniqueDirname(file);
-        //            Debug.WriteLine(file, extDirName);
-        //            RecurseExtractAll(file, extDirName);
-        //        }
-        //    }
-        //}
-
-        /// <summary>
         /// ファイル名（アーカイブ名）をベースにユニークな展開フォルダ名を探す。
         /// 書庫と同じ場所で探す
         /// </summary>
@@ -163,42 +106,18 @@ namespace Marmi
             }
         }
 
-        //public static Thread AsyncRecurseExtractAll(string archivename, string extractDir)
-        //{
-        //    void tsAction()
-        //    {
-        //        RecurseExtractAll(archivename, extractDir);
-        //    }
-
-        //    Thread th = new Thread(tsAction)
-        //    {
-        //        Name = "RecurseExtractAll",
-        //        IsBackground = true
-        //    };
-        //    th.Start();
-
-        //    //注意書きを入れておく
-        //    MakeAttentionTextfile(extractDir);
-
-        //    //Threadを返す
-        //    return th;
-        //}
-
-        public static void MakeAttentionTextfile(string extractFolder)
+        /// <summary>
+        /// 一時ディレクトリに「このフォルダは消しても安全です.txt」を作る。
+        /// </summary>
+        /// <param name="tempDirName">対象のディレクトリ</param>
+        public static void CreateAnnotationFile(string tempDirName)
         {
-            //フォルダに注意喚起のテキストを入れておく
             try
             {
-                string attentionFilename = Path.Combine(
-                    extractFolder,
-                    "このフォルダは消しても安全です.txt");
-                string[] texts = {
-                    "このファイルはMarmi.exeによって作成された一時フォルダです",
-                    "Marmi.exeを起動していない場合、安全に削除できます"};
-
-                File.WriteAllLines(
-                    attentionFilename,
-                    texts,
+                File.WriteAllText(
+                    Path.Combine(tempDirName, "このフォルダは消しても安全です.txt"),
+                    "このファイルはMarmi.exeによって作成された一時フォルダです" + Environment.NewLine +
+                    "Marmi.exeを起動していない場合、安全に削除できます",
                     System.Text.Encoding.UTF8);
             }
             catch
@@ -208,6 +127,10 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// 一時ディレクトリを削除する
+        /// </summary>
+        /// <param name="tempDirName">一時ディレクトリ</param>
         public static void DeleteTempDir(string tempDirName)
         {
             if (Directory.Exists(tempDirName))
@@ -234,18 +157,6 @@ namespace Marmi
                filename,
                UIOption.OnlyErrorDialogs,
                RecycleOption.SendToRecycleBin);
-        }
-
-        [Conditional("DEBUG")]
-        public static void WriteLine(string format, params object[] args)
-        {
-            Debug.WriteLine(string.Format(format, args), DateTime.Now.ToString());
-        }
-
-        [Conditional("DEBUG")]
-        public static void WriteLine(string s)
-        {
-            Debug.WriteLine(string.Format("{0} {1}", DateTime.Now.ToString(), s));
         }
 
         public static string GetUsedMemory()
