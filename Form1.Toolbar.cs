@@ -44,7 +44,7 @@ namespace Marmi
 
         private void toolButtonLeft_Click(object sender, EventArgs e)
         {
-            if (App.Config.isReplaceArrowButton)
+            if (App.Config.IsReplaceArrowButton)
                 NavigateToForword();
             else
                 NavigateToBack();
@@ -52,7 +52,7 @@ namespace Marmi
 
         private void toolButtonRight_Click(object sender, EventArgs e)
         {
-            if (App.Config.isReplaceArrowButton)
+            if (App.Config.IsReplaceArrowButton)
                 NavigateToBack();
             else
                 NavigateToForword();
@@ -122,7 +122,7 @@ namespace Marmi
             PicPanel.isAutoFit = true;
             //•\Ž¦”{—¦‚Ì’²®
             float r = PicPanel.FittingRatio;
-            if (r > 1.0f && App.Config.noEnlargeOver100p)
+            if (r > 1.0f && App.Config.NoEnlargeOver100p)
                 r = 1.0f;
             PicPanel.ZoomRatio = r;
             //PicPanel.Refresh();

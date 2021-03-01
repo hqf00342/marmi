@@ -117,7 +117,7 @@ namespace Marmi
             //ver1.81 サムネイル登録：2021年2月25日コメントアウト
             //App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
 
-            if (App.Config.dualView && Form1.CanDualView(index))
+            if (App.Config.DualView && Form1.CanDualView(index))
             {
                 //2枚表示
                 Bitmap bmp2 = SyncGetBitmap(index + 1);

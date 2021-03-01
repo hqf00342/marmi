@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
 /*
 サムネイル画像を保存するためのクラス
@@ -38,34 +39,25 @@ namespace Marmi
         [NonSerialized]
         public RawImage CacheImage = new RawImage();
 
-        //ver1.26 JpegでSerializeするために変更
-        //private readonly JpegSerializedImage _thumbImage = new JpegSerializedImage();
-
-        //public Bitmap Thumbnail
-        //{
-        //    get { return _thumbImage.Bitmap as Bitmap; }
-        //    set { _thumbImage.Bitmap = value; }
-        //}
-
         /// <summary>サムネイル画像</summary>
         [field: NonSerialized]
-        public Bitmap Thumbnail { get; set; }
+        public Bitmap Thumbnail { get; set; } = null;
 
-        /// <summary>アニメーションタイマー DateTime.Now.Ticks</summary>
-        [field: NonSerialized]
-        public long AnimateStartTime { get; set; } = 0;
+        ///// <summary>アニメーションタイマー DateTime.Now.Ticks</summary>
+        //[field: NonSerialized]
+        //public long AnimateStartTime { get; set; } = 0;
 
         /// <summary>EXIF: ISO値</summary>
-        public int ExifISO { get; set; }
+        public int ExifISO { get; private set; }
 
         /// <summary>EXIF: 撮影日</summary>
-        public string ExifDate { get; set; }
+        public string ExifDate { get; private set; }
 
         /// <summary>EXIF: メーカー</summary>
-        public string ExifMake { get; set; }
+        public string ExifMake { get; private set; }
 
         /// <summary>EXIF: モデル</summary>
-        public string ExifModel { get; set; }
+        public string ExifModel { get; private set; }
 
         /// <summary>しおり 2011年10月2日</summary>
         public bool IsBookMark { get; set; } = false;
@@ -79,7 +71,7 @@ namespace Marmi
         //}
 
         //ver1.36 表示させるかどうか
-        public bool IsVisible { get; set; }
+        public bool IsVisible { get; set; } = true;
 
         //ver1.51 画像情報を持っているか
         public bool HasInfo => Width != 0;
@@ -90,36 +82,22 @@ namespace Marmi
         //var1.54 横長かどうか
         public bool IsFat => Width > Height;
 
-        public ImageInfo(int index, string name, DateTime date, long bytes)
+        public ImageInfo(int index, string filename, DateTime creationDate, long bytes)
         {
-            //初期化
-            Thumbnail = null;
-            IsVisible = true;
-            ImgSize = Size.Empty;
-            AnimateStartTime = 0;
-
             OrgIndex = index;
-            Filename = name;
-            CreateDate = date;
+            Filename = filename;
+            CreateDate = creationDate;
             FileLength = bytes;
         }
 
-        //~ImageInfo()
-        //{
-        //    Dispose();
-        //}
-
-        //public void Dispose()
-        //{
-        //    if (Thumbnail != null)
-        //        Thumbnail.Dispose();
-        //    Thumbnail = null;
-        //    if (CacheImage != null)
-        //        CacheImage.Clear();
-        //}
-
-        //-------------------------------------------
-        // メソッド
+        public ImageInfo(int index, string filename)
+        {
+            var fi = new FileInfo(filename);
+            OrgIndex = index;
+            Filename = filename;
+            CreateDate = fi.CreationTime;
+            FileLength = fi.Length;
+        }
 
         /// <summary>
         /// ver1.10 サムネイル画像をオリジナル画像から登録する。

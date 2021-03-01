@@ -16,7 +16,7 @@ namespace Marmi
     {
         private void PicPanel_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (App.Config.mouseConfigWheel == "拡大縮小")
+            if (App.Config.MouseConfigWheel == "拡大縮小")
             {
                 //PicPanel内部で処理しているのでなにもしない
             }
@@ -69,27 +69,24 @@ namespace Marmi
 
             //ver1.80キー設定に基づく動作
             MethodInvoker func = null;
-            if (e.Button == MouseButtons.Middle)
-                if (KeyDefines.TryGetValue(Keys.MButton, out func))
-                    if (func != null)
-                    {
-                        func();
-                        return;
-                    }
-            if (e.Button == MouseButtons.XButton1)
-                if (KeyDefines.TryGetValue(Keys.XButton1, out func))
-                    if (func != null)
-                    {
-                        func();
-                        return;
-                    }
-            if (e.Button == MouseButtons.XButton2)
-                if (KeyDefines.TryGetValue(Keys.XButton2, out func))
-                    if (func != null)
-                    {
-                        func();
-                        return;
-                    }
+            if (e.Button == MouseButtons.Middle
+                && KeyDefines.TryGetValue(Keys.MButton, out func))
+            {
+                func?.Invoke();
+                return;
+            }
+            if (e.Button == MouseButtons.XButton1
+                && KeyDefines.TryGetValue(Keys.XButton1, out func))
+            {
+                func?.Invoke();
+                return;
+            }
+            if (e.Button == MouseButtons.XButton2
+                && KeyDefines.TryGetValue(Keys.XButton2, out func))
+            {
+                func?.Invoke();
+                return;
+            }
 
             //ページナビゲートをする。
             bool isForword = PicPanel.checkMousePosRight();
@@ -108,7 +105,9 @@ namespace Marmi
                 NavigateToForword();
             }
             else
+            {
                 NavigateToBack();
+            }
         }
 
         /// <summary>
@@ -176,19 +175,19 @@ namespace Marmi
             if (App.Config.isFullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
-                if (e.Y < 10 && toolStrip1.Visible == false)
+                if (e.Y < 10 && !toolStrip1.Visible)
                 {
                     //画面最上部にマウスがあれば表示
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > this.Height - 10 && toolStrip1.Visible == false)
+                else if (e.Y > this.Height - 10 && !toolStrip1.Visible)
                 {
                     //画面下でも動作するようにする
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > toolStrip1.Height && toolStrip1.Visible == true && !App.Config.isThumbnailView)
+                else if (e.Y > toolStrip1.Height && toolStrip1.Visible && !App.Config.isThumbnailView)
                 {
                     //スクロールバーが出る可能性があるので消しておく
                     //PicPanel.AutoScroll = true;
@@ -205,7 +204,7 @@ namespace Marmi
         /// <param name="cursorPos"></param>
         private void SetCursorShape(Point cursorPos)
         {
-            if (loupe != null && loupe.Visible)
+            if (loupe?.Visible == true)
             {
                 //ルーペ中
                 ChangeCursor(App.Cursors.Loupe);
@@ -215,7 +214,7 @@ namespace Marmi
                 //ドラッグスクロール中
                 ChangeCursor(App.Cursors.OpenHand);
             }
-            else if (App.g_pi.Items.Count <= 1 | !GetClientRectangle().Contains(cursorPos))
+            else if (App.g_pi.Items.Count <= 1 || !GetClientRectangle().Contains(cursorPos))
             {
                 Cursor.Current = Cursors.Default;
             }
@@ -266,8 +265,8 @@ namespace Marmi
             //ver1.27 マウス位置を補正
             float ratio = PicPanel.ZoomRatio;   //拡縮率をローカルに取る
 
-            if (App.Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
-                                                //&& viewPages == 1				//1ページ表示モード.コメントアウト2011年7月22日
+            if (App.Config.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
+                                                  //&& viewPages == 1				//1ページ表示モード.コメントアウト2011年7月22日
                 && ratio < 0.99F                //100%未満表示である.99%にしておく
                 )
             {
@@ -300,8 +299,8 @@ namespace Marmi
                 int x1 = mouseX - x0;
                 int y1 = mouseY - y0;
                 //始点を算出
-                double sx = (double)x1 / ratio - mouseX;
-                double sy = (double)y1 / ratio - mouseY;
+                double sx = ((double)x1 / ratio) - mouseX;
+                double sy = ((double)y1 / ratio) - mouseY;
                 //左上始点指定版のルーペ
                 loupe.DrawOriginalSizeLoupe2((int)sx, (int)sy, screenImage);
                 loupe.Refresh();
@@ -344,11 +343,11 @@ namespace Marmi
             loupe.Left = cRect.Left;
 
             //表示させる
-            if (loupe.Visible == false)
+            if (!loupe.Visible)
                 loupe.Visible = true;
 
             //ステータスバー表示
-            if (App.Config.isOriginalSizeLoupe    //原寸ルーペ設定が有効
+            if (App.Config.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
                 && PicPanel.ZoomRatio < 1.0F)           //表示倍率が100%以下
             {
                 setStatubarRatio("ルーペ（100%表示）");
@@ -414,21 +413,19 @@ namespace Marmi
             if (App.Config.isFullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
-                if (e.Y < 1
-                    && toolStrip1.Visible == false)
+                if (e.Y < 1 && !toolStrip1.Visible)
                 {
                     //Cursor.Current = Cursors.Default;
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > this.Height - 10 && toolStrip1.Visible == false)
+                else if (e.Y > this.Height - 10 && !toolStrip1.Visible)
                 {
                     //画面下でも動作するようにする
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > toolStrip1.Height
-                    && toolStrip1.Visible == true)
+                else if (e.Y > toolStrip1.Height && toolStrip1.Visible)
                 {
                     toolStrip1.Visible = false;
                     statusbar.Visible = false;

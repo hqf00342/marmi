@@ -50,7 +50,7 @@ namespace Marmi
             set
             {
                 _bmp = value;
-                if (!App.Config.keepMagnification)
+                if (!App.Config.KeepMagnification)
                     mat.Reset();
                 //alpha = 1.0f;
 
@@ -183,7 +183,7 @@ namespace Marmi
         {
             //ver1.78 倍率固定に対応
             //mat.Reset();
-            if (!App.Config.keepMagnification)
+            if (!App.Config.KeepMagnification)
                 mat.Reset();
             alpha = 1.0f;
         }
@@ -303,7 +303,7 @@ namespace Marmi
 
             if (mouseDowmFlag                   //ドラッグスクロール
                 || fastDraw                     //高速描写の必要性があるとき
-                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.isDotByDotZoom) //整数倍拡大
+                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.IsDotByDotZoom) //整数倍拡大
                                                                                                     //|| (ZoomRatio > 1.0f && App.Config.isDotByDotZoom)	//整数倍拡大
                 )
             {
@@ -319,7 +319,7 @@ namespace Marmi
             //e.Graphics.Transform = mat;
             if (alpha == 1.0f)
             {
-                if (App.Config.useUnsharpMask   //アンシャープが有効
+                if (App.Config.UseUnsharpMask   //アンシャープが有効
                     && LastDrawMode == InterpolationMode.HighQualityBicubic //高画質描写を要求
                     && ZoomRatio != 100.0f  //100%描写ではない
                     )
@@ -333,7 +333,7 @@ namespace Marmi
                         g.Transform = mat;
                         g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);
                     }
-                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.unsharpDepth);
+                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.UnsharpDepth);
                     e.Graphics.DrawImage(unsharpBmp, 0, 0, unsharpBmp.Width, unsharpBmp.Height);
                 }
                 else
@@ -381,7 +381,7 @@ namespace Marmi
             if (isAutoFit)
             {
                 float r = GetScreenFitRatio();
-                if (r > 1.0f && App.Config.noEnlargeOver100p)
+                if (r > 1.0f && App.Config.NoEnlargeOver100p)
                     r = 1.0f;
                 ZoomRatio = r;
             }
@@ -513,7 +513,7 @@ namespace Marmi
                 return;
 
             //ver1.30 Ctrlキーを押しているときは強制的にズーム
-            if (App.Config.mouseConfigWheel == "拡大縮小"
+            if (App.Config.MouseConfigWheel == "拡大縮小"
                 || (Control.ModifierKeys & Keys.Control) == Keys.Control)
             {
                 if (e.Delta > 0)

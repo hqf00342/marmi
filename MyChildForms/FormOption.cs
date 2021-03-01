@@ -24,17 +24,17 @@ namespace Marmi
             //config = set.Clone();
 
             //全般タブ
-            bSaveConfig.Checked = set.isSaveConfig;                     //設定の保存
+            bSaveConfig.Checked = set.IsSaveConfig;                     //設定の保存
                                                                         //bSaveThumbnailCache.Checked = set.isSaveThumbnailCache;		//キャッシュの保存
-            bContinueZip.Checked = set.isContinueZipView;               //zipファイルは前回の続きから
+            bContinueZip.Checked = set.IsContinueZipView;               //zipファイルは前回の続きから
                                                                         //bDeleteOldCache.Checked = set.isAutoCleanOldCache;			//古いキャッシュの削除
-            bReplaceArrowButton.Checked = set.isReplaceArrowButton;     //矢印ボタンの入れ替え
+            bReplaceArrowButton.Checked = set.IsReplaceArrowButton;     //矢印ボタンの入れ替え
             pictureBox_BackColor.BackColor = set.BackColor;             //背景色
-            isFastDraw.Checked = set.isFastDrawAtResize;
-            isWindowPosCenter.Checked = set.isWindowPosCenter;
+            isFastDraw.Checked = set.IsFastDrawAtResize;
+            isWindowPosCenter.Checked = set.IsWindowPosCenter;
 
             //高度な設定タブ
-            bStopPaintingAtResize.Checked = set.isStopPaintingAtResize; //リサイズ描写
+            bStopPaintingAtResize.Checked = set.IsStopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
             thumbnailSize.Text = set.ThumbnailSize.ToString();
@@ -42,19 +42,19 @@ namespace Marmi
             fontDialog1.Font = set.ThumbnailFont;
             linkLabel1.Text = fontDialog1.Font.Name + ", " + fontDialog1.Font.Size;
             ThumbnailFontColor.BackColor = set.ThumbnailFontColor;
-            isDrawThumbnailFrame.Checked = set.isDrawThumbnailFrame;
-            isDrawThumbnailShadow.Checked = set.isDrawThumbnailShadow;
-            isShowTPFileName.Checked = set.isShowTPFileName;
-            isShowTPFileSize.Checked = set.isShowTPFileSize;
-            isShowTPPicSize.Checked = set.isShowTPPicSize;
-            isThumbFadein.Checked = set.isThumbFadein;
+            isDrawThumbnailFrame.Checked = set.IsDrawThumbnailFrame;
+            isDrawThumbnailShadow.Checked = set.IsDrawThumbnailShadow;
+            isShowTPFileName.Checked = set.IsShowTPFileName;
+            isShowTPFileSize.Checked = set.IsShowTPFileSize;
+            isShowTPPicSize.Checked = set.IsShowTPPicSize;
+            isThumbFadein.Checked = set.IsThumbFadein;
 
             //ルーペ関連
-            isOriginalSizeLoupe.Checked = set.isOriginalSizeLoupe;
+            isOriginalSizeLoupe.Checked = set.IsOriginalSizeLoupe;
             loupeMag.Text = set.loupeMagnifcant.ToString();
 
             //ver1.09 書庫関連
-            isExtractIfSolidArchive.Checked = set.isExtractIfSolidArchive;
+            isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
 
             //ver1.09 クロスフェード
             //isCrossfadeTransition.Checked = set.isCrossfadeTransition;
@@ -75,14 +75,14 @@ namespace Marmi
             //keyConfExitApp.Text = set.keyConfExitApp;
 
             //マウスコンフィグ
-            mouseConfigWheel.Text = set.mouseConfigWheel;
+            mouseConfigWheel.Text = set.MouseConfigWheel;
 
             //画面切り替わり方法
-            SwitchPicMode.SelectedIndex = (int)set.pictureSwitchMode;
+            SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
 
             //拡大表示関連
-            noEnlargeOver100p.Checked = set.noEnlargeOver100p;
-            isDotByDotZoom.Checked = set.isDotByDotZoom;
+            noEnlargeOver100p.Checked = set.NoEnlargeOver100p;
+            isDotByDotZoom.Checked = set.IsDotByDotZoom;
 
             //ver1.35 ループ
             //isLoopToTopPage.Checked = set.isLoopToTopPage;
@@ -93,109 +93,109 @@ namespace Marmi
             reverseClickPointWhenLeftBook.Checked = set.ReverseDirectionWhenLeftBook;
 
             //ver1.65ツールバーアイテムの文字消し
-            eraseToolbarItemString.Checked = set.eraseToolbarItemString;
+            eraseToolbarItemString.Checked = set.EraseToolbarItemString;
 
             //ver1.70 2枚表示の厳密チェック
             //dualview_exactCheck.Checked = set.dualview_exactCheck;
 
             //ver1.70 サイドバーのスムーススクロール機能
-            sidebar_smoothscroll.Checked = set.sidebar_smoothScroll;
+            sidebar_smoothscroll.Checked = set.Sidebar_smoothScroll;
 
             //ver1.71 最終ページの動作
-            lastPage_stay.Checked = set.lastPage_stay;
-            lastPage_toTop.Checked = set.lastPage_toTop;
-            lastPage_toNextArchive.Checked = set.lastPage_toNextArchive;
+            lastPage_stay.Checked = set.LastPage_stay;
+            lastPage_toTop.Checked = set.LastPage_toTop;
+            lastPage_toNextArchive.Checked = set.LastPage_toNextArchive;
 
             //ver1.73 一時フォルダ
-            tmpFolder.Text = set.tmpFolder;
+            tmpFolder.Text = set.TmpFolder;
 
             //ver1.73 MRU保持数
-            numOfMru.Text = set.numberOfMru.ToString();
+            numOfMru.Text = set.NumberOfMru.ToString();
 
             //ver1.76多重起動
-            disableMultipleStarts.Checked = set.disableMultipleStarts;
+            disableMultipleStarts.Checked = set.DisableMultipleStarts;
             //ver1.77 ウィンドウ表示位置を簡易にするか
-            simpleCalcWindowPos.Checked = set.simpleCalcForWindowLocation;
+            simpleCalcWindowPos.Checked = set.SimpleCalcForWindowLocation;
             //ver1.77 フルスクリーン状態を復元できるようにする
-            saveFullScreenMode.Checked = set.saveFullScreenMode;
+            saveFullScreenMode.Checked = set.SaveFullScreenMode;
             //ver1.78 倍率の保持
-            keepMagnification.Checked = set.keepMagnification;
+            keepMagnification.Checked = set.KeepMagnification;
             //ver1.79 書庫は必ず展開
             alwaysExtractArchive.Checked = set.AlwaysExtractArchive;
             //ver1.79 2ページモードアルゴリズム
-            dualView_Force.Checked = set.dualView_Force;
-            dualView_Normal.Checked = set.dualView_Normal;
-            dualView_withSizeCheck.Checked = set.dualView_withSizeCheck;
+            dualView_Force.Checked = set.DualView_Force;
+            dualView_Normal.Checked = set.DualView_Normal;
+            dualView_withSizeCheck.Checked = set.DualView_withSizeCheck;
 
             //ver1.80 キーコンフィグ
-            ka_exit1.keyData = set.ka_exit1;
-            ka_exit2.keyData = set.ka_exit2;
-            ka_bookmark1.keyData = set.ka_bookmark1;
-            ka_bookmark2.keyData = set.ka_bookmark2;
-            ka_fullscreen1.keyData = set.ka_fullscreen1;
-            ka_fullscreen2.keyData = set.ka_fullscreen2;
-            ka_dualview1.keyData = set.ka_dualview1;
-            ka_dualview2.keyData = set.ka_dualview2;
-            ka_viewratio1.keyData = set.ka_viewratio1;
-            ka_viewratio2.keyData = set.ka_viewratio2;
-            ka_recycle1.keyData = set.ka_recycle1;
-            ka_recycle2.keyData = set.ka_recycle2;
+            ka_exit1.keyData = set.Key_Exit1;
+            ka_exit2.keyData = set.Key_Exit2;
+            ka_bookmark1.keyData = set.Key_Bookmark1;
+            ka_bookmark2.keyData = set.Key_Bookmark2;
+            ka_fullscreen1.keyData = set.Key_Fullscreen1;
+            ka_fullscreen2.keyData = set.Key_Fullscreen2;
+            ka_dualview1.keyData = set.Key_Dualview1;
+            ka_dualview2.keyData = set.Key_Dualview2;
+            ka_viewratio1.keyData = set.Key_ViewRatio1;
+            ka_viewratio2.keyData = set.Key_ViewRatio2;
+            ka_recycle1.keyData = set.Key_Recycle1;
+            ka_recycle2.keyData = set.Key_Recycle2;
             //1.80キーコンフィグナビゲーション関連;
-            ka_nextpage1.keyData = set.ka_nextpage1;
-            ka_nextpage2.keyData = set.ka_nextpage2;
-            ka_prevpage1.keyData = set.ka_prevpage1;
-            ka_prevpage2.keyData = set.ka_prevpage2;
-            ka_prevhalf1.keyData = set.ka_prevhalf1;
-            ka_prevhalf2.keyData = set.ka_prevhalf2;
-            ka_nexthalf1.keyData = set.ka_nexthalf1;
-            ka_nexthalf2.keyData = set.ka_nexthalf2;
-            ka_toppage1.keyData = set.ka_toppage1;
-            ka_toppage2.keyData = set.ka_toppage2;
-            ka_lastpage1.keyData = set.ka_lastpage1;
-            ka_lastpage2.keyData = set.ka_lastpage2;
+            ka_nextpage1.keyData = set.Key_Nextpage1;
+            ka_nextpage2.keyData = set.Key_Nextpage2;
+            ka_prevpage1.keyData = set.Key_Prevpage1;
+            ka_prevpage2.keyData = set.Key_Prevpage2;
+            ka_prevhalf1.keyData = set.Key_Prevhalf1;
+            ka_prevhalf2.keyData = set.Key_Prevhalf2;
+            ka_nexthalf1.keyData = set.Key_Nexthalf1;
+            ka_nexthalf2.keyData = set.Key_Nexthalf2;
+            ka_toppage1.keyData = set.Key_Toppage1;
+            ka_toppage2.keyData = set.Key_Toppage2;
+            ka_lastpage1.keyData = set.Key_Lastpage1;
+            ka_lastpage2.keyData = set.Key_Lastpage2;
             //ダブルクリックで全画面
             DoubleClickToFullscreen.Checked = set.DoubleClickToFullscreen;
             //ver1.81サムネイルのアニメーション効果
             ThumbnailPanelSmoothScroll.Checked = set.ThumbnailPanelSmoothScroll;
             //ver1.83 アンシャープマスク
-            useUnsharpMask.Checked = set.useUnsharpMask;
-            unsharpDepth.Value = (decimal)set.unsharpDepth;
+            useUnsharpMask.Checked = set.UseUnsharpMask;
+            unsharpDepth.Value = (decimal)set.UnsharpDepth;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
         {
             //全般タブ
-            set.isSaveConfig = bSaveConfig.Checked;
+            set.IsSaveConfig = bSaveConfig.Checked;
             //set.isSaveThumbnailCache = bSaveThumbnailCache.Checked;
-            set.isContinueZipView = bContinueZip.Checked;
+            set.IsContinueZipView = bContinueZip.Checked;
             //set.isAutoCleanOldCache = bDeleteOldCache.Checked;
-            set.isReplaceArrowButton = bReplaceArrowButton.Checked;
+            set.IsReplaceArrowButton = bReplaceArrowButton.Checked;
             set.BackColor = pictureBox_BackColor.BackColor;
-            set.isFastDrawAtResize = isFastDraw.Checked;
-            set.isWindowPosCenter = isWindowPosCenter.Checked;
+            set.IsFastDrawAtResize = isFastDraw.Checked;
+            set.IsWindowPosCenter = isWindowPosCenter.Checked;
 
             //高度な設定タブ
-            set.isStopPaintingAtResize = bStopPaintingAtResize.Checked;
+            set.IsStopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //サムネイルタブ
             if (!int.TryParse(thumbnailSize.Text, out set.ThumbnailSize)) set.ThumbnailSize = 120;
             set.ThumbnailBackColor = ThumbnailBackColor.BackColor;
             set.ThumbnailFont = fontDialog1.Font;
             set.ThumbnailFontColor = ThumbnailFontColor.BackColor;
-            set.isDrawThumbnailFrame = isDrawThumbnailFrame.Checked;
-            set.isDrawThumbnailShadow = isDrawThumbnailShadow.Checked;
-            set.isShowTPFileName = isShowTPFileName.Checked;
-            set.isShowTPFileSize = isShowTPFileSize.Checked;
-            set.isShowTPPicSize = isShowTPPicSize.Checked;
-            set.isThumbFadein = isThumbFadein.Checked;
+            set.IsDrawThumbnailFrame = isDrawThumbnailFrame.Checked;
+            set.IsDrawThumbnailShadow = isDrawThumbnailShadow.Checked;
+            set.IsShowTPFileName = isShowTPFileName.Checked;
+            set.IsShowTPFileSize = isShowTPFileSize.Checked;
+            set.IsShowTPPicSize = isShowTPPicSize.Checked;
+            set.IsThumbFadein = isThumbFadein.Checked;
 
             //ルーペ関連
-            set.isOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
+            set.IsOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
             if (!int.TryParse(loupeMag.Text, out set.loupeMagnifcant))
                 set.loupeMagnifcant = 3;
 
             //ver1.09 書庫関連
-            set.isExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
+            set.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
 
             //ver1.09 クロスフェード
             //set.isCrossfadeTransition = isCrossfadeTransition.Checked;
@@ -216,15 +216,15 @@ namespace Marmi
             //set.keyConfExitApp = keyConfExitApp.Text;
 
             //マウスコンフィグ
-            set.mouseConfigWheel = mouseConfigWheel.Text;
+            set.MouseConfigWheel = mouseConfigWheel.Text;
 
             //画面切り替わり方法
-            set.pictureSwitchMode =
+            set.PictureSwitchMode =
                 //(AppGlobalConfig.AnimateMode)SwitchPicMode.SelectedIndex;
                 (AnimateMode)SwitchPicMode.SelectedIndex;
             //拡大表示関連
-            set.noEnlargeOver100p = noEnlargeOver100p.Checked;
-            set.isDotByDotZoom = isDotByDotZoom.Checked;
+            set.NoEnlargeOver100p = noEnlargeOver100p.Checked;
+            set.IsDotByDotZoom = isDotByDotZoom.Checked;
 
             //ver1.35 ループ
             //set.isLoopToTopPage = isLoopToTopPage.Checked;
@@ -234,73 +234,73 @@ namespace Marmi
             set.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
 
             //ver1.65ツールバーアイテムの文字消し
-            set.eraseToolbarItemString = eraseToolbarItemString.Checked;
+            set.EraseToolbarItemString = eraseToolbarItemString.Checked;
 
             //ver1.70 2枚表示の厳密チェック
             //set.dualview_exactCheck = dualview_exactCheck.Checked;
 
             //ver1.70 サイドバーのスムーススクロール機能
-            set.sidebar_smoothScroll = sidebar_smoothscroll.Checked;
+            set.Sidebar_smoothScroll = sidebar_smoothscroll.Checked;
 
             //ver1.71 最終ページの動作
-            set.lastPage_stay = lastPage_stay.Checked;
-            set.lastPage_toTop = lastPage_toTop.Checked;
-            set.lastPage_toNextArchive = lastPage_toNextArchive.Checked;
+            set.LastPage_stay = lastPage_stay.Checked;
+            set.LastPage_toTop = lastPage_toTop.Checked;
+            set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
 
             //ver1.73 一時フォルダ
-            set.tmpFolder = tmpFolder.Text;
+            set.TmpFolder = tmpFolder.Text;
             //ver1.73 MRU保持数
-            if (!int.TryParse(numOfMru.Text, out set.numberOfMru))
-                set.numberOfMru = 10;   //デフォルト値
+            if (!int.TryParse(numOfMru.Text, out set.NumberOfMru))
+                set.NumberOfMru = 10;   //デフォルト値
 
             //ver1.76多重起動
-            set.disableMultipleStarts = disableMultipleStarts.Checked;
+            set.DisableMultipleStarts = disableMultipleStarts.Checked;
             //ver1.77 ウィンドウ表示位置を簡易にするか
-            set.simpleCalcForWindowLocation = simpleCalcWindowPos.Checked;
+            set.SimpleCalcForWindowLocation = simpleCalcWindowPos.Checked;
             //ver1.77 フルスクリーン状態を復元できるようにする
-            set.saveFullScreenMode = saveFullScreenMode.Checked;
+            set.SaveFullScreenMode = saveFullScreenMode.Checked;
             //ver1.78 倍率の保持
-            set.keepMagnification = keepMagnification.Checked;
+            set.KeepMagnification = keepMagnification.Checked;
             //ver1.79 書庫は必ず展開
             set.AlwaysExtractArchive = alwaysExtractArchive.Checked;
             //ver1.79 2ページモードアルゴリズム
-            set.dualView_Force = dualView_Force.Checked;
-            set.dualView_Normal = dualView_Normal.Checked;
-            set.dualView_withSizeCheck = dualView_withSizeCheck.Checked;
+            set.DualView_Force = dualView_Force.Checked;
+            set.DualView_Normal = dualView_Normal.Checked;
+            set.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
 
             //ver1.80 キーコンフィグ
-            set.ka_exit1 = ka_exit1.keyData;
-            set.ka_exit2 = ka_exit2.keyData;
-            set.ka_bookmark1 = ka_bookmark1.keyData;
-            set.ka_bookmark2 = ka_bookmark2.keyData;
-            set.ka_fullscreen1 = ka_fullscreen1.keyData;
-            set.ka_fullscreen2 = ka_fullscreen2.keyData;
-            set.ka_dualview1 = ka_dualview1.keyData;
-            set.ka_dualview2 = ka_dualview2.keyData;
-            set.ka_viewratio1 = ka_viewratio1.keyData;
-            set.ka_viewratio2 = ka_viewratio2.keyData;
-            set.ka_recycle1 = ka_recycle1.keyData;
-            set.ka_recycle2 = ka_recycle2.keyData;
+            set.Key_Exit1 = ka_exit1.keyData;
+            set.Key_Exit2 = ka_exit2.keyData;
+            set.Key_Bookmark1 = ka_bookmark1.keyData;
+            set.Key_Bookmark2 = ka_bookmark2.keyData;
+            set.Key_Fullscreen1 = ka_fullscreen1.keyData;
+            set.Key_Fullscreen2 = ka_fullscreen2.keyData;
+            set.Key_Dualview1 = ka_dualview1.keyData;
+            set.Key_Dualview2 = ka_dualview2.keyData;
+            set.Key_ViewRatio1 = ka_viewratio1.keyData;
+            set.Key_ViewRatio2 = ka_viewratio2.keyData;
+            set.Key_Recycle1 = ka_recycle1.keyData;
+            set.Key_Recycle2 = ka_recycle2.keyData;
             //1.80キーコンフィグナビゲーション関連;
-            set.ka_nextpage1 = ka_nextpage1.keyData;
-            set.ka_nextpage2 = ka_nextpage2.keyData;
-            set.ka_prevpage1 = ka_prevpage1.keyData;
-            set.ka_prevpage2 = ka_prevpage2.keyData;
-            set.ka_prevhalf1 = ka_prevhalf1.keyData;
-            set.ka_prevhalf2 = ka_prevhalf2.keyData;
-            set.ka_nexthalf1 = ka_nexthalf1.keyData;
-            set.ka_nexthalf2 = ka_nexthalf2.keyData;
-            set.ka_toppage1 = ka_toppage1.keyData;
-            set.ka_toppage2 = ka_toppage2.keyData;
-            set.ka_lastpage1 = ka_lastpage1.keyData;
-            set.ka_lastpage2 = ka_lastpage2.keyData;
+            set.Key_Nextpage1 = ka_nextpage1.keyData;
+            set.Key_Nextpage2 = ka_nextpage2.keyData;
+            set.Key_Prevpage1 = ka_prevpage1.keyData;
+            set.Key_Prevpage2 = ka_prevpage2.keyData;
+            set.Key_Prevhalf1 = ka_prevhalf1.keyData;
+            set.Key_Prevhalf2 = ka_prevhalf2.keyData;
+            set.Key_Nexthalf1 = ka_nexthalf1.keyData;
+            set.Key_Nexthalf2 = ka_nexthalf2.keyData;
+            set.Key_Toppage1 = ka_toppage1.keyData;
+            set.Key_Toppage2 = ka_toppage2.keyData;
+            set.Key_Lastpage1 = ka_lastpage1.keyData;
+            set.Key_Lastpage2 = ka_lastpage2.keyData;
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
             //ver1.81サムネイルのアニメーション効果
             set.ThumbnailPanelSmoothScroll = ThumbnailPanelSmoothScroll.Checked;
             //ver1.83 アンシャープマスク
-            set.useUnsharpMask = useUnsharpMask.Checked;
-            set.unsharpDepth = (int)unsharpDepth.Value;
+            set.UseUnsharpMask = useUnsharpMask.Checked;
+            set.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
         private void InitButton_Click(object sender, EventArgs e)

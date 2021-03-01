@@ -13,16 +13,16 @@ namespace Marmi
         private void ApplyConfigToWindow()
         {
             //バー関連
-            menuStrip1.Visible = App.Config.visibleMenubar;
-            toolStrip1.Visible = App.Config.visibleToolBar;
-            statusbar.Visible = App.Config.visibleStatusBar;
+            menuStrip1.Visible = App.Config.VisibleMenubar;
+            toolStrip1.Visible = App.Config.VisibleToolBar;
+            statusbar.Visible = App.Config.VisibleStatusBar;
 
             //ナビバー
             //g_Sidebar.SetSizeAndDock(GetClientRectangle());
-            g_Sidebar.Visible = App.Config.visibleNavibar;
+            g_Sidebar.Visible = App.Config.VisibleNavibar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
-            if (App.Config.simpleCalcForWindowLocation)
+            if (App.Config.SimpleCalcForWindowLocation)
             {
                 //簡易：as is
                 this.Size = App.Config.windowSize;
@@ -32,21 +32,21 @@ namespace Marmi
                 SetFormPosLocation();
 
             //ver1.77全画面モード対応
-            if (App.Config.saveFullScreenMode && App.Config.isFullScreen)
+            if (App.Config.SaveFullScreenMode && App.Config.isFullScreen)
                 SetFullScreen(true);
 
             //2枚表示
-            toolButtonDualMode.Checked = App.Config.dualView;
+            toolButtonDualMode.Checked = App.Config.DualView;
 
             //MRU反映
             //オープンするときに実施するのでコメントアウト
             //UpdateMruMenuListUI();
 
             //再帰検索
-            Menu_OptionRecurseDir.Checked = App.Config.isRecurseSearchDir;
+            Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
 
             //左右矢印交換対応
-            if (App.Config.isReplaceArrowButton)
+            if (App.Config.IsReplaceArrowButton)
             {
                 toolButtonLeft.Tag = "次のページに移動します";
                 toolButtonLeft.Text = "次へ";
@@ -150,7 +150,7 @@ namespace Marmi
                 App.Config.windowLocation.Y = disp.Y + disp.Height - App.Config.windowSize.Height;
 
             //中央表示強制かどうか
-            if (App.Config.isWindowPosCenter)
+            if (App.Config.IsWindowPosCenter)
             {
                 App.Config.windowLocation.X = disp.X + (disp.Width - App.Config.windowSize.Width) / 2;
                 App.Config.windowLocation.Y = disp.Y + (disp.Height - App.Config.windowSize.Height) / 2;

@@ -124,13 +124,13 @@ namespace Marmi
 
             //ver0.982ファイル名などの文字列表示を切り替えられるようにする
 
-            if (App.Config.isShowTPFileName)
+            if (App.Config.IsShowTPFileName)
                 _thumbBoxHeight += PADDING + FONT_HEIGHT;
 
-            if (App.Config.isShowTPFileSize)
+            if (App.Config.IsShowTPFileSize)
                 _thumbBoxHeight += PADDING + FONT_HEIGHT;
 
-            if (App.Config.isShowTPPicSize)
+            if (App.Config.IsShowTPPicSize)
                 _thumbBoxHeight += PADDING + FONT_HEIGHT;
 
             //サムネイルサイズが変わると画面に表示できる
@@ -291,8 +291,8 @@ namespace Marmi
                 }
 
                 //影・枠にチェック
-                thumbFrame.Checked = App.Config.isDrawThumbnailFrame;
-                thumbShadow.Checked = App.Config.isDrawThumbnailShadow;
+                thumbFrame.Checked = App.Config.IsDrawThumbnailFrame;
+                thumbShadow.Checked = App.Config.IsDrawThumbnailShadow;
 
                 //m_tooltip.Disposed += new EventHandler((se, ee) => { m_tooltip.Active = true; });
 
@@ -339,12 +339,12 @@ namespace Marmi
                     break;
 
                 case "影をつける":
-                    App.Config.isDrawThumbnailShadow = !App.Config.isDrawThumbnailShadow;
+                    App.Config.IsDrawThumbnailShadow = !App.Config.IsDrawThumbnailShadow;
                     //Invalidate();
                     break;
 
                 case "枠線":
-                    App.Config.isDrawThumbnailFrame = !App.Config.isDrawThumbnailFrame;
+                    App.Config.IsDrawThumbnailFrame = !App.Config.IsDrawThumbnailFrame;
                     //Invalidate();
                     break;
 
@@ -704,9 +704,9 @@ namespace Marmi
                 //スタック型の非同期GetBitmapに変更
                 Bmp.AsyncGetBitmap(item, () =>
                 {
+                    //読み込んだらすぐに描写
                     if (this.Visible)
                     {
-                        //読み込んだらすぐに描写
                         this.Invalidate(GetThumbboxRectanble(item));
                     }
                 });
@@ -722,11 +722,11 @@ namespace Marmi
             else
             {
                 //通常描写
-                m_thumbnailSet[item].AnimateStartTime = 0;
+                //m_thumbnailSet[item].AnimateStartTime = 0;
 
                 //影の描写
                 Rectangle frameRect = imageRect;
-                if (App.Config.isDrawThumbnailShadow) // && isDrawFrame)
+                if (App.Config.IsDrawThumbnailShadow)
                 {
                     BitmapUty.drawDropShadow(g, frameRect);
                 }
@@ -736,7 +736,7 @@ namespace Marmi
                 g.DrawImage(drawBitmap, imageRect);
 
                 //外枠を書く。
-                if (App.Config.isDrawThumbnailFrame) // && isDrawFrame)
+                if (App.Config.IsDrawThumbnailFrame)
                 {
                     g.DrawRectangle(Pens.LightGray, frameRect);
                 }
@@ -805,13 +805,13 @@ namespace Marmi
                 drawBitmap = DummyImage;
                 drawFrame = false;
                 isResize = false;
-                w = drawBitmap.Width;   //描写画像の幅
-                h = drawBitmap.Height;  //描写画像の高さ
+                w = drawBitmap.Width;
+                h = drawBitmap.Height;
             }
             else
             {
-                w = drawBitmap.Width;   //描写画像の幅
-                h = drawBitmap.Height;  //描写画像の高さ
+                w = drawBitmap.Width;
+                h = drawBitmap.Height;
 
                 //リサイズすべきかどうか確認する。
                 if (w <= _thumbnailSize && h <= _thumbnailSize)
@@ -822,11 +822,9 @@ namespace Marmi
             //if (THUMBNAIL_SIZE != DEFAULT_THUMBNAIL_SIZE && isResize == true)
             if (isResize)
             {
-                float ratio = 1;
-                if (w > h)
-                    ratio = (float)_thumbnailSize / (float)w;
-                else
-                    ratio = (float)_thumbnailSize / (float)h;
+                float ratio = (w > h) ?
+                    (float)_thumbnailSize / (float)w :
+                    (float)_thumbnailSize / (float)h;
                 //if (ratio > 1)			//これをコメント化すると
                 //    ratio = 1.0F;		//拡大描写も行う
                 w = (int)(w * ratio);
@@ -839,7 +837,7 @@ namespace Marmi
             Rectangle imageRect = new Rectangle(sx, sy, w, h);
 
             //影を描写する.アイコン時（＝drawFrame==false）で描写しない
-            if (App.Config.isDrawThumbnailShadow && drawFrame)
+            if (App.Config.IsDrawThumbnailShadow && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 BitmapUty.drawDropShadow(g, frameRect);
@@ -852,7 +850,7 @@ namespace Marmi
             g.DrawImage(drawBitmap, imageRect);
 
             //写真風に外枠を書く
-            if (App.Config.isDrawThumbnailFrame && drawFrame)
+            if (App.Config.IsDrawThumbnailFrame && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 //枠がおかしいので拡大しない
@@ -1009,7 +1007,7 @@ namespace Marmi
             };
 
             //ファイル名を書く
-            if (App.Config.isShowTPFileName)
+            if (App.Config.IsShowTPFileName)
             {
                 string filename = Path.GetFileName(m_thumbnailSet[item].Filename);
                 if (filename != null)
@@ -1020,7 +1018,7 @@ namespace Marmi
             }
 
             //ファイルサイズを書く
-            if (App.Config.isShowTPFileSize)
+            if (App.Config.IsShowTPFileSize)
             {
                 string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].FileLength);
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
@@ -1028,7 +1026,7 @@ namespace Marmi
             }
 
             //画像サイズを書く
-            if (App.Config.isShowTPPicSize)
+            if (App.Config.IsShowTPPicSize)
             {
                 string s = String.Format(
                     "{0:#,0}x{1:#,0} px",

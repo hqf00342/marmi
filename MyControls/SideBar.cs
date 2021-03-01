@@ -304,7 +304,7 @@ namespace Marmi
 
                 int dx = pt.X - m_mouseDragPoint.X;
                 this.Width += dx;
-                App.Config.sidebarWidth = this.Width;
+                App.Config.SidebarWidth = this.Width;
 
                 m_mouseDragPoint = pt;
 
@@ -441,7 +441,7 @@ namespace Marmi
 
             //ver1.70 スムーススクロールをOffにする
             //0: アニメーション無しで表示。1:スムーススクロール
-            if (!App.Config.sidebar_smoothScroll)
+            if (!App.Config.Sidebar_smoothScroll)
                 algorithm = 0;
 
             //残りが1以下なら移動させてタイマーストップ

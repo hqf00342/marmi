@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
 using System.IO;
 using System.Windows.Forms;		//Application
@@ -13,7 +12,7 @@ namespace Marmi
     /********************************************************************************/
 
     [Serializable]
-    public class AppGlobalConfig : INotifyPropertyChanged
+    public class AppGlobalConfig //: INotifyPropertyChanged
     {
         //コンフィグファイル名。XmlSerializeで利用
         private const string CONFIGNAME = "Marmi.xml";
@@ -21,160 +20,134 @@ namespace Marmi
         //サイドバーの基本の幅
         private const int SIDEBAR_INIT_WIDTH = 200;
 
-        public bool dualView;                       //2画面並べて表示
+        public static string ConfigFilename => Path.Combine(Application.StartupPath, CONFIGNAME);
+
+        public bool DualView { get; set; }                       //2画面並べて表示
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
-        //public MRU[] mru = new MRU[50];     //MRUリスト用配列
-        public List<MRU> mru = new List<MRU>();     //MRUリスト用配列
-        public bool visibleMenubar;                 //メニューバーの表示
-        public bool visibleToolBar;                 //ツールバーの表示
-        public bool visibleStatusBar;               //ステータスバーの表示
-        public bool isSaveConfig;                   //コンフィグの保存
 
-                                                    //public bool isSaveThumbnailCache;			//サムネイルキャッシュの保存
-        public bool isRecurseSearchDir;             //ディレクトリの再帰検索
+        public List<MRU> Mru { get; set; } = new List<MRU>();     //MRUリスト用配列
 
-        public bool isReplaceArrowButton;               //ツールバーの左右ボタンを入れ替える
+        public bool VisibleMenubar { get; set; }                 //メニューバーの表示
+        public bool VisibleToolBar { get; set; }                 //ツールバーの表示
+        public bool VisibleStatusBar { get; set; }               //ステータスバーの表示
+        public bool IsSaveConfig { get; set; }                   //コンフィグの保存
 
-        public bool isContinueZipView;              //zipファイルは前回の続きから
-        public bool isFitScreenAndImage;            //画像とイメージをフィットさせる
-        public bool isStopPaintingAtResize;         //リサイズ時の描写をやめる
+        //public bool isSaveThumbnailCache;			//サムネイルキャッシュの保存
+        public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
+
+        public bool IsReplaceArrowButton { get; set; }               //ツールバーの左右ボタンを入れ替える
+
+        public bool IsContinueZipView { get; set; }              //zipファイルは前回の続きから
+        public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
+        public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
         public int ThumbnailSize;                   //サムネイル画像の大きさ
-        public bool visibleNavibar;                 //ナビバーの表示
-        public bool isAutoCleanOldCache;            //古いキャッシュの自動削除
+        public bool VisibleNavibar { get; set; }                 //ナビバーの表示
+        public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
 
-        public bool isDrawThumbnailShadow;          // サムネイルに影を描写するか
-        public bool isDrawThumbnailFrame;           // サムネイルに枠を描写するか
-        public bool isShowTPFileName;               // サムネイルにファイル名を表示するか
-        public bool isShowTPFileSize;               // ファイル名にファイルサイズを表示するか
-        public bool isShowTPPicSize;                // ファイル名に画像サイズを表示するか
+        public bool IsDrawThumbnailShadow { get; set; }          // サムネイルに影を描写するか
+        public bool IsDrawThumbnailFrame { get; set; }           // サムネイルに枠を描写するか
+        public bool IsShowTPFileName { get; set; }               // サムネイルにファイル名を表示するか
+        public bool IsShowTPFileSize { get; set; }               // ファイル名にファイルサイズを表示するか
+        public bool IsShowTPPicSize { get; set; }                // ファイル名に画像サイズを表示するか
 
-                                                    //
-                                                    // ver1.35 メモリモデル
+        // ver1.35 メモリモデル
         public MemoryModel memModel;                //メモリーモデル
 
-        public int CacheSize;                       //memModel == userDefinedのときのキャッシュサイズ[MB]
-                                                    // ver1.35 最終ページを先頭へループ
-                                                    //public bool isLoopToTopPage { get; set; }
+        public int CacheSize { get; set; }                       //memModel == userDefinedのときのキャッシュサイズ[MB]
 
         //ルーペ関連
-        public int loupeMagnifcant;                 //ルーペ倍率
+        public int loupeMagnifcant;                //ルーペ倍率
 
-        public bool isOriginalSizeLoupe;            // ルーペを原寸表示とするかどうか。
+        public bool IsOriginalSizeLoupe { get; set; }            // ルーペを原寸表示とするかどうか。
 
-        public bool isFastDrawAtResize;             // 高速描写をするかどうか
+        public bool IsFastDrawAtResize { get; set; }             // 高速描写をするかどうか
 
         //サイドバー関連
         //public bool isFixSidebar;					//サイドバーを固定にするかどうか
-        public int sidebarWidth;                    //サイドバーの幅
+        public int SidebarWidth { get; set; }                    //サイドバーの幅
 
         //ver1.09 書庫関連
-        public bool isExtractIfSolidArchive;        //ソリッド書庫なら一時展開するか
-
-        //ver1.09 クロスフェード
-        //public bool isCrossfadeTransition;			//画面遷移でクロスフェードするか
-
-        //ver1.21 キーコンフィグ
-        //1.81 コメントアウト
-        //public string keyConfNextPage;
-        //public string keyConfPrevPage;
-        //public string keyConfNextPageHalf;
-        //public string keyConfPrevPageHalf;
-        //public string keyConfTopPage;
-        //public string keyConfLastPage;
-        //public string keyConfFullScr;
-        //public string keyConfPrintMode;
-        //public string keyConfBookMark;
-        //public string keyConfDualMode;
-        //public string keyConfRecycleBin;
-        //public string keyConfExitApp;	//ver1.77
+        public bool IsExtractIfSolidArchive { get; set; }        //ソリッド書庫なら一時展開するか
 
         //ver1.24 マウスホイール
-        public string mouseConfigWheel;
+        public string MouseConfigWheel { get; set; }
 
         //ver1.25
-        public bool noEnlargeOver100p;          //画面フィッティングは100%未満にする
+        public bool NoEnlargeOver100p { get; set; }          //画面フィッティングは100%未満にする
 
-        public bool isDotByDotZoom;             //Dot-by-Dot補間モードにする
+        public bool IsDotByDotZoom { get; set; }             //Dot-by-Dot補間モードにする
 
         //ver1.21画像切り替え方法
-        public AnimateMode pictureSwitchMode;
+        public AnimateMode PictureSwitchMode { get; set; }
 
         ////ver1.35 スクリーンショー時間[ms]
-        public int slideShowTime { get; set; }
+        public int SlideShowTime { get; set; }
 
         //ver1.42 サムネイルのフェードイン
         [Obsolete]
-        public bool isThumbFadein { get; set; }
+        public bool IsThumbFadein { get; set; }
 
         //ver1.49 ウィンドウの初期位置
-        public bool isWindowPosCenter;
+        public bool IsWindowPosCenter { get; set; }
 
         //ver1.62 ツールバーの位置
-        public bool isToolbarTop;
+        public bool IsToolbarTop { get; set; }
 
         //ver1.64 画面ナビゲーション.右画面クリックで進む
-        public bool RightScrClickIsNextPic;
+        public bool RightScrClickIsNextPic { get; set; }
 
         //ver1.64 左綴じ本でクリック位置逆転
-        public bool ReverseDirectionWhenLeftBook;
+        public bool ReverseDirectionWhenLeftBook { get; set; }
 
         //ver1.65 ツールバーアイテムの文字を消すか
-        public bool eraseToolbarItemString;
+        public bool EraseToolbarItemString { get; set; }
 
         //ver1.70 サイドバーのスムーススクロール
-        public bool sidebar_smoothScroll;
+        public bool Sidebar_smoothScroll { get; set; }
 
         //ver1.70 2枚表示の厳格化
         //public bool dualview_exactCheck;
 
         //ver1.71 最終ページの動作
-        public bool lastPage_stay;
+        public bool LastPage_stay { get; set; }
 
-        public bool lastPage_toTop;
-        public bool lastPage_toNextArchive;
+        public bool LastPage_toTop { get; set; }
+        public bool LastPage_toNextArchive { get; set; }
 
         //ver1.73 一時展開フォルダ
-        public string tmpFolder;
+        public string TmpFolder { get; set; }
 
         //ver1.73 MRU保持数
-        public int numberOfMru;
-
-        #region メイン画面背景色
+        public int NumberOfMru;
 
         [XmlIgnore]
         public Color BackColor;
 
-        [XmlElementAttribute("XmlMainBackColor")]
-        public string xmlMainColor
+        [XmlElement("XmlMainBackColor")]
+        public string XmlMainColor
         {
             set { BackColor = ColorTranslator.FromHtml(value); }
             get { return ColorTranslator.ToHtml(BackColor); }
         }
 
-        #endregion メイン画面背景色
-
-        #region サムネイル背景色
+        #region サムネイル
 
         [XmlIgnore]
         public Color ThumbnailBackColor;
 
-        [XmlElementAttribute("XmlThumbnailBackColor")]
-        public string xmlTbColor
+        [XmlElement("XmlThumbnailBackColor")]
+        public string XmlTbColor
         {
             set { ThumbnailBackColor = ColorTranslator.FromHtml(value); }
             get { return ColorTranslator.ToHtml(ThumbnailBackColor); }
         }
 
-        #endregion サムネイル背景色
-
-        #region サムネイル用フォント
-
         [XmlIgnore]
         public Font ThumbnailFont;
 
-        [XmlElementAttribute("XmlThumbnailFont")]
-        public string xmlTbFont
+        [XmlElement("XmlThumbnailFont")]
+        public string XmlTbFont
         {
             set
             {
@@ -188,97 +161,85 @@ namespace Marmi
             }
         }
 
-        #endregion サムネイル用フォント
-
-        #region サムネイル用フォントカラー
-
         [XmlIgnore]
         public Color ThumbnailFontColor;
 
-        [XmlElementAttribute("XmlThumbnailFontColor")]
-        public string xmlFontColor
+        [XmlElement("XmlThumbnailFontColor")]
+        public string XmlFontColor
         {
             set { ThumbnailFontColor = ColorTranslator.FromHtml(value); }
             get { return ColorTranslator.ToHtml(ThumbnailFontColor); }
         }
 
-        #endregion サムネイル用フォントカラー
+        #endregion サムネイル
 
         //ver1.77 画面モード保存対象にする。
         public bool isFullScreen;
-
-        #region 保存しないパラメータ
-
-        ////画面モード
-        //[XmlIgnore]
-        //public bool isFullScreen;
 
         //サムネイルモード
         [XmlIgnore]
         public bool isThumbnailView;
 
-        #endregion 保存しないパラメータ
-
         //ver1.76 多重起動禁止フラグ
-        public bool disableMultipleStarts { get; set; }
+        public bool DisableMultipleStarts { get; set; }
 
         //ver1.77 画面表示位置調整を簡易にするか
-        public bool simpleCalcForWindowLocation { get; set; }
+        public bool SimpleCalcForWindowLocation { get; set; }
 
         //ver1.77 フルスクリーン状態を復元できるようにする
-        public bool saveFullScreenMode { get; set; }
+        public bool SaveFullScreenMode { get; set; }
 
         //ver1.78 倍率の保持
-        public bool keepMagnification { get; set; }
+        public bool KeepMagnification { get; set; }
 
-        #region OnPropertyChanged
+        //#region OnPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string s)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(s));
-        }
+        //private void OnPropertyChanged(string s)
+        //{
+        //    if (PropertyChanged != null)
+        //        PropertyChanged(this, new PropertyChangedEventArgs(s));
+        //}
 
-        #endregion OnPropertyChanged
+        //#endregion OnPropertyChanged
 
         //ver1.79 書庫を常に展開するかどうか
         public bool AlwaysExtractArchive { get; set; }
 
         //ver1.79 2ページモード
-        public bool dualView_Force { get; set; }
+        public bool DualView_Force { get; set; }
 
-        public bool dualView_Normal { get; set; }
-        public bool dualView_withSizeCheck { get; set; }
+        public bool DualView_Normal { get; set; }
+        public bool DualView_withSizeCheck { get; set; }
 
         //ver1.80 キーコンフィグ２
-        public Keys ka_exit1 { get; set; }
+        public Keys Key_Exit1 { get; set; }
 
-        public Keys ka_exit2 { get; set; }
-        public Keys ka_bookmark1 { get; set; }
-        public Keys ka_bookmark2 { get; set; }
-        public Keys ka_fullscreen1 { get; set; }
-        public Keys ka_fullscreen2 { get; set; }
-        public Keys ka_dualview1 { get; set; }
-        public Keys ka_dualview2 { get; set; }
-        public Keys ka_viewratio1 { get; set; }
-        public Keys ka_viewratio2 { get; set; }
-        public Keys ka_recycle1 { get; set; }
-        public Keys ka_recycle2 { get; set; }
+        public Keys Key_Exit2 { get; set; }
+        public Keys Key_Bookmark1 { get; set; }
+        public Keys Key_Bookmark2 { get; set; }
+        public Keys Key_Fullscreen1 { get; set; }
+        public Keys Key_Fullscreen2 { get; set; }
+        public Keys Key_Dualview1 { get; set; }
+        public Keys Key_Dualview2 { get; set; }
+        public Keys Key_ViewRatio1 { get; set; }
+        public Keys Key_ViewRatio2 { get; set; }
+        public Keys Key_Recycle1 { get; set; }
+        public Keys Key_Recycle2 { get; set; }
 
-        public Keys ka_nextpage1 { get; set; }
-        public Keys ka_nextpage2 { get; set; }
-        public Keys ka_prevpage1 { get; set; }
-        public Keys ka_prevpage2 { get; set; }
-        public Keys ka_prevhalf1 { get; set; }
-        public Keys ka_prevhalf2 { get; set; }
-        public Keys ka_nexthalf1 { get; set; }
-        public Keys ka_nexthalf2 { get; set; }
-        public Keys ka_toppage1 { get; set; }
-        public Keys ka_toppage2 { get; set; }
-        public Keys ka_lastpage1 { get; set; }
-        public Keys ka_lastpage2 { get; set; }
+        public Keys Key_Nextpage1 { get; set; }
+        public Keys Key_Nextpage2 { get; set; }
+        public Keys Key_Prevpage1 { get; set; }
+        public Keys Key_Prevpage2 { get; set; }
+        public Keys Key_Prevhalf1 { get; set; }
+        public Keys Key_Prevhalf2 { get; set; }
+        public Keys Key_Nexthalf1 { get; set; }
+        public Keys Key_Nexthalf2 { get; set; }
+        public Keys Key_Toppage1 { get; set; }
+        public Keys Key_Toppage2 { get; set; }
+        public Keys Key_Lastpage1 { get; set; }
+        public Keys Key_Lastpage2 { get; set; }
 
         //ver1.80 ダブルクリック
         public bool DoubleClickToFullscreen { get; set; }
@@ -286,9 +247,9 @@ namespace Marmi
         public bool ThumbnailPanelSmoothScroll { get; set; }
 
         //ver1.83 アンシャープマスク
-        public bool useUnsharpMask { get; set; }
+        public bool UseUnsharpMask { get; set; }
 
-        public int unsharpDepth { get; set; }
+        public int UnsharpDepth { get; set; }
 
         /*******************************************************************************/
 
@@ -300,37 +261,32 @@ namespace Marmi
             Initialize();
         }
 
-        //public AppGlobalConfig Clone()
-        //{
-        //	return MemberwiseClone() as AppGlobalConfig;
-        //}
-
         /// <summary>
         /// 各パラメータの初期値
         /// </summary>
         private void Initialize()
         {
-            visibleMenubar = true;
-            visibleToolBar = true;
-            visibleStatusBar = true;
-            visibleNavibar = false;
+            VisibleMenubar = true;
+            VisibleToolBar = true;
+            VisibleStatusBar = true;
+            VisibleNavibar = false;
 
-            dualView = false;
+            DualView = false;
             isFullScreen = false;
             isThumbnailView = false;
             windowSize = new Size(640, 480);
             windowLocation = new Point(0, 0);
-            isSaveConfig = false;
+            IsSaveConfig = false;
             //isSaveThumbnailCache = false;
-            isRecurseSearchDir = false;
+            IsRecurseSearchDir = false;
             //BackColor = Color.DarkGray;
             BackColor = Color.LightSlateGray;
-            isReplaceArrowButton = false;
-            isFitScreenAndImage = true;
+            IsReplaceArrowButton = false;
+            IsFitScreenAndImage = true;
 
-            isContinueZipView = false;
-            isFitScreenAndImage = true;
-            isStopPaintingAtResize = false;
+            IsContinueZipView = false;
+            IsFitScreenAndImage = true;
+            IsStopPaintingAtResize = false;
 
             //サムネイルタブ
             ThumbnailSize = 200;                            //サムネイルサイズ
@@ -338,49 +294,36 @@ namespace Marmi
             ThumbnailFont = new Font("MS UI Gothic", 9);    //サムネイルのフォント
             ThumbnailFontColor = Color.Black;               //サムネイルのフォントカラー
                                                             //isAutoCleanOldCache = false;					//サムネイルを自動でクリーンするか
-            isDrawThumbnailShadow = true;                   //サムネイルに影を描写するか
-            isDrawThumbnailFrame = true;                    //サムネイルに枠を描写するか
-            isShowTPFileName = true;                        //画像名を表示するか
-            isShowTPFileSize = false;                       //画像のファイルサイズを表示するか
-            isShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
-            isThumbFadein = false;
+            IsDrawThumbnailShadow = true;                   //サムネイルに影を描写するか
+            IsDrawThumbnailFrame = true;                    //サムネイルに枠を描写するか
+            IsShowTPFileName = true;                        //画像名を表示するか
+            IsShowTPFileSize = false;                       //画像のファイルサイズを表示するか
+            IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
+            //IsThumbFadein = false;
 
             //ルーペタブ
             loupeMagnifcant = 3;
-            isOriginalSizeLoupe = true;
+            IsOriginalSizeLoupe = true;
 
             //サイドバー
             //isFixSidebar = false;
             //sidebarWidth = ThumbnailSize + 50;
-            sidebarWidth = SIDEBAR_INIT_WIDTH;
+            SidebarWidth = SIDEBAR_INIT_WIDTH;
 
             //高度な設定
-            isFastDrawAtResize = true;                      //リサイズ時に高速描写をするかどうか
+            IsFastDrawAtResize = true;                      //リサイズ時に高速描写をするかどうか
                                                             //書庫
-            isExtractIfSolidArchive = true;
+            IsExtractIfSolidArchive = true;
             //クロスフェード
             //isCrossfadeTransition = false;
-            //キーコンフィグ
-            //ver1.81コメントアウト
-            //keyConfNextPage ="→";
-            //keyConfPrevPage = "←";
-            //keyConfNextPageHalf = "PageDown";
-            //keyConfPrevPageHalf = "PageUp";
-            //keyConfTopPage = "Home";
-            //keyConfLastPage = "End";
-            //keyConfFullScr = "ESC";
-            //keyConfPrintMode = "V";
-            //keyConfBookMark = "B";
-            //keyConfDualMode = "D";
-            //keyConfRecycleBin = "Delete";
-            //keyConfExitApp = "Q";
+
             //マウスコンフィグ
-            mouseConfigWheel = "拡大縮小";
+            MouseConfigWheel = "拡大縮小";
             // 画面切り替えモード
-            pictureSwitchMode = AnimateMode.Slide;
+            PictureSwitchMode = AnimateMode.Slide;
             //zoom
-            noEnlargeOver100p = true;       //画面フィッティングは100%未満にする
-            isDotByDotZoom = false;         //Dot-by-Dot補間モードにする
+            NoEnlargeOver100p = true;       //画面フィッティングは100%未満にする
+            IsDotByDotZoom = false;         //Dot-by-Dot補間モードにする
                                             //メモリーモデル
                                             //memModel = MemoryModel.Small;	//最小
             memModel = MemoryModel.UserDefined; //キャッシュ活用モード
@@ -388,75 +331,75 @@ namespace Marmi
                                                 //ループするかどうか
                                                 //isLoopToTopPage = false;
                                                 //スクリーンショー時間
-            slideShowTime = 3000;
+            SlideShowTime = 3000;
             //画面の初期位置
-            isWindowPosCenter = false;
+            IsWindowPosCenter = false;
             //ツールバーの位置
-            isToolbarTop = true;
+            IsToolbarTop = true;
 
             //ver1.64 画面クリックナビゲーション
             RightScrClickIsNextPic = true;
             ReverseDirectionWhenLeftBook = true;
 
             //ver1.64ツールバーアイテムの文字を消す
-            eraseToolbarItemString = false;
+            EraseToolbarItemString = false;
 
             //ver1.70 サイドバーのスムーススクロールはOn
-            sidebar_smoothScroll = true;
+            Sidebar_smoothScroll = true;
 
             //ver1.70 2枚表示はデフォルトで簡易チェック
             //dualview_exactCheck = false;
 
             //ver1.71 最終ページの動作
-            lastPage_stay = true;
-            lastPage_toTop = false;
-            lastPage_toNextArchive = false;
+            LastPage_stay = true;
+            LastPage_toTop = false;
+            LastPage_toNextArchive = false;
 
             //ver1.73 一時展開フォルダ
-            tmpFolder = string.Empty;
-            numberOfMru = 10;
+            TmpFolder = string.Empty;
+            NumberOfMru = 10;
 
             //ver1.76 多重起動
-            disableMultipleStarts = false;
+            DisableMultipleStarts = false;
             //ver1.77 ウィンドウ位置を簡易計算にするか
-            simpleCalcForWindowLocation = false;
+            SimpleCalcForWindowLocation = false;
             //ver1.77 フルスクリーン状態を復元できるようにする
-            saveFullScreenMode = true;
+            SaveFullScreenMode = true;
             //ver1.78 倍率の保持
-            keepMagnification = false;
+            KeepMagnification = false;
             //ver1.79 書庫は必ず展開
             AlwaysExtractArchive = false;
             //ver1.79 2ページモードアルゴリズム
-            dualView_Force = false;
-            dualView_Normal = true;
-            dualView_withSizeCheck = false;
+            DualView_Force = false;
+            DualView_Normal = true;
+            DualView_withSizeCheck = false;
 
             //1.80キーコンフィグ
-            ka_exit1 = Keys.Q;
-            ka_exit2 = Keys.None;
-            ka_bookmark1 = Keys.B;
-            ka_bookmark2 = Keys.None;
-            ka_fullscreen1 = Keys.Escape;
-            ka_fullscreen2 = Keys.None;
-            ka_dualview1 = Keys.D;
-            ka_dualview2 = Keys.None;
-            ka_viewratio1 = Keys.V;
-            ka_viewratio2 = Keys.None;
-            ka_recycle1 = Keys.Delete;
-            ka_recycle2 = Keys.None;
+            Key_Exit1 = Keys.Q;
+            Key_Exit2 = Keys.None;
+            Key_Bookmark1 = Keys.B;
+            Key_Bookmark2 = Keys.None;
+            Key_Fullscreen1 = Keys.Escape;
+            Key_Fullscreen2 = Keys.None;
+            Key_Dualview1 = Keys.D;
+            Key_Dualview2 = Keys.None;
+            Key_ViewRatio1 = Keys.V;
+            Key_ViewRatio2 = Keys.None;
+            Key_Recycle1 = Keys.Delete;
+            Key_Recycle2 = Keys.None;
             //1.80キーコンフィグ ナビゲーション関連
-            ka_nextpage1 = Keys.Right;
-            ka_nextpage2 = Keys.None;
-            ka_prevpage1 = Keys.Left;
-            ka_prevpage2 = Keys.None;
-            ka_prevhalf1 = Keys.PageUp;
-            ka_prevhalf2 = Keys.None;
-            ka_nexthalf1 = Keys.PageDown;
-            ka_nexthalf2 = Keys.None;
-            ka_toppage1 = Keys.Home;
-            ka_toppage2 = Keys.None;
-            ka_lastpage1 = Keys.End;
-            ka_lastpage2 = Keys.None;
+            Key_Nextpage1 = Keys.Right;
+            Key_Nextpage2 = Keys.None;
+            Key_Prevpage1 = Keys.Left;
+            Key_Prevpage2 = Keys.None;
+            Key_Prevhalf1 = Keys.PageUp;
+            Key_Prevhalf2 = Keys.None;
+            Key_Nexthalf1 = Keys.PageDown;
+            Key_Nexthalf2 = Keys.None;
+            Key_Toppage1 = Keys.Home;
+            Key_Toppage2 = Keys.None;
+            Key_Lastpage1 = Keys.End;
+            Key_Lastpage2 = Keys.None;
 
             //ダブルクリック機能を開放する
             DoubleClickToFullscreen = false;
@@ -464,34 +407,8 @@ namespace Marmi
             ThumbnailPanelSmoothScroll = true;
 
             //ver1.83 アンシャープマスク
-            useUnsharpMask = true;
-            unsharpDepth = 25;
-        }
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //private void OnPropertyChanged(string s)
-        //{
-        //	if (PropertyChanged != null)
-        //		PropertyChanged(this, new PropertyChangedEventArgs(s));
-        //}
-
-        /// <summary>
-        /// コンフィグのファイル名を返す。
-        /// プロパティを作ったので不要なはず
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        public static string getConfigFileName()
-        {
-            return Path.Combine(Application.StartupPath, CONFIGNAME);
-        }
-
-        public static string configFilename
-        {
-            get
-            {
-                return Path.Combine(Application.StartupPath, CONFIGNAME);
-            }
+            UseUnsharpMask = true;
+            UnsharpDepth = 25;
         }
 
         /// <summary>
@@ -500,18 +417,15 @@ namespace Marmi
         /// <returns></returns>
         public static object LoadFromXmlFile()
         {
-            //string path = getConfigFileName();
-            string path = AppGlobalConfig.configFilename;
+            string path = AppGlobalConfig.ConfigFilename;
 
             if (File.Exists(path))
             {
-                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(AppGlobalConfig));
-
                     //読み込んで逆シリアル化する
-                    Object obj = xs.Deserialize(fs);
-                    return obj;
+                    var xs = new XmlSerializer(typeof(AppGlobalConfig));
+                    return xs.Deserialize(fs);
                 }
             }
             return null;
@@ -523,13 +437,11 @@ namespace Marmi
         /// <param name="obj"></param>
         public static void SaveToXmlFile(object obj)
         {
-            //string path = getConfigFileName();
-            string path = AppGlobalConfig.configFilename;
+            string path = AppGlobalConfig.ConfigFilename;
 
-            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(AppGlobalConfig));
-                //シリアル化して書き込む
+                var xs = new XmlSerializer(typeof(AppGlobalConfig));
                 xs.Serialize(fs, obj);
             }
         }

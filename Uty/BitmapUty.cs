@@ -1088,7 +1088,7 @@ namespace Marmi
 
             //è¨Ç≥Ç¢ÇŸÇ§ÇégÇ§
             double r = rx < ry ? rx : ry;
-            if (r > 1.0f && App.Config.noEnlargeOver100p)
+            if (r > 1.0f && App.Config.NoEnlargeOver100p)
                 r = 1.0f;
 
             Bitmap newbmp = new Bitmap(screenSize.Width, screenSize.Height);

@@ -107,7 +107,7 @@ namespace Marmi
             //
             // ver1.62 ツールバーの位置
             //
-            toolStrip1.Dock = App.Config.isToolbarTop ? DockStyle.Top : DockStyle.Bottom;
+            toolStrip1.Dock = App.Config.IsToolbarTop ? DockStyle.Top : DockStyle.Bottom;
 
             //初期設定
             this.KeyPreview = true;
@@ -159,7 +159,7 @@ namespace Marmi
             this.Controls.Add(g_Sidebar);
             g_Sidebar.Visible = false;
             //g_Sidebar.Width = SIDEBAR_DEFAULT_WIDTH
-            g_Sidebar.Width = App.Config.sidebarWidth;
+            g_Sidebar.Width = App.Config.SidebarWidth;
             g_Sidebar.Dock = DockStyle.Left;
             g_Sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
             //
@@ -267,13 +267,13 @@ namespace Marmi
             InitControls();
 
             //ver1.62ツールバー位置を保存
-            App.Config.isToolbarTop = (toolStrip1.Dock == DockStyle.Top);
+            App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
 
             ////////////////////////////////////////ver1.10
 
             //ver1.10
             //設定の保存
-            if (App.Config.isSaveConfig)
+            if (App.Config.IsSaveConfig)
             {
                 //設定ファイルを保存する
                 App.Config.windowLocation = this.Location;
@@ -284,13 +284,13 @@ namespace Marmi
             {
                 //設定ファイルがあれば削除する
                 //string configFile = AppGlobalConfig.getConfigFileName();
-                string configFile = AppGlobalConfig.configFilename;
+                string configFile = AppGlobalConfig.ConfigFilename;
                 if (File.Exists(configFile))
                     File.Delete(configFile);
             }
 
             //古いキャッシュファイルを捨てる
-            if (App.Config.isAutoCleanOldCache)
+            if (App.Config.IsAutoCleanOldCache)
                 ClearOldCacheDBFile();
 
             //Application.Idleの解放
@@ -593,11 +593,11 @@ namespace Marmi
 
             //サムネイルDBがあれば読み込む
             //loadThumbnailDBFile();
-            if (App.Config.isContinueZipView)
+            if (App.Config.IsContinueZipView)
             {
                 //読み込み値を無視し、０にセット
                 //g_pi.NowViewPage = 0;
-                foreach (var mru in App.Config.mru)
+                foreach (var mru in App.Config.Mru)
                 {
                     if (mru == null)
                     {
@@ -663,7 +663,7 @@ namespace Marmi
                 {
                     //ディレクトリの場合
                     App.g_pi.PackType = PackageType.Directory;
-                    GetDirPictureList(files[0], App.Config.isRecurseSearchDir);
+                    GetDirPictureList(files[0], App.Config.IsRecurseSearchDir);
                 }
                 else if (App.unrar.dllLoaded && files[0].EndsWith(".rar", StringComparison.OrdinalIgnoreCase))
                 {
@@ -674,22 +674,7 @@ namespace Marmi
                     App.g_pi.isSolid = true;
 
                     //ファイルリストを構築
-                    App.unrar.Open(files[0], Unrar.OpenMode.List);
-                    int num = 0;
-                    while (App.unrar.ReadHeader())
-                    {
-                        if (!App.unrar.CurrentFile.IsDirectory)
-                        {
-                            App.g_pi.Items.Add(new ImageInfo(
-                                num++,
-                                App.unrar.CurrentFile.FileName,
-                                App.unrar.CurrentFile.FileTime,
-                                App.unrar.CurrentFile.UnpackedSize
-                                ));
-                        }
-                        App.unrar.Skip();
-                    }
-                    App.unrar.Close();
+                    ListRar(files[0]);
 
                     //展開が必要なのでtrueを返す
                     return true;
@@ -699,55 +684,29 @@ namespace Marmi
                     // 書庫ファイル
                     App.g_pi.PackType = PackageType.Archive;
                     bool needRecurse = GetArchivedFileInfo(files[0]);
-                    //if (needRecurse)
-                    //{
-                    //    Uty.RecurseExtractAll(files[0], @"d:\temp");
-                    //}
-                    //MRUListを更新
-                    //UpdateMRUList();
                     if (needRecurse)
                         return true;
                 }
                 else if (files[0].EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                 {
                     //pdfファイル
-                    App.g_pi.PackType = PackageType.Pdf;
-                    if (App.susie.isSupportPdf())
-                    {
-                        var list = App.susie.GetArchiveInfo(files[0]);
-                        foreach (var e in list)
-                        {
-                            App.g_pi.Items.Add(new ImageInfo((int)e.position, e.filename, e.timestamp, e.filesize));
-                        }
-                        return false;
-                    }
-                    else
-                    {
-                        //pdfは未サポート
-                        //g_pi.PackageName = string.Empty;
-                        return false;
-                    }
+                    return ListPdf(files[0]);
                 }
                 else
                 {
                     //単一画像ファイル
-                    App.g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
+                    App.g_pi.PackageName = string.Empty;
                     App.g_pi.PackType = PackageType.Pictures;
-
-                    //１つだけファイルを登録
                     if (Uty.IsPictureFilename(files[0]))
                     {
-                        FileInfo fi = new FileInfo(files[0]);
-                        //g_pi.Items.Add(new ImageInfo(files[0], fi.CreationTime, fi.Length));
-                        App.g_pi.Items.Add(new ImageInfo(0, files[0], fi.CreationTime, fi.Length));
+                        App.g_pi.Items.Add(new ImageInfo(0, files[0]));
                     }
                 }
             }
             else //if (files.Length == 1)
             {
-                //複数ファイル
-                App.g_pi.PackageName = string.Empty;    //zipでもディレクトリでもない
-                                                        //g_pi.isZip = false;
+                //複数ファイルパターン
+                App.g_pi.PackageName = string.Empty;
                 App.g_pi.PackType = PackageType.Pictures;
 
                 //ファイルを追加する
@@ -756,12 +715,51 @@ namespace Marmi
                 {
                     if (Uty.IsPictureFilename(filename))
                     {
-                        FileInfo fi = new FileInfo(filename);
-                        App.g_pi.Items.Add(new ImageInfo(index++, filename, fi.CreationTime, fi.Length));
+                        App.g_pi.Items.Add(new ImageInfo(index++, filename));
                     }
                 }
             }//if (files.Length == 1)
             return false;
+
+            /// <summary>unrarを使ってリスト化</summary>
+            void ListRar(string file)
+            {
+                App.unrar.Open(file, Unrar.OpenMode.List);
+                int num = 0;
+                while (App.unrar.ReadHeader())
+                {
+                    if (!App.unrar.CurrentFile.IsDirectory)
+                    {
+                        App.g_pi.Items.Add(new ImageInfo(
+                            num++,
+                            App.unrar.CurrentFile.FileName,
+                            App.unrar.CurrentFile.FileTime,
+                            App.unrar.CurrentFile.UnpackedSize
+                            ));
+                    }
+                    App.unrar.Skip();
+                }
+                App.unrar.Close();
+            }
+
+            bool ListPdf(string file)
+            {
+                App.g_pi.PackType = PackageType.Pdf;
+                if (App.susie.isSupportPdf())
+                {
+                    foreach (var e in App.susie.GetArchiveInfo(file))
+                    {
+                        App.g_pi.Items.Add(new ImageInfo((int)e.position, e.filename, e.timestamp, e.filesize));
+                    }
+                    return false;
+                }
+                else
+                {
+                    //pdfは未サポート
+                    //g_pi.PackageName = string.Empty;
+                    return false;
+                }
+            }
         }
 
         // メニュー操作 *****************************************************************/
@@ -788,13 +786,13 @@ namespace Marmi
             {
                 SetViewPage(next, drawOrderTick);
             }
-            else if (App.Config.lastPage_toTop)
+            else if (App.Config.LastPage_toTop)
             {
                 //先頭ページへループ
                 SetViewPage(0, drawOrderTick);
                 g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
             }
-            else if (App.Config.lastPage_toNextArchive)
+            else if (App.Config.LastPage_toNextArchive)
             {
                 //ver1.70 最終ページで次の書庫を開く
                 if (App.g_pi.PackType != PackageType.Directory)
@@ -894,7 +892,7 @@ namespace Marmi
                 UpdateStatusbar();
 
                 //NaviBarを戻す
-                if (App.Config.visibleNavibar)
+                if (App.Config.VisibleNavibar)
                     g_Sidebar.Visible = true;
 
                 //トラックバーを戻す Ver0.975
@@ -991,9 +989,9 @@ namespace Marmi
                 this.Controls.Add(menuStrip1);
 
                 toolButtonFullScreen.Checked = false;
-                toolStrip1.Visible = App.Config.visibleToolBar;
-                menuStrip1.Visible = App.Config.visibleMenubar;
-                statusbar.Visible = App.Config.visibleStatusBar;
+                toolStrip1.Visible = App.Config.VisibleToolBar;
+                menuStrip1.Visible = App.Config.VisibleMenubar;
+                statusbar.Visible = App.Config.VisibleStatusBar;
             }
 
             //メニュー、ツールバーの更新
@@ -1049,7 +1047,7 @@ namespace Marmi
         private void SetDualViewMode(bool isDual)
         {
             Debug.WriteLine(isDual, "SetDualViewMode()");
-            App.Config.dualView = isDual;
+            App.Config.DualView = isDual;
             toolButtonDualMode.Checked = isDual;
             Menu_View2Page.Checked = isDual;
 
@@ -1087,7 +1085,7 @@ namespace Marmi
             string tempDir;
 
             //tempフォルダのルートとなるフォルダを決める。
-            string rootPath = App.Config.tmpFolder;
+            string rootPath = App.Config.TmpFolder;
             if (string.IsNullOrEmpty(rootPath))
                 rootPath = Application.StartupPath; //アプリのパス
                                                     //Path.GetTempPath(),		//windows標準のTempDir
@@ -1303,21 +1301,21 @@ namespace Marmi
 
             //MRUに追加する必要があるか確認
             bool needMruAdd = true;
-            for (int i = 0; i < App.Config.mru.Count; i++)
+            for (int i = 0; i < App.Config.Mru.Count; i++)
             {
-                if (App.Config.mru[i] == null)
+                if (App.Config.Mru[i] == null)
                     continue;
-                if (App.Config.mru[i].Name == App.g_pi.PackageName)
+                if (App.Config.Mru[i].Name == App.g_pi.PackageName)
                 {
                     //登録済みのMRUを更新
                     //日付だけ更新
-                    App.Config.mru[i].Date = DateTime.Now;
+                    App.Config.Mru[i].Date = DateTime.Now;
                     //最後に見たページも更新 v1.37
-                    App.Config.mru[i].LastViewPage = App.g_pi.NowViewPage;
+                    App.Config.Mru[i].LastViewPage = App.g_pi.NowViewPage;
                     needMruAdd = false;
 
                     //ver1.77 Bookmarkも設定
-                    App.Config.mru[i].Bookmarks = App.g_pi.CreateBookmarkString();
+                    App.Config.Mru[i].Bookmarks = App.g_pi.CreateBookmarkString();
                 }
             }
             if (needMruAdd)
@@ -1326,7 +1324,7 @@ namespace Marmi
                 //古い順に並べる→先頭に追加
                 //Array.Sort(App.Config.mru);
                 //App.Config.mru[0] = new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark());
-                App.Config.mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.CreateBookmarkString()));
+                App.Config.Mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.CreateBookmarkString()));
             }
             //Array.Sort(App.Config.mru);   //並べ直す
         }
@@ -1437,8 +1435,8 @@ namespace Marmi
             //ver1.50 表示
             PicPanel.State = PicturePanel.DrawStatus.drawing;
             PicPanel.Message = string.Empty;
-            if (App.Config.pictureSwitchMode != AnimateMode.none  //アニメーションモードである
-                && !App.Config.keepMagnification                  //倍率固定モードではアニメーションしない
+            if (App.Config.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
+                && !App.Config.KeepMagnification                  //倍率固定モードではアニメーションしない
                 && pageDirection != 0)
             {
                 //スライドインアニメーション
@@ -1450,12 +1448,12 @@ namespace Marmi
             PicPanel.fastDraw = false;
 
             //ver1.78 倍率をオプション指定できるように変更
-            if (!App.Config.keepMagnification     //倍率維持モードではない
+            if (!App.Config.KeepMagnification     //倍率維持モードではない
                 || IsFitToScreen())             //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
-                if (r > 1.0f && App.Config.noEnlargeOver100p)
+                if (r > 1.0f && App.Config.NoEnlargeOver100p)
                     r = 1.0f;
                 PicPanel.ZoomRatio = r;
             }
@@ -1528,7 +1526,7 @@ namespace Marmi
         private void UpdateToolbar()
         {
             //画面モードの状態反映
-            toolButtonDualMode.Checked = App.Config.dualView;
+            toolButtonDualMode.Checked = App.Config.DualView;
             toolButtonFullScreen.Checked = App.Config.isFullScreen;
             toolButtonThumbnail.Checked = App.Config.isThumbnailView;
 
@@ -1585,7 +1583,7 @@ namespace Marmi
                     toolStripButton_Rotate.Enabled = true;
 
                     //左右ボタンの有効無効
-                    if (App.Config.isReplaceArrowButton)
+                    if (App.Config.IsReplaceArrowButton)
                     {
                         //入れ替え
                         toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
@@ -1650,20 +1648,20 @@ namespace Marmi
             MenuItem_FileRecent.DropDownItems.Clear();
 
             //Array.Sort(App.Config.mru);
-            App.Config.mru = App.Config.mru.OrderBy(a => a.Date).ToList();
+            App.Config.Mru = App.Config.Mru.OrderBy(a => a.Date).ToList();
 
             int menuCount = 0;
 
             //新しい順にする
-            for (int i = App.Config.mru.Count - 1; i >= 0; i--)
+            for (int i = App.Config.Mru.Count - 1; i >= 0; i--)
             {
-                if (App.Config.mru[i] == null)
+                if (App.Config.Mru[i] == null)
                     continue;
 
-                MenuItem_FileRecent.DropDownItems.Add(App.Config.mru[i].Name, null, new EventHandler(OnClickMRUMenu));
+                MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
 
                 //ver1.73 MRU表示数の制限
-                if (++menuCount >= App.Config.numberOfMru)
+                if (++menuCount >= App.Config.NumberOfMru)
                     break;
             }
         }
@@ -1681,8 +1679,7 @@ namespace Marmi
             {
                 if (Uty.IsPictureFilename(name))
                 {
-                    var fi = new FileInfo(name);
-                    App.g_pi.Items.Add(new ImageInfo(index++, name, fi.CreationTime, fi.Length));
+                    App.g_pi.Items.Add(new ImageInfo(index++, name));
                 }
             }
 
@@ -1729,7 +1726,7 @@ namespace Marmi
             int statusbarHeight = (statusbar.Visible && !App.Config.isFullScreen) ? statusbar.Height : 0;
 
             //ツールバーが上の時だけYから控除
-            if (App.Config.isToolbarTop)
+            if (App.Config.IsToolbarTop)
                 rect.Y += toolbarHeight;
 
             //各パラメータの補正
@@ -1749,7 +1746,7 @@ namespace Marmi
         /// </summary>
         private void SetToolbarString()
         {
-            if (App.Config.eraseToolbarItemString)
+            if (App.Config.EraseToolbarItemString)
             {
                 toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
                 toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -1789,11 +1786,11 @@ namespace Marmi
                 return false;
 
             //コンフィグ条件を確認
-            if (!App.Config.dualView)
+            if (!App.Config.DualView)
                 return false;
 
             //ver1.79判定なしの2ページ表示
-            if (App.Config.dualView_Force)
+            if (App.Config.DualView_Force)
                 return true;
 
             //1枚目チェック
@@ -1809,7 +1806,7 @@ namespace Marmi
                 return false; //横長だった
 
             //全て縦長だった時の処理
-            if (App.Config.dualView_Normal)
+            if (App.Config.DualView_Normal)
                 return true; //縦画像2枚
 
             //2画像の高さがほとんど変わらなければtrue
@@ -1906,14 +1903,14 @@ namespace Marmi
 
                 //MRUリストをチェック
                 //MRUリストにないキャッシュファイルは削除する。
-                int mruCount = App.Config.mru.Count;
+                int mruCount = App.Config.Mru.Count;
                 for (int i = 0; i < mruCount; i++)
                 {
                     //NullException対応。Nullの可能性有 ver0.982
-                    if (App.Config.mru[i] == null)
+                    if (App.Config.Mru[i] == null)
                         continue;
 
-                    string file2 = Path.GetFileName(App.Config.mru[i].Name);
+                    string file2 = Path.GetFileName(App.Config.Mru[i].Name);
                     if (file1.CompareTo(file2) == 0)
                     {
                         isDel = false;
@@ -2009,7 +2006,7 @@ namespace Marmi
                 g_ClearPanel.ShowAndClose(
                     "スライドショーを開始します。\r\nマウスクリックまたはキー入力で終了します。",
                     1500);
-                SlideShowTimer.Interval = App.Config.slideShowTime;
+                SlideShowTimer.Interval = App.Config.SlideShowTime;
                 //SlideShowTimer.Tick += new EventHandler(SlideShowTimer_Tick);
                 SlideShowTimer.Start();
             }
@@ -2060,8 +2057,8 @@ namespace Marmi
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)
         {
-            App.Config.useUnsharpMask = !App.Config.useUnsharpMask;
-            MenuItem_Unsharp.Checked = App.Config.useUnsharpMask;
+            App.Config.UseUnsharpMask = !App.Config.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.UseUnsharpMask;
 
             //再描写
             PicPanel.Invalidate();

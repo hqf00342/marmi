@@ -129,7 +129,7 @@ namespace Marmi
                 //通常ファイルからの読み込み
                 Items[index].CacheImage.Load(filename);
             }
-            else if (isSolid && App.Config.isExtractIfSolidArchive)
+            else if (isSolid && App.Config.IsExtractIfSolidArchive)
             {
                 //ver1.10 ソリッド書庫
                 //一時フォルダの画像ファイルから読取り
