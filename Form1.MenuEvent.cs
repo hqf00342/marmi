@@ -228,7 +228,7 @@ namespace Marmi
         private void ToggleFitScreen()
         {
             App.Config.IsFitScreenAndImage = !App.Config.IsFitScreenAndImage;
-            PicPanel.isAutoFit = App.Config.IsFitScreenAndImage;
+            PicPanel.IsAutoFit = App.Config.IsFitScreenAndImage;
 
             PicPanel.Refresh();
             UpdateStatusbar();

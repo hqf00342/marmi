@@ -408,7 +408,7 @@ namespace Marmi
             if (PicPanel.LastDrawMode
                 == System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor)
             {
-                PicPanel.fastDraw = false;
+                PicPanel.FastDraw = false;
                 PicPanel.Refresh();
             }
 
@@ -1218,7 +1218,7 @@ namespace Marmi
 
             //画像表示をやめる
             PicPanel.Message = string.Empty;
-            PicPanel.bmp = null;
+            PicPanel.Bmp = null;
 
             //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
             Uty.ForceGC();
@@ -1413,27 +1413,27 @@ namespace Marmi
             //ver1.55 drawOrderTickのチェック.
             // スレッドプールに入るため稀に順序が前後する。
             // 最新の描写でなければスキップ
-            if (PicPanel.drawOrderTime > orderTime)
+            if (PicPanel.DrawOrderTime > orderTime)
             {
-                Debug.WriteLine($"Skip SetViewPage2({index}) too old order={orderTime} < now={PicPanel.drawOrderTime}");
+                Debug.WriteLine($"Skip SetViewPage2({index}) too old order={orderTime} < now={PicPanel.DrawOrderTime}");
                 return;
             }
 
             //描写開始
-            PicPanel.State = PicturePanel.DrawStatus.drawing;
-            PicPanel.drawOrderTime = orderTime;
+            PicPanel.State = DrawStatus.drawing;
+            PicPanel.DrawOrderTime = orderTime;
 
             if (screenImage == null)
             {
                 Debug.WriteLine($"bmpがnull(index={index})");
-                PicPanel.State = PicturePanel.DrawStatus.idle;
+                PicPanel.State = DrawStatus.idle;
                 PicPanel.Message = "表示エラー 再度表示してみてください" + index.ToString();
                 PicPanel.Refresh();
                 return;
             }
 
             //ver1.50 表示
-            PicPanel.State = PicturePanel.DrawStatus.drawing;
+            PicPanel.State = DrawStatus.drawing;
             PicPanel.Message = string.Empty;
             if (App.Config.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
                 && !App.Config.KeepMagnification                  //倍率固定モードではアニメーションしない
@@ -1443,9 +1443,9 @@ namespace Marmi
                 PicPanel.AnimateSlideIn(screenImage, pageDirection);
             }
 
-            PicPanel.bmp = screenImage;
+            PicPanel.Bmp = screenImage;
             PicPanel.ResetView();
-            PicPanel.fastDraw = false;
+            PicPanel.FastDraw = false;
 
             //ver1.78 倍率をオプション指定できるように変更
             if (!App.Config.KeepMagnification     //倍率維持モードではない
@@ -1464,7 +1464,7 @@ namespace Marmi
             //1ページ表示か2ページ表示か
             //viewPages = CanDualView(index) ? 2 : 1;
             g_viewPages = (int)screenImage.Tag;
-            PicPanel.State = PicturePanel.DrawStatus.idle;
+            PicPanel.State = DrawStatus.idle;
 
             //カーソルを元に戻す
             this.Cursor = Cursors.Default;
@@ -1480,7 +1480,7 @@ namespace Marmi
             needMakeScreenCache = true;
 
             //PicPanel.Message = string.Empty;
-            PicPanel.State = PicturePanel.DrawStatus.idle;
+            PicPanel.State = DrawStatus.idle;
             //2021年2月26日 GCをやめる
             //ToDo:ここだけはあったほうがいいかもしれないがLOHの扱いも同時にすべき
             //Uty.ForceGC();
@@ -1971,7 +1971,7 @@ namespace Marmi
             {
                 //next=0 : 最後のページを消した
                 Debug.WriteLine("最後のページを消した");
-                PicPanel.bmp = null;
+                PicPanel.Bmp = null;
                 PicPanel.ResetView();
                 PicPanel.Refresh();
             }

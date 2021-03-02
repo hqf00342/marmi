@@ -6,9 +6,7 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
-        // ステータスバー関連 ***********************************************************/
-
-        private void setStatusbarPages()
+        private void SetStatusbarPages()
         {
             if (App.g_pi.Items.Count == 0)
             {
@@ -16,36 +14,18 @@ namespace Marmi
             }
             else
             {
-                if (g_viewPages == 1)
-                    Statusbar_PageLabel.Text = String.Format(
-                        "{0} / {1}pages",
-                        App.g_pi.NowViewPage + 1,
-                        App.g_pi.Items.Count);
-                else
-                    Statusbar_PageLabel.Text = String.Format(
-                        "[{0},{1}] / {2}pages",
-                        App.g_pi.NowViewPage + 1,
-                        App.g_pi.NowViewPage + 2,
-                        App.g_pi.Items.Count);
+                Statusbar_PageLabel.Text = (g_viewPages == 1)
+                    ? $"{App.g_pi.NowViewPage + 1} / {App.g_pi.Items.Count}pages"
+                    : $"[{App.g_pi.NowViewPage + 1},{App.g_pi.NowViewPage + 2}] / {App.g_pi.Items.Count}pages";
             }
         }
 
-        private void setStatubarRatio(float ratio)
+        public void SetStatubarRatio(string s)
         {
-            string s = string.Format("{0}%", Math.Floor(ratio * 100));
-            Statusbar_ratio.Text = s;
+            Statusbar_ratio.Text = s + " : " + Uty.GetUsedMemory();
         }
 
-        public void setStatubarRatio(string s)
-        {
-#if DEBUG
-            s = s + " : " + Uty.GetUsedMemory();
-#endif
-            // 指定した文字列を記述
-            Statusbar_ratio.Text = s;
-        }
-
-        private void setStatusbarFilename()
+        private void SetStatusbarFilename()
         {
             if (App.g_pi.Items.Count == 0)
             {
@@ -53,14 +33,14 @@ namespace Marmi
                 return;
             }
 
-            //if (g_viewPages == 1)
-            //ver1.81 最終ページのときも1ページだけに変更
             if (g_viewPages == 1 || App.g_pi.NowViewPage == App.g_pi.Items.Count - 1)
             {
+                //1ページのみ
                 Statusbar_InfoLabel.Text = App.g_pi.Items[App.g_pi.NowViewPage].Filename;
             }
             else
             {
+                //2ページ
                 Statusbar_InfoLabel.Text =
                     App.g_pi.Items[App.g_pi.NowViewPage + 1].Filename
                     + "  |  "
@@ -77,9 +57,9 @@ namespace Marmi
         private void UpdateStatusbar()
         {
             //StatusBar ページ更新
-            setStatusbarPages();
+            SetStatusbarPages();
             //StatusBar ファイル名更新
-            setStatusbarFilename();
+            SetStatusbarFilename();
             //setStatubarRatio(g_viewRatio);	//StatusBar 表示比率更新
         }
     }

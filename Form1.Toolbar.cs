@@ -69,7 +69,7 @@ namespace Marmi
         private void toolButton_MouseLeave(object sender, EventArgs e)
         {
             //ファイル名表示に戻す
-            setStatusbarFilename();
+            SetStatusbarFilename();
 
             //1クリック対応用に処理
             g_hoverStripItem = null;
@@ -111,7 +111,7 @@ namespace Marmi
             //    PicPanel.isAutoFit = true;
             //else
             //    PicPanel.isAutoFit = false;
-            PicPanel.isAutoFit = false;
+            PicPanel.IsAutoFit = false;
             PicPanel.ZoomRatio = 1.0f;
             //PicPanel.Refresh();
             PicPanel.AjustViewAndShow();
@@ -119,7 +119,7 @@ namespace Marmi
 
         private void toolStripButton_ZoomFit_Click(object sender, EventArgs e)
         {
-            PicPanel.isAutoFit = true;
+            PicPanel.IsAutoFit = true;
             //表示倍率の調整
             float r = PicPanel.FittingRatio;
             if (r > 1.0f && App.Config.NoEnlargeOver100p)

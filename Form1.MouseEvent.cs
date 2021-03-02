@@ -89,7 +89,7 @@ namespace Marmi
             }
 
             //ページナビゲートをする。
-            bool isForword = PicPanel.checkMousePosRight();
+            bool isForword = PicPanel.CheckMousePosRight();
             //コンフィグ確認
             if (!App.Config.RightScrClickIsNextPic)
                 isForword = !isForword;
@@ -218,7 +218,7 @@ namespace Marmi
             {
                 Cursor.Current = Cursors.Default;
             }
-            else if (PicPanel.checkMousePosRight())
+            else if (PicPanel.CheckMousePosRight())
             {
                 //画面の右側
                 ChangeCursor(App.Cursors.Right);
@@ -289,7 +289,7 @@ namespace Marmi
 
                 //ver1.27 左上座標に補正
                 //元画像サイズをローカルに取る
-                Bitmap screenImage = PicPanel.bmp;
+                Bitmap screenImage = PicPanel.Bmp;
                 int _bmpHeight = screenImage.Height;
                 int _bmpWidth = screenImage.Width;
                 //縮尺画像の原点の表示位置を確認
@@ -350,12 +350,12 @@ namespace Marmi
             if (App.Config.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
                 && PicPanel.ZoomRatio < 1.0F)           //表示倍率が100%以下
             {
-                setStatubarRatio("ルーペ（100%表示）");
+                SetStatubarRatio("ルーペ（100%表示）");
             }
             else
             {
                 //%表示
-                setStatubarRatio(
+                SetStatubarRatio(
                     string.Format("ルーペ:{0}倍（{1,0:p1}表示）",
                         App.Config.loupeMagnifcant,
                         (double)(PicPanel.ZoomRatio * App.Config.loupeMagnifcant)

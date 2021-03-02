@@ -50,7 +50,18 @@ namespace Marmi
         public const int WM_USER = 0x400;
         public const int MY_FORCE_FOREGROUND_MESSAGE = WM_USER + 1;
 
-        #endregion USER32
+        #endregion
+
+        #region PicPanel
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        public const int WM_SETREDRAW = 0x000B;
+        public const int WIN32_FALSE = 0;
+        public const int WIN32_TRUE = 1;
+
+        #endregion
 
         #region kernel32.dll
 
@@ -73,7 +84,7 @@ namespace Marmi
         [DllImport("kernel32")]
         public extern static IntPtr LocalFree(IntPtr hMem);
 
-        #endregion kernel32.dll
+        #endregion
 
         #region gdi32.dll
 
