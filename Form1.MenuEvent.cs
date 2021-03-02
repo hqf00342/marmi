@@ -3,8 +3,6 @@ using System.ComponentModel;			//EventArgs
 using System.IO;						//Directory, File
 using System.Windows.Forms;
 
-//using System.Drawing;
-
 namespace Marmi
 {
     public partial class Form1 : Form
@@ -13,13 +11,9 @@ namespace Marmi
 
         private void OnClickMRUMenu(object sender, EventArgs e)
         {
-            ToolStripDropDownItem tsddi = (ToolStripDropDownItem)sender;
+            var tsddi = (ToolStripDropDownItem)sender;
             if (File.Exists(tsddi.Text))
             {
-                //OpenFileAndStart(tsddi.Text);
-
-                //ver1.09 初期化してスタートを明確に
-                //OpenFileAndStart(tsddi.Text);は何をするのかよく分からない状態なので削除
                 Start(new string[] { tsddi.Text });
             }
             else

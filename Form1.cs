@@ -79,7 +79,7 @@ namespace Marmi
         private bool needMakeScreenCache = false;
 
         //BeginInvoke用Delegate
-        private delegate void StatusbarRenew(string s);
+        //private delegate void StatusbarRenew(string s);
 
         //ver1.35 スライドショータイマー
         private readonly System.Windows.Forms.Timer SlideShowTimer = new System.Windows.Forms.Timer();
@@ -87,7 +87,6 @@ namespace Marmi
         //スライドショー中かどうか
         public bool IsSlideShow => SlideShowTimer.Enabled;
 
-        // コンストラクタ *************************************************************/
         public Form1()
         {
             this.Name = App.APPNAME;
@@ -133,13 +132,8 @@ namespace Marmi
 
         private void MyInitializeComponent()
         {
-            //
-            //パッケージ情報 PackageInfo
-            //
             App.g_pi = new PackageInfo();
-            //
-            //PicturePanel
-            //
+
             this.Controls.Add(PicPanel);
             PicPanel.Enabled = true;
             PicPanel.Visible = true;
@@ -158,7 +152,6 @@ namespace Marmi
             g_Sidebar = new SideBar();
             this.Controls.Add(g_Sidebar);
             g_Sidebar.Visible = false;
-            //g_Sidebar.Width = SIDEBAR_DEFAULT_WIDTH
             g_Sidebar.Width = App.Config.SidebarWidth;
             g_Sidebar.Dock = DockStyle.Left;
             g_Sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
@@ -382,13 +375,7 @@ namespace Marmi
             }
             else
             {
-                //通常画面
-                //ResizeEndでスクロールバーを表示
-                //UpdateFormScrollbar();
-
                 //画面を描写。ただしハイクオリティで
-                //PaintBG2(LastDrawMode.HighQuality);
-                //this.Refresh();		//this.Invalidate();
                 UpdateStatusbar();
                 if (PicPanel.Visible)
                     PicPanel.ResizeEnd();
@@ -461,9 +448,10 @@ namespace Marmi
             }
         }
 
-        #endregion
+        #endregion Event
 
-        // 非同期スタート ***************************************************************/
+        #region START
+
         /// <summary>
         /// 非同期タイプのStart()
         /// 実際はThreadPoolからStartを呼び出しているだけ。
@@ -476,7 +464,6 @@ namespace Marmi
             ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
         }
 
-        // スタート *********************************************************************/
         private void Start(string[] filenames)
         {
             //ver1.73 MRUリストの更新
@@ -762,82 +749,9 @@ namespace Marmi
             }
         }
 
+        #endregion START
+
         // メニュー操作 *****************************************************************/
-
-        private void NavigateToBack()
-        {
-            //前に戻る
-            long drawOrderTick = DateTime.Now.Ticks;
-            int prev = GetPrevPageIndex(App.g_pi.NowViewPage);
-            if (prev >= 0)
-                SetViewPage(prev, drawOrderTick);
-            else
-                g_ClearPanel.ShowAndClose("先頭のページです", 1000);
-        }
-
-        private void NavigateToForword()
-        {
-            //ver1.35 ループ機能を実装
-            long drawOrderTick = DateTime.Now.Ticks;
-            int now = App.g_pi.NowViewPage;
-            int next = GetNextPageIndex(App.g_pi.NowViewPage);
-            Debug.WriteLine($"NavigateToForword() {now} -> {next}");
-            if (next >= 0)
-            {
-                SetViewPage(next, drawOrderTick);
-            }
-            else if (App.Config.LastPage_toTop)
-            {
-                //先頭ページへループ
-                SetViewPage(0, drawOrderTick);
-                g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
-            }
-            else if (App.Config.LastPage_toNextArchive)
-            {
-                //ver1.70 最終ページで次の書庫を開く
-                if (App.g_pi.PackType != PackageType.Directory)
-                {
-                    //次の書庫を探す
-                    string filename = App.g_pi.PackageName;
-                    string dirname = Path.GetDirectoryName(filename);
-                    string[] files = Directory.GetFiles(dirname);
-
-                    //ファイル名でソートする
-                    //Array.Sort(files, Uty.Compare_unsafeFast);
-                    Array.Sort(files, NaturalStringComparer.CompareS);
-
-                    bool match = false;
-                    foreach (var s in files)
-                    {
-                        if (s == filename)
-                        {
-                            match = true;
-                            continue;
-                        }
-                        if (match)
-                        {
-                            if (Uty.IsAvailableFile(s))
-                            {
-                                g_ClearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
-                                Start(new string[] { s });
-                                return;
-                            }
-                        }
-                    }
-                    g_ClearPanel.ShowAndClose("最後のページです。次の書庫が見つかりませんでした", 1000);
-                }
-                else
-                {
-                    //先頭ページへループ
-                    SetViewPage(0, drawOrderTick);
-                    g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
-                }
-            }
-            else //if(App.Config.lastPage_stay)
-            {
-                g_ClearPanel.ShowAndClose("最後のページです", 1000);
-            }
-        }
 
         public void SetThumbnailView(bool isShow)
         {
@@ -845,9 +759,6 @@ namespace Marmi
             {
                 //表示準備する
                 App.Config.isThumbnailView = true;
-                //Rectangle rect = GetClientRectangle();
-                //g_ThumbPanel.Location = rect.Location;
-                //g_ThumbPanel.Size = rect.Size;					//これでOnSize()が呼ばれるはずなんだけど。
 
                 //SideBarがある場合は消す
                 if (g_Sidebar.Visible)
@@ -883,12 +794,6 @@ namespace Marmi
                 PicPanel.Dock = DockStyle.Fill;
                 PicPanel.Visible = true;
 
-                //ver0.91 きちんと再描写する
-                //リサイズされている可能性があるので再描写
-                //Form1_ResizeEnd(null, null);	//ここでg_bgのRe-Allocate()が行われる。
-                //OnResizeEnd(null);
-                //PaintBG2(LastDrawMode.HighQuality);
-                //this.Refresh();		//this.Invalidate();
                 UpdateStatusbar();
 
                 //NaviBarを戻す
@@ -924,91 +829,6 @@ namespace Marmi
             }
         }
 
-        private void ToggleFullScreen()
-        {
-            SetFullScreen(!App.Config.isFullScreen);
-        }
-
-        private void SetFullScreen(bool isFullScreen)
-        {
-            if (isFullScreen)
-            {
-                //全画面にする
-                App.Config.isFullScreen = true;
-
-                menuStrip1.Visible = false;
-                toolStrip1.Visible = false;
-                statusbar.Visible = false;
-                //App.Config.visibleMenubar = false;
-
-                //Zオーダーを変更する
-                this.Controls.Remove(statusbar);
-                this.Controls.Remove(toolStrip1);
-                this.Controls.Remove(menuStrip1);
-                this.Controls.Remove(g_Sidebar);
-                this.Controls.Remove(PicPanel);
-                this.Controls.Remove(g_ThumbPanel);
-
-                this.Controls.Add(menuStrip1);
-                this.Controls.Add(toolStrip1);
-                this.Controls.Add(statusbar);
-                this.Controls.Add(PicPanel);
-                this.Controls.Add(g_ThumbPanel);
-                this.Controls.Add(g_Sidebar);
-
-                if (this.WindowState != FormWindowState.Normal)
-                    this.WindowState = FormWindowState.Normal;
-                this.FormBorderStyle = FormBorderStyle.None;
-
-                //toolButtonFullScreen.Checked = true;			//これを先にやっておかないと
-                this.WindowState = FormWindowState.Maximized;   //ここで発生するResizeイベントに間に合わない
-            }
-            else
-            {
-                //全画面を解除する
-                App.Config.isFullScreen = false;
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-                this.WindowState = FormWindowState.Normal;
-
-                //ツールバーを復元する /ver0.17 2009年3月8日
-                //this.Controls.Add(toolStrip1);
-
-                //Zオーダーを元に戻す
-                this.Controls.Remove(statusbar);
-                this.Controls.Remove(toolStrip1);
-                this.Controls.Remove(menuStrip1);
-                this.Controls.Remove(g_Sidebar);
-                this.Controls.Remove(PicPanel);
-                this.Controls.Remove(g_ThumbPanel);
-
-                this.Controls.Add(PicPanel);
-                this.Controls.Add(g_ThumbPanel);
-                this.Controls.Add(g_Sidebar);
-                this.Controls.Add(toolStrip1);
-                this.Controls.Add(statusbar);
-                this.Controls.Add(menuStrip1);
-
-                toolButtonFullScreen.Checked = false;
-                toolStrip1.Visible = App.Config.VisibleToolBar;
-                menuStrip1.Visible = App.Config.VisibleMenubar;
-                statusbar.Visible = App.Config.VisibleStatusBar;
-            }
-
-            //メニュー、ツールバーの更新
-            Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
-            Menu_ContextFullView.Checked = App.Config.isFullScreen;
-            toolButtonFullScreen.Checked = App.Config.isFullScreen;
-
-            AjustSidebarArrangement();
-            UpdateStatusbar();
-
-            //画面表示を修復
-            if (PicPanel.Visible)
-                PicPanel.ResizeEnd();
-            else if (g_ThumbPanel.Visible)
-                g_ThumbPanel.ReDraw();
-        }
-
         /// <summary>
         /// サイドバーとPicPanelの位置関係を調整する
         /// </summary>
@@ -1042,20 +862,6 @@ namespace Marmi
                 if (g_ThumbPanel.Visible)
                     g_ThumbPanel.Bounds = rect;
             }
-        }
-
-        private void SetDualViewMode(bool isDual)
-        {
-            Debug.WriteLine(isDual, "SetDualViewMode()");
-            App.Config.DualView = isDual;
-            toolButtonDualMode.Checked = isDual;
-            Menu_View2Page.Checked = isDual;
-
-            //ver1.36 スクリーンキャッシュをクリア
-            //ClearScreenCache();
-            App.ScreenCache.Clear();
-
-            SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
 
         private void ToggleBookmark()
@@ -1224,6 +1030,8 @@ namespace Marmi
             Uty.ForceGC();
         }
 
+        #region パッケージ操作
+
         private void SortPackage()
         {
             //ファイルリストを並び替える
@@ -1286,6 +1094,35 @@ namespace Marmi
         }
 
         /// <summary>
+        /// ディレクトリの画像をリストに追加する。再帰的に呼び出すために関数化
+        /// </summary>
+        /// <param name="dirName">追加対象のディレクトリ名</param>
+        /// <param name="isRecurse">再帰的に走査する場合はtrue</param>
+        private static void GetDirPictureList(string dirName, bool isRecurse)
+        {
+            //画像ファイルだけを追加する
+            int index = 0;
+            foreach (string name in Directory.EnumerateFiles(dirName))
+            {
+                if (Uty.IsPictureFilename(name))
+                {
+                    App.g_pi.Items.Add(new ImageInfo(index++, name));
+                }
+            }
+
+            //再帰的に取得するかどうか。
+            if (isRecurse)
+            {
+                foreach (var name in Directory.GetDirectories(dirName))
+                    GetDirPictureList(name, isRecurse);
+            }
+        }
+
+        #endregion パッケージ操作
+
+        #region MRU操作
+
+        /// <summary>
         /// 現在閲覧しているg_pi.PackageNameをMRUに追加する
         /// 以前も見たことがある場合、閲覧日付だけを更新
         /// </summary>
@@ -1329,20 +1166,34 @@ namespace Marmi
             //Array.Sort(App.Config.mru);   //並べ直す
         }
 
-        //*****************************************************************
-        // 画面遷移
-
         /// <summary>
-        /// 指定したインデックスの画像を表示する。
-        /// publicになっている理由はサイドバーやサムネイル画面からの
-        /// 呼び出しに対応するため。
-        /// 前のページに戻らないようにdrawOrderTickは現在時を内部で指定している。
+        /// MRUリストを更新する。実際にメニューの中身を更新
+        /// この関数を呼び出しているのはMenu_File_DropDownOpeningのみ
         /// </summary>
-        /// <param name="index">移動したいページインデックス番号</param>
-        public void SetViewPage(int index)
+        private void UpdateMruMenuListUI()
         {
-            SetViewPage(index, DateTime.Now.Ticks);
+            MenuItem_FileRecent.DropDownItems.Clear();
+
+            //Array.Sort(App.Config.mru);
+            App.Config.Mru = App.Config.Mru.OrderBy(a => a.Date).ToList();
+
+            int menuCount = 0;
+
+            //新しい順にする
+            for (int i = App.Config.Mru.Count - 1; i >= 0; i--)
+            {
+                if (App.Config.Mru[i] == null)
+                    continue;
+
+                MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
+
+                //ver1.73 MRU表示数の制限
+                if (++menuCount >= App.Config.NumberOfMru)
+                    break;
+            }
         }
+
+        #endregion MRU操作
 
         /// <summary>
         /// 指定したインデックスの画像を表示する。
@@ -1352,8 +1203,11 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス番号</param>
         /// <param name="drawOrderTick">描写順序を示すオーダー時間 = DateTime.Now.Ticks</param>
-        public void SetViewPage(int index, long drawOrderTick)
+        public void SetViewPage(int index, long drawOrderTick = 0)
         {
+            if (drawOrderTick == 0)
+                drawOrderTick = DateTime.Now.Ticks;
+
             //ver1.09 オプションダイアログを閉じると必ずここに来ることに対するチェック
             if (App.g_pi.Items == null || App.g_pi.Items.Count == 0)
                 return;
@@ -1449,7 +1303,7 @@ namespace Marmi
 
             //ver1.78 倍率をオプション指定できるように変更
             if (!App.Config.KeepMagnification     //倍率維持モードではない
-                || IsFitToScreen())             //画面にフィットしている
+                || IsFitToScreen)             //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
@@ -1484,42 +1338,6 @@ namespace Marmi
             //2021年2月26日 GCをやめる
             //ToDo:ここだけはあったほうがいいかもしれないがLOHの扱いも同時にすべき
             //Uty.ForceGC();
-        }
-
-        //ver1.35 前のページ番号。すでに先頭ページなら-1
-        private static int GetPrevPageIndex(int index)
-        {
-            if (index > 0)
-            {
-                int declimentPages = -1;
-                //2ページ減らすことが出来るか
-                if (CanDualView(App.g_pi.NowViewPage - 2))
-                    declimentPages = -2;
-
-                int ret = index + declimentPages;
-                return ret >= 0 ? ret : 0;
-            }
-            else
-            {
-                //すでに先頭ページなので-1を返す
-                return -1;
-            }
-        }
-
-        //ver1.36次のページ番号。すでに最終ページなら-1
-        private static int GetNextPageIndex(int index)
-        {
-            int pages = CanDualView(index) ? 2 : 1;
-
-            if (index + pages <= App.g_pi.Items.Count - 1)
-            {
-                return index + pages;
-            }
-            else
-            {
-                //最終ページ
-                return -1;
-            }
         }
 
         // ユーティリティ系 *************************************************************/
@@ -1596,10 +1414,10 @@ namespace Marmi
                     }
 
                     //100%ズーム
-                    toolStripButton_Zoom100.Checked = IsScreen100p();
+                    toolStripButton_Zoom100.Checked = IsScreen100p;
 
                     //画面フィットズーム
-                    toolStripButton_ZoomFit.Checked = IsFitToScreen();
+                    toolStripButton_ZoomFit.Checked = IsFitToScreen;
 
                     //Favorite
                     if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
@@ -1627,67 +1445,80 @@ namespace Marmi
             }
         }
 
-        /// <summary>表示中の画像が画面いっぱいにフィットしているかどうか</summary>
-        private bool IsFitToScreen()
+        #region Navigation
+
+        private void NavigateToBack()
         {
-            return Math.Abs(PicPanel.ZoomRatio - PicPanel.FittingRatio) < 0.001f;
+            //前に戻る
+            long drawOrderTick = DateTime.Now.Ticks;
+            int prev = GetPrevPageIndex(App.g_pi.NowViewPage);
+            if (prev >= 0)
+                SetViewPage(prev, drawOrderTick);
+            else
+                g_ClearPanel.ShowAndClose("先頭のページです", 1000);
         }
 
-        /// <summary>現在の表示が原寸かどうか</summary>
-        private bool IsScreen100p()
+        private void NavigateToForword()
         {
-            return Math.Abs(PicPanel.ZoomRatio - 1.0f) < 0.001f;
-        }
-
-        /// <summary>
-        /// MRUリストを更新する。実際にメニューの中身を更新
-        /// この関数を呼び出しているのはMenu_File_DropDownOpeningのみ
-        /// </summary>
-        private void UpdateMruMenuListUI()
-        {
-            MenuItem_FileRecent.DropDownItems.Clear();
-
-            //Array.Sort(App.Config.mru);
-            App.Config.Mru = App.Config.Mru.OrderBy(a => a.Date).ToList();
-
-            int menuCount = 0;
-
-            //新しい順にする
-            for (int i = App.Config.Mru.Count - 1; i >= 0; i--)
+            //ver1.35 ループ機能を実装
+            long drawOrderTick = DateTime.Now.Ticks;
+            int now = App.g_pi.NowViewPage;
+            int next = GetNextPageIndex(App.g_pi.NowViewPage);
+            Debug.WriteLine($"NavigateToForword() {now} -> {next}");
+            if (next >= 0)
             {
-                if (App.Config.Mru[i] == null)
-                    continue;
-
-                MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
-
-                //ver1.73 MRU表示数の制限
-                if (++menuCount >= App.Config.NumberOfMru)
-                    break;
+                SetViewPage(next, drawOrderTick);
             }
-        }
-
-        /// <summary>
-        /// ディレクトリの画像をリストに追加する。再帰的に呼び出すために関数化
-        /// </summary>
-        /// <param name="dirName">追加対象のディレクトリ名</param>
-        /// <param name="isRecurse">再帰的に走査する場合はtrue</param>
-        private static void GetDirPictureList(string dirName, bool isRecurse)
-        {
-            //画像ファイルだけを追加する
-            int index = 0;
-            foreach (string name in Directory.EnumerateFiles(dirName))
+            else if (App.Config.LastPage_toTop)
             {
-                if (Uty.IsPictureFilename(name))
+                //先頭ページへループ
+                SetViewPage(0, drawOrderTick);
+                g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
+            }
+            else if (App.Config.LastPage_toNextArchive)
+            {
+                //ver1.70 最終ページで次の書庫を開く
+                if (App.g_pi.PackType != PackageType.Directory)
                 {
-                    App.g_pi.Items.Add(new ImageInfo(index++, name));
+                    //次の書庫を探す
+                    string filename = App.g_pi.PackageName;
+                    string dirname = Path.GetDirectoryName(filename);
+                    string[] files = Directory.GetFiles(dirname);
+
+                    //ファイル名でソートする
+                    //Array.Sort(files, Uty.Compare_unsafeFast);
+                    Array.Sort(files, NaturalStringComparer.CompareS);
+
+                    bool match = false;
+                    foreach (var s in files)
+                    {
+                        if (s == filename)
+                        {
+                            match = true;
+                            continue;
+                        }
+                        if (match)
+                        {
+                            if (Uty.IsAvailableFile(s))
+                            {
+                                g_ClearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
+                                Start(new string[] { s });
+                                return;
+                            }
+                        }
+                    }
+                    g_ClearPanel.ShowAndClose("最後のページです。次の書庫が見つかりませんでした", 1000);
+                }
+                else
+                {
+                    //先頭ページへループ
+                    SetViewPage(0, drawOrderTick);
+                    g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
                 }
             }
-
-            //再帰的に取得するかどうか。
-            if (isRecurse)
+            else //if(App.Config.lastPage_stay)
             {
-                foreach (var name in Directory.GetDirectories(dirName))
-                    GetDirPictureList(name, isRecurse);
+                g_ClearPanel.ShowAndClose("最後のページです", 1000);
             }
         }
 
@@ -1702,7 +1533,163 @@ namespace Marmi
                 return false;
             if (App.g_pi.Items.Count <= 1)
                 return false;
-            return (bool)(App.g_pi.NowViewPage + g_viewPages >= App.g_pi.Items.Count);
+            return App.g_pi.NowViewPage + g_viewPages >= App.g_pi.Items.Count;
+        }
+
+        //ver1.35 前のページ番号。すでに先頭ページなら-1
+        private static int GetPrevPageIndex(int index)
+        {
+            if (index > 0)
+            {
+                int declimentPages = -1;
+                //2ページ減らすことが出来るか
+                if (CanDualView(App.g_pi.NowViewPage - 2))
+                    declimentPages = -2;
+
+                int ret = index + declimentPages;
+                return ret >= 0 ? ret : 0;
+            }
+            else
+            {
+                //すでに先頭ページなので-1を返す
+                return -1;
+            }
+        }
+
+        //ver1.36次のページ番号。すでに最終ページなら-1
+        private static int GetNextPageIndex(int index)
+        {
+            int pages = CanDualView(index) ? 2 : 1;
+
+            if (index + pages <= App.g_pi.Items.Count - 1)
+            {
+                return index + pages;
+            }
+            else
+            {
+                //最終ページ
+                return -1;
+            }
+        }
+
+        #endregion Navigation
+
+        /// <summary>
+        /// ver1.67 ツールバーの文字を表示/非表示する。
+        /// </summary>
+        private void SetToolbarString()
+        {
+            if (App.Config.EraseToolbarItemString)
+            {
+                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
+                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            }
+            else
+            {
+                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            }
+        }
+
+        #region Screen操作
+
+        private void SetDualViewMode(bool isDual)
+        {
+            Debug.WriteLine(isDual, "SetDualViewMode()");
+            App.Config.DualView = isDual;
+            toolButtonDualMode.Checked = isDual;
+            Menu_View2Page.Checked = isDual;
+
+            //ver1.36 スクリーンキャッシュをクリア
+            //ClearScreenCache();
+            App.ScreenCache.Clear();
+
+            SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
+        }
+
+        private void ToggleFullScreen()
+        {
+            SetFullScreen(!App.Config.isFullScreen);
+        }
+
+        private void SetFullScreen(bool isFullScreen)
+        {
+            if (isFullScreen)
+            {
+                //全画面にする
+                App.Config.isFullScreen = true;
+
+                menuStrip1.Visible = false;
+                toolStrip1.Visible = false;
+                statusbar.Visible = false;
+                //App.Config.visibleMenubar = false;
+
+                //Zオーダーを変更する
+                this.Controls.Remove(statusbar);
+                this.Controls.Remove(toolStrip1);
+                this.Controls.Remove(menuStrip1);
+                this.Controls.Remove(g_Sidebar);
+                this.Controls.Remove(PicPanel);
+                this.Controls.Remove(g_ThumbPanel);
+
+                this.Controls.Add(menuStrip1);
+                this.Controls.Add(toolStrip1);
+                this.Controls.Add(statusbar);
+                this.Controls.Add(PicPanel);
+                this.Controls.Add(g_ThumbPanel);
+                this.Controls.Add(g_Sidebar);
+
+                if (this.WindowState != FormWindowState.Normal)
+                    this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = FormBorderStyle.None;
+
+                //toolButtonFullScreen.Checked = true;			//これを先にやっておかないと
+                this.WindowState = FormWindowState.Maximized;   //ここで発生するResizeイベントに間に合わない
+            }
+            else
+            {
+                //全画面を解除する
+                App.Config.isFullScreen = false;
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.WindowState = FormWindowState.Normal;
+
+                //ツールバーを復元する /ver0.17 2009年3月8日
+                //this.Controls.Add(toolStrip1);
+
+                //Zオーダーを元に戻す
+                this.Controls.Remove(statusbar);
+                this.Controls.Remove(toolStrip1);
+                this.Controls.Remove(menuStrip1);
+                this.Controls.Remove(g_Sidebar);
+                this.Controls.Remove(PicPanel);
+                this.Controls.Remove(g_ThumbPanel);
+
+                this.Controls.Add(PicPanel);
+                this.Controls.Add(g_ThumbPanel);
+                this.Controls.Add(g_Sidebar);
+                this.Controls.Add(toolStrip1);
+                this.Controls.Add(statusbar);
+                this.Controls.Add(menuStrip1);
+
+                toolButtonFullScreen.Checked = false;
+                toolStrip1.Visible = App.Config.VisibleToolBar;
+                menuStrip1.Visible = App.Config.VisibleMenubar;
+                statusbar.Visible = App.Config.VisibleStatusBar;
+            }
+
+            //メニュー、ツールバーの更新
+            Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
+            Menu_ContextFullView.Checked = App.Config.isFullScreen;
+            toolButtonFullScreen.Checked = App.Config.isFullScreen;
+
+            AjustSidebarArrangement();
+            UpdateStatusbar();
+
+            //画面表示を修復
+            if (PicPanel.Visible)
+                PicPanel.ResizeEnd();
+            else if (g_ThumbPanel.Visible)
+                g_ThumbPanel.ReDraw();
         }
 
         /// <summary>
@@ -1740,38 +1727,6 @@ namespace Marmi
 
             return rect;
         }
-
-        /// <summary>
-        /// ver1.67 ツールバーの文字を表示/非表示する。
-        /// </summary>
-        private void SetToolbarString()
-        {
-            if (App.Config.EraseToolbarItemString)
-            {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            }
-            else
-            {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-            }
-        }
-
-        // サイドバー関連 ***************************************************************/
-        /// <summary>
-        /// サイドバーのサイズが変更された（され終わった）ときに呼び出される。
-        /// これが呼び出されるときはサイドバー固定の時のみ。
-        /// 2010年6月6日 ver0.985で実装
-        /// </summary>
-        /// <param name="sender">利用せず</param>
-        /// <param name="e">利用せず</param>
-        private void Sidebar_SidebarSizeChanged(object sender, EventArgs e)
-        {
-            OnResizeEnd(null);
-        }
-
-        // 画像処理 *********************************************************************/
 
         /// <summary>
         /// 指定されたインデックスから２枚表示できるかチェック
@@ -1813,6 +1768,14 @@ namespace Marmi
             const int ACCEPTABLE_RANGE = 200;
             return Math.Abs(App.g_pi.Items[index].Height - App.g_pi.Items[index + 1].Height) < ACCEPTABLE_RANGE;
         }
+
+        /// <summary>表示中の画像が画面いっぱいにフィットしているかどうか</summary>
+        private bool IsFitToScreen => Math.Abs(PicPanel.ZoomRatio - PicPanel.FittingRatio) < 0.001f;
+
+        /// <summary>現在の表示が原寸かどうか</summary>
+        private bool IsScreen100p => Math.Abs(PicPanel.ZoomRatio - 1.0f) < 0.001f;
+
+        #endregion Screen操作
 
         #region スクリーンキャッシュ
 
@@ -2030,7 +1993,7 @@ namespace Marmi
             }
         }
 
-        #endregion
+        #endregion スライドショー
 
         /// <summary>
         /// IPCで呼ばれるインターフェースメソッド
@@ -2055,6 +2018,8 @@ namespace Marmi
             }));
         }
 
+        #region UIエレメントからのイベント
+
         private void Menu_Unsharp_Click(object sender, EventArgs e)
         {
             App.Config.UseUnsharpMask = !App.Config.UseUnsharpMask;
@@ -2065,5 +2030,19 @@ namespace Marmi
         }
 
         private void Menu_Help_GC_Clicked(object sender, EventArgs e) => Uty.ForceGC();
+
+        /// <summary>
+        /// サイドバーのサイズが変更された（され終わった）ときに呼び出される。
+        /// これが呼び出されるときはサイドバー固定の時のみ。
+        /// 2010年6月6日 ver0.985で実装
+        /// </summary>
+        /// <param name="sender">利用せず</param>
+        /// <param name="e">利用せず</param>
+        private void Sidebar_SidebarSizeChanged(object sender, EventArgs e)
+        {
+            OnResizeEnd(null);
+        }
+
+        #endregion UIエレメントからのイベント
     } // Class Form1
 }
