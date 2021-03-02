@@ -332,14 +332,13 @@
     <None Include="Resources\16x16\arrow-circle-double.png" />
     <None Include="Resources\ScrNext.png" />
     <None Include="Resources\ScrPrev.png" />
-    <Content Include="配布物\readme.txt" />
+    <None Include="配布物\readme.txt" />
     <None Include="7z.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="7z64.dll" />
     <None Include="ToDo.md" />
     <None Include="配布物\axpdf.spi" />
-    <None Include="配布物\使い方%28詳細版%29.txt" />
     <None Include="配布物\SevenZipSharp.dll" />
     <Content Include="zic.ico" />
     <None Include="Resources\rc_tif32.png" />

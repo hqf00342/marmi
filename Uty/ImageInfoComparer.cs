@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
-
+/*
+ソート用比較クラス
+自然言語ソートするための比較クラス
+*/
 namespace Marmi
 {
-    //class CompareClass
-    //{
-    //}
-
-    /********************************************************************************/
-    // ソート用比較クラス
-    // 自然言語ソートするための比較クラス
-    /********************************************************************************/
-
     public class ImageInfoComparer : IComparer<ImageInfo>
     {
         public enum Target
