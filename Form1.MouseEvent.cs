@@ -62,8 +62,7 @@ namespace Marmi
             if (App.g_pi.Items.Count == 0)
             {
                 //ファイルをD&Dしてくださいと表示
-                g_ClearPanel.ShowAndClose(
-                    Properties.Resources.MSG_LETDORPFILES, 1000);
+                g_ClearPanel.ShowAndClose("ファイルをドロップしてください", 1000);
                 return;
             }
 

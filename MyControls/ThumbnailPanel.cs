@@ -864,7 +864,7 @@ namespace Marmi
             //DrawTextInfo(g, Item, tRect);
 
             //Bitmap‚Ì”jŠüBGetBitmapWithoutCache()‚Åæ‚Á‚Ä‚«‚½‚½‚ß
-            if (drawBitmap != null && (string)(drawBitmap.Tag) != Properties.Resources.TAG_PICTURECACHE)
+            if (drawBitmap != null && (string)(drawBitmap.Tag) != App.TAG_PICTURECACHE)
             {
                 drawBitmap.Dispose();
             }

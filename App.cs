@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Marmi
 {
     public static class App
     {
+        //コンフィグ。Program.csで読み込みまたは生成している。
         public static AppGlobalConfig Config;
 
         //サムネイル標準サイズ
@@ -45,6 +41,10 @@ namespace Marmi
 
         //ver1.35 スクリーンキャッシュ
         internal static Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
+
+        //Bitmap.Tagにつけるタグ:リソース文字列から移動
+        //TODO:利用していない疑惑あり
+        internal const string TAG_PICTURECACHE = "CACHE";
 
         public static class Cursors
         {

@@ -351,15 +351,6 @@ namespace Marmi.Properties {
         }
         
         /// <summary>
-        ///   ファイルをドロップしてください に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MSG_LETDORPFILES {
-            get {
-                return ResourceManager.GetString("MSG_LETDORPFILES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Icon rc_tif {
@@ -416,15 +407,6 @@ namespace Marmi.Properties {
             get {
                 object obj = ResourceManager.GetObject("sortAlphabet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   CACHE に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TAG_PICTURECACHE {
-            get {
-                return ResourceManager.GetString("TAG_PICTURECACHE", resourceCulture);
             }
         }
         
