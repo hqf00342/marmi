@@ -33,12 +33,12 @@ namespace Marmi
             Debug.WriteLine($"ResizeTrackbar:{trackbarWidth}");
 
             toolStrip1.CanOverflow = false;
-            if (g_trackbar != null) //起動時にエラーが出るので
+            if (_trackbar != null) //起動時にエラーが出るので
             {
                 if (trackbarWidth > 10)
-                    g_trackbar.Width = trackbarWidth - 10;  //10はグリップの大きさ分ぐらい・・・
+                    _trackbar.Width = trackbarWidth - 10;  //10はグリップの大きさ分ぐらい・・・
                 else
-                    g_trackbar.Width = 0;
+                    _trackbar.Width = 0;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Marmi
             Statusbar_InfoLabel.Text = (string)((ToolStripButton)sender).Tag;
 
             //1クリック対応用に保持しておく
-            g_hoverStripItem = sender;
+            _hoverStripItem = sender;
         }
 
         private void toolButton_MouseLeave(object sender, EventArgs e)
@@ -72,7 +72,7 @@ namespace Marmi
             SetStatusbarFilename();
 
             //1クリック対応用に処理
-            g_hoverStripItem = null;
+            _hoverStripItem = null;
         }
 
         // Zoomボタン関連 *********************************************************/
@@ -82,8 +82,8 @@ namespace Marmi
             if (App.Config.isThumbnailView)
             {
                 //サムネイル対応
-                g_ThumbPanel.ThumbSizeZoomIn();
-                g_ThumbPanel.Refresh();
+                _thumbPanel.ThumbSizeZoomIn();
+                _thumbPanel.Refresh();
                 return;
             }
 
@@ -96,8 +96,8 @@ namespace Marmi
             if (App.Config.isThumbnailView)
             {
                 //サムネイル対応
-                g_ThumbPanel.ThumbSizeZoomOut();
-                g_ThumbPanel.Refresh();
+                _thumbPanel.ThumbSizeZoomOut();
+                _thumbPanel.Refresh();
                 return;
             }
 
@@ -140,7 +140,7 @@ namespace Marmi
         private void g_trackbar_ValueChanged(object sender, EventArgs e)
         {
             //Debug.WriteLine(g_trackbar.Value, "g_trackbar_ValueChanged");
-            if (g_trackbar.Value != App.g_pi.NowViewPage)
+            if (_trackbar.Value != App.g_pi.NowViewPage)
             {
                 ////トラックバー用のツールチップを表示する。
                 //Point p = PointToClient(MousePosition);
@@ -157,22 +157,22 @@ namespace Marmi
             }
 
             //サムネイル表示がされていたら中央を更新
-            if (g_trackNaviPanel != null)
-                g_trackNaviPanel.SetCenterItem(g_trackbar.Value);
+            if (_trackNaviPanel != null)
+                _trackNaviPanel.SetCenterItem(_trackbar.Value);
         }
 
         private void g_trackbar_MouseDown(object sender, MouseEventArgs e)
         {
-            if (g_trackNaviPanel == null)
-                g_trackNaviPanel = new NaviBar3(App.g_pi);
+            if (_trackNaviPanel == null)
+                _trackNaviPanel = new NaviBar3(App.g_pi);
 
             //g_n3.Parent = this;
             //if(!this.Controls.Contains(g_n3))
             //    this.Controls.Add(g_n3);
 
-            if (!PicPanel.Controls.Contains(g_trackNaviPanel))
+            if (!PicPanel.Controls.Contains(_trackNaviPanel))
             {
-                PicPanel.Controls.Add(g_trackNaviPanel);
+                PicPanel.Controls.Add(_trackNaviPanel);
                 //Debug.WriteLine("add navigatebar");
             }
 
@@ -184,14 +184,14 @@ namespace Marmi
                 if (App.Config.isFullScreen)
                     r.Y += toolStrip1.Height;
                 //Debug.WriteLine(r, "add navigatebar");
-                g_trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
+                _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
             else
             {
                 //ToolStripが下にいる
-                r.Y = r.Height - g_trackNaviPanel.Height;
+                r.Y = r.Height - _trackNaviPanel.Height;
                 if (r.Y < 0) r.Y = 0;
-                g_trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
+                _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
 
             g_trackbar_ValueChanged(null, null);
@@ -206,18 +206,18 @@ namespace Marmi
             //ValueChanged()の代わりにこのイベントで処理
 
             //トラックバー用サムネイルがある場合は閉じる
-            if (g_trackNaviPanel != null)
+            if (_trackNaviPanel != null)
             {
-                g_trackNaviPanel.ClosePanel();
-                PicPanel.Controls.Remove(g_trackNaviPanel);
+                _trackNaviPanel.ClosePanel();
+                PicPanel.Controls.Remove(_trackNaviPanel);
                 Debug.WriteLine("remove navigatebar");
             }
 
             //マウスが離れたところで確定する
-            if (g_trackbar.Value != App.g_pi.NowViewPage)
+            if (_trackbar.Value != App.g_pi.NowViewPage)
             {
                 //ページ位置確定
-                App.g_pi.NowViewPage = g_trackbar.Value;
+                App.g_pi.NowViewPage = _trackbar.Value;
                 SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
 
                 //ツールチップを隠す。

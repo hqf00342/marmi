@@ -42,10 +42,10 @@ namespace Marmi
 
         private void Menu_SaveThumbnail_Click(object sender, EventArgs e)
         {
-            g_ThumbPanel.Location = GetClientRectangle().Location;
-            g_ThumbPanel.Size = GetClientRectangle().Size;
-            g_ThumbPanel.Parent = this;
-            g_ThumbPanel.SaveThumbnail(App.g_pi.PackageName);
+            _thumbPanel.Location = GetClientRectangle().Location;
+            _thumbPanel.Size = GetClientRectangle().Size;
+            _thumbPanel.Parent = this;
+            _thumbPanel.SaveThumbnail(App.g_pi.PackageName);
         }
 
         private void Menu_Exit_Click(object sender, EventArgs e)
@@ -230,23 +230,23 @@ namespace Marmi
 
         private void Menu_ViewSidebar_Click(object sender, EventArgs e)
         {
-            if (g_Sidebar.Visible)
+            if (_sidebar.Visible)
             {
                 //閉じる
-                g_Sidebar.Visible = false;
+                _sidebar.Visible = false;
                 App.Config.VisibleNavibar = false;
             }
             else
             {
                 //サイドバーオープン
-                g_Sidebar.Init(App.g_pi);
+                _sidebar.Init(App.g_pi);
                 if (App.Config != null)
-                    g_Sidebar.Width = App.Config.SidebarWidth;
+                    _sidebar.Width = App.Config.SidebarWidth;
                 else
-                    g_Sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
+                    _sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
 
-                g_Sidebar.Visible = true;
-                g_Sidebar.SetItemToCenter(App.g_pi.NowViewPage);
+                _sidebar.Visible = true;
+                _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
                 App.Config.VisibleNavibar = true;
             }
             AjustSidebarArrangement();
@@ -315,15 +315,15 @@ namespace Marmi
                 App.ScreenCache.Clear();
 
                 //サムネイルサイズはすぐに反映
-                if (g_ThumbPanel != null && g_ThumbPanel.Visible)
+                if (_thumbPanel != null && _thumbPanel.Visible)
                 {
-                    g_ThumbPanel.CalcThumbboxSize(App.Config.ThumbnailSize);
-                    g_ThumbPanel.BackColor = App.Config.ThumbnailBackColor;
-                    g_ThumbPanel.SetFont(App.Config.ThumbnailFont, App.Config.ThumbnailFontColor);
+                    _thumbPanel.CalcThumbboxSize(App.Config.ThumbnailSize);
+                    _thumbPanel.BackColor = App.Config.ThumbnailBackColor;
+                    _thumbPanel.SetFont(App.Config.ThumbnailFont, App.Config.ThumbnailFontColor);
                 }
                 if (App.Config.isThumbnailView)
                 {
-                    g_ThumbPanel.ReDraw();
+                    _thumbPanel.ReDraw();
                 }
                 else
                 {
@@ -412,7 +412,7 @@ namespace Marmi
                 //サムネイル表示中であれば再描写させる
                 if (App.Config.isThumbnailView)
                 {
-                    g_ThumbPanel.ReDraw();
+                    _thumbPanel.ReDraw();
                 }
 
                 //ver1.38 ソート後に画面を書き直す
@@ -437,7 +437,7 @@ namespace Marmi
                 {
                     //ThumbPanel.MakeThumbnailScreen(true);	//強制再描写
                     //ThumbPanel.Invalidate();
-                    g_ThumbPanel.ReDraw();
+                    _thumbPanel.ReDraw();
                 }
                 //StartThumnailMakerThread();//ソート完了、スレッド再開
                 //ResumeThumbnailMakerThread();	//ver1.09 スレッド再開
@@ -464,12 +464,12 @@ namespace Marmi
         private void Menu_MouseHover(object sender, EventArgs e)
         {
             //1クリック対応用に保持しておく
-            g_hoverStripItem = sender;
+            _hoverStripItem = sender;
         }
 
         private void Menu_MouseLeave(object sender, EventArgs e)
         {
-            g_hoverStripItem = null;
+            _hoverStripItem = null;
         }
 
         private void menuStrip1_MenuDeactivate(object sender, EventArgs e)
@@ -512,7 +512,7 @@ namespace Marmi
             Menu_View2Page.Checked = App.Config.DualView;
             Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
             Menu_ViewFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
-            Menu_ViewNavibar.Checked = g_Sidebar.Visible;
+            Menu_ViewNavibar.Checked = _sidebar.Visible;
             //ツールバーの位置
             Menu_ToolbarBottom.Checked = (toolStrip1.Dock == DockStyle.Bottom);
             //サイドバー関連
@@ -654,7 +654,7 @@ namespace Marmi
             Menu_ContextFullView.Checked = App.Config.isFullScreen;
             Menu_ContextFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
 
-            Menu_ContextNavibar.Checked = g_Sidebar.Visible;
+            Menu_ContextNavibar.Checked = _sidebar.Visible;
 
             //ファイルを閲覧していない場合のナビゲーション
             if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
@@ -839,7 +839,7 @@ namespace Marmi
             AjustSidebarArrangement();
 
             if (App.Config.isThumbnailView)
-                g_ThumbPanel.ReDraw();
+                _thumbPanel.ReDraw();
             else
                 SetViewPage(App.g_pi.NowViewPage);
         }
@@ -855,7 +855,7 @@ namespace Marmi
             }
             else
             {
-                g_ClearPanel.ShowAndClose(
+                _clearPanel.ShowAndClose(
                     "スライドショーを開始します。\r\nマウスクリックまたはキー入力で終了します。",
                     1500);
 

@@ -41,34 +41,19 @@ namespace Marmi
             parent.Controls.Add(this);
         }
 
-        ~ClearPanel()
-        {
-            this.Visible = false;
-            _screenImage?.Dispose();
-
-            if (Parent.Controls.Contains(this))
-                Parent.Controls.Remove(this);
-
-            if (_hideTimer != null)
-            {
-                _hideTimer.Stop();
-                _hideTimer.Dispose();
-                _hideTimer.Tick -= HideTimer_Tick;
-            }
-        }
-
         private void HideTimer_Tick(object sender, EventArgs e)
         {
-            _hideTimer.Stop();
             this.Visible = false;
-            _screenImage?.Dispose();
-            _screenImage = null;
+            _hideTimer.Stop();
+
+            //_screenImage?.Dispose();
+            //_screenImage = null;
             //Uty.ForceGC();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Debug.WriteLine("ClearPanel::OnPaint()");
+            Debug.WriteLine($"ClearPanel::OnPaint() : {e.ClipRectangle}");
             base.OnPaint(e);
 
             if (_screenImage != null)
@@ -104,7 +89,7 @@ namespace Marmi
             this.Visible = true;
 
             //一定時間で非表示にするタイマーを起動
-            _hideTimer.Interval = holdtime <= 100 ? 1000 : holdtime;
+            _hideTimer.Interval = holdtime <= 100 ? 100 : holdtime;
             _hideTimer.Start();
         }
     }

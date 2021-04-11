@@ -19,7 +19,7 @@ namespace Marmi
 
             //ナビバー
             //g_Sidebar.SetSizeAndDock(GetClientRectangle());
-            g_Sidebar.Visible = App.Config.VisibleNavibar;
+            _sidebar.Visible = App.Config.VisibleNavibar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
             if (App.Config.SimpleCalcForWindowLocation)
@@ -62,11 +62,11 @@ namespace Marmi
             }
 
             //サムネイル関連
-            if (g_ThumbPanel != null)
+            if (_thumbPanel != null)
             {
-                g_ThumbPanel.BackColor = App.Config.ThumbnailBackColor;
-                g_ThumbPanel.CalcThumbboxSize(App.Config.ThumbnailSize);
-                g_ThumbPanel.SetFont(App.Config.ThumbnailFont, App.Config.ThumbnailFontColor);
+                _thumbPanel.BackColor = App.Config.ThumbnailBackColor;
+                _thumbPanel.CalcThumbboxSize(App.Config.ThumbnailSize);
+                _thumbPanel.SetFont(App.Config.ThumbnailFont, App.Config.ThumbnailFontColor);
             }
         }
 

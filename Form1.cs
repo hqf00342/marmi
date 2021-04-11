@@ -36,22 +36,22 @@ namespace Marmi
         private Loupe loupe = null;
 
         //TrackBar
-        private ToolStripTrackBar g_trackbar;
+        private ToolStripTrackBar _trackbar;
 
         //サムネイルパネル本体
-        private ThumbnailPanel g_ThumbPanel = null;
+        private ThumbnailPanel _thumbPanel = null;
 
         //フェードするPictureBox
-        private ClearPanel g_ClearPanel = null;
+        private ClearPanel _clearPanel = null;
 
         //サイドバー
-        private SideBar g_Sidebar = null;
+        private SideBar _sidebar = null;
 
         //TrackBar用のサムネイル表示バー
-        private NaviBar3 g_trackNaviPanel = null;
+        private NaviBar3 _trackNaviPanel = null;
 
         //ホバー中のメニュー/ツールアイテム。非Focusクリック対応
-        private object g_hoverStripItem = null;
+        private object _hoverStripItem = null;
 
         #endregion --- コントロール ---
 
@@ -102,7 +102,7 @@ namespace Marmi
             //コントロールを追加。ツールストリップは最後に追加
             MyInitializeComponent();
             InitializeComponent();
-            toolStrip1.Items.Add(g_trackbar);
+            toolStrip1.Items.Add(_trackbar);
             //
             // ver1.62 ツールバーの位置
             //
@@ -149,40 +149,40 @@ namespace Marmi
             //
             //NaviBar
             //
-            g_Sidebar = new SideBar();
-            this.Controls.Add(g_Sidebar);
-            g_Sidebar.Visible = false;
-            g_Sidebar.Width = App.Config.SidebarWidth;
-            g_Sidebar.Dock = DockStyle.Left;
-            g_Sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
+            _sidebar = new SideBar();
+            this.Controls.Add(_sidebar);
+            _sidebar.Visible = false;
+            _sidebar.Width = App.Config.SidebarWidth;
+            _sidebar.Dock = DockStyle.Left;
+            _sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
             //
             //TrackBar
             //
-            g_trackbar = new ToolStripTrackBar();
-            g_trackbar.Name = "MarmiTrackBar";
-            g_trackbar.AutoSize = false;
-            g_trackbar.Size = new System.Drawing.Size(300, 20);
-            g_trackbar.ValueChanged += g_trackbar_ValueChanged;
-            g_trackbar.MouseUp += g_trackbar_MouseUp;
-            g_trackbar.MouseDown += g_trackbar_MouseDown;
-            g_trackbar.MouseWheel += g_trackbar_MouseWheel;
+            _trackbar = new ToolStripTrackBar();
+            _trackbar.Name = "MarmiTrackBar";
+            _trackbar.AutoSize = false;
+            _trackbar.Size = new System.Drawing.Size(300, 20);
+            _trackbar.ValueChanged += g_trackbar_ValueChanged;
+            _trackbar.MouseUp += g_trackbar_MouseUp;
+            _trackbar.MouseDown += g_trackbar_MouseDown;
+            _trackbar.MouseWheel += g_trackbar_MouseWheel;
             //g_trackbar.MouseEnter += new EventHandler(g_trackbar_MouseEnter);
             //
             //サムネイルパネル
             //
-            g_ThumbPanel = new ThumbnailPanel();
-            this.Controls.Add(g_ThumbPanel);
-            g_ThumbPanel.MouseMove += ThumbPanel_MouseMove;
-            g_ThumbPanel.Init();
-            g_ThumbPanel.Visible = false;
-            g_ThumbPanel.Dock = DockStyle.Fill;
+            _thumbPanel = new ThumbnailPanel();
+            this.Controls.Add(_thumbPanel);
+            _thumbPanel.MouseMove += ThumbPanel_MouseMove;
+            _thumbPanel.Init();
+            _thumbPanel.Visible = false;
+            _thumbPanel.Dock = DockStyle.Fill;
             //
             //ClearPanel
             //
-            g_ClearPanel = new ClearPanel(PicPanel);
+            _clearPanel = new ClearPanel(PicPanel);
 
             //ホバー中のメニュー/ツールアイテム。非Focusクリック対応
-            g_hoverStripItem = null;
+            _hoverStripItem = null;
 
             //ver1.81 変更
             SetKeyConfig2();
@@ -340,7 +340,7 @@ namespace Marmi
 
             //サムネイルか？
             //Formが表示する前にも呼ばれるのでThumbPanel != nullは必須
-            if (g_ThumbPanel != null && App.Config.isThumbnailView)
+            if (_thumbPanel != null && App.Config.isThumbnailView)
             {
                 //ver1.64 DockStyleにしたのでコメントアウト
                 //Rectangle rect = GetClientRectangle();
@@ -369,7 +369,7 @@ namespace Marmi
             base.OnResizeEnd(e);
             //Debug.WriteLine("OnResizeEnd()");
 
-            if (g_ThumbPanel != null && App.Config.isThumbnailView)
+            if (_thumbPanel != null && App.Config.isThumbnailView)
             {
                 //サムネイル表示モード中
             }
@@ -558,7 +558,7 @@ namespace Marmi
                 if (!App.susie.isSupportedExtentions("pdf"))
                 {
                     const string str = "pdfファイルはサポートしていません";
-                    g_ClearPanel.ShowAndClose(str, 1000);
+                    _clearPanel.ShowAndClose(str, 1000);
                     SetStatusbarInfo(str);
                     App.g_pi.Initialize();
                     return;
@@ -569,7 +569,7 @@ namespace Marmi
             {
                 //画面をクリア、準備中の文字を消す
                 const string str = "表示できるファイルがありませんでした";
-                g_ClearPanel.ShowAndClose(str, 1000);
+                _clearPanel.ShowAndClose(str, 1000);
                 SetStatusbarInfo(str);
                 return;
             }
@@ -617,7 +617,7 @@ namespace Marmi
             InitTrackbar();
 
             //SideBarへ登録
-            g_Sidebar.Init(App.g_pi);
+            _sidebar.Init(App.g_pi);
 
             //タイトルバーの設定
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
@@ -761,33 +761,33 @@ namespace Marmi
                 App.Config.isThumbnailView = true;
 
                 //SideBarがある場合は消す
-                if (g_Sidebar.Visible)
-                    g_Sidebar.Visible = false;
+                if (_sidebar.Visible)
+                    _sidebar.Visible = false;
 
                 //トラックバーはDisable Ver0.975
-                g_trackbar.Enabled = false;
+                _trackbar.Enabled = false;
 
                 //PicPanelを非表示に
                 PicPanel.Visible = false;
                 PicPanel.Dock = DockStyle.None;
 
                 //表示する
-                if (!this.Controls.Contains(g_ThumbPanel))
-                    this.Controls.Add(g_ThumbPanel);
+                if (!this.Controls.Contains(_thumbPanel))
+                    this.Controls.Add(_thumbPanel);
                 if (!App.Config.isFullScreen)
-                    g_ThumbPanel.BringToFront();        //ver1.83 最前面になるようにする。ツールバー対策
-                g_ThumbPanel.Dock = DockStyle.Fill; //ver1.64
-                g_ThumbPanel.Visible = true;
+                    _thumbPanel.BringToFront();        //ver1.83 最前面になるようにする。ツールバー対策
+                _thumbPanel.Dock = DockStyle.Fill; //ver1.64
+                _thumbPanel.Visible = true;
                 toolButtonThumbnail.Checked = true;
-                g_ThumbPanel.ReDraw();
+                _thumbPanel.ReDraw();
             }
             else
             {
                 //表示をやめる
                 App.Config.isThumbnailView = false;
                 //this.Controls.Remove(g_ThumbPanel);
-                g_ThumbPanel.Visible = false;
-                g_ThumbPanel.Dock = DockStyle.None; //ver1.64
+                _thumbPanel.Visible = false;
+                _thumbPanel.Dock = DockStyle.None; //ver1.64
                 toolButtonThumbnail.Checked = false;
 
                 //PicPanelを表示
@@ -798,10 +798,10 @@ namespace Marmi
 
                 //NaviBarを戻す
                 if (App.Config.VisibleNavibar)
-                    g_Sidebar.Visible = true;
+                    _sidebar.Visible = true;
 
                 //トラックバーを戻す Ver0.975
-                g_trackbar.Enabled = true;
+                _trackbar.Enabled = true;
             }
         }
 
@@ -835,32 +835,32 @@ namespace Marmi
         public void AjustSidebarArrangement()
         {
             Rectangle rect = GetClientRectangle();
-            if (g_Sidebar.Visible)
+            if (_sidebar.Visible)
             {
                 //g_Sidebar.SetSizeAndDock(GetClientRectangle());
-                g_Sidebar.Top = rect.Top;
-                g_Sidebar.Left = rect.Left;
-                g_Sidebar.Height = rect.Height;
+                _sidebar.Top = rect.Top;
+                _sidebar.Left = rect.Left;
+                _sidebar.Height = rect.Height;
 
                 PicPanel.Top = rect.Top;
-                PicPanel.Left = g_Sidebar.Right + 1;
-                PicPanel.Width = rect.Width - g_Sidebar.Width;
+                PicPanel.Left = _sidebar.Right + 1;
+                PicPanel.Width = rect.Width - _sidebar.Width;
                 PicPanel.Height = rect.Height;
 
-                if (g_ThumbPanel.Visible)
+                if (_thumbPanel.Visible)
                 {
-                    g_ThumbPanel.Top = rect.Top;
-                    g_ThumbPanel.Left = g_Sidebar.Right + 1;
-                    g_ThumbPanel.Width = rect.Width - g_Sidebar.Width;
-                    g_ThumbPanel.Height = rect.Height;
+                    _thumbPanel.Top = rect.Top;
+                    _thumbPanel.Left = _sidebar.Right + 1;
+                    _thumbPanel.Width = rect.Width - _sidebar.Width;
+                    _thumbPanel.Height = rect.Height;
                 }
             }
             else
             {
                 //PicPanel.fastDraw = false;
                 PicPanel.Bounds = rect;
-                if (g_ThumbPanel.Visible)
-                    g_ThumbPanel.Bounds = rect;
+                if (_thumbPanel.Visible)
+                    _thumbPanel.Bounds = rect;
             }
         }
 
@@ -929,18 +929,18 @@ namespace Marmi
 
         private void InitTrackbar()
         {
-            g_trackbar.Minimum = 0;
+            _trackbar.Minimum = 0;
             if (App.g_pi.Items.Count > 0)
             {
-                g_trackbar.Maximum = App.g_pi.Items.Count - 1;
-                g_trackbar.Enabled = true;
-                g_trackbar.Value = App.g_pi.NowViewPage;
+                _trackbar.Maximum = App.g_pi.Items.Count - 1;
+                _trackbar.Enabled = true;
+                _trackbar.Value = App.g_pi.NowViewPage;
             }
             else
             {
-                g_trackbar.Maximum = 0;
-                g_trackbar.Value = 0;
-                g_trackbar.Enabled = false;
+                _trackbar.Maximum = 0;
+                _trackbar.Value = 0;
+                _trackbar.Enabled = false;
             }
         }
 
@@ -957,19 +957,19 @@ namespace Marmi
                 SetThumbnailView(false);
 
             //2011/08/19 サムネイル初期化
-            g_ThumbPanel.Init();
+            _thumbPanel.Init();
 
             //2011年11月11日 ver1.24 サイドバー
             //g_Sidebar.Init();
-            g_Sidebar.Init(null);   //ver1.37
-            if (g_Sidebar.Visible)
-                g_Sidebar.Invalidate();
+            _sidebar.Init(null);   //ver1.37
+            if (_sidebar.Visible)
+                _sidebar.Invalidate();
 
             //ver1.25 trackNavi
-            if (g_trackNaviPanel != null)
+            if (_trackNaviPanel != null)
             {
-                g_trackNaviPanel.Dispose();
-                g_trackNaviPanel = null;
+                _trackNaviPanel.Dispose();
+                _trackNaviPanel = null;
             }
 
             //2011/08/19 trackbarを初期化
@@ -1221,7 +1221,7 @@ namespace Marmi
 
             //ページ番号を更新
             App.g_pi.NowViewPage = index;
-            g_trackbar.Value = index;
+            _trackbar.Value = index;
 
             //ver1.35 スクリーンキャッシュチェック
             if (App.ScreenCache.TryGetValue(index, out Bitmap screenImage))
@@ -1328,8 +1328,8 @@ namespace Marmi
             UpdateToolbar();
 
             //サイドバーでアイテムを中心に
-            if (g_Sidebar.Visible)
-                g_Sidebar.SetItemToCenter(App.g_pi.NowViewPage);
+            if (_sidebar.Visible)
+                _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
 
             needMakeScreenCache = true;
 
@@ -1349,12 +1349,12 @@ namespace Marmi
             toolButtonThumbnail.Checked = App.Config.isThumbnailView;
 
             //Sidebar
-            toolStripButton_Sidebar.Checked = g_Sidebar.Visible;
+            toolStripButton_Sidebar.Checked = _sidebar.Visible;
 
             if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
                 //ファイルを閲覧していない場合のツールバー
-                g_trackbar.Enabled = false;
+                _trackbar.Enabled = false;
                 toolButtonLeft.Enabled = false;
                 toolButtonRight.Enabled = false;
                 toolButtonThumbnail.Enabled = false;
@@ -1436,7 +1436,7 @@ namespace Marmi
                     }
 
                     //Sidebar
-                    toolStripButton_Sidebar.Checked = g_Sidebar.Visible;
+                    toolStripButton_Sidebar.Checked = _sidebar.Visible;
                 }
 
                 //TrackBar
@@ -1455,7 +1455,7 @@ namespace Marmi
             if (prev >= 0)
                 SetViewPage(prev, drawOrderTick);
             else
-                g_ClearPanel.ShowAndClose("先頭のページです", 1000);
+                _clearPanel.ShowAndClose("先頭のページです", 1000);
         }
 
         private void NavigateToForword()
@@ -1473,7 +1473,7 @@ namespace Marmi
             {
                 //先頭ページへループ
                 SetViewPage(0, drawOrderTick);
-                g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
+                _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
             }
             else if (App.Config.LastPage_toNextArchive)
             {
@@ -1501,24 +1501,24 @@ namespace Marmi
                         {
                             if (Uty.IsAvailableFile(s))
                             {
-                                g_ClearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
+                                _clearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
                                 Start(new string[] { s });
                                 return;
                             }
                         }
                     }
-                    g_ClearPanel.ShowAndClose("最後のページです。次の書庫が見つかりませんでした", 1000);
+                    _clearPanel.ShowAndClose("最後のページです。次の書庫が見つかりませんでした", 1000);
                 }
                 else
                 {
                     //先頭ページへループ
                     SetViewPage(0, drawOrderTick);
-                    g_ClearPanel.ShowAndClose("先頭ページに戻りました", 1000);
+                    _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
                 }
             }
             else //if(App.Config.lastPage_stay)
             {
-                g_ClearPanel.ShowAndClose("最後のページです", 1000);
+                _clearPanel.ShowAndClose("最後のページです", 1000);
             }
         }
 
@@ -1628,16 +1628,16 @@ namespace Marmi
                 this.Controls.Remove(statusbar);
                 this.Controls.Remove(toolStrip1);
                 this.Controls.Remove(menuStrip1);
-                this.Controls.Remove(g_Sidebar);
+                this.Controls.Remove(_sidebar);
                 this.Controls.Remove(PicPanel);
-                this.Controls.Remove(g_ThumbPanel);
+                this.Controls.Remove(_thumbPanel);
 
                 this.Controls.Add(menuStrip1);
                 this.Controls.Add(toolStrip1);
                 this.Controls.Add(statusbar);
                 this.Controls.Add(PicPanel);
-                this.Controls.Add(g_ThumbPanel);
-                this.Controls.Add(g_Sidebar);
+                this.Controls.Add(_thumbPanel);
+                this.Controls.Add(_sidebar);
 
                 if (this.WindowState != FormWindowState.Normal)
                     this.WindowState = FormWindowState.Normal;
@@ -1660,13 +1660,13 @@ namespace Marmi
                 this.Controls.Remove(statusbar);
                 this.Controls.Remove(toolStrip1);
                 this.Controls.Remove(menuStrip1);
-                this.Controls.Remove(g_Sidebar);
+                this.Controls.Remove(_sidebar);
                 this.Controls.Remove(PicPanel);
-                this.Controls.Remove(g_ThumbPanel);
+                this.Controls.Remove(_thumbPanel);
 
                 this.Controls.Add(PicPanel);
-                this.Controls.Add(g_ThumbPanel);
-                this.Controls.Add(g_Sidebar);
+                this.Controls.Add(_thumbPanel);
+                this.Controls.Add(_sidebar);
                 this.Controls.Add(toolStrip1);
                 this.Controls.Add(statusbar);
                 this.Controls.Add(menuStrip1);
@@ -1688,8 +1688,8 @@ namespace Marmi
             //画面表示を修復
             if (PicPanel.Visible)
                 PicPanel.ResizeEnd();
-            else if (g_ThumbPanel.Visible)
-                g_ThumbPanel.ReDraw();
+            else if (_thumbPanel.Visible)
+                _thumbPanel.ReDraw();
         }
 
         /// <summary>
@@ -1966,7 +1966,7 @@ namespace Marmi
                 if (App.g_pi.Items.Count == 0)
                     return;
 
-                g_ClearPanel.ShowAndClose(
+                _clearPanel.ShowAndClose(
                     "スライドショーを開始します。\r\nマウスクリックまたはキー入力で終了します。",
                     1500);
                 SlideShowTimer.Interval = App.Config.SlideShowTime;
@@ -1989,7 +1989,7 @@ namespace Marmi
             {
                 //スライドショーを終了させる
                 SlideShowTimer.Stop();
-                g_ClearPanel.ShowAndClose("スライドショーを終了しました", 1500);
+                _clearPanel.ShowAndClose("スライドショーを終了しました", 1500);
             }
         }
 
