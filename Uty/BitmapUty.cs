@@ -241,7 +241,7 @@ namespace Marmi
         //}
 
         //半透明版のDrawImage
-        public static void alphaDrawImage(Graphics g, Image img, float alpha)
+        public static void AlphaDrawImage(Graphics g, Image img, float alpha)
         {
             var cm = new ColorMatrix
             {
@@ -266,7 +266,7 @@ namespace Marmi
         }
 
         //半透明版のDrawImage
-        public static void alphaDrawImage(Graphics g, Image img, Rectangle rect, float alpha)
+        public static void AlphaDrawImage(Graphics g, Image img, Rectangle rect, float alpha)
         {
             var cm = new ColorMatrix
             {
@@ -334,7 +334,7 @@ namespace Marmi
                 //一番大きく、色深度の高いアイコンを取得する
                 Byte[] ICONDIRENTRY = new byte[16];
                 int bWidth = 0;                 //アイコンの幅
-                int bHeight = 0;                //アイコンの高さ
+                //int bHeight = 0;                //アイコンの高さ
                 int Item;                       //対象のアイテム番号（意味なし）
                 int wBitCount = 0;              //色深度
                 UInt32 dwBytesInRes = 0;        //対象イメージのバイト数
@@ -607,7 +607,7 @@ namespace Marmi
 
         //ドロップシャドウの描写
         //指定した矩形に影を落とす。距離は３
-        public static void drawDropShadow(Graphics g, Rectangle r)
+        public static void DrawDropShadow(Graphics g, Rectangle r)
         {
             //ver0.975光彩をつける
             SolidBrush b1 = new SolidBrush(Color.FromArgb(96, Color.DimGray));
@@ -619,18 +619,18 @@ namespace Marmi
             r.Inflate(3, 3);
             r.X++;
             r.Y++;
-            drawRoundRectangle(g, b4, r, 5);
+            DrawRoundRectangle(g, b4, r, 5);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b4, r, 4);
+            DrawRoundRectangle(g, b4, r, 4);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b3, r, 3);
+            DrawRoundRectangle(g, b3, r, 3);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b3, r, 2);
+            DrawRoundRectangle(g, b3, r, 2);
             //g.CompositingMode = CompositingMode.SourceCopy;
         }
 
         //指定した矩形に周りにエフェクトを描写
-        public static void drawBlurEffect(Graphics g, Rectangle r, Color c)
+        public static void DrawBlurEffect(Graphics g, Rectangle r, Color c)
         {
             //ver0.975光彩をつける
             SolidBrush b1 = new SolidBrush(Color.FromArgb(192, c));
@@ -644,21 +644,21 @@ namespace Marmi
             r.Inflate(4, 4);
             //r.X++;
             //r.Y++;
-            drawRoundRectangle(g, b4, r, 5);
+            DrawRoundRectangle(g, b4, r, 5);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b3, r, 4);
+            DrawRoundRectangle(g, b3, r, 4);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b2, r, 3);
+            DrawRoundRectangle(g, b2, r, 3);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b1, r, 2);
+            DrawRoundRectangle(g, b1, r, 2);
             r.Inflate(-1, -1);
-            drawRoundRectangle(g, b1, r, 2);
+            DrawRoundRectangle(g, b1, r, 2);
             //g.CompositingMode = CompositingMode.SourceCopy;
         }
 
         //角丸を描写
         //ドロップシャドウで使う
-        private static void drawRoundRectangle(Graphics g, Brush br, Rectangle rect, int arc)
+        private static void DrawRoundRectangle(Graphics g, Brush br, Rectangle rect, int arc)
         {
             using (GraphicsPath gp = new GraphicsPath(FillMode.Winding))
             {
@@ -779,9 +779,11 @@ namespace Marmi
                     textHeight1line
                     );
 
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Center;      //上下中央
-                sf.LineAlignment = StringAlignment.Center;  //センタリング
+                StringFormat sf = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,      //上下中央
+                    LineAlignment = StringAlignment.Center  //センタリング
+                };
 
                 foreach (string s in str)
                 {
@@ -943,7 +945,7 @@ namespace Marmi
         /// <param name="y">縦の長さ</param>
         /// <param name="maxLength">最大長</param>
         /// <returns>新しいサイズ</returns>
-        public static Size calcThumbnailSize(int x, int y, int maxLength)
+        public static Size CalcThumbnailSize(int x, int y, int maxLength)
         {
             //比率を確定
             double ratioX = (double)maxLength / (double)x;
@@ -959,9 +961,9 @@ namespace Marmi
             return new Size(lx, ly);
         }
 
-        public static Size calcThumbnailSize(Size s, int maxLength)
+        public static Size CalcThumbnailSize(Size s, int maxLength)
         {
-            return calcThumbnailSize(s.Width, s.Height, maxLength);
+            return CalcThumbnailSize(s.Width, s.Height, maxLength);
         }
 
         /// <summary>
@@ -979,7 +981,7 @@ namespace Marmi
                 && orgImage.Height <= maxLength)
                 return orgImage.Clone() as Bitmap;
 
-            Size s = BitmapUty.calcThumbnailSize(orgImage.Width, orgImage.Height, maxLength);
+            Size s = BitmapUty.CalcThumbnailSize(orgImage.Width, orgImage.Height, maxLength);
             Bitmap _bmp = new Bitmap(s.Width, s.Height);
 
             using (Graphics g = Graphics.FromImage(_bmp))
@@ -1000,7 +1002,7 @@ namespace Marmi
                 return orgImage.Clone() as Bitmap;
 
             //新しいサイズを計算
-            Size s = BitmapUty.calcHeightFixImageSize(orgImage.Size, maxHeight);
+            Size s = BitmapUty.CalcHeightFixImageSize(orgImage.Size, maxHeight);
 
             //サムネイルを作成
             Bitmap _bmp = new Bitmap(s.Width, s.Height);
@@ -1013,7 +1015,7 @@ namespace Marmi
             return _bmp;
         }
 
-        public static Size calcHeightFixImageSize(Size orgSize, int maxHeight)
+        public static Size CalcHeightFixImageSize(Size orgSize, int maxHeight)
         {
             if (orgSize.Height <= maxHeight)
                 return orgSize;

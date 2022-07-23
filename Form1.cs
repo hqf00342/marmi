@@ -65,7 +65,7 @@ namespace Marmi
         #endregion --- データクラス ---
 
         //非同期全展開用SevenZipWrapper
-        private SevenZipWrapper m_AsyncSevenZip = null;
+        //private SevenZipWrapper m_AsyncSevenZip = null;
 
         //フラグ類
         //サムネイルを作るか。1000個以上あったときのフラグ
@@ -252,7 +252,7 @@ namespace Marmi
             }
 
             //7z解凍をしていたら中断
-            m_AsyncSevenZip?.CancelExtractAll();
+           //m_AsyncSevenZip?.CancelExtractAll();
 
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
@@ -989,7 +989,7 @@ namespace Marmi
             //g_pi = new PackageInfo();
 
             //7z解凍をしていたら中断
-            m_AsyncSevenZip?.CancelExtractAll();
+            //m_AsyncSevenZip?.CancelExtractAll();
             //tempフォルダがあれば削除
             //if (!string.IsNullOrEmpty(g_pi.tempDirname))
             //{

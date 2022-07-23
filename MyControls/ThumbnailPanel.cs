@@ -728,7 +728,7 @@ namespace Marmi
                 Rectangle frameRect = imageRect;
                 if (App.Config.IsDrawThumbnailShadow)
                 {
-                    BitmapUty.drawDropShadow(g, frameRect);
+                    BitmapUty.DrawDropShadow(g, frameRect);
                 }
                 g.FillRectangle(Brushes.White, imageRect);
 
@@ -840,7 +840,7 @@ namespace Marmi
             if (App.Config.IsDrawThumbnailShadow && drawFrame)
             {
                 Rectangle frameRect = imageRect;
-                BitmapUty.drawDropShadow(g, frameRect);
+                BitmapUty.DrawDropShadow(g, frameRect);
             }
 
             //âÊëúÇèëÇ≠

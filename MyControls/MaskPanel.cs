@@ -213,7 +213,7 @@ namespace Marmi
             else
             {
                 //”¼“§–¾•`ŽÊ
-                BitmapUty.alphaDrawImage(e.Graphics, _bmp, alpha);
+                BitmapUty.AlphaDrawImage(e.Graphics, _bmp, alpha);
             }
         }
 

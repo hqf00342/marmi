@@ -103,7 +103,9 @@
     <Compile Include="DataClass\ThumbnailEventArgs.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />
+    <Compile Include="Uty\Uty.cs" />
     <Compile Include="Uty\NaturalStringComparer.cs" />
+    <Compile Include="Uty\SharpCompressHelper.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\ThumbnailSize.cs" />
@@ -295,7 +297,6 @@
     <Compile Include="MyChildForms\Version.Designer.cs">
       <DependentUpon>Version.cs</DependentUpon>
     </Compile>
-    <Compile Include="Uty\Uty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zic_png.png" />

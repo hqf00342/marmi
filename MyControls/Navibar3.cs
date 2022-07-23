@@ -247,7 +247,7 @@ namespace Marmi
                     Graphics.FromImage(bmp).Clear(Color.Transparent);
                     //DrawItems(Graphics.FromImage(bmp));
                     DrawItemAll(Graphics.FromImage(bmp));
-                    BitmapUty.alphaDrawImage(g, bmp, alpha);
+                    BitmapUty.AlphaDrawImage(g, bmp, alpha);
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace Marmi
                     item.pos.Y = PADDING;
                     if (m_packageInfo.Items[i].Thumbnail != null)
                     {
-                        item.size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
+                        item.size = BitmapUty.CalcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
                     }
                     else
                         item.size = new System.Drawing.Size(THUMBSIZE * 2 / 3, THUMBSIZE);
@@ -319,7 +319,7 @@ namespace Marmi
                     thumbnailPos[i].pos.X = X;
                     thumbnailPos[i].pos.Y = PADDING;
                     if (m_packageInfo.Items[i].Thumbnail != null)
-                        thumbnailPos[i].size = BitmapUty.calcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
+                        thumbnailPos[i].size = BitmapUty.CalcHeightFixImageSize(m_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
                     else
                         thumbnailPos[i].size = new System.Drawing.Size(THUMBSIZE * 2 / 3, THUMBSIZE);
                     X += thumbnailPos[i].size.Width + PADDING;
@@ -432,7 +432,7 @@ namespace Marmi
             {
                 //中央のアイテム
                 //ver1.17追加 フォーカス枠
-                BitmapUty.drawBlurEffect(g, cRect, Color.LightBlue);
+                BitmapUty.DrawBlurEffect(g, cRect, Color.LightBlue);
                 //中央を描写
                 g.DrawImage(img, cRect);
 
