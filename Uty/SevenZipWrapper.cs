@@ -52,8 +52,9 @@ namespace Marmi
             m_isOpen = false;
 
             //強制的に32bitライブラリに
-            SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z.dll"));
-            //setLibrary32or64();
+            //SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z.dll"));
+            //SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z64.dll"));
+            SetLibraryPath();
 
             //ver1.10 キャンセル処理のための初期化
             IsCancelExtraction = false;
@@ -63,6 +64,14 @@ namespace Marmi
         {
             Close();
         }
+
+        private void SetLibraryPath()
+        {
+            var libname = Environment.Is64BitOperatingSystem ? "7z64.dll" : "7z.dll";
+            SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, libname));
+
+        }
+
 
         /// <summary>
         /// パスワードをクリアする。
