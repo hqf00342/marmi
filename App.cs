@@ -21,17 +21,11 @@ namespace Marmi
         //アプリ名。タイトルとして利用
         internal const string APPNAME = "Marmi";
 
-        //サムネイルキャッシュの拡張子
-        internal const string CACHEEXT = ".tmp";
-
         //サイドバーの標準サイズ
         internal const int SIDEBAR_DEFAULT_WIDTH = 200;
 
         //非同期IOタイムアウト値
         internal const int ASYNC_TIMEOUT = 5000;
-
-        //非同期取得用スタック
-        //internal static PrioritySafeQueue<KeyValuePair<int, Delegate>> stack = new PrioritySafeQueue<KeyValuePair<int, Delegate>>();
 
         //Susieプラグイン
         internal static Susie susie = new Susie();

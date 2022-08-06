@@ -333,26 +333,6 @@ namespace Marmi
             }
         }
 
-        private void Menu_ClearCacheFile_Click(object sender, EventArgs e)
-        {
-            string[] files = Directory.GetFiles(Application.StartupPath, "*" + App.CACHEEXT);
-            if (files.Length > 0)
-            {
-                long size = 0;
-                foreach (string delFile in files)
-                {
-                    FileInfo fi = new FileInfo(delFile);
-                    size += fi.Length;
-                    File.Delete(delFile);
-                }
-                MessageBox.Show(string.Format("{0}個のキャッシュ、{1:N0}バイトを削除しました",
-                    files.Length, size));
-            }
-            else
-            {
-                MessageBox.Show("キャッシュファイルはありませんでした");
-            }
-        }
 
         private void Menu_RemakeThumbnail_Click(object sender, EventArgs e)
         {

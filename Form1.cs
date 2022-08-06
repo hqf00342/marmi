@@ -282,10 +282,6 @@ namespace Marmi
                     File.Delete(configFile);
             }
 
-            //古いキャッシュファイルを捨てる
-            if (App.Config.IsAutoCleanOldCache)
-                ClearOldCacheDBFile();
-
             //Application.Idleの解放
             Application.Idle -= Application_Idle;
 
@@ -1854,46 +1850,6 @@ namespace Marmi
         }
 
         #endregion スクリーンキャッシュ
-
-        //古いキャッシュDBファイルを消去する。Form1_FormClosed()から呼ばれる
-        private static void ClearOldCacheDBFile()
-        {
-            string[] files = Directory.GetFiles(Application.StartupPath, "*" + App.CACHEEXT);
-            foreach (string sz in files)
-            {
-                bool isDel = true;
-                string file1 = Path.GetFileNameWithoutExtension(sz);
-
-                //MRUリストをチェック
-                //MRUリストにないキャッシュファイルは削除する。
-                int mruCount = App.Config.Mru.Count;
-                for (int i = 0; i < mruCount; i++)
-                {
-                    //NullException対応。Nullの可能性有 ver0.982
-                    if (App.Config.Mru[i] == null)
-                        continue;
-
-                    string file2 = Path.GetFileName(App.Config.Mru[i].Name);
-                    if (file1.CompareTo(file2) == 0)
-                    {
-                        isDel = false;
-                        break;
-                    }
-                }
-                if (isDel)
-                {
-                    try
-                    {
-                        File.Delete(sz);
-                    }
-                    catch
-                    {
-                        //ver1.19 エラーがあっても何もしない
-                    }
-                    Debug.WriteLine(sz, "Cacheを削除しました");
-                }
-            }
-        }
 
         /// <summary>
         /// 現在のページをゴミ箱に入れる。削除後にページ遷移を行う。(ver1.35)

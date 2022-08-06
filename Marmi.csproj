@@ -341,6 +341,7 @@
     <None Include="ToDo.md" />
     <None Include="配布物\axpdf.spi" />
     <None Include="配布物\SevenZipSharp.dll" />
+    <Content Include="README.txt" />
     <Content Include="zic.ico" />
     <None Include="Resources\rc_tif32.png" />
     <None Include="Resources\finger-right-shadow-ico.ico" />
