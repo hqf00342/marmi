@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 
 namespace Marmi
@@ -61,42 +62,21 @@ namespace Marmi
                         continue;
                     }
 
-                    //画像読み込み
-                    try //不意のファイルドロップによりindexがOutOfRangeになるため。効果なさそう
+                    try
                     {
+                        Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
+
+                        //画像読み込み
                         if (!App.g_pi.Items[index].CacheImage.HasImage)
-                        {
-                            Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
+                            LoadImage(AsyncSZ, index);
 
-                            //7zをOpenしていなければOpen
-                            if (App.g_pi.PackType == PackageType.Archive && !AsyncSZ.IsOpen)
-                            {
-                                AsyncSZ.Open(App.g_pi.PackageName);
-                                Debug.WriteLine("AsyncIO : 7zOpen");
-                            }
+                        //画像サイズ設定
+                        App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
 
-                            if (App.g_pi.PackType == PackageType.Pdf)
-                            {
-                                //pdfファイルの読み込み
-                                byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].FileLength);
-                                App.g_pi.Items[index].CacheImage.Load(b);
-                                App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
-                                //App.g_pi.AsyncThumnailMaker(index);
-                            }
-                            else
-                            {
-                                //pdf以外の読み込み
-                                App.g_pi.LoadImageToCache(index, AsyncSZ);
-                                //ver1.75 サムネイル登録
-                                //ver1.81コメントアウト
-                                //サムネイル作成はあとでやる。
-                                //g_pi.ThumnailMaker(index, g_pi.Items[index].cacheImage.bitmap);
-                            }
 
-                            //サムネイルの作成。ここ1か所に集約(2021年2月25日)
-                            //App.g_pi.AsyncThumnailMaker(index);
-                            App.g_pi.ThumnailMaker(index);
-                        }
+                        //サムネイル作成。ここ1か所に集約(2021年2月25日)
+                        App.g_pi.ThumnailMaker(index);
+
 
                         //Invoke(action)を実行
                         if (Form1._instance.IsHandleCreated && action != null)
@@ -111,9 +91,62 @@ namespace Marmi
                 }
                 else
                 {
-                    //タスクがなかったので少し休憩
+                    //少し休憩
                     Thread.Sleep(50);
                 }
+            }
+        }
+
+        /// <summary>
+        /// PackageTypeごとの画像読み込み。
+        /// AsyncIO.Work()内で都度呼び出される。
+        /// </summary>
+        /// <param name="AsyncSZ"></param>
+        /// <param name="index"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private static void LoadImage(SevenZipWrapper AsyncSZ, int index)
+        {
+            var filename = App.g_pi.Items[index].Filename;
+
+            switch (App.g_pi.PackType)
+            {
+                case PackageType.Archive:
+                    if (!AsyncSZ.IsOpen)
+                    {
+                        AsyncSZ.Open(App.g_pi.PackageName);
+                        Debug.WriteLine("AsyncIO : 7zOpen");
+                    }
+
+                    if (App.g_pi.isSolid && App.Config.IsExtractIfSolidArchive)
+                    {
+                        //ソリッド書庫は一時フォルダの画像ファイルから読取り
+                        string tempname = Path.Combine(App.g_pi.tempDirname, filename);
+                        App.g_pi.Items[index].CacheImage.Load(tempname);
+                    }
+                    else
+                    {
+                        //通常書庫
+                        App.g_pi.Items[index].CacheImage.Load(AsyncSZ.GetStream(filename));
+                    }
+                    break;
+
+                case PackageType.Pictures:
+                case PackageType.Directory:
+                    //生ファイルを読み込む
+                    App.g_pi.Items[index].CacheImage.Load(filename);
+                    break;
+
+
+                case PackageType.Pdf:
+                    //pdfファイルの読み込み
+                    byte[] b = App.susie.GetFile(App.g_pi.PackageName, index, (int)App.g_pi.Items[index].FileLength);
+                    App.g_pi.Items[index].CacheImage.Load(b);
+                    App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
+                    break;
+
+                case PackageType.None:
+                default:
+                    throw new NotImplementedException("PackageTypeが定義できていない");
             }
         }
 

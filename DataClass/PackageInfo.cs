@@ -65,16 +65,11 @@ namespace Marmi
 
             PageDirectionIsLeft = true;
 
-            //if (Items.Count > 0)
-            //{
-            //    for (int i = 0; i < Items.Count; i++)
-            //        Items[i].Dispose(); //サムネイル画像をクリア
-            //}
-            Items.Clear();
-
             //ファイルキャッシュをクリア
             foreach (var item in Items)
                 item.CacheImage.Clear();
+
+            Items.Clear();
         }
 
         /// <summary>
@@ -109,111 +104,10 @@ namespace Marmi
             return Items[index].CacheImage.HasImage;
         }
 
-        /// <summary>
-        /// キャッシュにファイルを読み込む
-        /// AsyncIOから呼ばれている画像読み込み本体。
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="_7z"></param>
-        /// <returns></returns>
-        public bool LoadImageToCache(int index, SevenZipWrapper _7z)
+        public void ClearCache(int index)
         {
-            if (index < 0 || index >= Items.Count)
-                return false;
-
-            string filename = Items[index].Filename;
-
-            if (PackType != PackageType.Archive)
-            {
-                //通常ファイルからの読み込み
-                Items[index].CacheImage.Load(filename);
-            }
-            else if (isSolid && App.Config.IsExtractIfSolidArchive)
-            {
-                //ver1.10 ソリッド書庫
-                //一時フォルダの画像ファイルから読取り
-                string tempname = Path.Combine(tempDirname, filename);
-                Items[index].CacheImage.Load(tempname);
-            }
-            else
-            {
-                //ver1.05 Solid書庫ではない書庫ファイルモード
-                try
-                {
-                    if (_7z == null)
-                        _7z = new SevenZipWrapper();
-                    if (_7z.Open(PackageName))
-                    {
-                        Items[index].CacheImage.Load(_7z.GetStream(filename));
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch (IOException e)
-                {
-                    //7zTemp展開中にアクセスされたケースと想定
-                    //ファイルがなかったものとしてnullを返す
-                    Debug.WriteLine(e.Message, "!Exception! " + e.TargetSite);
-                    return false;
-                }
-            }
-
-            //画像サイズを設定
-            Items[index].ImgSize = Items[index].CacheImage.GetImageSize();
-
-            //サムネイル登録はThreadPoolで
-            //AsyncThumnailMaker(index);
-
-            return true;
+            Items[index].CacheImage.Clear();
         }
-
-        //public void AsyncThumnailMaker(int index)
-        //{
-        //    //ver1.73 index check
-        //    if (index > Items.Count) return;
-
-        //    if (Items[index].CacheImage.HasImage)
-        //    {
-        //        ThreadPool.QueueUserWorkItem(dummy =>
-        //        {
-        //            try
-        //            {
-        //                //ver1.10 サムネイル登録も行う
-        //                Bitmap _bmp = Items[index].CacheImage.ToBitmap();
-        //                if (_bmp != null)
-        //                {
-        //                    Items[index].ResisterThumbnailImage(_bmp);
-
-        //                    //ver1.81コメントアウト。悪さしそう
-        //                    //_bmp.Dispose();
-        //                }
-        //            }
-        //            catch { }
-        //        });
-        //    }
-        //}
-
-        ///// <summary>
-        ///// サムネイル登録
-        ///// すでに画像を持っている場合はこれを使う
-        ///// </summary>
-        ///// <param name="index">画像のインデックス</param>
-        ///// <param name="orgBitmap">元画像</param>
-        //public void AsyncThumnailMaker(int index, Bitmap orgBitmap)
-        //{
-        //    //ver1.73 index check
-        //    if (index > Items.Count) return;
-        //    if (orgBitmap == null) return;
-
-        //    ThreadPool.QueueUserWorkItem(dummy =>
-        //    {
-        //        Items[index].ResisterThumbnailImage(orgBitmap);
-        //        //TODO:画像をDispose()すべき
-        //        orgBitmap.Dispose();
-        //    });
-        //}
 
         /// <summary>
         /// サムネイルの作成・登録
@@ -248,7 +142,8 @@ namespace Marmi
         /// <param name="MaxCacheSize">残しておくメモリ量[MB]</param>
         public void FileCacheCleanUp2(int MaxCacheSize)
         {
-            MaxCacheSize *= 1000000;    //MB変換
+            MaxCacheSize *= 1_000_000;    //MB変換
+
             switch (App.Config.memModel)
             {
                 case MemoryModel.Small:
