@@ -11,24 +11,21 @@ namespace Marmi
 
         private void OnClickMRUMenu(object sender, EventArgs e)
         {
-            var tsddi = (ToolStripDropDownItem)sender;
-            if (File.Exists(tsddi.Text))
+            var filename = ((ToolStripDropDownItem)sender).Text;
+
+            if (File.Exists(filename) || Directory.Exists(filename))
             {
-                Start(new string[] { tsddi.Text });
+                Start(new string[] { filename });
             }
             else
             {
-                string sz = string.Format("ファイルが見つかりませんでした\n{0}", tsddi.Text);
-                MessageBox.Show(sz, "ファイルオープンエラー");
+                MessageBox.Show($"ファイルが見つかりませんでした\n{filename}", "ファイルオープンエラー");
 
                 //MRUリストから削除
-                for (int i = 0; i < App.Config.Mru.Count; i++)
+                var target = App.Config.Mru.Find(a=>a.Name == filename);
+                if(target != null)
                 {
-                    if (App.Config.Mru[i] != null && App.Config.Mru[i].Name == tsddi.Text)
-                    {
-                        App.Config.Mru[i] = null;
-                        break;
-                    }
+                    App.Config.Mru.Remove(target);
                 }
             }
         }

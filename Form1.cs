@@ -457,8 +457,6 @@ namespace Marmi
             }
 
             //ver1.41 非同期IOを停止
-            //App.stack.Clear();
-            //App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
             AsyncIO.ClearJob();
             AsyncIO.AddJob(-1, null);
             App.g_pi.Initialize();
@@ -468,7 +466,8 @@ namespace Marmi
             ScreenCache.Clear();
 
             //コントロールの初期化
-            InitControls();     //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
+            InitControls();
+            //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
 
             //ver1.78単一ファイルの場合、そのディレクトリを対象とする
             string onePicFile = string.Empty;
@@ -478,8 +477,10 @@ namespace Marmi
                 filenames[0] = Path.GetDirectoryName(filenames[0]);
             }
 
+            //書庫のパスワードをクリア
+            SevenZipWrapper.ClearPassword();
+
             //ファイル一覧を生成
-            SevenZipWrapper.ClearPassword();    //書庫のパスワードをクリア
             bool needRecurse = SetPackageInfo(filenames);
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
@@ -1103,14 +1104,10 @@ namespace Marmi
         /// 現在閲覧しているg_pi.PackageNameをMRUに追加する
         /// 以前も見たことがある場合、閲覧日付だけを更新
         /// </summary>
-        private void UpdateMRUList()
+        private static void UpdateMRUList()
         {
             //なにも無ければ追加しない
             if (string.IsNullOrEmpty(App.g_pi.PackageName))
-                return;
-
-            //ディレクトリでも追加しない
-            if (App.g_pi.PackType == PackageType.Directory)
                 return;
 
             //MRUに追加する必要があるか確認
@@ -1134,13 +1131,8 @@ namespace Marmi
             }
             if (needMruAdd)
             {
-                //MRUを新しく登録
-                //古い順に並べる→先頭に追加
-                //Array.Sort(App.Config.mru);
-                //App.Config.mru[0] = new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.GetCsvFromBookmark());
                 App.Config.Mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.CreateBookmarkString()));
             }
-            //Array.Sort(App.Config.mru);   //並べ直す
         }
 
         /// <summary>
