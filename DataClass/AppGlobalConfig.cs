@@ -52,7 +52,7 @@ namespace Marmi
         public bool IsShowTPPicSize { get; set; }                // ファイル名に画像サイズを表示するか
 
         // ver1.35 メモリモデル
-        public MemoryModel memModel;                //メモリーモデル
+        //public MemoryModel memModel;                //メモリーモデル
 
         public int CacheSize { get; set; }                       //memModel == userDefinedのときのキャッシュサイズ[MB]
 
@@ -324,16 +324,17 @@ namespace Marmi
             //zoom
             NoEnlargeOver100p = true;       //画面フィッティングは100%未満にする
             IsDotByDotZoom = false;         //Dot-by-Dot補間モードにする
-                                            //メモリーモデル
-                                            //memModel = MemoryModel.Small;	//最小
-            memModel = MemoryModel.UserDefined; //キャッシュ活用モード
             CacheSize = 100;                    //ver1.53 100MB
-                                                //ループするかどうか
-                                                //isLoopToTopPage = false;
-                                                //スクリーンショー時間
+
+            //ループするかどうか
+            //isLoopToTopPage = false;
+            
+            //スクリーンショー時間
             SlideShowTime = 3000;
+            
             //画面の初期位置
             IsWindowPosCenter = false;
+            
             //ツールバーの位置
             IsToolbarTop = true;
 

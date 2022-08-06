@@ -15,9 +15,6 @@ namespace Marmi
         //現在見ているパッケージ情報
         public static PackageInfo g_pi = null;
 
-        //コンフィグファイル名。XmlSerializeで利用
-        //private const string CONFIGNAME = "Marmi.xml";
-
         //アプリ名。タイトルとして利用
         internal const string APPNAME = "Marmi";
 
@@ -32,9 +29,6 @@ namespace Marmi
 
         //unrar.dllプラグイン ver1.76
         internal static Unrar unrar = new Unrar();
-
-        //ver1.35 スクリーンキャッシュ
-        //internal static Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
 
         //Bitmap.Tagにつけるタグ:リソース文字列から移動
         //TODO:利用していない疑惑あり

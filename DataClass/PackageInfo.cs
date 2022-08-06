@@ -138,80 +138,64 @@ namespace Marmi
 
         /// <summary>
         /// FileCacheをパージする
+        /// オーバーしていたらMaxの半分までクリアする。
+        /// ・アイドル状態時
+        /// ・AsyncLoadImageInfo()
+        /// から呼び出されている。
         /// </summary>
-        /// <param name="MaxCacheSize">残しておくメモリ量[MB]</param>
+        /// <param name="MaxCacheSize">Maxメモリ量[MB]</param>
         public void FileCacheCleanUp2(int MaxCacheSize)
         {
             MaxCacheSize *= 1_000_000;    //MB変換
 
-            switch (App.Config.memModel)
+            //すべてのキャッシュをクリアする
+            //foreach (var i in Items)
+            //    i.CacheImage.Clear();
+
+
+            //現在のサイズを計算
+            int nowBufferSize = Items.Sum(i => i.CacheImage.Length);
+
+            if (nowBufferSize <= MaxCacheSize)
+                return;
+
+
+            //サイズオーバーしたのでMacCacheSizeの半分になるまで開放
+
+            //現在の位置から上下にさかのぼっていく
+            int now1 = NowViewPage;     //上にたどるポインタ
+            int now2 = NowViewPage + 1; //下にたどるポインタ
+
+            int sumBytes = 0;
+            int halfSize = MaxCacheSize / 2;//半分のサイズまで解放
+
+            while (now1 >= 0 || now2 < Items.Count)
             {
-                case MemoryModel.Small:
-                    //すべてのキャッシュをクリアする
-                    foreach (var i in Items)
-                        i.CacheImage.Clear();
-                    break;
-
-                case MemoryModel.Large:
-                    //可能な限り残しておく
-                    break;
-
-                case MemoryModel.UserDefined:
-                    //現在のサイズを計算
-                    int nowBufferSize = 0;
-                    foreach (var i in Items)
-                        nowBufferSize += i.CacheImage.Length;
-                    if (nowBufferSize <= MaxCacheSize)
-                        break;
-
-                    //大きいので消す
-                    //現在の位置から上下にさかのぼっていく
-                    int nowup = NowViewPage;
-                    int nowdown = NowViewPage + 1;
-                    int sumBytes = 0;
-                    int thresholdSize = MaxCacheSize / 2;//半分のサイズまで解放
-
-                    Debug.WriteLine($"FileCacheCleanUp() start: {nowBufferSize:N0}bytes");
-                    while (nowup >= 0 || nowdown < Items.Count)
+                //前方走査
+                if (now1 >= 0)
+                {
+                    sumBytes += Items[now1].CacheImage.Length;
+                    if (sumBytes > halfSize)
                     {
-                        if (nowup >= 0)
-                        {
-                            sumBytes += Items[nowup].CacheImage.Length;
-                            if (sumBytes > thresholdSize)
-                            {
-                                if (Items[nowup].CacheImage.Length > 0)
-                                {
-                                    Debug.WriteLine($"FileCacheCleanUp():target={nowup}");
-                                    Items[nowup].CacheImage.Clear();
-                                }
-                            }
-                            nowup--;
-                        }
-                        if (nowdown < Items.Count)
-                        {
-                            sumBytes += Items[nowdown].CacheImage.Length;
-                            if (sumBytes > thresholdSize)
-                            {
-                                if (Items[nowdown].CacheImage.Length > 0)
-                                {
-                                    Debug.WriteLine($"FileCacheCleanUp():target={nowdown}");
-                                    Items[nowdown].CacheImage.Clear();
-                                }
-                            }
-                            nowdown++;
-                        }
-                    }//while
-                    nowBufferSize = 0;
-                    foreach (var i in Items)
-                        nowBufferSize += i.CacheImage.Length;
-                    Debug.WriteLine($"FileCacheCleanUp() end: {nowBufferSize:N0}bytes");
-                    //2021年2月26日 GCをやめる
-                    //Uty.ForceGC();
-                    break;
+                        Items[now1].CacheImage.Clear();
+                    }
+                    now1--;
+                }
 
-                default:
-                    break;
+                //後方走査
+                if (now2 < Items.Count)
+                {
+                    sumBytes += Items[now2].CacheImage.Length;
+                    if (sumBytes > halfSize)
+                    {
+                        Items[now2].CacheImage.Clear();
+                    }
+                    now2++;
+                }
             }
+
+            //2021年2月26日 GCをやめる
+            //Uty.ForceGC();
         }
 
         /// <summary>

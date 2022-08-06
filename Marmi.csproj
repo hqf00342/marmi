@@ -131,7 +131,6 @@
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\ThumbnailSize.cs" />
     <Compile Include="enums\DiagLocate.cs" />
-    <Compile Include="enums\MemoryModel.cs" />
     <Compile Include="enums\PackageType.cs" />
     <Compile Include="enums\ThreadStatus.cs" />
     <Compile Include="enums\ThumnailMode.cs" />
