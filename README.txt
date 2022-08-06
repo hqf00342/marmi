@@ -12,3 +12,18 @@ app.manifest を参照。
 ・再生空での○○MBを超えたらやめる
 ・キャッシュがなかった場合の処理
 ・キャッシュをGCさせる措置
+
+
+# 画像保持の構造
+
+App.g_pi        // PackageInfo
+    .Items      // List<ImageInfo>
+
+ImageInfo
+    .CacheImage // RawImage
+    ._rawimage  // byte[](private)
+
+
+# v1.8.8時点のキャッシュの作り方
+
+AsyncIOで作成されている。

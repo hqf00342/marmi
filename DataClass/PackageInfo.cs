@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;	//Bookmarkの集計のために追加
-using System.Threading;
+using System.Linq;
 /*
 閲覧対象の画像一覧クラス
 シリアライズ対応
