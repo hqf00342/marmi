@@ -88,9 +88,9 @@
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(387, 306);
 			this.listBox1.TabIndex = 3;
-			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
-			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-			this.listBox1.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listBox1_MeasureItem);
+			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListBox1_DrawItem);
+			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
+			this.listBox1.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.ListBox1_MeasureItem);
 			// 
 			// buttonOK
 			// 
@@ -102,7 +102,7 @@
 			this.buttonOK.TabIndex = 5;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
-			this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+			this.buttonOK.Click += new System.EventHandler(this.ButtonOK_Click);
 			// 
 			// groupBox1
 			// 
@@ -138,7 +138,7 @@
 			this.buttonUp.TabIndex = 8;
 			this.buttonUp.Text = "１つ上に";
 			this.buttonUp.UseVisualStyleBackColor = true;
-			this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+			this.buttonUp.Click += new System.EventHandler(this.ButtonUp_Click);
 			// 
 			// buttonDown
 			// 
@@ -149,7 +149,7 @@
 			this.buttonDown.TabIndex = 8;
 			this.buttonDown.Text = "１つ下に";
 			this.buttonDown.UseVisualStyleBackColor = true;
-			this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
+			this.buttonDown.Click += new System.EventHandler(this.ButtonDown_Click);
 			// 
 			// buttonSortByName
 			// 
@@ -160,7 +160,7 @@
 			this.buttonSortByName.TabIndex = 9;
 			this.buttonSortByName.Text = "名前順";
 			this.buttonSortByName.UseVisualStyleBackColor = true;
-			this.buttonSortByName.Click += new System.EventHandler(this.buttonSortByName_Click);
+			this.buttonSortByName.Click += new System.EventHandler(this.ButtonSortByName_Click);
 			// 
 			// buttonSortByDate
 			// 
@@ -171,7 +171,7 @@
 			this.buttonSortByDate.TabIndex = 9;
 			this.buttonSortByDate.Text = "日付順";
 			this.buttonSortByDate.UseVisualStyleBackColor = true;
-			this.buttonSortByDate.Click += new System.EventHandler(this.buttonSortByDate_Click);
+			this.buttonSortByDate.Click += new System.EventHandler(this.ButtonSortByDate_Click);
 			// 
 			// buttonSortOrg
 			// 
@@ -182,7 +182,7 @@
 			this.buttonSortOrg.TabIndex = 9;
 			this.buttonSortOrg.Text = "元に戻す";
 			this.buttonSortOrg.UseVisualStyleBackColor = true;
-			this.buttonSortOrg.Click += new System.EventHandler(this.buttonSortOrg_Click);
+			this.buttonSortOrg.Click += new System.EventHandler(this.ButtonSortOrg_Click);
 			// 
 			// buttonCancel
 			// 
@@ -193,7 +193,7 @@
 			this.buttonCancel.TabIndex = 10;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
-			this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+			this.buttonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
 			// checkBoxSort
 			// 
@@ -204,7 +204,7 @@
 			this.checkBoxSort.TabIndex = 12;
 			this.checkBoxSort.Text = "並び替え";
 			this.checkBoxSort.UseVisualStyleBackColor = true;
-			this.checkBoxSort.CheckedChanged += new System.EventHandler(this.checkBoxSort_CheckedChanged);
+			this.checkBoxSort.CheckedChanged += new System.EventHandler(this.CheckBoxSort_CheckedChanged);
 			// 
 			// PackageInfoForm
 			// 

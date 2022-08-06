@@ -9,16 +9,16 @@ namespace Marmi
     {
         private Point m_mouseDownPoint;     //マウスクリック（Down）されたときのマウス位置（クライアント座標）
         private bool m_formMove;            //マウスアップしたときのフラグ。フォームが移動したか。
-        private ImageInfo ImgInfo = null;
-        private Timer timer = new Timer();
+        private readonly ImageInfo ImgInfo = null;
+        private readonly Timer timer = new Timer();
 
         private const int PADDING = 10;         //定数：画像の上下パディング
         private const int THUMBSIZE = 120;      //定数：サムネイルサイズ
         private const int LINEPADDING = 2;      //定数：行間
         private const int FORMWIDTH = 480;      //定数：フォームの幅
         private const int FORMHEIGHT = PADDING * 2 + THUMBSIZE;     //定数：フォームの高さ
-        private Font fontL = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
-        private Font fontS = new Font("ＭＳ Ｐ ゴシック", 10F);
+        private readonly Font fontL = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
+        private readonly Font fontS = new Font("ＭＳ Ｐ ゴシック", 10F);
 
         #region public
 
@@ -138,9 +138,11 @@ namespace Marmi
             int HeightS = (int)size.Height;
 
             //StringFormatを作っておく
-            StringFormat sf = new StringFormat();
-            sf.Alignment = StringAlignment.Near;
-            sf.Trimming = StringTrimming.EllipsisPath;  //表示しきれないときは・・・表記
+            var sf = new StringFormat
+            {
+                Alignment = StringAlignment.Near,
+                Trimming = StringTrimming.EllipsisPath  //表示しきれないときは・・・表記
+            };
 
             //画像の描写
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;

@@ -162,10 +162,10 @@ namespace Marmi
             _trackbar.Name = "MarmiTrackBar";
             _trackbar.AutoSize = false;
             _trackbar.Size = new System.Drawing.Size(300, 20);
-            _trackbar.ValueChanged += g_trackbar_ValueChanged;
-            _trackbar.MouseUp += g_trackbar_MouseUp;
-            _trackbar.MouseDown += g_trackbar_MouseDown;
-            _trackbar.MouseWheel += g_trackbar_MouseWheel;
+            _trackbar.ValueChanged += Trackbar_ValueChanged;
+            _trackbar.MouseUp += Trackbar_MouseUp;
+            _trackbar.MouseDown += Trackbar_MouseDown;
+            _trackbar.MouseWheel += Trackbar_MouseWheel;
             //g_trackbar.MouseEnter += new EventHandler(g_trackbar_MouseEnter);
             //
             //サムネイルパネル

@@ -209,7 +209,7 @@ namespace Marmi
                 return;
 
             FormPackageInfo pif = new FormPackageInfo(this, App.g_pi);
-            pif.setSortMode(false);
+            pif.SetSortMode(false);
             //pif.Show(g_pi.ViewPage);
             pif.ShowDialog(App.g_pi.NowViewPage);
         }
@@ -431,7 +431,7 @@ namespace Marmi
         private void Menu_SortCustom_Click(object sender, EventArgs e)
         {
             FormPackageInfo pif = new FormPackageInfo(this, App.g_pi);
-            pif.setSortMode(true);
+            pif.SetSortMode(true);
             pif.ShowDialog(App.g_pi.NowViewPage);
 
             //ver1.38 É\Å[Égå„Ç…âÊñ ÇèëÇ´íºÇ∑

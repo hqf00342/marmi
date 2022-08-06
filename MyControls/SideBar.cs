@@ -77,7 +77,7 @@ namespace Marmi
             //縦スクロールバーの設定
             //m_vsBar = new VScrollBar();
             m_vsBar.Visible = false;
-            m_vsBar.ValueChanged += new EventHandler(m_vsBar_ValueChanged);
+            m_vsBar.ValueChanged += new EventHandler(VsBar_ValueChanged);
             m_vsBar.Value = 0;
             m_drawScrollValue = 0;
             this.Controls.Add(m_vsBar);
@@ -401,7 +401,7 @@ namespace Marmi
 
         // スクロールバー関連 ***********************************************************/
 
-        private void m_vsBar_ValueChanged(object sender, EventArgs e)
+        private void VsBar_ValueChanged(object sender, EventArgs e)
         {
             //ver 0.985 2010/06/03 描写タイマーを起動
             if (!m_scrollTimer.Enabled)

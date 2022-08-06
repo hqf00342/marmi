@@ -7,15 +7,15 @@ namespace Marmi
 {
     public partial class FormPackageInfo : Form
     {
-        private Form1 m_parent;             //親フォーム
-        private PackageInfo m_packageInfo;  //g_piそのものを挿す
+        private readonly Form1 m_parent;             //親フォーム
+        private readonly PackageInfo m_packageInfo;  //g_piそのものを挿す
 
         //定数
         //リストボックスの高さはTHUMBSIZE + PADDING * 2;
-        private int PADDING = 2;        //定数：画像の上下パディング
+        private const int PADDING = 2;        //定数：画像の上下パディング
 
-        private int NUM_WIDTH = 30;     //定数：画像番号表示幅
-        private int THUMBSIZE = 60;     //定数：サムネイルサイズ
+        private const int NUM_WIDTH = 30;     //定数：画像番号表示幅
+        private const int THUMBSIZE = 60;     //定数：サムネイルサイズ
 
         //描写用オブジェクト
         private Font fontL = null;
@@ -113,7 +113,7 @@ namespace Marmi
             this.ShowDialog(m_parent);
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ix = listBox1.SelectedIndex;
             //pictureBox2.Image = m_packageInfo.Items[ix].ThumbImage;
@@ -130,7 +130,7 @@ namespace Marmi
             listBox1.Refresh();
         }
 
-        private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+        private void ListBox1_DrawItem(object sender, DrawItemEventArgs e)
         {
             //インデックスが範囲内かチェック
             if (e.Index < 0 || e.Index >= m_packageInfo.Items.Count)
@@ -211,9 +211,11 @@ namespace Marmi
             sz = Path.GetDirectoryName(ImgInfo.Filename);
             if (!string.IsNullOrEmpty(sz))
             {
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Near;
-                sf.Trimming = StringTrimming.EllipsisPath;  //表示しきれないときは・・・表記
+                var sf = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    Trimming = StringTrimming.EllipsisPath  //表示しきれないときは・・・表記
+                };
 
                 //描写サイズを確認
                 size = g.MeasureString(sz, fontS, e.Bounds.Width - x, sf);
@@ -241,7 +243,7 @@ namespace Marmi
                 ImgInfo.Height
                 );
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
-            y += HeightS + PADDING;
+            //y += HeightS + PADDING; //最後なので不要
 
             ////文字の描写:Exifその他
             //sz = string.Format(
@@ -261,17 +263,17 @@ namespace Marmi
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listBox1_MeasureItem(object sender, MeasureItemEventArgs e)
+        private void ListBox1_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             e.ItemHeight = THUMBSIZE + PADDING * 2;
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void buttonUp_Click(object sender, EventArgs e)
+        private void ButtonUp_Click(object sender, EventArgs e)
         {
             int ix = listBox1.SelectedIndex;
 
@@ -289,7 +291,7 @@ namespace Marmi
             }
         }
 
-        private void buttonDown_Click(object sender, EventArgs e)
+        private void ButtonDown_Click(object sender, EventArgs e)
         {
             int ix = listBox1.SelectedIndex;
 
@@ -307,7 +309,7 @@ namespace Marmi
             }
         }
 
-        private void buttonSortByName_Click(object sender, EventArgs e)
+        private void ButtonSortByName_Click(object sender, EventArgs e)
         {
             var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
             m_packageInfo.Items.Sort(comparer);
@@ -317,10 +319,10 @@ namespace Marmi
             listBox1.Refresh();
 
             //メイン画面を更新
-            listBox1_SelectedIndexChanged(null, null);
+            ListBox1_SelectedIndexChanged(null, null);
         }
 
-        private void buttonSortByDate_Click(object sender, EventArgs e)
+        private void ButtonSortByDate_Click(object sender, EventArgs e)
         {
             var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
             m_packageInfo.Items.Sort(comparer);
@@ -330,10 +332,10 @@ namespace Marmi
             listBox1.Refresh();
 
             //メイン画面を更新
-            listBox1_SelectedIndexChanged(null, null);
+            ListBox1_SelectedIndexChanged(null, null);
         }
 
-        private void buttonSortOrg_Click(object sender, EventArgs e)
+        private void ButtonSortOrg_Click(object sender, EventArgs e)
         {
             var comparer = new ImageInfoComparer(ImageInfoComparer.Target.OriginalIndex);
             m_packageInfo.Items.Sort(comparer);
@@ -343,10 +345,10 @@ namespace Marmi
             listBox1.Refresh();
 
             //メイン画面を更新
-            listBox1_SelectedIndexChanged(null, null);
+            ListBox1_SelectedIndexChanged(null, null);
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             //元の順序にソート
             if (checkBoxSort.Enabled)
@@ -357,7 +359,7 @@ namespace Marmi
             this.Close();
         }
 
-        private void checkBoxSort_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxSort_CheckedChanged(object sender, EventArgs e)
         {
             bool b = checkBoxSort.Checked;
 
@@ -368,7 +370,7 @@ namespace Marmi
             buttonSortByName.Enabled = b;
         }
 
-        public void setSortMode(bool canSort)
+        public void SetSortMode(bool canSort)
         {
             if (canSort)
             {
@@ -380,7 +382,7 @@ namespace Marmi
                 checkBoxSort.Checked = false;
                 checkBoxSort.Enabled = false;
             }
-            checkBoxSort_CheckedChanged(null, null);
+            CheckBoxSort_CheckedChanged(null, null);
         }
     }
 }

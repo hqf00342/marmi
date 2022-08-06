@@ -9,7 +9,7 @@ namespace Marmi
     {
         // ツールバー *******************************************************************/
 
-        private void toolStrip1_Resize(object sender, EventArgs e)
+        private void ToolStrip1_Resize(object sender, EventArgs e)
         {
             //リサイズドラッグ中は表示させない
             if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left)
@@ -42,7 +42,7 @@ namespace Marmi
             }
         }
 
-        private void toolButtonLeft_Click(object sender, EventArgs e)
+        private void ToolButtonLeft_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
                 NavigateToForword();
@@ -50,7 +50,7 @@ namespace Marmi
                 NavigateToBack();
         }
 
-        private void toolButtonRight_Click(object sender, EventArgs e)
+        private void ToolButtonRight_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
                 NavigateToBack();
@@ -58,7 +58,7 @@ namespace Marmi
                 NavigateToForword();
         }
 
-        private void toolButton_MouseHover(object sender, EventArgs e)
+        private void ToolButton_MouseHover(object sender, EventArgs e)
         {
             Statusbar_InfoLabel.Text = (string)((ToolStripButton)sender).Tag;
 
@@ -66,7 +66,7 @@ namespace Marmi
             _hoverStripItem = sender;
         }
 
-        private void toolButton_MouseLeave(object sender, EventArgs e)
+        private void ToolButton_MouseLeave(object sender, EventArgs e)
         {
             //ファイル名表示に戻す
             SetStatusbarFilename();
@@ -77,7 +77,7 @@ namespace Marmi
 
         // Zoomボタン関連 *********************************************************/
 
-        private void toolStripButton_ZoomIn_Click(object sender, EventArgs e)
+        private void ToolStripButton_ZoomIn_Click(object sender, EventArgs e)
         {
             if (App.Config.isThumbnailView)
             {
@@ -91,7 +91,7 @@ namespace Marmi
             PicPanel.ZoomIn();
         }
 
-        private void toolStripButton_ZoomOut_Click(object sender, EventArgs e)
+        private void ToolStripButton_ZoomOut_Click(object sender, EventArgs e)
         {
             if (App.Config.isThumbnailView)
             {
@@ -105,7 +105,7 @@ namespace Marmi
             PicPanel.ZoomOut();
         }
 
-        private void toolStripButton_Zoom100_Click(object sender, EventArgs e)
+        private void ToolStripButton_Zoom100_Click(object sender, EventArgs e)
         {
             //if (PicPanel.FittingRatio == 1.0f)
             //    PicPanel.isAutoFit = true;
@@ -117,7 +117,7 @@ namespace Marmi
             PicPanel.AjustViewAndShow();
         }
 
-        private void toolStripButton_ZoomFit_Click(object sender, EventArgs e)
+        private void ToolStripButton_ZoomFit_Click(object sender, EventArgs e)
         {
             PicPanel.IsAutoFit = true;
             //表示倍率の調整
@@ -129,7 +129,7 @@ namespace Marmi
             PicPanel.AjustViewAndShow();
         }
 
-        private void toolStripButton_Rotate_Click(object sender, EventArgs e)
+        private void ToolStripButton_Rotate_Click(object sender, EventArgs e)
         {
             PicPanel.Rotate();
             PicPanel.Refresh();
@@ -137,7 +137,7 @@ namespace Marmi
 
         // コントロールイベント *********************************************************/
 
-        private void g_trackbar_ValueChanged(object sender, EventArgs e)
+        private void Trackbar_ValueChanged(object sender, EventArgs e)
         {
             //Debug.WriteLine(g_trackbar.Value, "g_trackbar_ValueChanged");
             if (_trackbar.Value != App.g_pi.NowViewPage)
@@ -161,7 +161,7 @@ namespace Marmi
                 _trackNaviPanel.SetCenterItem(_trackbar.Value);
         }
 
-        private void g_trackbar_MouseDown(object sender, MouseEventArgs e)
+        private void Trackbar_MouseDown(object sender, MouseEventArgs e)
         {
             if (_trackNaviPanel == null)
                 _trackNaviPanel = new NaviBar3(App.g_pi);
@@ -194,14 +194,14 @@ namespace Marmi
                 _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
 
-            g_trackbar_ValueChanged(null, null);
+            Trackbar_ValueChanged(null, null);
 
             //ツールチップの表示
             //g_toolTip.BringToFront();		//最前面に
             //g_toolTip.Show();
         }
 
-        private void g_trackbar_MouseUp(object sender, MouseEventArgs e)
+        private void Trackbar_MouseUp(object sender, MouseEventArgs e)
         {
             //ValueChanged()の代わりにこのイベントで処理
 
@@ -226,7 +226,7 @@ namespace Marmi
             }
         }
 
-        private void g_trackbar_MouseWheel(object sender, MouseEventArgs e)
+        private void Trackbar_MouseWheel(object sender, MouseEventArgs e)
         {
             OnMouseWheel(e);
             Debug.WriteLine("g_trackbar_MouseWheel");

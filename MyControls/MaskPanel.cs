@@ -15,14 +15,14 @@ namespace Marmi
         private Bitmap _bmp;                // 真っ黒に塗られたBitmap
 
         //表示するテキスト
-        private List<string> texts = new List<string>();
+        private readonly List<string> texts = new List<string>();
 
         //private System.Threading.Timer timer;
 
         //フェード配列群
-        private float[] ToBlackAlphas = { 0.0f, 0.4f, 0.7f, 0.9f, 1.0f };
+        private readonly float[] ToBlackAlphas = { 0.0f, 0.4f, 0.7f, 0.9f, 1.0f };
 
-        private float[] ToClearAlphas = { 1.0f, 0.6f, 0.3f, 0.2f, 0.1f };
+        private readonly float[] ToClearAlphas = { 1.0f, 0.6f, 0.3f, 0.2f, 0.1f };
 
         public float alpha { get; set; }
 

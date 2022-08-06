@@ -336,7 +336,7 @@ namespace Marmi
             }
         }
 
-        private void pictureBoxBackColor_Click(object sender, EventArgs e)
+        private void PictureBoxBackColor_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
@@ -344,7 +344,7 @@ namespace Marmi
             }
         }
 
-        private void textBox1_Click(object sender, EventArgs e)
+        private void TextBox1_Click(object sender, EventArgs e)
         {
             if (fontDialog1.ShowDialog(this) == DialogResult.OK)
             {
@@ -416,7 +416,7 @@ namespace Marmi
         /// OKボタンを押した際に不具合がなかったかチェック
         /// ver1.21ではキーコンフィグ重複チェック
         /// </summary>
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
             //if (CheckKeyDuplicate())
             //{
@@ -427,41 +427,41 @@ namespace Marmi
             KeyDuplicationError = false;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             //Cancelボタンを押した時はエラー無し
             KeyDuplicationError = false;
         }
 
-        private void radioRightScrToNextPic_CheckedChanged(object sender, EventArgs e)
+        private void RadioRightScrToNextPic_CheckedChanged(object sender, EventArgs e)
         {
             //クリック画面表示を更新
             pictureBoxRightScr.Image = Properties.Resources.ScrNext;
             pictureBoxLeftScr.Image = Properties.Resources.ScrPrev;
         }
 
-        private void radioLeftScrToNextPic_CheckedChanged(object sender, EventArgs e)
+        private void RadioLeftScrToNextPic_CheckedChanged(object sender, EventArgs e)
         {
             //クリック画面表示を更新
             pictureBoxRightScr.Image = Properties.Resources.ScrPrev;
             pictureBoxLeftScr.Image = Properties.Resources.ScrNext;
         }
 
-        private void pictureBoxRightScr_Click(object sender, EventArgs e)
+        private void PictureBoxRightScr_Click(object sender, EventArgs e)
         {
             //ラジオボックスを連動->画像も変わる
             radioRightScrToNextPic.Checked = true;
             //radioLeftScrToNextPic.Checked = false;
         }
 
-        private void pictureBoxLeftScr_Click(object sender, EventArgs e)
+        private void PictureBoxLeftScr_Click(object sender, EventArgs e)
         {
             //ラジオボックスを連動->画像も変わる
             //radioRightScrToNextPic.Checked = false;
             radioLeftScrToNextPic.Checked = true;
         }
 
-        private void tmpFolderBrowse_Click(object sender, EventArgs e)
+        private void TmpFolderBrowse_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -469,15 +469,15 @@ namespace Marmi
             }
         }
 
-        private void label35_Click(object sender, EventArgs e)
-        {
-        }
+        //private void Label35_Click(object sender, EventArgs e)
+        //{
+        //}
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
+        //private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        //{
+        //}
 
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        private void TabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
             if (e.TabPageIndex == 7)
                 e.Cancel = true;
@@ -489,7 +489,7 @@ namespace Marmi
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ka_Validating(object sender, CancelEventArgs e)
+        private void KeyAcc_Validating(object sender, CancelEventArgs e)
         {
             //調査元となるKeyAccelerator
             var org = sender as KeyAccelerator;

@@ -181,7 +181,7 @@
             this.toolStrip1.Size = new System.Drawing.Size(624, 39);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.Resize += new System.EventHandler(this.toolStrip1_Resize);
+            this.toolStrip1.Resize += new System.EventHandler(this.ToolStrip1_Resize);
             // 
             // toolButtonOpen
             // 
@@ -194,8 +194,8 @@
             this.toolButtonOpen.Tag = "表示するファイルを選択します";
             this.toolButtonOpen.Text = "開く...";
             this.toolButtonOpen.Click += new System.EventHandler(this.Menu_FileOpen_Click);
-            this.toolButtonOpen.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonOpen.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonOpen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonOpen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonLeft
             // 
@@ -207,9 +207,9 @@
             this.toolButtonLeft.Size = new System.Drawing.Size(36, 36);
             this.toolButtonLeft.Tag = "前のページに移動します";
             this.toolButtonLeft.Text = "前へ";
-            this.toolButtonLeft.Click += new System.EventHandler(this.toolButtonLeft_Click);
-            this.toolButtonLeft.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonLeft.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonLeft.Click += new System.EventHandler(this.ToolButtonLeft_Click);
+            this.toolButtonLeft.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonLeft.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonRight
             // 
@@ -221,9 +221,9 @@
             this.toolButtonRight.Size = new System.Drawing.Size(36, 36);
             this.toolButtonRight.Tag = "次のページに移動します";
             this.toolButtonRight.Text = "次へ";
-            this.toolButtonRight.Click += new System.EventHandler(this.toolButtonRight_Click);
-            this.toolButtonRight.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonRight.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonRight.Click += new System.EventHandler(this.ToolButtonRight_Click);
+            this.toolButtonRight.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonRight.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonClose
             // 
@@ -236,8 +236,8 @@
             this.toolButtonClose.Tag = "アプリケーションを終了します";
             this.toolButtonClose.Text = "終了";
             this.toolButtonClose.Click += new System.EventHandler(this.Menu_Exit_Click);
-            this.toolButtonClose.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonClose.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonClose.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonClose.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonFullScreen
             // 
@@ -250,8 +250,8 @@
             this.toolButtonFullScreen.Tag = "全画面モードをトグル切り替えします";
             this.toolButtonFullScreen.Text = "全画面表示";
             this.toolButtonFullScreen.Click += new System.EventHandler(this.Menu_ViewFullScreen_Click);
-            this.toolButtonFullScreen.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonFullScreen.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonFullScreen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonFullScreen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonThumbnail
             // 
@@ -264,8 +264,8 @@
             this.toolButtonThumbnail.Tag = "サムネイル一覧を表示し、ページジャンプできます";
             this.toolButtonThumbnail.Text = "サムネイル一覧を表示";
             this.toolButtonThumbnail.Click += new System.EventHandler(this.Menu_ViewThumbnail_Click);
-            this.toolButtonThumbnail.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonThumbnail.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonThumbnail.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonThumbnail.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonDualMode
             // 
@@ -278,8 +278,8 @@
             this.toolButtonDualMode.Tag = "2ページモードを切り替えます";
             this.toolButtonDualMode.Text = "2枚表示モード";
             this.toolButtonDualMode.Click += new System.EventHandler(this.Menu_ViewDualPage_Click);
-            this.toolButtonDualMode.MouseLeave += new System.EventHandler(this.toolButton_MouseLeave);
-            this.toolButtonDualMode.MouseHover += new System.EventHandler(this.toolButton_MouseHover);
+            this.toolButtonDualMode.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolButtonDualMode.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolStripSeparator10
             // 
@@ -318,7 +318,7 @@
             this.toolStripButton_Zoom100.Size = new System.Drawing.Size(28, 36);
             this.toolStripButton_Zoom100.Tag = "等倍表示";
             this.toolStripButton_Zoom100.Text = "等倍表示";
-            this.toolStripButton_Zoom100.Click += new System.EventHandler(this.toolStripButton_Zoom100_Click);
+            this.toolStripButton_Zoom100.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
             // 
             // toolStripButton_ZoomFit
             // 
@@ -330,7 +330,7 @@
             this.toolStripButton_ZoomFit.Size = new System.Drawing.Size(28, 36);
             this.toolStripButton_ZoomFit.Tag = "ウィンドウサイズに合わせて表示";
             this.toolStripButton_ZoomFit.Text = "ウィンドウサイズに合わせて表示";
-            this.toolStripButton_ZoomFit.Click += new System.EventHandler(this.toolStripButton_ZoomFit_Click);
+            this.toolStripButton_ZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
             // 
             // toolStripButton_ZoomIn
             // 
@@ -342,7 +342,7 @@
             this.toolStripButton_ZoomIn.Size = new System.Drawing.Size(28, 36);
             this.toolStripButton_ZoomIn.Tag = "拡大表示";
             this.toolStripButton_ZoomIn.Text = "拡大表示";
-            this.toolStripButton_ZoomIn.Click += new System.EventHandler(this.toolStripButton_ZoomIn_Click);
+            this.toolStripButton_ZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
             // 
             // toolStripButton_ZoomOut
             // 
@@ -354,7 +354,7 @@
             this.toolStripButton_ZoomOut.Size = new System.Drawing.Size(28, 36);
             this.toolStripButton_ZoomOut.Tag = "縮小表示";
             this.toolStripButton_ZoomOut.Text = "縮小表示";
-            this.toolStripButton_ZoomOut.Click += new System.EventHandler(this.toolStripButton_ZoomOut_Click);
+            this.toolStripButton_ZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
             // 
             // toolStripButton_Rotate
             // 
@@ -364,7 +364,7 @@
             this.toolStripButton_Rotate.Name = "toolStripButton_Rotate";
             this.toolStripButton_Rotate.Size = new System.Drawing.Size(24, 36);
             this.toolStripButton_Rotate.Text = "右方向に90度回転";
-            this.toolStripButton_Rotate.Click += new System.EventHandler(this.toolStripButton_Rotate_Click);
+            this.toolStripButton_Rotate.Click += new System.EventHandler(this.ToolStripButton_Rotate_Click);
             // 
             // statusbar
             // 
@@ -609,7 +609,7 @@
             this.MenuItem_ZoomFit.Name = "MenuItem_ZoomFit";
             this.MenuItem_ZoomFit.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ZoomFit.Text = "ウィンドウサイズに合わせる";
-            this.MenuItem_ZoomFit.Click += new System.EventHandler(this.toolStripButton_ZoomFit_Click);
+            this.MenuItem_ZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
             // 
             // MenuItem_ZoomOriginal
             // 
@@ -617,7 +617,7 @@
             this.MenuItem_ZoomOriginal.Name = "MenuItem_ZoomOriginal";
             this.MenuItem_ZoomOriginal.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ZoomOriginal.Text = "原寸(100%)表示";
-            this.MenuItem_ZoomOriginal.Click += new System.EventHandler(this.toolStripButton_Zoom100_Click);
+            this.MenuItem_ZoomOriginal.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
             // 
             // MenuItem_ZoomIn
             // 
@@ -625,7 +625,7 @@
             this.MenuItem_ZoomIn.Name = "MenuItem_ZoomIn";
             this.MenuItem_ZoomIn.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ZoomIn.Text = "拡大";
-            this.MenuItem_ZoomIn.Click += new System.EventHandler(this.toolStripButton_ZoomIn_Click);
+            this.MenuItem_ZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
             // 
             // MenuItem_ZoomOut
             // 
@@ -633,7 +633,7 @@
             this.MenuItem_ZoomOut.Name = "MenuItem_ZoomOut";
             this.MenuItem_ZoomOut.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ZoomOut.Text = "縮小";
-            this.MenuItem_ZoomOut.Click += new System.EventHandler(this.toolStripButton_ZoomOut_Click);
+            this.MenuItem_ZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1120,7 +1120,7 @@
             this.MenuItem_ContextZoomFit.Name = "MenuItem_ContextZoomFit";
             this.MenuItem_ContextZoomFit.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ContextZoomFit.Text = "ウィンドウサイズに合わせる";
-            this.MenuItem_ContextZoomFit.Click += new System.EventHandler(this.toolStripButton_ZoomFit_Click);
+            this.MenuItem_ContextZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
             // 
             // MenuItem_ContextZoomOriginal
             // 
@@ -1128,7 +1128,7 @@
             this.MenuItem_ContextZoomOriginal.Name = "MenuItem_ContextZoomOriginal";
             this.MenuItem_ContextZoomOriginal.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ContextZoomOriginal.Text = "原寸(100%)表示";
-            this.MenuItem_ContextZoomOriginal.Click += new System.EventHandler(this.toolStripButton_Zoom100_Click);
+            this.MenuItem_ContextZoomOriginal.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
             // 
             // MenuItem_ContextZoomIn
             // 
@@ -1136,7 +1136,7 @@
             this.MenuItem_ContextZoomIn.Name = "MenuItem_ContextZoomIn";
             this.MenuItem_ContextZoomIn.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ContextZoomIn.Text = "拡大";
-            this.MenuItem_ContextZoomIn.Click += new System.EventHandler(this.toolStripButton_ZoomIn_Click);
+            this.MenuItem_ContextZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
             // 
             // MenuItem_ContextZoomOut
             // 
@@ -1144,7 +1144,7 @@
             this.MenuItem_ContextZoomOut.Name = "MenuItem_ContextZoomOut";
             this.MenuItem_ContextZoomOut.Size = new System.Drawing.Size(194, 22);
             this.MenuItem_ContextZoomOut.Text = "縮小";
-            this.MenuItem_ContextZoomOut.Click += new System.EventHandler(this.toolStripButton_ZoomOut_Click);
+            this.MenuItem_ContextZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
             // 
             // Menu_ContextRedraw
             // 

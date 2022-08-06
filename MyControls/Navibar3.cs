@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using FormTimer = System.Windows.Forms.Timer;
 
 namespace Marmi
 {
@@ -55,7 +56,7 @@ namespace Marmi
         private Bitmap dummyImage = null;
 
         //アニメーションタイマー
-        private System.Windows.Forms.Timer timer = null;
+        private FormTimer timer = null;
 
         //現在の描写位置
         private int nowOffset;
@@ -100,15 +101,15 @@ namespace Marmi
             dummyImage = BitmapUty.LoadingImage(THUMBSIZE * 2 / 3, THUMBSIZE);
 
             //タイマーの初期設定
-            timer = new System.Windows.Forms.Timer();
+            timer = new FormTimer();
             timer.Interval = 20;
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += new EventHandler(Timer_Tick);
 
             //オフセットを設定
             nowOffset = 0;
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             int diff = (GetOffset(m_selectedItem) - nowOffset);
             //THUMBSIZE以上離れていたらすぐにTHUMBSIZEに近づける

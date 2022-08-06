@@ -197,7 +197,7 @@
 			this.tabControl1.Size = new System.Drawing.Size(505, 390);
 			this.tabControl1.TabIndex = 0;
 			this.tabControl1.Tag = "アプリケーション設定項目を切り替えます";
-			this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
+			this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabControl1_Selecting);
 			this.tabControl1.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// General
@@ -319,7 +319,7 @@
 			this.tmpFolderBrowse.Tag = "書庫を一度展開する必要がある場合に利用するフォルダを指定します。";
 			this.tmpFolderBrowse.Text = "参照...";
 			this.tmpFolderBrowse.UseVisualStyleBackColor = true;
-			this.tmpFolderBrowse.Click += new System.EventHandler(this.tmpFolderBrowse_Click);
+			this.tmpFolderBrowse.Click += new System.EventHandler(this.TmpFolderBrowse_Click);
 			this.tmpFolderBrowse.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// tmpFolder
@@ -390,7 +390,7 @@
 			this.pictureBox_BackColor.TabIndex = 8;
 			this.pictureBox_BackColor.TabStop = false;
 			this.pictureBox_BackColor.Tag = "背景色を指定します";
-			this.pictureBox_BackColor.Click += new System.EventHandler(this.pictureBoxBackColor_Click);
+			this.pictureBox_BackColor.Click += new System.EventHandler(this.PictureBoxBackColor_Click);
 			this.pictureBox_BackColor.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// label4
@@ -820,7 +820,7 @@
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Tag = "サムネイルモード時のファイル名のフォントを指定します。フォント指定ダイアログが表示されます。";
 			this.linkLabel1.Text = "linkLabel1";
-			this.linkLabel1.Click += new System.EventHandler(this.textBox1_Click);
+			this.linkLabel1.Click += new System.EventHandler(this.TextBox1_Click);
 			this.linkLabel1.Enter += new System.EventHandler(this.OnFocus_Enter);
 			this.linkLabel1.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
@@ -1331,7 +1331,7 @@
 			this.pictureBoxRightScr.TabIndex = 3;
 			this.pictureBoxRightScr.TabStop = false;
 			this.pictureBoxRightScr.Tag = "画面の右側をクリックすると次のページに進みます";
-			this.pictureBoxRightScr.Click += new System.EventHandler(this.pictureBoxRightScr_Click);
+			this.pictureBoxRightScr.Click += new System.EventHandler(this.PictureBoxRightScr_Click);
 			this.pictureBoxRightScr.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// pictureBoxLeftScr
@@ -1343,7 +1343,7 @@
 			this.pictureBoxLeftScr.TabIndex = 3;
 			this.pictureBoxLeftScr.TabStop = false;
 			this.pictureBoxLeftScr.Tag = "画面の左側をクリックすると次のページに進みます";
-			this.pictureBoxLeftScr.Click += new System.EventHandler(this.pictureBoxLeftScr_Click);
+			this.pictureBoxLeftScr.Click += new System.EventHandler(this.PictureBoxLeftScr_Click);
 			this.pictureBoxLeftScr.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// reverseClickPointWhenLeftBook
@@ -1371,7 +1371,7 @@
 			this.radioLeftScrToNextPic.Tag = "画面の左側をクリックすると次のページに進みます";
 			this.radioLeftScrToNextPic.Text = "画面左側";
 			this.radioLeftScrToNextPic.UseVisualStyleBackColor = true;
-			this.radioLeftScrToNextPic.CheckedChanged += new System.EventHandler(this.radioLeftScrToNextPic_CheckedChanged);
+			this.radioLeftScrToNextPic.CheckedChanged += new System.EventHandler(this.RadioLeftScrToNextPic_CheckedChanged);
 			this.radioLeftScrToNextPic.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// radioRightScrToNextPic
@@ -1386,7 +1386,7 @@
 			this.radioRightScrToNextPic.Tag = "画面の右側をクリックすると次のページに進みます";
 			this.radioRightScrToNextPic.Text = "画面右側";
 			this.radioRightScrToNextPic.UseVisualStyleBackColor = true;
-			this.radioRightScrToNextPic.CheckedChanged += new System.EventHandler(this.radioRightScrToNextPic_CheckedChanged);
+			this.radioRightScrToNextPic.CheckedChanged += new System.EventHandler(this.RadioRightScrToNextPic_CheckedChanged);
 			this.radioRightScrToNextPic.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
 			// 
 			// Detail
@@ -1454,7 +1454,7 @@
 			this.btnOK.TabIndex = 1;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = true;
-			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+			this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
 			// 
 			// btnCancel
 			// 
@@ -1467,7 +1467,7 @@
 			this.btnCancel.TabIndex = 2;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
-			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
 			// 
 			// InitButton
 			// 
@@ -1513,7 +1513,7 @@
 			this.ka_exit2.Size = new System.Drawing.Size(120, 16);
 			this.ka_exit2.TabIndex = 2;
 			this.ka_exit2.Tag = "Marmiの終了(2)";
-			this.ka_exit2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_exit2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_exit1
 			// 
@@ -1524,7 +1524,7 @@
 			this.ka_exit1.Size = new System.Drawing.Size(120, 16);
 			this.ka_exit1.TabIndex = 1;
 			this.ka_exit1.Tag = "Marmiの終了";
-			this.ka_exit1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_exit1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_bookmark1
 			// 
@@ -1535,7 +1535,7 @@
 			this.ka_bookmark1.Size = new System.Drawing.Size(120, 16);
 			this.ka_bookmark1.TabIndex = 1;
 			this.ka_bookmark1.Tag = "しおりOn/Off";
-			this.ka_bookmark1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_bookmark1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_fullscreen1
 			// 
@@ -1546,7 +1546,7 @@
 			this.ka_fullscreen1.Size = new System.Drawing.Size(120, 16);
 			this.ka_fullscreen1.TabIndex = 1;
 			this.ka_fullscreen1.Tag = "全画面On/Off";
-			this.ka_fullscreen1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_fullscreen1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_dualview1
 			// 
@@ -1557,7 +1557,7 @@
 			this.ka_dualview1.Size = new System.Drawing.Size(120, 16);
 			this.ka_dualview1.TabIndex = 1;
 			this.ka_dualview1.Tag = "2ページモード切替";
-			this.ka_dualview1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_dualview1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_viewratio1
 			// 
@@ -1568,7 +1568,7 @@
 			this.ka_viewratio1.Size = new System.Drawing.Size(120, 16);
 			this.ka_viewratio1.TabIndex = 1;
 			this.ka_viewratio1.Tag = "表示倍率切替";
-			this.ka_viewratio1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_viewratio1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_recycle1
 			// 
@@ -1579,7 +1579,7 @@
 			this.ka_recycle1.Size = new System.Drawing.Size(120, 16);
 			this.ka_recycle1.TabIndex = 1;
 			this.ka_recycle1.Tag = "ファイルをゴミ箱へ";
-			this.ka_recycle1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_recycle1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_nextpage1
 			// 
@@ -1590,7 +1590,7 @@
 			this.ka_nextpage1.Size = new System.Drawing.Size(120, 16);
 			this.ka_nextpage1.TabIndex = 1;
 			this.ka_nextpage1.Tag = "次のページ";
-			this.ka_nextpage1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_nextpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_prevpage1
 			// 
@@ -1601,7 +1601,7 @@
 			this.ka_prevpage1.Size = new System.Drawing.Size(120, 16);
 			this.ka_prevpage1.TabIndex = 1;
 			this.ka_prevpage1.Tag = "前のページ";
-			this.ka_prevpage1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_prevpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_toppage1
 			// 
@@ -1612,7 +1612,7 @@
 			this.ka_toppage1.Size = new System.Drawing.Size(120, 16);
 			this.ka_toppage1.TabIndex = 1;
 			this.ka_toppage1.Tag = "先頭ページ";
-			this.ka_toppage1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_toppage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_lastpage1
 			// 
@@ -1623,7 +1623,7 @@
 			this.ka_lastpage1.Size = new System.Drawing.Size(120, 16);
 			this.ka_lastpage1.TabIndex = 1;
 			this.ka_lastpage1.Tag = "最終ページ";
-			this.ka_lastpage1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_lastpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_nexthalf1
 			// 
@@ -1634,7 +1634,7 @@
 			this.ka_nexthalf1.Size = new System.Drawing.Size(120, 16);
 			this.ka_nexthalf1.TabIndex = 1;
 			this.ka_nexthalf1.Tag = "半ページ進む";
-			this.ka_nexthalf1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_nexthalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_prevhalf1
 			// 
@@ -1645,7 +1645,7 @@
 			this.ka_prevhalf1.Size = new System.Drawing.Size(120, 16);
 			this.ka_prevhalf1.TabIndex = 1;
 			this.ka_prevhalf1.Tag = "半ページ戻る";
-			this.ka_prevhalf1.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_prevhalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_bookmark2
 			// 
@@ -1656,7 +1656,7 @@
 			this.ka_bookmark2.Size = new System.Drawing.Size(120, 16);
 			this.ka_bookmark2.TabIndex = 1;
 			this.ka_bookmark2.Tag = "しおりOn/Off(2)";
-			this.ka_bookmark2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_bookmark2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_fullscreen2
 			// 
@@ -1667,7 +1667,7 @@
 			this.ka_fullscreen2.Size = new System.Drawing.Size(120, 16);
 			this.ka_fullscreen2.TabIndex = 1;
 			this.ka_fullscreen2.Tag = "全画面On/Off(2)";
-			this.ka_fullscreen2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_fullscreen2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_dualview2
 			// 
@@ -1678,7 +1678,7 @@
 			this.ka_dualview2.Size = new System.Drawing.Size(120, 16);
 			this.ka_dualview2.TabIndex = 1;
 			this.ka_dualview2.Tag = "2ページモード切替(2)";
-			this.ka_dualview2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_dualview2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_viewratio2
 			// 
@@ -1689,7 +1689,7 @@
 			this.ka_viewratio2.Size = new System.Drawing.Size(120, 16);
 			this.ka_viewratio2.TabIndex = 1;
 			this.ka_viewratio2.Tag = "表示倍率切替(2)";
-			this.ka_viewratio2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_viewratio2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_recycle2
 			// 
@@ -1700,7 +1700,7 @@
 			this.ka_recycle2.Size = new System.Drawing.Size(120, 16);
 			this.ka_recycle2.TabIndex = 1;
 			this.ka_recycle2.Tag = "ファイルをゴミ箱へ(2)";
-			this.ka_recycle2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_recycle2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_nextpage2
 			// 
@@ -1711,7 +1711,7 @@
 			this.ka_nextpage2.Size = new System.Drawing.Size(120, 16);
 			this.ka_nextpage2.TabIndex = 1;
 			this.ka_nextpage2.Tag = "次のページ(2)";
-			this.ka_nextpage2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_nextpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_prevpage2
 			// 
@@ -1722,7 +1722,7 @@
 			this.ka_prevpage2.Size = new System.Drawing.Size(120, 16);
 			this.ka_prevpage2.TabIndex = 1;
 			this.ka_prevpage2.Tag = "前のページ(2)";
-			this.ka_prevpage2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_prevpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_toppage2
 			// 
@@ -1733,7 +1733,7 @@
 			this.ka_toppage2.Size = new System.Drawing.Size(120, 16);
 			this.ka_toppage2.TabIndex = 1;
 			this.ka_toppage2.Tag = "先頭ページ(2)";
-			this.ka_toppage2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_toppage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_lastpage2
 			// 
@@ -1744,7 +1744,7 @@
 			this.ka_lastpage2.Size = new System.Drawing.Size(120, 16);
 			this.ka_lastpage2.TabIndex = 1;
 			this.ka_lastpage2.Tag = "最終ページ(2)";
-			this.ka_lastpage2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_lastpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_nexthalf2
 			// 
@@ -1755,7 +1755,7 @@
 			this.ka_nexthalf2.Size = new System.Drawing.Size(120, 16);
 			this.ka_nexthalf2.TabIndex = 1;
 			this.ka_nexthalf2.Tag = "半ページ進む(2)";
-			this.ka_nexthalf2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_nexthalf2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// ka_prevhalf2
 			// 
@@ -1766,7 +1766,7 @@
 			this.ka_prevhalf2.Size = new System.Drawing.Size(120, 16);
 			this.ka_prevhalf2.TabIndex = 1;
 			this.ka_prevhalf2.Tag = "半ページ戻る(2)";
-			this.ka_prevhalf2.Validating += new System.ComponentModel.CancelEventHandler(this.ka_Validating);
+			this.ka_prevhalf2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
 			// 
 			// FormOption
 			// 
