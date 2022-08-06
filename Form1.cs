@@ -383,8 +383,6 @@ namespace Marmi
 
         private void Application_Idle(object sender, EventArgs e)
         {
-            //return;
-
             UpdateToolbar();
 
             //低品質描写だったら高品質で書き直す
@@ -395,31 +393,14 @@ namespace Marmi
                 PicPanel.Refresh();
             }
 
-            //ver1.24 サイドバー
-            //if (g_Sidebar.Visible)
-            //{
-            //    g_Sidebar.Invalidate();
-            //}
-
-            // スクリーンキャッシュ生成・パージ
-            // ver1.38 Idleで毎回やらずにSetViewPageの最後でやる
-            //getScreenCache();
-            //ClearScreenCache();
-
-            //サムネイルモードのApplication_Idle()へ
-            //if (App.Config.isThumbnailView)
-            //{
-            //    g_ThumbPanel.Application_Idle();
-            //}
-
             //ScreenCacheを作る必要があれば作成。
             if (needMakeScreenCache)
             {
                 needMakeScreenCache = false;
                 ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    MakeScreenCache();
-                    PurgeScreenCache();
+                    ScreenCache.MakeCacheForPreAndNextPages();
+                    ScreenCache.Purge();
                     App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 });
             }
@@ -484,7 +465,7 @@ namespace Marmi
             SetStatusbarInfo("準備中・・・" + filenames[0]);
 
             //ver1.35スクリーンキャッシュをクリア
-            App.ScreenCache.Clear();
+            ScreenCache.Clear();
 
             //コントロールの初期化
             InitControls();     //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
@@ -1220,7 +1201,7 @@ namespace Marmi
             _trackbar.Value = index;
 
             //ver1.35 スクリーンキャッシュチェック
-            if (App.ScreenCache.TryGetValue(index, out Bitmap screenImage))
+            if (ScreenCache.Dic.TryGetValue(index, out Bitmap screenImage))
             {
                 //スクリーンキャッシュあったのですぐに描写
                 SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
@@ -1230,8 +1211,8 @@ namespace Marmi
             {
                 //ver1.50
                 //Keyだけある{key,null}キャッシュだったら消す。稀に発生するため
-                if (App.ScreenCache.ContainsKey(index))
-                    App.ScreenCache.Remove(index);
+                if (ScreenCache.Dic.ContainsKey(index))
+                    ScreenCache.Remove(index);
 
                 //ver1.50 読み込み中と表示
                 SetStatusbarInfo("Now Loading ... " + (index + 1).ToString());
@@ -1533,7 +1514,7 @@ namespace Marmi
         }
 
         //ver1.35 前のページ番号。すでに先頭ページなら-1
-        private static int GetPrevPageIndex(int index)
+        internal static int GetPrevPageIndex(int index)
         {
             if (index > 0)
             {
@@ -1553,7 +1534,7 @@ namespace Marmi
         }
 
         //ver1.36次のページ番号。すでに最終ページなら-1
-        private static int GetNextPageIndex(int index)
+        internal static int GetNextPageIndex(int index)
         {
             int pages = CanDualView(index) ? 2 : 1;
 
@@ -1598,7 +1579,7 @@ namespace Marmi
 
             //ver1.36 スクリーンキャッシュをクリア
             //ClearScreenCache();
-            App.ScreenCache.Clear();
+            ScreenCache.Clear();
 
             SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
@@ -1773,83 +1754,6 @@ namespace Marmi
 
         #endregion Screen操作
 
-        #region スクリーンキャッシュ
-
-        /// <summary>
-        /// 前後ページの画面キャッシュを作成する
-        /// 現在見ているページを中心とする
-        /// </summary>
-        private static void MakeScreenCache()
-        {
-            //ver1.37 スレッドで使うことを前提にロック
-            lock ((App.ScreenCache as ICollection).SyncRoot)
-            {
-                //前のページ
-                int ix = GetPrevPageIndex(App.g_pi.NowViewPage);
-                if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
-                {
-                    Debug.WriteLine(ix, "getScreenCache() Add Prev");
-                    var bmp = Bmp.MakeOriginalSizeImage(ix);
-                    if (bmp != null)
-                        App.ScreenCache.Add(ix, bmp);
-                }
-
-                //前のページ
-                ix = GetNextPageIndex(App.g_pi.NowViewPage);
-                if (ix >= 0 && !App.ScreenCache.ContainsKey(ix))
-                {
-                    Debug.WriteLine(ix, "getScreenCache() Add Next");
-                    var bmp = Bmp.MakeOriginalSizeImage(ix);
-                    if (bmp != null)
-                        App.ScreenCache.Add(ix, bmp);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 不要なスクリーンキャッシュを削除する
-        /// </summary>
-        private static void PurgeScreenCache()
-        {
-            //削除候補をリストアップ
-            int now = App.g_pi.NowViewPage;
-            const int DISTANCE = 2;
-            List<int> deleteCandidate = new List<int>();
-
-            foreach (var ix in App.ScreenCache.Keys)
-            {
-                if (ix > now + DISTANCE || ix < now - DISTANCE)
-                {
-                    deleteCandidate.Add(ix);
-                }
-            }
-
-            //削除候補を削除する
-            if (deleteCandidate.Count > 0)
-            {
-                foreach (int ix in deleteCandidate)
-                {
-                    //先に消してはだめ！
-                    //ディクショナリから削除した後BitmapをDispose()
-                    //Bitmap tempBmp = ScreenCache[key];
-                    //ScreenCache.Remove(key);
-                    //tempBmp.Dispose();
-                    if (App.ScreenCache.TryGetValue(ix, out Bitmap tempBmp))
-                    {
-                        App.ScreenCache.Remove(ix);
-                        Debug.WriteLine($"PurgeScreenCache({ix})");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"PurgeScreenCache({ix})失敗");
-                    }
-                }
-            }
-            //ver1.37GC
-            //Uty.ForceGC();
-        }
-
-        #endregion スクリーンキャッシュ
 
         /// <summary>
         /// 現在のページをゴミ箱に入れる。削除後にページ遷移を行う。(ver1.35)
@@ -1903,7 +1807,7 @@ namespace Marmi
             App.g_pi.Items.RemoveAt(now);
 
             //ScreenCacheから削除
-            App.ScreenCache.Clear();
+            ScreenCache.Clear();
 
             //Trackbarを変更
             InitTrackbar();

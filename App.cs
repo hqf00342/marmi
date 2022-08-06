@@ -34,7 +34,7 @@ namespace Marmi
         internal static Unrar unrar = new Unrar();
 
         //ver1.35 スクリーンキャッシュ
-        internal static Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
+        //internal static Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
 
         //Bitmap.Tagにつけるタグ:リソース文字列から移動
         //TODO:利用していない疑惑あり

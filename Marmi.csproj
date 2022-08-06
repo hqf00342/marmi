@@ -123,6 +123,7 @@
     <Compile Include="DataClass\ThumbnailEventArgs.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />
+    <Compile Include="ScreenCache.cs" />
     <Compile Include="Uty\Uty.cs" />
     <Compile Include="Uty\NaturalStringComparer.cs" />
     <Compile Include="Uty\SharpCompressHelper.cs" />

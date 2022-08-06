@@ -312,7 +312,7 @@ namespace Marmi
                 ResizeTrackBar();
 
                 //ver1.79 ScreenCacheをクリアする。
-                App.ScreenCache.Clear();
+                ScreenCache.Clear();
 
                 //サムネイルサイズはすぐに反映
                 if (_thumbPanel != null && _thumbPanel.Visible)
@@ -396,7 +396,7 @@ namespace Marmi
                 }
 
                 //ver1.38 ソート後に画面を書き直す
-                App.ScreenCache.Clear();
+                ScreenCache.Clear();
                 SetViewPage(App.g_pi.NowViewPage);
             }
         }
@@ -423,7 +423,7 @@ namespace Marmi
                 //ResumeThumbnailMakerThread();	//ver1.09 スレッド再開
 
                 //ver1.38 ソート後に画面を書き直す
-                App.ScreenCache.Clear();
+                ScreenCache.Clear();
                 SetViewPage(App.g_pi.NowViewPage);
             }
         }
@@ -435,7 +435,7 @@ namespace Marmi
             pif.ShowDialog(App.g_pi.NowViewPage);
 
             //ver1.38 ソート後に画面を書き直す
-            App.ScreenCache.Clear();
+            ScreenCache.Clear();
             SetViewPage(App.g_pi.NowViewPage);
         }
 
