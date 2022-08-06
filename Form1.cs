@@ -252,7 +252,7 @@ namespace Marmi
             }
 
             //7z解凍をしていたら中断
-           //m_AsyncSevenZip?.CancelExtractAll();
+            //m_AsyncSevenZip?.CancelExtractAll();
 
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
@@ -890,7 +890,7 @@ namespace Marmi
             for (int cnt = 0; cnt < App.g_pi.Items.Count; cnt++)
             {
                 //ラムダ式の外で文字列作成
-                string s = string.Format("画像情報読み込み中...{0}/{1}", cnt + 1, App.g_pi.Items.Count);
+                string s = $"画像情報読み込み中...{cnt + 1}/{App.g_pi.Items.Count}";
 
                 //スタックに入れる
                 AsyncIO.AddJobLow(-1, () =>
@@ -1452,48 +1452,7 @@ namespace Marmi
                 SetViewPage(0, drawOrderTick);
                 _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
             }
-            else if (App.Config.LastPage_toNextArchive)
-            {
-                //ver1.70 最終ページで次の書庫を開く
-                if (App.g_pi.PackType != PackageType.Directory)
-                {
-                    //次の書庫を探す
-                    string filename = App.g_pi.PackageName;
-                    string dirname = Path.GetDirectoryName(filename);
-                    string[] files = Directory.GetFiles(dirname);
-
-                    //ファイル名でソートする
-                    //Array.Sort(files, Uty.Compare_unsafeFast);
-                    Array.Sort(files, NaturalStringComparer.CompareS);
-
-                    bool match = false;
-                    foreach (var s in files)
-                    {
-                        if (s == filename)
-                        {
-                            match = true;
-                            continue;
-                        }
-                        if (match)
-                        {
-                            if (Uty.IsAvailableFile(s))
-                            {
-                                _clearPanel.ShowAndClose("次へ移動します：" + Path.GetFileName(s), 1000);
-                                Start(new string[] { s });
-                                return;
-                            }
-                        }
-                    }
-                    _clearPanel.ShowAndClose("最後のページです。次の書庫が見つかりませんでした", 1000);
-                }
-                else
-                {
-                    //先頭ページへループ
-                    SetViewPage(0, drawOrderTick);
-                    _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
-                }
-            }
-            else //if(App.Config.lastPage_stay)
+            else
             {
                 _clearPanel.ShowAndClose("最後のページです", 1000);
             }

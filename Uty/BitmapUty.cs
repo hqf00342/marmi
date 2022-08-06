@@ -610,8 +610,8 @@ namespace Marmi
         public static void DrawDropShadow(Graphics g, Rectangle r)
         {
             //ver0.975光彩をつける
-            SolidBrush b1 = new SolidBrush(Color.FromArgb(96, Color.DimGray));
-            SolidBrush b2 = new SolidBrush(Color.FromArgb(64, Color.DimGray));
+            //SolidBrush b1 = new SolidBrush(Color.FromArgb(96, Color.DimGray));
+            //SolidBrush b2 = new SolidBrush(Color.FromArgb(64, Color.DimGray));
             SolidBrush b3 = new SolidBrush(Color.FromArgb(32, Color.DimGray));
             SolidBrush b4 = new SolidBrush(Color.FromArgb(16, Color.DimGray));
 
@@ -620,10 +620,13 @@ namespace Marmi
             r.X++;
             r.Y++;
             DrawRoundRectangle(g, b4, r, 5);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b4, r, 4);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b3, r, 3);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b3, r, 2);
             //g.CompositingMode = CompositingMode.SourceCopy;
@@ -641,16 +644,19 @@ namespace Marmi
             //g.CompositingMode = CompositingMode.SourceOver;
             //r.Width += 1;	//足しておかないと1ドット欠ける
             //r.Height += 1;	//足しておかないと1ドット欠ける
+
             r.Inflate(4, 4);
-            //r.X++;
-            //r.Y++;
             DrawRoundRectangle(g, b4, r, 5);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b3, r, 4);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b2, r, 3);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b1, r, 2);
+
             r.Inflate(-1, -1);
             DrawRoundRectangle(g, b1, r, 2);
             //g.CompositingMode = CompositingMode.SourceCopy;
@@ -1125,10 +1131,10 @@ namespace Marmi
             //小さい場合はコピーを作って返す
             if (orgImage.Width <= maxLen && orgImage.Height <= maxLen)
                 return orgImage.Clone() as Bitmap;
-
-            Bitmap bmp = null;  //大きめのサムネイル
             Rectangle srcRect;  //切り抜く位置
             Rectangle destRect = new Rectangle(0, 0, maxLen, maxLen);
+
+            Bitmap bmp;
             if (orgImage.Width >= orgImage.Height)
             {
                 //横長画像なので高さをmaxLenに

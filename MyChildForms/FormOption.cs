@@ -104,7 +104,7 @@ namespace Marmi
             //ver1.71 最終ページの動作
             lastPage_stay.Checked = set.LastPage_stay;
             lastPage_toTop.Checked = set.LastPage_toTop;
-            lastPage_toNextArchive.Checked = set.LastPage_toNextArchive;
+            //lastPage_toNextArchive.Checked = set.LastPage_toNextArchive;
 
             //ver1.73 一時フォルダ
             tmpFolder.Text = set.TmpFolder;
@@ -245,7 +245,7 @@ namespace Marmi
             //ver1.71 最終ページの動作
             set.LastPage_stay = lastPage_stay.Checked;
             set.LastPage_toTop = lastPage_toTop.Checked;
-            set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
+            //set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
 
             //ver1.73 一時フォルダ
             set.TmpFolder = tmpFolder.Text;
@@ -315,7 +315,7 @@ namespace Marmi
             }
         }
 
-        private void bSaveConfig_CheckedChanged(object sender, EventArgs e)
+        private void SaveConfig_CheckedChanged(object sender, EventArgs e)
         {
             //全てのTabPage1内のアイテムの動作設定
             //設定を保存するときはEnable、そうでないときはDisable

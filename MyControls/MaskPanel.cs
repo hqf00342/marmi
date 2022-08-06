@@ -24,7 +24,7 @@ namespace Marmi
 
         private readonly float[] ToClearAlphas = { 1.0f, 0.6f, 0.3f, 0.2f, 0.1f };
 
-        public float alpha { get; set; }
+        public float Alpha { get; set; }
 
         // 初期化 ***********************************************************************/
 
@@ -33,7 +33,7 @@ namespace Marmi
         public MaskPanel()
         {
             //透明度は不透明に
-            alpha = 1.0F;
+            Alpha = 1.0F;
 
             //textsを初期化
             texts.Clear();
@@ -101,17 +101,17 @@ namespace Marmi
         /// </summary>
         public void FadeIn()
         {
-            alpha = 0.0F;
+            Alpha = 0.0F;
             this.Refresh();
             this.Visible = true;
 
             foreach (float a in ToBlackAlphas)
             {
-                alpha = a;      //透明度を設定
+                Alpha = a;      //透明度を設定
                 this.Refresh();
                 //Thread.Sleep(30);
             }
-            alpha = 1.0F;
+            Alpha = 1.0F;
         }
 
         /// <summary>
@@ -121,13 +121,13 @@ namespace Marmi
         {
             foreach (float a in ToClearAlphas)
             {
-                alpha = a;      //透明度を設定
+                Alpha = a;      //透明度を設定
                 this.Refresh();
                 //Thread.Sleep(100);
                 //Debug.WriteLine(a, "fadeout()");
             }
             this.Visible = false;
-            alpha = 0.0F;
+            Alpha = 0.0F;
         }
 
         // 文字表示できるようにする
@@ -205,7 +205,7 @@ namespace Marmi
             //base.OnPaint(e);
 
             //e.Graphics.Clear(Color.Transparent);
-            if (alpha >= 1.0F)
+            if (Alpha >= 1.0F)
             {
                 //透明描写しない
                 e.Graphics.DrawImageUnscaled(_bmp, 0, 0);
@@ -213,7 +213,7 @@ namespace Marmi
             else
             {
                 //半透明描写
-                BitmapUty.AlphaDrawImage(e.Graphics, _bmp, alpha);
+                BitmapUty.AlphaDrawImage(e.Graphics, _bmp, Alpha);
             }
         }
 

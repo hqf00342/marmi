@@ -113,7 +113,7 @@ namespace Marmi
         public bool LastPage_stay { get; set; }
 
         public bool LastPage_toTop { get; set; }
-        public bool LastPage_toNextArchive { get; set; }
+        //public bool LastPage_toNextArchive { get; set; }
 
         //ver1.73 一時展開フォルダ
         public string TmpFolder { get; set; }
@@ -354,7 +354,7 @@ namespace Marmi
             //ver1.71 最終ページの動作
             LastPage_stay = true;
             LastPage_toTop = false;
-            LastPage_toNextArchive = false;
+            //LastPage_toNextArchive = false;
 
             //ver1.73 一時展開フォルダ
             TmpFolder = string.Empty;
