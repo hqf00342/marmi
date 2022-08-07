@@ -62,5 +62,5 @@ AsyncIO内で実行。キャッシュを読み込んだ後に画像サイズ、�
 
 # 確認したい点
 
-・PackageType.Directoryは必要か      --> 除外できるレベルまで持ってきたい
-・MemTypeは必要か。                  --> 除外済
+・PackageType.Directoryは必要か      --> 除外できるレベルまで持ってきた
+・ThumbnailPanelの SaveThumbnailImageAsync(int thumbSize, int numX, string FilenameCandidate)がnumXを使ってない。

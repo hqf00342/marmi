@@ -81,7 +81,7 @@ namespace Marmi
             }
         }
 
-        private void btExcute_Click(object sender, EventArgs e)
+        private async void btExcute_Click(object sender, EventArgs e)
         {
             //サムネイルサイズの設定
             int ThumbnailSize = 0;
@@ -128,7 +128,7 @@ namespace Marmi
             tbPixels.Enabled = false;
             tbnItemX.Enabled = false;
             m_Saving = true;
-            m_tPanel.SaveThumbnailImage(ThumbnailSize, nItemX, savename);
+            await m_tPanel.SaveThumbnailImageAsync(ThumbnailSize, nItemX, savename);
             this.Close();
         }
 

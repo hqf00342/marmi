@@ -6,51 +6,36 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 /*
 サムネイルパネル
 */
+
 namespace Marmi
 {
     public sealed class ThumbnailPanel : UserControl
     {
-        //共通変数の定義
-        private List<ImageInfo> m_thumbnailSet;     //ImageInfoのリスト, = g_pi.Items
+        private readonly List<ImageInfo> m_thumbnailSet; //ImageInfoのリスト, = g_pi.Items
+        private FormSaveThumbnail m_saveForm;   //サムネイル保存用ダイアログ
+        private int m_mouseHoverItem = -1;      //現在マウスがホバーしているアイテム
 
-        private FormSaveThumbnail m_saveForm;       //サムネイル保存用ダイアログ
-
-        private int m_mouseHoverItem = -1;          //現在マウスがホバーしているアイテム
-
-        //フェードインアニメーション時間
-        //private const long ANIMATE_DURATION = 1000;
-
-        //サムネイルの余白。2014年3月23日変更。間隔狭すぎた
-        private const int PADDING = 10;
-
-        //サムネイルの大きさ。幅＝高さ
-        private int _thumbnailSize;
-
-        //サムネイルBOXのサイズ：幅 = PADDING + THUMBNAIL_SIZE + PADDING
-        private int _thumbBoxWidth;
-
-        //サムネイルBOXのサイズ：高さ = PADDING + THUMBNAIL_SIZE + PADDING + TEXT_HEIGHT + PADDING
-        private int _thumbBoxHeight;
+        private const int PADDING = 10;         //サムネイルの余白。2014年3月23日変更。間隔狭すぎた
+        private int _thumbnailSize;             //サムネイルの大きさ。幅＝高さ
+        private int _thumbBoxWidth;             //サムネイルBOXのサイズ：幅 = PADDING + THUMBNAIL_SIZE + PADDING
+        private int _thumbBoxHeight;            //サムネイルBOXのサイズ：高さ = PADDING + THUMBNAIL_SIZE + PADDING + TEXT_HEIGHT + PADDING
 
         //フォント
         private Font _font;
+
         private Color _fontColor;
         private const string FONTNAME = "ＭＳ ゴシック";
         private const int FONTSIZE = 9;
         private int FONT_HEIGHT; //SetFont()内で設定される。
 
-        //専用イベントの定義
-        //public delegate void ThumbnailEventHandler(object obj, ThumbnailEventArgs e);
-
         public event EventHandler<ThumbnailEventArgs> SavedItemChanged;
 
         //コンテキストメニュー
         private readonly ContextMenuStrip m_ContextMenu = new ContextMenuStrip();
-
-        //private bool _fastDraw = false;
 
         //スクロールタイマー
         private readonly Timer m_scrollTimer = null;
@@ -433,7 +418,9 @@ namespace Marmi
 
             //マウス位置をクライアント座標で取得
             Point pos = this.PointToClient(Cursor.Position);
-            int itemIndex = GetHoverItem(pos);  //ホバー中のアイテム番号
+
+            //ホバー中のアイテム番号
+            int itemIndex = GetHoverItem(pos);
             if (itemIndex == m_mouseHoverItem)
             {
                 //マウスがホバーしているアイテムが変わらないときは何もしない。
@@ -441,59 +428,24 @@ namespace Marmi
             }
 
             //ホバーアイテムが替わっているので再描写
-            int temp = m_mouseHoverItem;
+            int prevIndex = m_mouseHoverItem;
             m_mouseHoverItem = itemIndex;
-            if (temp >= 0)
-                this.Invalidate(GetThumbboxRectanble(temp));
+            if (prevIndex >= 0)
+                this.Invalidate(GetThumbboxRectanble(prevIndex));
             if (itemIndex >= 0)
                 this.Invalidate(GetThumbboxRectanble(itemIndex));
             this.Update();
-            //this.Invalidate();
-            //this.Refresh();
-
-            //ホバーアイテムが替わったことを伝える
-            //m_mouseHoverItem = itemIndex;
 
             //ver1.20 2011年10月9日 再描写が終わったら帰っていい
             if (itemIndex < 0)
                 return;
 
-            //Hoverしているアイテムが替わったことを示すイベントを発生させる
-            //このイベントはメインFormで受け取りStatusBarの表示を変える。
-            //ThumbnailEventArgs he = new ThumbnailEventArgs();
-            //he.HoverItemNumber = m_mouseHoverItem;
-            //he.HoverItemName = m_thumbnailSet[m_mouseHoverItem].filename;
-            //this.OnHoverItemChanged(this, he);
-
-            //ver1.20 イベント通知をやめる
-            //ステータスバーを変更
-            string s = string.Format(
-                "[{0}]{1}",
-                itemIndex + 1,
-                m_thumbnailSet[m_mouseHoverItem].Filename);
+            //ステータスバー変更
+            string s = $"[{itemIndex + 1}]{m_thumbnailSet[m_mouseHoverItem].Filename}";
             Form1._instance.SetStatusbarInfo(s);
-
-            //ToolTipを表示する
-            //string sz = String.Format(
-            //    "{0}\n {1}\n 日付: {2:yyyy年M月d日 H:m:s}\n ファイルサイズ: {3:N0}bytes\n 画像サイズ: {4:N0}x{5:N0}ピクセル",
-            //    Path.GetFileName(m_thumbnailSet[itemIndex].filename),
-            //    Path.GetDirectoryName(m_thumbnailSet[itemIndex].filename),
-            //    m_thumbnailSet[itemIndex].CreateDate,
-            //    m_thumbnailSet[itemIndex].length,
-            //    m_thumbnailSet[itemIndex].originalWidth,
-            //    m_thumbnailSet[itemIndex].originalHeight
-            //);
-            //m_tooltip.Show(sz, this, e.Location, 3000);
-
-            //Timerで表示
-            //m_tooltip.Tag = sz;
-            ////ToolTipにはTextがないのでTagに保存する。Timer内で利用
-            //if (m_tooltipTimer.Enabled)
-            //    m_tooltipTimer.Stop();
-            //m_tooltipTimer.Start();
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override async void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
 
@@ -507,7 +459,7 @@ namespace Marmi
                 }
                 else
                 {
-                    (Form1._instance).SetViewPage(index);
+                    await (Form1._instance).SetViewPage(index);
                     //表示をやめ終了
                     Form1._instance.SetThumbnailView(false);
                     return;
@@ -526,11 +478,6 @@ namespace Marmi
             //fastDraw = true;
             base.OnScroll(se);
         }
-
-        //protected override void OnPaintBackground(PaintEventArgs e)
-        //{
-        //    //base.OnPaintBackground(e);
-        //}
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
@@ -701,17 +648,6 @@ namespace Marmi
 
             if (drawBitmap == null)
             {
-                //画像がないときは非同期で取ってくる
-                //スタック型の非同期GetBitmapに変更
-                //Bmp.AsyncGetBitmap(item, () =>
-                //{
-                //    //読み込んだらすぐに描写
-                //    if (this.Visible)
-                //    {
-                //        this.Invalidate(GetThumbboxRectanble(item));
-                //    }
-                //});
-
                 AsyncIO.AddJob(item, () =>
                 {
                     //読み込んだらすぐに描写
@@ -732,8 +668,6 @@ namespace Marmi
             else
             {
                 //通常描写
-                //m_thumbnailSet[item].AnimateStartTime = 0;
-
                 //影の描写
                 Rectangle frameRect = imageRect;
                 if (App.Config.IsDrawThumbnailShadow)
@@ -781,7 +715,7 @@ namespace Marmi
         /// </summary>
         /// <param name="g"></param>
         /// <param name="item"></param>
-        private async Task DrawItemHQ2(Graphics g, int item)
+        private async Task DrawItemHQ2Async(Graphics g, int item)
         {
             //対象矩形を背景色で塗りつぶす.
             g.FillRectangle(
@@ -1124,7 +1058,7 @@ namespace Marmi
         /// <param name="numX">サムネイルの横方向の画像数</param>
         /// <param name="FilenameCandidate">保存するファイル名</param>
         /// <returns>原則true、保存しなかった場合はfalse</returns>
-        public bool SaveThumbnailImage(int thumbSize, int numX, string FilenameCandidate)
+        public async Task<bool> SaveThumbnailImageAsync(int thumbSize, int numX, string FilenameCandidate)
         {
             //初期化済みか確認
             if (m_thumbnailSet == null)
@@ -1160,7 +1094,7 @@ namespace Marmi
                     using (Graphics dummyg = Graphics.FromImage(dummyBmp))
                     {
                         //高品質画像を描写
-                        DrawItemHQ2(dummyg, item);
+                        await DrawItemHQ2Async(dummyg, item);
 
                         //ダミーに描写した画像を描写する。
                         Rectangle r = GetThumbboxRectanble(item);
