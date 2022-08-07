@@ -50,8 +50,7 @@ namespace Marmi
             isThumbFadein.Checked = set.IsThumbFadein;
 
             //ルーペ関連
-            isOriginalSizeLoupe.Checked = set.IsOriginalSizeLoupe;
-            loupeMag.Text = set.loupeMagnifcant.ToString();
+            LoadLoupeConfig(set);
 
             //ver1.09 書庫関連
             isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
@@ -114,6 +113,12 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             useUnsharpMask.Checked = set.UseUnsharpMask;
             unsharpDepth.Value = (decimal)set.UnsharpDepth;
+        }
+
+        private void LoadLoupeConfig(AppGlobalConfig set)
+        {
+            isOriginalSizeLoupe.Checked = set.Loupe.IsOriginalSizeLoupe;
+            loupeMag.Text = set.Loupe.loupeMagnifcant.ToString();
         }
 
         private void LoadMouseConfig(AppGlobalConfig set)
@@ -183,10 +188,6 @@ namespace Marmi
             set.IsShowTPPicSize = isShowTPPicSize.Checked;
             set.IsThumbFadein = isThumbFadein.Checked;
 
-            //ルーペ関連
-            set.IsOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
-            if (!int.TryParse(loupeMag.Text, out set.loupeMagnifcant))
-                set.loupeMagnifcant = 3;
 
             //ver1.09 書庫関連
             set.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
@@ -243,6 +244,9 @@ namespace Marmi
             //マウスコンフィグ
             SaveMouseConfig(ref set);
 
+            //ルーペ関連
+            SaveLoupeConfig(ref set);
+
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
             //ver1.81サムネイルのアニメーション効果
@@ -250,6 +254,13 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             set.UseUnsharpMask = useUnsharpMask.Checked;
             set.UnsharpDepth = (int)unsharpDepth.Value;
+        }
+
+        private void SaveLoupeConfig(ref AppGlobalConfig set)
+        {
+            set.Loupe.IsOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
+            if (!int.TryParse(loupeMag.Text, out set.Loupe.loupeMagnifcant))
+                set.Loupe.loupeMagnifcant = 3;
         }
 
         private void SaveMouseConfig(ref AppGlobalConfig set)

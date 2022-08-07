@@ -58,9 +58,6 @@ namespace Marmi
         public int CacheSize { get; set; }                       //memModel == userDefinedのときのキャッシュサイズ[MB]
 
         //ルーペ関連
-        public int loupeMagnifcant;                //ルーペ倍率
-
-        public bool IsOriginalSizeLoupe { get; set; }            // ルーペを原寸表示とするかどうか。
 
         public bool IsFastDrawAtResize { get; set; }             // 高速描写をするかどうか
 
@@ -207,6 +204,8 @@ namespace Marmi
 
         public MouseConfig Mouse { get; set; } = new MouseConfig();
 
+        public LoupeConfig Loupe { get; set; } = new LoupeConfig();
+
         /*******************************************************************************/
 
         /// <summary>
@@ -257,9 +256,7 @@ namespace Marmi
             IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
             //IsThumbFadein = false;
 
-            //ルーペタブ
-            loupeMagnifcant = 3;
-            IsOriginalSizeLoupe = true;
+
 
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
@@ -336,6 +333,10 @@ namespace Marmi
             Keys.Init();
 
             //ver1.91 マウスコンフィグ 2022年8月7日
+            Mouse.Init();
+
+            //ver1.91 ルーペコンフィグ 2022年8月7日
+            Loupe.Init();
         }
 
         /// <summary>

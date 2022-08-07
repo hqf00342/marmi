@@ -121,6 +121,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
     <Compile Include="DataModel\KeyConfig.cs" />
+    <Compile Include="DataModel\LoupeConfig.cs" />
     <Compile Include="DataModel\MouseConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
     <Compile Include="enums\DrawStatus.cs" />

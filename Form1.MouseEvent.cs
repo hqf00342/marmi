@@ -264,7 +264,7 @@ namespace Marmi
             float ratio = PicPanel.ZoomRatio;   //拡縮率をローカルに取る
 
             //原寸ルーペ設定が有効 && 100%未満表示である.99%にしておく
-            if (App.Config.IsOriginalSizeLoupe && ratio < 0.99F)
+            if (App.Config.Loupe.IsOriginalSizeLoupe && ratio < 0.99F)
             {
                 //ver1.27 左上座標に補正
                 //元画像サイズをローカルに取る
@@ -292,7 +292,7 @@ namespace Marmi
                 //loupe.DrawLoupeFast2(mouseX - cRect.Left, mouseY - cRect.Top);	//ver0.986サイドバー補正
 
                 //ver1.27 左上座標に補正
-                double mag = App.Config.loupeMagnifcant;
+                double mag = App.Config.Loupe.loupeMagnifcant;
                 double x9 = ((mag - 1.0d) / mag) * (double)mouseX;
                 double y9 = ((mag - 1.0d) / mag) * (double)mouseY;
                 loupe.DrawLoupeFast3((int)x9, (int)y9);
@@ -310,14 +310,12 @@ namespace Marmi
             //ver0.990 2011/07/21全画面ルーペ
             int dx = cRect.Width;
             int dy = cRect.Height;
-            int mag = App.Config.loupeMagnifcant;
+            int mag = App.Config.Loupe.loupeMagnifcant;
 
             loupe = new Loupe(this, dx, dy, mag);
             this.Controls.Add(loupe);
 
-            //ルーペの位置を決める。縦方向は上
-            //loupe.Top = GetClientRectangle().Top;
-            //loupe.Left = GetClientRectangle().Left;	// =0と想定
+            //ルーペの位置を決める。
             loupe.Top = cRect.Top;
             loupe.Left = cRect.Left;
 
@@ -326,7 +324,7 @@ namespace Marmi
                 loupe.Visible = true;
 
             //ステータスバー表示
-            if (App.Config.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
+            if (App.Config.Loupe.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
                 && PicPanel.ZoomRatio < 1.0F)           //表示倍率が100%以下
             {
                 SetStatubarRatio("ルーペ（100%表示）");
@@ -336,8 +334,8 @@ namespace Marmi
                 //%表示
                 SetStatubarRatio(
                     string.Format("ルーペ:{0}倍（{1,0:p1}表示）",
-                        App.Config.loupeMagnifcant,
-                        (double)(PicPanel.ZoomRatio * App.Config.loupeMagnifcant)
+                        App.Config.Loupe.loupeMagnifcant,
+                        (double)(PicPanel.ZoomRatio * App.Config.Loupe.loupeMagnifcant)
                         ));
             }
         }
