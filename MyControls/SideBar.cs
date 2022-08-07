@@ -577,8 +577,7 @@ namespace Marmi
                 //その後サムネイル登録.タイマーが止まってから実行
                 if (m_scrollTimer == null || !m_scrollTimer.Enabled)
                 {
-                    Debug.WriteLine("Sidebar AsyncGetBitmap()");
-                    await Bmp.LoadBitmapAsync(index);
+                    await Bmp.LoadBitmapAsync(index, false);
                     if (this.Visible)
                         this.Invalidate();
                 }

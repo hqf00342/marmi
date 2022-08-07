@@ -1,64 +1,19 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Marmi
 {
     public static class Bmp
     {
         /// <summary>
-        /// 非同期でBitmapを読み込む。
-        /// 実質にはAsyncIOスレッド内で実行される。
-        /// 読み込むとキャッシュに保存される。
-        /// 読み込み終わった後に実行するuiActionを設定可能。
+        /// Bitmapを取得
         /// </summary>
-        /// <param name="index">対象画像ののインデックス番号</param>
-        /// <param name="uiAction">読み込み完了後に実行するAction</param>
-        //[Obsolete("GetBitmapAsync()への移行推奨")]
-
-        //public static void AsyncGetBitmap(int index, Action uiAction)
-        //{
-        //    //キャッシュを持っていれば非同期しない
-        //    if (App.g_pi.Items[index].CacheImage.HasImage)
-        //    {
-        //        uiAction?.Invoke();
-        //    }
-
-        //    //ver1.54 HighQueueとして登録されているかどうか確認する。
-        //    //ToDo:2021年2月22日 この方法ではuiActionが実行されない。
-        //    var array = AsyncIO.GetAllJob();
-        //    foreach (var elem in array)
-        //    {
-        //        if (elem.Key == index)
-        //        {
-        //            Debug.WriteLine($"AsyncGetBitmap() : Skip. {index} is already queued.");
-        //            return;
-        //        }
-        //    }
-
-        //    //非同期するためにPush
-        //    AsyncIO.AddJob(index, uiAction);
-        //}
-
-        /// <summary>
-        /// Bitmapを非同期で取得
-        /// </summary>
-        /// <param name="ix"></param>
-        /// <returns></returns>
-        public static async Task<Bitmap> GetBitmapAsync(int ix)
+        /// <param name="ix">画像番号</param>
+        /// <returns>Bitmap</returns>
+        public static async Task<Bitmap> GetBitmapAsync(int ix, bool highPriority)
         {
-            if (!App.g_pi.Items[ix].CacheImage.HasImage)
-            {
-                bool complete = false;
-                AsyncIO.AddJob(ix, () => { complete = true; });
-                await Task.Yield();
-                while (!complete)
-                {
-                    await Task.Delay(10);
-                }
-            }
+            await LoadBitmapAsync(ix, highPriority);
             return App.g_pi.Items[ix].CacheImage.ToBitmap();
         }
 
@@ -68,13 +23,19 @@ namespace Marmi
         /// 画像サイズが欲しいときに利用する。
         /// </summary>
         /// <param name="ix"></param>
-        /// <returns></returns>
-        public static async Task LoadBitmapAsync(int ix)
+        /// <returns>なし</returns>
+        public static async Task LoadBitmapAsync(int ix, bool highPriority)
         {
             if (App.g_pi.Items[ix].CacheImage.HasImage)
                 return;
+
             bool complete = false;
-            AsyncIO.AddJob(ix, () => { complete = true; });
+
+            if(highPriority)
+                AsyncIO.AddJob(ix, () => { complete = true; });
+            else
+                AsyncIO.AddJobLow(ix, () => { complete = true; });
+
             await Task.Yield();
             while (!complete)
             {
@@ -82,94 +43,27 @@ namespace Marmi
             }
         }
 
-
         /// <summary>
-        /// Bitmapを取得する
+        /// 原寸サイズの画像を生成
+        /// 2枚表示する場合は2画像を結合する。
         /// </summary>
-        /// <param name="index">取得したいBitmapのIndex</param>
-        /// <returns>Bitmap。失敗した場合はnull</returns>
-        //[Obsolete("GetBitmapAsync()への移行推奨")]
-        //public static Bitmap SyncGetBitmap(int index)
-        //{
-        //    var bmp = App.g_pi.GetBitmapFromCache(index);
-
-        //    if (bmp != null)
-        //    {
-        //        return bmp;
-        //    }
-        //    else
-        //    {
-        //        bool asyncFinished = false;
-        //        Stopwatch sw = Stopwatch.StartNew();
-        //        AsyncGetBitmap(index, () => asyncFinished = true);
-
-        //        while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-        //            Application.DoEvents();
-        //        sw.Stop();
-
-        //        if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-        //            return App.g_pi.GetBitmapFromCache(index);
-        //        else
-        //        {
-        //            Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
-        //            return null;
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// Bitmapサイズを取得する
-        /// Bitmap化しないだけ速いはず。
-        /// </summary>
-        /// <param name="index">取得したいBitmapのIndex</param>
-        /// <returns>サイズ</returns>
-        //[Obsolete("LoadBitmapAsync()への移行推奨")]
-
-        //internal static Size SyncGetBitmapSize(int index)
-        //{
-        //    if (App.g_pi.Items[index].HasInfo)
-        //        return App.g_pi.Items[index].ImgSize;
-        //    else
-        //    {
-        //        //非同期のGetBitmap()を読み終わるまで待つ
-        //        bool asyncFinished = false;
-        //        var sw = Stopwatch.StartNew();
-        //        AsyncGetBitmap(index, () => asyncFinished = true);
-        //        while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-        //            Application.DoEvents();
-        //        sw.Stop();
-
-        //        if (App.g_pi.Items[index].HasInfo)
-        //            return App.g_pi.Items[index].ImgSize;
-        //        else
-        //            return Size.Empty;
-        //    }
-        //}
-
-        internal async static Task<Bitmap> MakeOriginalSizeImageAsync(int index)
+        /// <param name="index">画像番号</param>
+        /// <returns></returns>
+        internal static async Task<Bitmap> MakeOriginalSizeImageAsync(int index)
         {
             Debug.WriteLine($"MakeOriginalSizeImage({index})");
 
             //とりあえず1枚読め！
-            //Bitmap bmp1 = SyncGetBitmap(index);
-            var bmp1 = await GetBitmapAsync(index);
+            var bmp1 = await GetBitmapAsync(index, true);
             if (bmp1 == null)
             {
-                //if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
-                //    PicPanel.Message = "画像ファイルを展開中です";
-                //else
-                //    PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
                 return null;
             }
 
-            //ver1.81 サムネイル登録：2021年2月25日コメントアウト
-            //App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
-
-            if (App.Config.DualView && await Form1.CanDualView(index))
+            if (App.Config.DualView && await Form1.CanDualViewAsync(index))
             {
                 //2枚表示
-                //Bitmap bmp2 = SyncGetBitmap(index + 1);
-                Bitmap bmp2 = await GetBitmapAsync(index + 1);
+                Bitmap bmp2 = await GetBitmapAsync(index + 1, true);
                 if (bmp2 == null)
                 {
                     //2枚目の読み込みがエラーなので1枚表示にする
@@ -177,40 +71,34 @@ namespace Marmi
                     return bmp1;
                 }
 
-                //ver1.81 サムネイル登録：2021年2月25日コメントアウト
-                //App.g_pi.AsyncThumnailMaker(index + 1, bmp2.Clone() as Bitmap);
+                //2枚合成ページを作る
+                var returnBmp = new Bitmap(
+                    bmp1.Width + bmp2.Width,
+                    (bmp1.Height > bmp2.Height) ? bmp1.Height : bmp2.Height);
 
-                //合成ページを作る
-                int width1 = bmp1.Width;
-                int width2 = bmp2.Width;
-                int height1 = bmp1.Height;
-                int height2 = bmp2.Height;
-                Bitmap returnBmp = new Bitmap(
-                    width1 + width2,
-                    (height1 > height2) ? height1 : height2);
-
-                using (Graphics g = Graphics.FromImage(returnBmp))
+                using (var g = Graphics.FromImage(returnBmp))
                 {
                     g.Clear(App.Config.BackColor);
                     if (App.g_pi.PageDirectionIsLeft)
                     {
                         //左から右へ
                         //2枚目(左）を描写
-                        g.DrawImage(bmp2, 0, 0, width2, height2);
+                        g.DrawImage(bmp2, 0, 0, bmp2.Width, bmp2.Height);
                         //1枚目（右）を描写
-                        g.DrawImage(bmp1, width2, 0, width1, height1);
+                        g.DrawImage(bmp1, bmp2.Width, 0, bmp1.Width, bmp1.Height);
                     }
                     else
                     {
                         //右から左へ
                         //2枚目(左）を描写
-                        g.DrawImage(bmp1, 0, 0, width1, height1);
+                        g.DrawImage(bmp1, 0, 0, bmp1.Width, bmp1.Height);
                         //1枚目（右）を描写
-                        g.DrawImage(bmp2, width1, 0, width2, height2);
+                        g.DrawImage(bmp2, bmp1.Width, 0, bmp2.Width, bmp2.Height);
                     }
                 }
                 bmp1.Dispose();
                 bmp2.Dispose();
+
                 returnBmp.Tag = 2;
                 return returnBmp;
             }

@@ -349,7 +349,7 @@ namespace Marmi
                 //ver1.81 “Ç‚İ‚İƒ‹[ƒ`ƒ“‚ğPushLow()‚É•ÏX
                 if (_timer == null || !_timer.Enabled)
                 {
-                    await Bmp.LoadBitmapAsync(index);
+                    await Bmp.LoadBitmapAsync(index, false);
                     CalcAllItemPos();
                     if (this.Visible)
                         this.Invalidate();

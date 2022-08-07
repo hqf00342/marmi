@@ -13,7 +13,7 @@ namespace Marmi
         public static readonly int DEFAULT_THUMBNAIL_SIZE = 400;
 
         //現在見ているパッケージ情報
-        public static PackageInfo g_pi = null;
+        public static PackageInfo g_pi = new PackageInfo();
 
         //アプリ名。タイトルとして利用
         internal const string APPNAME = "Marmi";

@@ -13,13 +13,6 @@ namespace Marmi
 {
     public partial class Form1 : Form, IRemoteObject
     {
-        //コンフィグ。ただ１つだけ存在。App.Configに移動
-        //読み込みは Program.csで行っている。
-        //public static AppGlobalConfig g_onfig;
-
-        //現在見ているパッケージ情報. Appクラスへ移動
-        //public static PackageInfo App.g_pi = null;
-
         //Form1参照用ハンドル
         public static Form1 _instance;
 
@@ -63,22 +56,12 @@ namespace Marmi
 
         #endregion --- データクラス ---
 
-        //非同期全展開用SevenZipWrapper
-        //private SevenZipWrapper m_AsyncSevenZip = null;
 
-        //フラグ類
-        //サムネイルを作るか。1000個以上あったときのフラグ
-        //private bool g_makeThumbnail = true;
         //マウスクリックされた位置を保存。ドラッグ操作用
         private Point g_LastClickPoint = Point.Empty;
 
-        //private static volatile ThreadStatus tsThumbnail = ThreadStatus.STOP;   //スレッドの状況を見る
-
         //ver1.51 事前のScreenCacheを作るかどうかのフラグ
         private bool needMakeScreenCache = false;
-
-        //BeginInvoke用Delegate
-        //private delegate void StatusbarRenew(string s);
 
         //ver1.35 スライドショータイマー
         private readonly System.Windows.Forms.Timer SlideShowTimer = new System.Windows.Forms.Timer();
@@ -95,8 +78,7 @@ namespace Marmi
             this.AutoScaleMode = AutoScaleMode.Dpi;
             //this.DpiChanged += Form1_DpiChanged;
 
-            ////設定ファイルの読み込みはProgram.csで実施
-            ////App.Config = (AppGlobalConfig)LoadFromXmlFile();
+            //設定ファイルの読み込みはProgram.csで実施
 
             //コントロールを追加。ツールストリップは最後に追加
             MyInitializeComponent();
@@ -114,14 +96,6 @@ namespace Marmi
             this.SetStyle(ControlStyles.Opaque, true);
             Application.Idle += Application_Idle;
 
-            //zオーダーを初期化
-            //SetFullScreen(false);
-            //ver1.77 フルスクリーン状態の保存に対応
-            //if (App.Config.saveFullScreenMode)
-            //	SetFullScreen(App.Config.isFullScreen);
-            //else
-            //	SetFullScreen(false);
-
             //ツールバーの文字を設定 ver1.67
             SetToolbarString();
 
@@ -129,14 +103,15 @@ namespace Marmi
             AsyncIO.StartThread();
         }
 
+        /// <summary>コンストラクタから一度だけ呼ばれる</summary>
         private void MyInitializeComponent()
         {
-            App.g_pi = new PackageInfo();
-
+            //
+            // PicPanel
+            //
             this.Controls.Add(PicPanel);
             PicPanel.Enabled = true;
             PicPanel.Visible = true;
-            //PicPanel.Left = 0;	//ver1.62コメントアウト
             PicPanel.Width = ClientRectangle.Width;
             PicPanel.BackColor = App.Config.BackColor;
             PicPanel.MouseClick += (s, e) => OnMouseClick(e);
@@ -885,15 +860,17 @@ namespace Marmi
         private void AsyncLoadImageInfo()
         {
             //ver1.54 2013年5月7日
+            //全画像読込をスタックに積む
             for (int cnt = 0; cnt < App.g_pi.Items.Count; cnt++)
             {
                 //ラムダ式の外で文字列作成
-                string s = $"画像情報読み込み中...{cnt + 1}/{App.g_pi.Items.Count}";
+                var msg = $"画像情報読み込み中...{cnt + 1}/{App.g_pi.Items.Count}";
 
-                //スタックに入れる
-                AsyncIO.AddJobLow(-1, () =>
+
+                //サムネイルを作成するだけなのでawaitせず高速に回す。
+                AsyncIO.AddJobLow(cnt, () =>
                 {
-                    SetStatusbarInfo(s);
+                    SetStatusbarInfo(msg);
                     //読み込んだものをPurge対象にする
                     App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
                 });
@@ -1464,7 +1441,7 @@ namespace Marmi
             {
                 int declimentPages = -1;
                 //2ページ減らすことが出来るか
-                if (await CanDualView(App.g_pi.NowViewPage - 2))
+                if (await CanDualViewAsync(App.g_pi.NowViewPage - 2))
                     declimentPages = -2;
 
                 int ret = index + declimentPages;
@@ -1480,7 +1457,7 @@ namespace Marmi
         //ver1.36次のページ番号。すでに最終ページなら-1
         internal static async Task<int> GetNextPageIndexAsync(int index)
         {
-            int pages = await CanDualView(index) ? 2 : 1;
+            int pages = await CanDualViewAsync(index) ? 2 : 1;
 
             if (index + pages <= App.g_pi.Items.Count - 1)
             {
@@ -1655,7 +1632,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス値</param>
         /// <returns>2画面表示できるときはtrue</returns>
-        public static async Task<bool> CanDualView(int index)
+        public static async Task<bool> CanDualViewAsync(int index)
         {
             //最後のページになっていないか確認
             if (index >= App.g_pi.Items.Count - 1 || index < 0)
@@ -1672,14 +1649,14 @@ namespace Marmi
             //1枚目チェック
             //if (!App.g_pi.Items[index].HasInfo)
             //    Bmp.SyncGetBitmapSize(index);
-            await Bmp.LoadBitmapAsync(index);
+            await Bmp.LoadBitmapAsync(index, true);
             if (App.g_pi.Items[index].IsFat)
                 return false; //横長だった
 
             //２枚目チェック
             //if (!App.g_pi.Items[index + 1].HasInfo)
             //    Bmp.SyncGetBitmapSize(index + 1);
-            await Bmp.LoadBitmapAsync(index + 1);
+            await Bmp.LoadBitmapAsync(index + 1, true);
             if (App.g_pi.Items[index + 1].IsFat)
                 return false; //横長だった
 

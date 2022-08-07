@@ -631,7 +631,7 @@ namespace Marmi
         /// </summary>
         /// <param name="g">Graphics</param>
         /// <param name="item">アイテム番号</param>
-        private void DrawItem3(Graphics g, int item)
+        private async Task DrawItem3(Graphics g, int item)
         {
             //描写位置の決定
             Rectangle thumbnailBoxRect = GetThumbboxRectanble(item);
@@ -649,14 +649,20 @@ namespace Marmi
 
             if (drawBitmap == null)
             {
-                AsyncIO.AddJob(item, () =>
+                await Bmp.LoadBitmapAsync(item, false);
+                if (this.Visible)
                 {
-                    //読み込んだらすぐに描写
-                    if (this.Visible)
-                    {
-                        this.Invalidate(GetThumbboxRectanble(item));
-                    }
-                });
+                    this.Invalidate(GetThumbboxRectanble(item));
+                }
+
+                //AsyncIO.AddJob(item, () =>
+                //{
+                //    //読み込んだらすぐに描写
+                //    if (this.Visible)
+                //    {
+                //        this.Invalidate(GetThumbboxRectanble(item));
+                //    }
+                //});
 
                 //まだ読み込まれていないので枠だけ描写
                 thumbnailBoxRect.Inflate(-PADDING, -PADDING);
@@ -736,8 +742,7 @@ namespace Marmi
                 return;
             }
 
-            //Bitmap drawBitmap = GetBitmap(item);
-            var drawBitmap = await Bmp.GetBitmapAsync(item);
+            var drawBitmap = await Bmp.GetBitmapAsync(item, false);
 
             //フラグ設定
             bool drawFrame = true;          //枠線を描写するか
@@ -817,26 +822,6 @@ namespace Marmi
         }
 
         //*** 描写支援ルーチン ****************************************************************
-
-        //private Bitmap GetBitmap(int item)
-        //{
-        //    //Form1::GetBitmap()を使うので親ウィンドウチェック
-        //    if (Parent == null)
-        //        return null;
-
-        //    //画像読み込み
-        //    Bitmap orgBitmap = null;
-        //    if (InvokeRequired)
-        //    {
-        //        this.Invoke((Action)(() => orgBitmap = Bmp.SyncGetBitmap(item)));
-        //    }
-        //    else
-        //    {
-        //        orgBitmap = Bmp.SyncGetBitmap(item);
-        //    }
-
-        //    return orgBitmap;
-        //}
 
         /// <summary>
         /// 再描写関数
