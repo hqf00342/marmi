@@ -1253,7 +1253,6 @@ namespace Marmi
             PicPanel.AjustViewAndShow();
 
             //1ページ表示か2ページ表示か
-            //viewPages = CanDualView(index) ? 2 : 1;
             g_viewPages = (int)screenImage.Tag;
             PicPanel.State = DrawStatus.idle;
 
@@ -1634,7 +1633,7 @@ namespace Marmi
         /// <returns>2画面表示できるときはtrue</returns>
         public static async Task<bool> CanDualViewAsync(int index)
         {
-            //最後のページになっていないか確認
+            //最後のページならfalse
             if (index >= App.g_pi.Items.Count - 1 || index < 0)
                 return false;
 
@@ -1642,21 +1641,27 @@ namespace Marmi
             if (!App.Config.DualView)
                 return false;
 
-            //ver1.79判定なしの2ページ表示
+            //ver1.79：2ページ強制表示
             if (App.Config.DualView_Force)
                 return true;
 
-            //1枚目チェック
-            //if (!App.g_pi.Items[index].HasInfo)
-            //    Bmp.SyncGetBitmapSize(index);
-            await Bmp.LoadBitmapAsync(index, true);
-            if (App.g_pi.Items[index].IsFat)
-                return false; //横長だった
+            //1枚目読み込み
+            if (App.g_pi.Items[index].ImgSize == Size.Empty)
+            {
+                await Bmp.LoadBitmapAsync(index, true);
+            }
 
-            //２枚目チェック
-            //if (!App.g_pi.Items[index + 1].HasInfo)
-            //    Bmp.SyncGetBitmapSize(index + 1);
-            await Bmp.LoadBitmapAsync(index + 1, true);
+            //1枚目が横長ならfalse
+            if (App.g_pi.Items[index].IsFat)
+                return false;
+
+            //2枚目読み込み
+            if (App.g_pi.Items[index+1].ImgSize == Size.Empty)
+            {
+                await Bmp.LoadBitmapAsync(index + 1, true);
+            }
+
+            //2枚目が横長ならfalse
             if (App.g_pi.Items[index + 1].IsFat)
                 return false; //横長だった
 
