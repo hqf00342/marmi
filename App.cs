@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -45,6 +46,22 @@ namespace Marmi
             internal static Cursor Right = new Cursor(iconRightFinger.Handle);
             internal static Cursor Loupe = new Cursor(iconLoope.Handle);
             internal static Cursor OpenHand = new Cursor(iconHandOpen.Handle);
+        }
+
+        /// <summary>
+        /// その気になったら使おう
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void SetStatusbarInfo(string msg)
+        {
+            if(Form1._instance.InvokeRequired)
+            {
+                Form1._instance.BeginInvoke( (Action)(()=> { SetStatusbarInfo(msg); }));;
+            }
+            else
+            {
+                Form1._instance.SetStatusbarInfo(msg);
+            }
         }
     }
 }
