@@ -117,7 +117,7 @@ namespace Marmi
             base.OnMouseDoubleClick(e);
 
             //ver1.80 全画面をダブルクリックで対応するオプション導入
-            if (App.Config.DoubleClickToFullscreen)
+            if (App.Config.Mouse.DoubleClickToFullscreen)
                 ToggleFullScreen();
 
             if (e.Button == MouseButtons.Left)

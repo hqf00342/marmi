@@ -352,7 +352,7 @@ namespace Marmi
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             //ver1.80 全画面をダブルクリックで対応するオプション導入
-            if (App.Config.DoubleClickToFullscreen)
+            if (App.Config.Mouse.DoubleClickToFullscreen)
             {
                 base.OnMouseDoubleClick(e);
             }

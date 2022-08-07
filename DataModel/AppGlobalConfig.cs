@@ -1,10 +1,10 @@
 using Marmi.DataModel;
 using System;
 using System.Collections.Generic;
-using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
+using System.Drawing;
 using System.IO;
-using System.Windows.Forms;		//Application
-using System.Xml.Serialization;			// XmlSerializer
+using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Marmi
 {
@@ -23,7 +23,7 @@ namespace Marmi
 
         public static string ConfigFilename => Path.Combine(Application.StartupPath, CONFIGNAME);
 
-        public bool DualView { get; set; }                       //2画面並べて表示
+        public bool DualView { get; set; }          //2画面並べて表示
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
 
@@ -39,22 +39,13 @@ namespace Marmi
         public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
         public bool VisibleNavibar { get; set; }                 //ナビバーの表示
         public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
-
-        //サイドバー関連
-        //public bool isFixSidebar;					//サイドバーを固定にするかどうか
         public int SidebarWidth { get; set; }                    //サイドバーの幅
-
-        //ver1.21画像切り替え方法
-        public AnimateMode PictureSwitchMode { get; set; }
 
         ////ver1.35 スクリーンショー時間[ms]
         public int SlideShowTime { get; set; }
 
         //ver1.62 ツールバーの位置
         public bool IsToolbarTop { get; set; }
-
-        //ver1.70 2枚表示の厳格化
-        //public bool dualview_exactCheck;
 
         //ver1.77 画面モード保存対象にする。
         public bool isFullScreen;
@@ -66,12 +57,10 @@ namespace Marmi
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
 
-        //ver1.80 ダブルクリック
-        public bool DoubleClickToFullscreen { get; set; }
-
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
         public ViewConfig View { get; set; } = new ViewConfig();
+        
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
         public MouseConfig Mouse { get; set; } = new MouseConfig();
@@ -118,9 +107,6 @@ namespace Marmi
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
 
-            // 画面切り替えモード
-            PictureSwitchMode = AnimateMode.Slide;
-
             //ループするかどうか
             //isLoopToTopPage = false;
 
@@ -136,9 +122,6 @@ namespace Marmi
             //ver1.78 倍率の保持
             KeepMagnification = false;
             //ver1.79 書庫は必ず展開
-
-            //ダブルクリック機能を開放する
-            DoubleClickToFullscreen = false;
 
             //ver1.91 コンフィグ分離 2022年8月7日
             General.Init();

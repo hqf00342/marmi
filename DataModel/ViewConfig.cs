@@ -19,6 +19,9 @@
 
         public bool LastPage_toTop { get; set; }
 
+        //ver1.21画像切り替え方法
+        public AnimateMode PictureSwitchMode { get; set; }
+
         public void Init()
         {
             NoEnlargeOver100p = true;
@@ -28,6 +31,7 @@
             DualView_Force = false;
             DualView_Normal = true;
             DualView_withSizeCheck = false;
+            PictureSwitchMode = AnimateMode.Slide;
         }
     }
 }

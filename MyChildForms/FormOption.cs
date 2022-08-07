@@ -40,14 +40,8 @@ namespace Marmi
             //ver1.70 2枚表示の厳密チェック
             //dualview_exactCheck.Checked = set.dualview_exactCheck;
 
-            //画面切り替わり方法
-            SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
-
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
-
-            //ダブルクリックで全画面
-            DoubleClickToFullscreen.Checked = set.DoubleClickToFullscreen;
         }
 
         private void LoadViewConfig(AppGlobalConfig set)
@@ -59,6 +53,7 @@ namespace Marmi
             dualView_Force.Checked = set.View.DualView_Force;
             dualView_Normal.Checked = set.View.DualView_Normal;
             dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
+            SwitchPicMode.SelectedIndex = (int)(set.View.PictureSwitchMode);
         }
 
         private void LoadGeneralConfig(AppGlobalConfig set)
@@ -118,6 +113,7 @@ namespace Marmi
             radioRightScrToNextPic.Checked = set.Mouse.RightScrClickIsNextPic;
             radioLeftScrToNextPic.Checked = !set.Mouse.RightScrClickIsNextPic;
             reverseClickPointWhenLeftBook.Checked = set.Mouse.ReverseDirectionWhenLeftBook;
+            DoubleClickToFullscreen.Checked = set.Mouse.DoubleClickToFullscreen;
         }
 
         private void LoadKeyConfig(AppGlobalConfig set)
@@ -160,10 +156,6 @@ namespace Marmi
             //サムネイルタブ
             SaveThumbnailConfig(ref set);
 
-            //画面切り替わり方法
-            set.PictureSwitchMode =
-                //(AppGlobalConfig.AnimateMode)SwitchPicMode.SelectedIndex;
-                (AnimateMode)SwitchPicMode.SelectedIndex;
             //拡大表示関連
             SaveViewConfig(ref set);
 
@@ -183,9 +175,6 @@ namespace Marmi
             SaveMouseConfig(ref set);
             SaveLoupeConfig(ref set);
             SaveAdvanceConfig(ref set);
-
-            //1.80 ダブルクリックで全画面
-            set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
         }
 
         private void SaveViewConfig(ref AppGlobalConfig set)
@@ -197,6 +186,7 @@ namespace Marmi
             set.View.DualView_Force = dualView_Force.Checked;
             set.View.DualView_Normal = dualView_Normal.Checked;
             set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
+            set.View.PictureSwitchMode = (AnimateMode)SwitchPicMode.SelectedIndex;
         }
 
         private void SaveGnereralConfig(ref AppGlobalConfig set)
@@ -254,6 +244,7 @@ namespace Marmi
             //ver1.64 画面ナビ
             set.Mouse.RightScrClickIsNextPic = radioRightScrToNextPic.Checked;
             set.Mouse.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
+            set.Mouse.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
         }
 
         private void SaveKeyConfig(ref AppGlobalConfig set)

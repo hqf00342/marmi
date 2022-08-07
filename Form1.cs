@@ -1224,7 +1224,7 @@ namespace Marmi
             //ver1.50 表示
             PicPanel.State = DrawStatus.drawing;
             PicPanel.Message = string.Empty;
-            if (App.Config.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
+            if (App.Config.View.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
                 && !App.Config.KeepMagnification                  //倍率固定モードではアニメーションしない
                 && pageDirection != 0)
             {

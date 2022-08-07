@@ -31,7 +31,7 @@ namespace Marmi
 
             bool complete = false;
 
-            if(highPriority)
+            if (highPriority)
                 AsyncIO.AddJob(ix, () => { complete = true; });
             else
                 AsyncIO.AddJobLow(ix, () => { complete = true; });
