@@ -373,7 +373,7 @@ namespace Marmi
                 needMakeScreenCache = false;
                 await ScreenCache.MakeCacheForPreAndNextPagesAsync();
                 ScreenCache.Purge();
-                App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
+                App.g_pi.FileCacheCleanUp2(App.Config.Advance.CacheSize);
             }
         }
 
@@ -872,7 +872,7 @@ namespace Marmi
                 {
                     SetStatusbarInfo(msg);
                     //読み込んだものをPurge対象にする
-                    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
+                    App.g_pi.FileCacheCleanUp2(App.Config.Advance.CacheSize);
                 });
             }
             //読み込み完了メッセージ

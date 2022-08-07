@@ -51,12 +51,12 @@ namespace Marmi
 
             //ルーペ関連
             LoadLoupeConfig(set);
+            LoadMouseConfig(set);
+            LoadAdvanceConfig(set);
 
             //ver1.09 書庫関連
             isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
 
-            //マウスコンフィグ
-            LoadMouseConfig(set);
 
             //画面切り替わり方法
             SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
@@ -113,6 +113,12 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             useUnsharpMask.Checked = set.UseUnsharpMask;
             unsharpDepth.Value = (decimal)set.UnsharpDepth;
+        }
+
+
+        private void LoadAdvanceConfig(AppGlobalConfig set)
+        {
+            tb_cachesize.Text = set.Advance.CacheSize.ToString();
         }
 
         private void LoadLoupeConfig(AppGlobalConfig set)
@@ -240,12 +246,9 @@ namespace Marmi
 
             //ver1.91 キーコンフィグ
             SaveKeyConfig(ref set);
-
-            //マウスコンフィグ
             SaveMouseConfig(ref set);
-
-            //ルーペ関連
             SaveLoupeConfig(ref set);
+            SaveAdvanceConfig(ref set);
 
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
@@ -256,11 +259,15 @@ namespace Marmi
             set.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
+        private void SaveAdvanceConfig(ref AppGlobalConfig set)
+        {
+            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs: 100;
+        }
+
         private void SaveLoupeConfig(ref AppGlobalConfig set)
         {
             set.Loupe.IsOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
-            if (!int.TryParse(loupeMag.Text, out set.Loupe.loupeMagnifcant))
-                set.Loupe.loupeMagnifcant = 3;
+            set.Loupe.loupeMagnifcant = int.TryParse(loupeMag.Text, out var m) ? m : 3;
         }
 
         private void SaveMouseConfig(ref AppGlobalConfig set)

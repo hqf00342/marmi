@@ -131,6 +131,9 @@
             this.ka_lastpage2 = new Marmi.KeyAccelerator();
             this.ka_nexthalf2 = new Marmi.KeyAccelerator();
             this.ka_prevhalf2 = new Marmi.KeyAccelerator();
+            this.label12 = new System.Windows.Forms.Label();
+            this.ka_rotate1 = new Marmi.KeyAccelerator();
+            this.ka_rotate2 = new Marmi.KeyAccelerator();
             this.Mouse = new System.Windows.Forms.TabPage();
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -145,7 +148,7 @@
             this.radioLeftScrToNextPic = new System.Windows.Forms.RadioButton();
             this.radioRightScrToNextPic = new System.Windows.Forms.RadioButton();
             this.Detail = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_cachesize = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.bStopPaintingAtResize = new System.Windows.Forms.CheckBox();
@@ -158,9 +161,6 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label12 = new System.Windows.Forms.Label();
-            this.ka_rotate1 = new Marmi.KeyAccelerator();
-            this.ka_rotate2 = new Marmi.KeyAccelerator();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
@@ -1491,6 +1491,37 @@
             this.ka_prevhalf2.Tag = "半ページ戻る(2)";
             this.ka_prevhalf2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 159);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 12);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "回転";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_rotate1
+            // 
+            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
+            this.ka_rotate1.Name = "ka_rotate1";
+            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate1.TabIndex = 12;
+            this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
+            // 
+            // ka_rotate2
+            // 
+            this.ka_rotate2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate2.keyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate2.Location = new System.Drawing.Point(244, 157);
+            this.ka_rotate2.Name = "ka_rotate2";
+            this.ka_rotate2.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate2.TabIndex = 13;
+            this.ka_rotate2.Tag = "ファイルをゴミ箱へ";
+            // 
             // Mouse
             // 
             this.Mouse.Controls.Add(this.DoubleClickToFullscreen);
@@ -1662,7 +1693,7 @@
             // 
             // Detail
             // 
-            this.Detail.Controls.Add(this.textBox1);
+            this.Detail.Controls.Add(this.tb_cachesize);
             this.Detail.Controls.Add(this.label22);
             this.Detail.Controls.Add(this.label21);
             this.Detail.Controls.Add(this.bStopPaintingAtResize);
@@ -1675,13 +1706,13 @@
             this.Detail.Text = "高度な設定";
             this.Detail.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tb_cachesize
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(148, 40);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(45, 19);
-            this.textBox1.TabIndex = 11;
+            this.tb_cachesize.Enabled = false;
+            this.tb_cachesize.Location = new System.Drawing.Point(148, 40);
+            this.tb_cachesize.Name = "tb_cachesize";
+            this.tb_cachesize.Size = new System.Drawing.Size(45, 19);
+            this.tb_cachesize.TabIndex = 11;
             // 
             // label22
             // 
@@ -1775,37 +1806,6 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 159);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 12);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "回転";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ka_rotate1
-            // 
-            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_rotate1.keyData = System.Windows.Forms.Keys.None;
-            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
-            this.ka_rotate1.Name = "ka_rotate1";
-            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
-            this.ka_rotate1.TabIndex = 12;
-            this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
-            // 
-            // ka_rotate2
-            // 
-            this.ka_rotate2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_rotate2.keyData = System.Windows.Forms.Keys.None;
-            this.ka_rotate2.Location = new System.Drawing.Point(244, 157);
-            this.ka_rotate2.Name = "ka_rotate2";
-            this.ka_rotate2.Size = new System.Drawing.Size(120, 16);
-            this.ka_rotate2.TabIndex = 13;
-            this.ka_rotate2.Tag = "ファイルをゴミ箱へ";
-            // 
             // FormOption
             // 
             this.AcceptButton = this.btnOK;
@@ -1897,7 +1897,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox isExtractIfSolidArchive;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox tb_cachesize;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.CheckBox isThumbFadein;

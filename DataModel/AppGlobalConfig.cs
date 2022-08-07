@@ -55,8 +55,6 @@ namespace Marmi
         // ver1.35 メモリモデル
         //public MemoryModel memModel;                //メモリーモデル
 
-        public int CacheSize { get; set; }                       //memModel == userDefinedのときのキャッシュサイズ[MB]
-
         //ルーペ関連
 
         public bool IsFastDrawAtResize { get; set; }             // 高速描写をするかどうか
@@ -206,6 +204,9 @@ namespace Marmi
 
         public LoupeConfig Loupe { get; set; } = new LoupeConfig();
 
+
+        public AdvanceConfig Advance { get; set; } = new AdvanceConfig();
+
         /*******************************************************************************/
 
         /// <summary>
@@ -256,8 +257,6 @@ namespace Marmi
             IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
             //IsThumbFadein = false;
 
-
-
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
 
@@ -273,7 +272,6 @@ namespace Marmi
             //zoom
             NoEnlargeOver100p = true;       //画面フィッティングは100%未満にする
             IsDotByDotZoom = false;         //Dot-by-Dot補間モードにする
-            CacheSize = 100;                    //ver1.53 100MB
 
             //ループするかどうか
             //isLoopToTopPage = false;
@@ -329,14 +327,12 @@ namespace Marmi
             UseUnsharpMask = true;
             UnsharpDepth = 25;
 
-            //ver1.91 キーコンフィグ 2022年8月7日
+            //ver1.91 コンフィグ分離 2022年8月7日
             Keys.Init();
-
-            //ver1.91 マウスコンフィグ 2022年8月7日
             Mouse.Init();
-
-            //ver1.91 ルーペコンフィグ 2022年8月7日
             Loupe.Init();
+            Advance.Init();
+            
         }
 
         /// <summary>
