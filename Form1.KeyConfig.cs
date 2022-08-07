@@ -61,6 +61,10 @@ namespace Marmi
             // 終了 ver1.77
             setkey(App.Config.Key_Exit1, () => Application.Exit());
             setkey(App.Config.Key_Exit2, () => Application.Exit());
+            // 回転 ver 1.91
+            setkey(App.Config.Key_Rotate1, () => PicPanel.Rotate());
+            setkey(App.Config.Key_Rotate2, () => PicPanel.Rotate());
+
         }
     }
 }

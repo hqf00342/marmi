@@ -192,18 +192,6 @@ namespace Marmi
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
 
-        //#region OnPropertyChanged
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //private void OnPropertyChanged(string s)
-        //{
-        //    if (PropertyChanged != null)
-        //        PropertyChanged(this, new PropertyChangedEventArgs(s));
-        //}
-
-        //#endregion OnPropertyChanged
-
         //ver1.79 書庫を常に展開するかどうか
         public bool AlwaysExtractArchive { get; set; }
 
@@ -227,6 +215,8 @@ namespace Marmi
         public Keys Key_ViewRatio2 { get; set; }
         public Keys Key_Recycle1 { get; set; }
         public Keys Key_Recycle2 { get; set; }
+        public Keys Key_Rotate1 { get; set; }
+        public Keys Key_Rotate2 { get; set; }
 
         public Keys Key_Nextpage1 { get; set; }
         public Keys Key_Nextpage2 { get; set; }
@@ -306,8 +296,6 @@ namespace Marmi
             IsOriginalSizeLoupe = true;
 
             //サイドバー
-            //isFixSidebar = false;
-            //sidebarWidth = ThumbnailSize + 50;
             SidebarWidth = SIDEBAR_INIT_WIDTH;
 
             //高度な設定
@@ -401,6 +389,10 @@ namespace Marmi
             Key_Toppage2 = Keys.None;
             Key_Lastpage1 = Keys.End;
             Key_Lastpage2 = Keys.None;
+
+            Key_Rotate1 = Keys.R;
+            Key_Rotate1 = Keys.None;
+
 
             //ダブルクリック機能を開放する
             DoubleClickToFullscreen = false;

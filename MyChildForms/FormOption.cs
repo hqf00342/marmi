@@ -56,24 +56,6 @@ namespace Marmi
             //ver1.09 書庫関連
             isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
 
-            //ver1.09 クロスフェード
-            //isCrossfadeTransition.Checked = set.isCrossfadeTransition;
-
-            //ver1.21 キーコンフィグ
-            //ver1.81コメントアウト
-            //keyConfBookmark.Text = set.keyConfBookMark;
-            //keyConfFullScr.Text = set.keyConfFullScr;
-            //keyConfLastPage.Text = set.keyConfLastPage;
-            //keyConfNextPage.Text = set.keyConfNextPage;
-            //keyConfNextPageHalf.Text = set.keyConfNextPageHalf;
-            //keyConfPrevPage.Text = set.keyConfPrevPage;
-            //keyConfPrevPageHalf.Text = set.keyConfPrevPageHalf;
-            //keyConfPrintMode.Text = set.keyConfPrintMode;
-            //keyConfTopPage.Text = set.keyConfTopPage;
-            //keyConfDualMode.Text = set.keyConfDualMode;
-            //keyConfRecycleBin.Text = set.keyConfRecycleBin;
-            //keyConfExitApp.Text = set.keyConfExitApp;
-
             //マウスコンフィグ
             mouseConfigWheel.Text = set.MouseConfigWheel;
 
@@ -140,6 +122,9 @@ namespace Marmi
             ka_viewratio2.keyData = set.Key_ViewRatio2;
             ka_recycle1.keyData = set.Key_Recycle1;
             ka_recycle2.keyData = set.Key_Recycle2;
+            ka_rotate1.keyData = set.Key_Rotate1;
+            ka_rotate2.keyData = set.Key_Rotate2;
+
             //1.80キーコンフィグナビゲーション関連;
             ka_nextpage1.keyData = set.Key_Nextpage1;
             ka_nextpage2.keyData = set.Key_Nextpage2;
@@ -197,23 +182,6 @@ namespace Marmi
             //ver1.09 書庫関連
             set.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
 
-            //ver1.09 クロスフェード
-            //set.isCrossfadeTransition = isCrossfadeTransition.Checked;
-
-            //ver1.21 キーコンフィグ
-            //ver1.81コメントアウト
-            //set.keyConfBookMark = keyConfBookmark.Text;
-            //set.keyConfFullScr = keyConfFullScr.Text;
-            //set.keyConfLastPage = keyConfLastPage.Text;
-            //set.keyConfNextPage = keyConfNextPage.Text;
-            //set.keyConfNextPageHalf = keyConfNextPageHalf.Text;
-            //set.keyConfPrevPage = keyConfPrevPage.Text;
-            //set.keyConfPrevPageHalf = keyConfPrevPageHalf.Text;
-            //set.keyConfPrintMode = keyConfPrintMode.Text;
-            //set.keyConfTopPage = keyConfTopPage.Text;
-            //set.keyConfDualMode = keyConfDualMode.Text;
-            //set.keyConfRecycleBin = keyConfRecycleBin.Text;
-            //set.keyConfExitApp = keyConfExitApp.Text;
 
             //マウスコンフィグ
             set.MouseConfigWheel = mouseConfigWheel.Text;
@@ -281,6 +249,8 @@ namespace Marmi
             set.Key_ViewRatio2 = ka_viewratio2.keyData;
             set.Key_Recycle1 = ka_recycle1.keyData;
             set.Key_Recycle2 = ka_recycle2.keyData;
+            set.Key_Rotate1 = ka_rotate1.keyData;
+            set.Key_Rotate2 = ka_rotate2.keyData;
             //1.80キーコンフィグナビゲーション関連;
             set.Key_Nextpage1 = ka_nextpage1.keyData;
             set.Key_Nextpage2 = ka_nextpage2.keyData;

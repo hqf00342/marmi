@@ -158,6 +158,9 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label12 = new System.Windows.Forms.Label();
+            this.ka_rotate1 = new Marmi.KeyAccelerator();
+            this.ka_rotate2 = new Marmi.KeyAccelerator();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
@@ -1042,6 +1045,9 @@
             this.tableLayoutPanel1.Controls.Add(this.ka_lastpage2, 2, 11);
             this.tableLayoutPanel1.Controls.Add(this.ka_nexthalf2, 2, 12);
             this.tableLayoutPanel1.Controls.Add(this.ka_prevhalf2, 2, 13);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.ka_rotate1, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.ka_rotate2, 2, 7);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 16;
@@ -1769,6 +1775,37 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 159);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 12);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "回転";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_rotate1
+            // 
+            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
+            this.ka_rotate1.Name = "ka_rotate1";
+            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate1.TabIndex = 12;
+            this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
+            // 
+            // ka_rotate2
+            // 
+            this.ka_rotate2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate2.keyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate2.Location = new System.Drawing.Point(244, 157);
+            this.ka_rotate2.Name = "ka_rotate2";
+            this.ka_rotate2.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate2.TabIndex = 13;
+            this.ka_rotate2.Tag = "ファイルをゴミ箱へ";
+            // 
             // FormOption
             // 
             this.AcceptButton = this.btnOK;
@@ -1952,5 +1989,8 @@
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.CheckBox useUnsharpMask;
 		private System.Windows.Forms.NumericUpDown unsharpDepth;
-	}
+        private System.Windows.Forms.Label label12;
+        private KeyAccelerator ka_rotate1;
+        private KeyAccelerator ka_rotate2;
+    }
 }
