@@ -460,7 +460,7 @@ namespace Marmi
                 }
                 else
                 {
-                    await (Form1._instance).SetViewPage(index);
+                    await (Form1._instance).SetViewPageAsync(index);
                     //•\¦‚ğ‚â‚ßI—¹
                     Form1._instance.SetThumbnailView(false);
                     return;

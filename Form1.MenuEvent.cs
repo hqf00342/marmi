@@ -64,22 +64,22 @@ namespace Marmi
 
         private void Menu_ViewNext_Click(object sender, EventArgs e)
         {
-            NavigateToForword();
+            NavigateToForwordAsync();
         }
 
         private void Menu_ViewBack_Click(object sender, EventArgs e)
         {
-            NavigateToBack();
+            NavigateToBackAsync();
         }
 
         private void Menu_ViewTop_Click(object sender, EventArgs e)
         {
-            SetViewPage(0);
+            SetViewPageAsync(0);
         }
 
         private void Menu_ViewEnd_Click(object sender, EventArgs e)
         {
-            SetViewPage(App.g_pi.Items.Count - 1);
+            SetViewPageAsync(App.g_pi.Items.Count - 1);
         }
 
         private void Menu_ViewThumbnail_Click(object sender, EventArgs e)
@@ -151,7 +151,7 @@ namespace Marmi
                 if (App.g_pi.NowViewPage > 0)
                 {
                     //g_pi.NowViewPage -= 1;	//半ページ戻し
-                    SetViewPage(--App.g_pi.NowViewPage);    //ver0.988
+                    SetViewPageAsync(--App.g_pi.NowViewPage);    //ver0.988
                 }
                 else
                 {
@@ -171,7 +171,7 @@ namespace Marmi
                 if (App.g_pi.NowViewPage < App.g_pi.Items.Count)
                 {
                     App.g_pi.NowViewPage++;  //半ページ戻し
-                    SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
+                    SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
                 }
                 else
                 {
@@ -263,7 +263,7 @@ namespace Marmi
             App.g_pi.PageDirectionIsLeft = !App.g_pi.PageDirectionIsLeft;
             if (App.Config.DualView)
             {
-                SetViewPage(App.g_pi.NowViewPage);
+                SetViewPageAsync(App.g_pi.NowViewPage);
             }
         }
 
@@ -325,7 +325,7 @@ namespace Marmi
                 else
                 {
                     //通常画面を再描写
-                    SetViewPage(App.g_pi.NowViewPage);
+                    SetViewPageAsync(App.g_pi.NowViewPage);
                 }
             }
         }
@@ -366,7 +366,7 @@ namespace Marmi
         private void Menu_DontEnlargeOver100percent_Click(object sender, EventArgs e)
         {
             App.Config.NoEnlargeOver100p = !App.Config.NoEnlargeOver100p;
-            SetViewPage(App.g_pi.NowViewPage);
+            SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
         // コンテキストメニュー  ********************************************************************
@@ -394,7 +394,7 @@ namespace Marmi
 
                 //ver1.38 ソート後に画面を書き直す
                 ScreenCache.Clear();
-                SetViewPage(App.g_pi.NowViewPage);
+                SetViewPageAsync(App.g_pi.NowViewPage);
             }
         }
 
@@ -421,7 +421,7 @@ namespace Marmi
 
                 //ver1.38 ソート後に画面を書き直す
                 ScreenCache.Clear();
-                SetViewPage(App.g_pi.NowViewPage);
+                SetViewPageAsync(App.g_pi.NowViewPage);
             }
         }
 
@@ -433,7 +433,7 @@ namespace Marmi
 
             //ver1.38 ソート後に画面を書き直す
             ScreenCache.Clear();
-            SetViewPage(App.g_pi.NowViewPage);
+            SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
         // メニューホバーイベント *******************************************************************
@@ -744,7 +744,7 @@ namespace Marmi
                     int ix = count;
                     item.Tag = count;
                     //item.Click += (s, ex) => { SetViewPage((int)((s as ToolStripMenuItem).Tag)); };
-                    item.Click += (s, ex) => SetViewPage(ix);
+                    item.Click += (s, ex) => SetViewPageAsync(ix);
                     Menu_Bookmark.DropDownItems.Add(item);
                 }
                 count++;
@@ -793,7 +793,7 @@ namespace Marmi
             var tsddi = (ToolStripDropDownItem)sender;
             int index = App.g_pi.GetIndexFromFilename(tsddi.Text);
             if (index >= 0)
-                SetViewPage(index);
+                SetViewPageAsync(index);
         }
 
         private void BookMark_Clear_Click(object sender, EventArgs e)
@@ -818,7 +818,7 @@ namespace Marmi
             if (App.Config.isThumbnailView)
                 _thumbPanel.ReDraw();
             else
-                SetViewPage(App.g_pi.NowViewPage);
+                SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
         private void Menu_Slideshow_Click(object sender, EventArgs e)

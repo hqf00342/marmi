@@ -120,7 +120,7 @@ namespace Marmi
 
             if (checkBoxChangeMainWindow.Checked)
             {
-                m_parent.SetViewPage(ix);
+                m_parent.SetViewPageAsync(ix);
                 //m_parent.setViewImage(((ImageInfo)(listBox1.Items[ix])).nOrgIndex);
             }
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace Marmi
 {
@@ -15,7 +14,7 @@ namespace Marmi
         /// キーコンフィグをDicに登録するメソッド
         /// マウスの中ボタン、進む戻るはマウスイベントで実施
         /// </summary>
-        private async void SetKeyConfig2()
+        private void SetKeyConfig2()
         {
             KeyDefines.Clear();
 
@@ -26,22 +25,22 @@ namespace Marmi
             }
 
             //前後ページ移動
-            setkey(App.Config.Key_Nextpage1, async ()=> { await NavigateToForword(); });
-            setkey(App.Config.Key_Nextpage2, async () => { await NavigateToForword(); });
-            setkey(App.Config.Key_Prevpage1, async () => { await NavigateToBack(); });
-            setkey(App.Config.Key_Prevpage2, async () => { await NavigateToBack(); });
+            setkey(App.Config.Key_Nextpage1, async () => { await NavigateToForwordAsync(); });
+            setkey(App.Config.Key_Nextpage2, async () => { await NavigateToForwordAsync(); });
+            setkey(App.Config.Key_Prevpage1, async () => { await NavigateToBackAsync(); });
+            setkey(App.Config.Key_Prevpage2, async () => { await NavigateToBackAsync(); });
 
             //前後ページ移動（半分）
-            setkey(App.Config.Key_Nexthalf1, () => SetViewPage(++App.g_pi.NowViewPage));
-            setkey(App.Config.Key_Nexthalf2, () => SetViewPage(++App.g_pi.NowViewPage));
-            setkey(App.Config.Key_Prevhalf1, () => SetViewPage(--App.g_pi.NowViewPage));
-            setkey(App.Config.Key_Prevhalf2, () => SetViewPage(--App.g_pi.NowViewPage));
+            setkey(App.Config.Key_Nexthalf1, async () => { await SetViewPageAsync(++App.g_pi.NowViewPage); });
+            setkey(App.Config.Key_Nexthalf2, async () => { await SetViewPageAsync(++App.g_pi.NowViewPage); });
+            setkey(App.Config.Key_Prevhalf1, async () => { await SetViewPageAsync(--App.g_pi.NowViewPage); });
+            setkey(App.Config.Key_Prevhalf2, async () => { await SetViewPageAsync(--App.g_pi.NowViewPage); });
 
             //先頭最終ページ
-            setkey(App.Config.Key_Toppage1, () => SetViewPage(0));
-            setkey(App.Config.Key_Toppage2, () => SetViewPage(0));
-            setkey(App.Config.Key_Lastpage1, () => SetViewPage(App.g_pi.Items.Count - 1));
-            setkey(App.Config.Key_Lastpage2, () => SetViewPage(App.g_pi.Items.Count - 1));
+            setkey(App.Config.Key_Toppage1, async () => { await SetViewPageAsync(0); });
+            setkey(App.Config.Key_Toppage2, async () => { await SetViewPageAsync(0); });
+            setkey(App.Config.Key_Lastpage1, async () => { await SetViewPageAsync(App.g_pi.Items.Count - 1); });
+            setkey(App.Config.Key_Lastpage2, async () => { await SetViewPageAsync(App.g_pi.Items.Count - 1); });
 
             //ブックマーク
             setkey(App.Config.Key_Bookmark1, ToggleBookmark);
@@ -54,8 +53,8 @@ namespace Marmi
             setkey(App.Config.Key_Dualview1, () => SetDualViewMode(!App.Config.DualView));
             setkey(App.Config.Key_Dualview2, () => SetDualViewMode(!App.Config.DualView));
             // ゴミ箱
-            setkey(App.Config.Key_Recycle1, () => RecycleBinNowPage());
-            setkey(App.Config.Key_Recycle2, () => RecycleBinNowPage());
+            setkey(App.Config.Key_Recycle1, async () => { await RecycleBinNowPageAsync(); });
+            setkey(App.Config.Key_Recycle2, async () => { await RecycleBinNowPageAsync(); });
             //表示モード
             setkey(App.Config.Key_ViewRatio1, ToggleFitScreen);
             setkey(App.Config.Key_ViewRatio2, ToggleFitScreen);

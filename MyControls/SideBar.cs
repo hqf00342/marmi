@@ -185,7 +185,7 @@ namespace Marmi
                 return;
 
             //((Form1)Parent).SetViewPage(item);
-            await ((Form1)Form1._instance).SetViewPage(item);
+            await ((Form1)Form1._instance).SetViewPageAsync(item);
 
             //ƒAƒCƒeƒ€‚ğ’†‰›‚É‚Á‚Ä‚­‚é
             SetItemToCenter(item);

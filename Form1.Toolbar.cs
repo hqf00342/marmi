@@ -45,17 +45,17 @@ namespace Marmi
         private void ToolButtonLeft_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
-                NavigateToForword();
+                NavigateToForwordAsync();
             else
-                NavigateToBack();
+                NavigateToBackAsync();
         }
 
         private void ToolButtonRight_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
-                NavigateToBack();
+                NavigateToBackAsync();
             else
-                NavigateToForword();
+                NavigateToForwordAsync();
         }
 
         private void ToolButton_MouseHover(object sender, EventArgs e)
@@ -218,7 +218,7 @@ namespace Marmi
             {
                 //ページ位置確定
                 App.g_pi.NowViewPage = _trackbar.Value;
-                SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
+                SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
 
                 //ツールチップを隠す。
                 //g_toolTip.Hide();

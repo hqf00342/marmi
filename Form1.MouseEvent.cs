@@ -27,9 +27,9 @@ namespace Marmi
                 //    return;
 
                 if (e.Delta > 0)
-                    NavigateToBack();
+                    NavigateToBackAsync();
                 else
-                    NavigateToForword();
+                    NavigateToForwordAsync();
             }
         }
 
@@ -101,11 +101,11 @@ namespace Marmi
             //ナビゲート
             if (isForword)
             {
-                NavigateToForword();
+                NavigateToForwordAsync();
             }
             else
             {
-                NavigateToBack();
+                NavigateToBackAsync();
             }
         }
 

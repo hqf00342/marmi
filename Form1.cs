@@ -606,7 +606,7 @@ namespace Marmi
 
             //画像を表示
             PicPanel.Message = string.Empty;
-            SetViewPage(App.g_pi.NowViewPage);
+            SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
         /// <summary>
@@ -1173,7 +1173,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス番号</param>
         /// <param name="drawOrderTick">描写順序を示すオーダー時間 = DateTime.Now.Ticks</param>
-        public async Task SetViewPage(int index, long drawOrderTick = 0)
+        public async Task SetViewPageAsync(int index, long drawOrderTick = 0)
         {
             if (drawOrderTick == 0)
                 drawOrderTick = DateTime.Now.Ticks;
@@ -1411,20 +1411,20 @@ namespace Marmi
 
         #region Navigation
 
-        private async Task NavigateToBack()
+        private async Task NavigateToBackAsync()
         {
             //前に戻る
             long drawOrderTick = DateTime.Now.Ticks;
             int prev = await GetPrevPageIndex(App.g_pi.NowViewPage);
             if (prev >= 0)
             {
-                await SetViewPage(prev, drawOrderTick);
+                await SetViewPageAsync(prev, drawOrderTick);
             }
             else
                 _clearPanel.ShowAndClose("先頭のページです", 1000);
         }
 
-        private async Task NavigateToForword()
+        private async Task NavigateToForwordAsync()
         {
             //ver1.35 ループ機能を実装
             long drawOrderTick = DateTime.Now.Ticks;
@@ -1433,12 +1433,12 @@ namespace Marmi
             Debug.WriteLine($"NavigateToForword() {now} -> {next}");
             if (next >= 0)
             {
-                await SetViewPage(next, drawOrderTick);
+                await SetViewPageAsync(next, drawOrderTick);
             }
             else if (App.Config.LastPage_toTop)
             {
                 //先頭ページへループ
-                await SetViewPage(0, drawOrderTick);
+                await SetViewPageAsync(0, drawOrderTick);
                 _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
             }
             else
@@ -1529,7 +1529,7 @@ namespace Marmi
             //ClearScreenCache();
             ScreenCache.Clear();
 
-            SetViewPage(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
+            SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
 
         private void ToggleFullScreen()
@@ -1708,7 +1708,7 @@ namespace Marmi
         /// <summary>
         /// 現在のページをゴミ箱に入れる。削除後にページ遷移を行う。(ver1.35)
         /// </summary>
-        private async Task RecycleBinNowPage()
+        private async Task RecycleBinNowPageAsync()
         {
             //アイテムがなにもなければなにもしない
             if (App.g_pi.Items.Count == 0) return;
@@ -1729,7 +1729,7 @@ namespace Marmi
             {
                 //次ページがあるので次ページを表示
                 //Screenキャッシュを有効に使うため先にページ変更
-                await SetViewPage(next);
+                await SetViewPageAsync(next);
 
                 //削除されたためページ番号を戻す
                 App.g_pi.NowViewPage = now;
@@ -1738,7 +1738,7 @@ namespace Marmi
             {
                 //前のページに移動
                 next = now - 1;
-                await SetViewPage(next);
+                await SetViewPageAsync(next);
             }
             else
             {
@@ -1790,7 +1790,7 @@ namespace Marmi
             if (await GetNextPageIndex(App.g_pi.NowViewPage) == -1)
                 StopSlideShow();
             else
-                NavigateToForword();
+                NavigateToForwordAsync();
         }
 
         private void StopSlideShow()
