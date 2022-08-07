@@ -84,7 +84,7 @@
 			this.tbPixels.Size = new System.Drawing.Size(60, 19);
 			this.tbPixels.TabIndex = 1;
 			this.tbPixels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.tbPixels.TextChanged += new System.EventHandler(this.textbox_TextChanged);
+			this.tbPixels.TextChanged += new System.EventHandler(this.Textbox_TextChanged);
 			// 
 			// label4
 			// 
@@ -102,7 +102,7 @@
 			this.tbnItemX.Size = new System.Drawing.Size(60, 19);
 			this.tbnItemX.TabIndex = 2;
 			this.tbnItemX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.tbnItemX.TextChanged += new System.EventHandler(this.textbox_TextChanged);
+			this.tbnItemX.TextChanged += new System.EventHandler(this.Textbox_TextChanged);
 			// 
 			// label5
 			// 
@@ -122,7 +122,7 @@
 			this.btExcute.TabIndex = 3;
 			this.btExcute.Text = "実行";
 			this.btExcute.UseVisualStyleBackColor = true;
-			this.btExcute.Click += new System.EventHandler(this.btExcute_Click);
+			this.btExcute.Click += new System.EventHandler(this.BtnExcute_Click);
 			// 
 			// btCancel
 			// 
@@ -134,7 +134,7 @@
 			this.btCancel.TabIndex = 4;
 			this.btCancel.Text = "キャンセル";
 			this.btCancel.UseVisualStyleBackColor = true;
-			this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
+			this.btCancel.Click += new System.EventHandler(this.BtnCancel_Click);
 			// 
 			// tbInfo
 			// 

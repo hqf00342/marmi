@@ -10,13 +10,13 @@ namespace Marmi
         //const int DEFAULT_THUMBNAIL_SIZE = 120; //App.DEFAULT_THUMBNAIL_SIZEに統合;
         private const int DEFAULT_VERTICAL_WIDTH = 640;
 
-        private bool saveConf_isDrawFilename;       //グローバルコンフィグの一時待避領域
-        private bool saveConf_isDrawFileSize;       //グローバルコンフィグの一時待避領域
-        private bool saveConf_isDrawPicSize;        //グローバルコンフィグの一時待避領域
+        private readonly bool saveConf_isDrawFilename;       //グローバルコンフィグの一時待避領域
+        private readonly bool saveConf_isDrawFileSize;       //グローバルコンフィグの一時待避領域
+        private readonly bool saveConf_isDrawPicSize;        //グローバルコンフィグの一時待避領域
 
         private string savename;                            //保存ファイル名
-        private List<ImageInfo> m_thumbnailSet;     //リストへのポインタ
-        private ThumbnailPanel m_tPanel = null;     //親のパネルを表す
+        private readonly List<ImageInfo> m_thumbnailSet;     //リストへのポインタ
+        private readonly ThumbnailPanel m_tPanel = null;     //親のパネルを表す
         private bool m_Saving = false;              //保存処理中かどうかを表すフラグ
 
         public bool IsCancel => !m_Saving;
@@ -26,7 +26,7 @@ namespace Marmi
             InitializeComponent();
             m_thumbnailSet = lii;
             m_tPanel = tp;
-            m_tPanel.SavedItemChanged += tPanel_SavedItemChanged;
+            m_tPanel.SavedItemChanged += ThumbPanel_SavedItemChanged;
 
             //保存ファイル名
             savename = SuggestFilename(Filename);
@@ -39,7 +39,7 @@ namespace Marmi
 
         ~FormSaveThumbnail()
         {
-            m_tPanel.SavedItemChanged -= tPanel_SavedItemChanged;
+            m_tPanel.SavedItemChanged -= ThumbPanel_SavedItemChanged;
         }
 
         private void FormSaveThumbnail_Load(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace Marmi
             App.Config.IsShowTPPicSize = saveConf_isDrawPicSize;
         }
 
-        private void btCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             if (m_Saving)
             {
@@ -81,29 +81,29 @@ namespace Marmi
             }
         }
 
-        private async void btExcute_Click(object sender, EventArgs e)
+        private async void BtnExcute_Click(object sender, EventArgs e)
         {
             //サムネイルサイズの設定
-            int ThumbnailSize = 0;
-            if (!Int32.TryParse(tbPixels.Text, out ThumbnailSize))
+            if (!Int32.TryParse(tbPixels.Text, out int ThumbnailSize))
                 ThumbnailSize = App.DEFAULT_THUMBNAIL_SIZE;
             tbPixels.Text = ThumbnailSize.ToString();
 
             //横に並ぶ個数の設定
-            int nItemX = 0;
-            if (!Int32.TryParse(tbnItemX.Text, out nItemX))
+            if (!Int32.TryParse(tbnItemX.Text, out int nItemX))
                 nItemX = DEFAULT_VERTICAL_WIDTH / ThumbnailSize;
             tbnItemX.Text = nItemX.ToString();
 
             //ファイル名の確認
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.AddExtension = true;
-            sf.DefaultExt = "png";
-            sf.FileName = savename;
-            sf.InitialDirectory = Path.GetDirectoryName(savename);
-            sf.Filter = "pngファイル|*.png|全てのファイル|*.*";
-            sf.FilterIndex = 1;
-            sf.OverwritePrompt = true;
+            var sf = new SaveFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = "png",
+                FileName = savename,
+                InitialDirectory = Path.GetDirectoryName(savename),
+                Filter = "pngファイル|*.png|全てのファイル|*.*",
+                FilterIndex = 1,
+                OverwritePrompt = true
+            };
             if (sf.ShowDialog() == DialogResult.OK)
                 savename = sf.FileName;
             else
@@ -149,7 +149,7 @@ namespace Marmi
             return suggest;
         }
 
-        private void tPanel_SavedItemChanged(object obj, ThumbnailEventArgs e)
+        private void ThumbPanel_SavedItemChanged(object obj, ThumbnailEventArgs e)
         {
             int num = e.HoverItemNumber;
             toolStripStatusLabel1.Text = string.Format("完了数 : {0} / {1}", num + 1, m_thumbnailSet.Count);
@@ -165,17 +165,15 @@ namespace Marmi
             }
         }
 
-        private void textbox_TextChanged(object sender, EventArgs e)
+        private void Textbox_TextChanged(object sender, EventArgs e)
         {
             //サムネイルサイズの設定
-            int ThumbnailSize = 0;
-            if (!Int32.TryParse(tbPixels.Text, out ThumbnailSize))
+            if (!Int32.TryParse(tbPixels.Text, out int ThumbnailSize))
                 ThumbnailSize = App.DEFAULT_THUMBNAIL_SIZE;
             tbPixels.Text = ThumbnailSize.ToString();
 
             //横に並ぶ個数の設定
-            int nItemsX = 0;
-            if (!Int32.TryParse(tbnItemX.Text, out nItemsX))
+            if (!Int32.TryParse(tbnItemX.Text, out int nItemsX))
                 nItemsX = DEFAULT_VERTICAL_WIDTH / ThumbnailSize;
             tbnItemX.Text = nItemsX.ToString();
 

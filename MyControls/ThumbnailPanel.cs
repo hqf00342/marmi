@@ -32,6 +32,7 @@ namespace Marmi
         private const int FONTSIZE = 9;
         private int FONT_HEIGHT; //SetFont()内で設定される。
 
+        //サムネイル保存ダイアログに知らせるイベントハンドラー
         public event EventHandler<ThumbnailEventArgs> SavedItemChanged;
 
         //コンテキストメニュー
