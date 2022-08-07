@@ -37,19 +37,7 @@ namespace Marmi
             bStopPaintingAtResize.Checked = set.IsStopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
-            thumbnailSize.Text = set.ThumbnailSize.ToString();
-            ThumbnailBackColor.BackColor = set.ThumbnailBackColor;
-            fontDialog1.Font = set.ThumbnailFont;
-            linkLabel1.Text = fontDialog1.Font.Name + ", " + fontDialog1.Font.Size;
-            ThumbnailFontColor.BackColor = set.ThumbnailFontColor;
-            isDrawThumbnailFrame.Checked = set.IsDrawThumbnailFrame;
-            isDrawThumbnailShadow.Checked = set.IsDrawThumbnailShadow;
-            isShowTPFileName.Checked = set.IsShowTPFileName;
-            isShowTPFileSize.Checked = set.IsShowTPFileSize;
-            isShowTPPicSize.Checked = set.IsShowTPPicSize;
-            isThumbFadein.Checked = set.IsThumbFadein;
-
-            //ルーペ関連
+            LoadThumbnailConfig(set);
             LoadLoupeConfig(set);
             LoadMouseConfig(set);
             LoadAdvanceConfig(set);
@@ -108,13 +96,27 @@ namespace Marmi
 
             //ダブルクリックで全画面
             DoubleClickToFullscreen.Checked = set.DoubleClickToFullscreen;
-            //ver1.81サムネイルのアニメーション効果
-            ThumbnailPanelSmoothScroll.Checked = set.ThumbnailPanelSmoothScroll;
             //ver1.83 アンシャープマスク
             useUnsharpMask.Checked = set.UseUnsharpMask;
             unsharpDepth.Value = (decimal)set.UnsharpDepth;
         }
 
+        private void LoadThumbnailConfig(AppGlobalConfig set)
+        {
+            thumbnailSize.Text = set.Thumbnail.ThumbnailSize.ToString();
+            ThumbnailBackColor.BackColor = set.Thumbnail.ThumbnailBackColor;
+            fontDialog1.Font = set.Thumbnail.ThumbnailFont;
+            linkLabel1.Text = fontDialog1.Font.Name + ", " + fontDialog1.Font.Size;
+            ThumbnailFontColor.BackColor = set.Thumbnail.ThumbnailFontColor;
+            isDrawThumbnailFrame.Checked = set.Thumbnail.IsDrawThumbnailFrame;
+            isDrawThumbnailShadow.Checked = set.Thumbnail.IsDrawThumbnailShadow;
+            isShowTPFileName.Checked = set.Thumbnail.IsShowTPFileName;
+            isShowTPFileSize.Checked = set.Thumbnail.IsShowTPFileSize;
+            isShowTPPicSize.Checked = set.Thumbnail.IsShowTPPicSize;
+            isThumbFadein.Checked = set.Thumbnail.IsThumbFadein;
+            //ver1.81サムネイルのアニメーション効果
+            ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.ThumbnailPanelSmoothScroll;
+        }
 
         private void LoadAdvanceConfig(AppGlobalConfig set)
         {
@@ -183,16 +185,7 @@ namespace Marmi
             set.IsStopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //サムネイルタブ
-            if (!int.TryParse(thumbnailSize.Text, out set.ThumbnailSize)) set.ThumbnailSize = 120;
-            set.ThumbnailBackColor = ThumbnailBackColor.BackColor;
-            set.ThumbnailFont = fontDialog1.Font;
-            set.ThumbnailFontColor = ThumbnailFontColor.BackColor;
-            set.IsDrawThumbnailFrame = isDrawThumbnailFrame.Checked;
-            set.IsDrawThumbnailShadow = isDrawThumbnailShadow.Checked;
-            set.IsShowTPFileName = isShowTPFileName.Checked;
-            set.IsShowTPFileSize = isShowTPFileSize.Checked;
-            set.IsShowTPPicSize = isShowTPPicSize.Checked;
-            set.IsThumbFadein = isThumbFadein.Checked;
+            SaveThumbnailConfig(ref set);
 
 
             //ver1.09 書庫関連
@@ -252,11 +245,25 @@ namespace Marmi
 
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
-            //ver1.81サムネイルのアニメーション効果
-            set.ThumbnailPanelSmoothScroll = ThumbnailPanelSmoothScroll.Checked;
             //ver1.83 アンシャープマスク
             set.UseUnsharpMask = useUnsharpMask.Checked;
             set.UnsharpDepth = (int)unsharpDepth.Value;
+        }
+
+        private void SaveThumbnailConfig(ref AppGlobalConfig set)
+        {
+            set.Thumbnail.ThumbnailSize = int.TryParse(thumbnailSize.Text, out var s) ? s : 120;
+            set.Thumbnail.ThumbnailBackColor = ThumbnailBackColor.BackColor;
+            set.Thumbnail.ThumbnailFont = fontDialog1.Font;
+            set.Thumbnail.ThumbnailFontColor = ThumbnailFontColor.BackColor;
+            set.Thumbnail.IsDrawThumbnailFrame = isDrawThumbnailFrame.Checked;
+            set.Thumbnail.IsDrawThumbnailShadow = isDrawThumbnailShadow.Checked;
+            set.Thumbnail.IsShowTPFileName = isShowTPFileName.Checked;
+            set.Thumbnail.IsShowTPFileSize = isShowTPFileSize.Checked;
+            set.Thumbnail.IsShowTPPicSize = isShowTPPicSize.Checked;
+            set.Thumbnail.IsThumbFadein = isThumbFadein.Checked;
+            //ver1.81サムネイルのアニメーション効果
+            set.Thumbnail.ThumbnailPanelSmoothScroll = ThumbnailPanelSmoothScroll.Checked;
         }
 
         private void SaveAdvanceConfig(ref AppGlobalConfig set)

@@ -124,6 +124,7 @@
     <Compile Include="DataModel\KeyConfig.cs" />
     <Compile Include="DataModel\LoupeConfig.cs" />
     <Compile Include="DataModel\MouseConfig.cs" />
+    <Compile Include="DataModel\ThumbnailConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />

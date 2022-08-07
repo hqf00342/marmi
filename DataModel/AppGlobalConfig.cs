@@ -34,7 +34,6 @@ namespace Marmi
         public bool VisibleStatusBar { get; set; }               //ステータスバーの表示
         public bool IsSaveConfig { get; set; }                   //コンフィグの保存
 
-        //public bool isSaveThumbnailCache;			//サムネイルキャッシュの保存
         public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
         public bool IsReplaceArrowButton { get; set; }               //ツールバーの左右ボタンを入れ替える
@@ -42,20 +41,8 @@ namespace Marmi
         public bool IsContinueZipView { get; set; }              //zipファイルは前回の続きから
         public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
         public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
-        public int ThumbnailSize;                   //サムネイル画像の大きさ
         public bool VisibleNavibar { get; set; }                 //ナビバーの表示
         public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
-
-        public bool IsDrawThumbnailShadow { get; set; }          // サムネイルに影を描写するか
-        public bool IsDrawThumbnailFrame { get; set; }           // サムネイルに枠を描写するか
-        public bool IsShowTPFileName { get; set; }               // サムネイルにファイル名を表示するか
-        public bool IsShowTPFileSize { get; set; }               // ファイル名にファイルサイズを表示するか
-        public bool IsShowTPPicSize { get; set; }                // ファイル名に画像サイズを表示するか
-
-        // ver1.35 メモリモデル
-        //public MemoryModel memModel;                //メモリーモデル
-
-        //ルーペ関連
 
         public bool IsFastDrawAtResize { get; set; }             // 高速描写をするかどうか
 
@@ -77,9 +64,6 @@ namespace Marmi
         ////ver1.35 スクリーンショー時間[ms]
         public int SlideShowTime { get; set; }
 
-        //ver1.42 サムネイルのフェードイン
-        [Obsolete]
-        public bool IsThumbFadein { get; set; }
 
         //ver1.49 ウィンドウの初期位置
         public bool IsWindowPosCenter { get; set; }
@@ -118,47 +102,7 @@ namespace Marmi
             get { return ColorTranslator.ToHtml(BackColor); }
         }
 
-        #region サムネイル
 
-        [XmlIgnore]
-        public Color ThumbnailBackColor;
-
-        [XmlElement("XmlThumbnailBackColor")]
-        public string XmlTbColor
-        {
-            set { ThumbnailBackColor = ColorTranslator.FromHtml(value); }
-            get { return ColorTranslator.ToHtml(ThumbnailBackColor); }
-        }
-
-        [XmlIgnore]
-        public Font ThumbnailFont;
-
-        [XmlElement("XmlThumbnailFont")]
-        public string XmlTbFont
-        {
-            set
-            {
-                FontConverter fc = new FontConverter();
-                ThumbnailFont = (Font)fc.ConvertFromString(value);
-            }
-            get
-            {
-                FontConverter fc = new FontConverter();
-                return fc.ConvertToString(ThumbnailFont);
-            }
-        }
-
-        [XmlIgnore]
-        public Color ThumbnailFontColor;
-
-        [XmlElement("XmlThumbnailFontColor")]
-        public string XmlFontColor
-        {
-            set { ThumbnailFontColor = ColorTranslator.FromHtml(value); }
-            get { return ColorTranslator.ToHtml(ThumbnailFontColor); }
-        }
-
-        #endregion サムネイル
 
         //ver1.77 画面モード保存対象にする。
         public bool isFullScreen;
@@ -191,7 +135,6 @@ namespace Marmi
         //ver1.80 ダブルクリック
         public bool DoubleClickToFullscreen { get; set; }
 
-        public bool ThumbnailPanelSmoothScroll { get; set; }
 
         //ver1.83 アンシャープマスク
         public bool UseUnsharpMask { get; set; }
@@ -206,6 +149,8 @@ namespace Marmi
 
 
         public AdvanceConfig Advance { get; set; } = new AdvanceConfig();
+
+        public ThumbnailConfig Thumbnail { get; set; } = new ThumbnailConfig();
 
         /*******************************************************************************/
 
@@ -244,18 +189,6 @@ namespace Marmi
             IsFitScreenAndImage = true;
             IsStopPaintingAtResize = false;
 
-            //サムネイルタブ
-            ThumbnailSize = 200;                            //サムネイルサイズ
-            ThumbnailBackColor = Color.White;               //サムネイルのバックカラー
-            ThumbnailFont = new Font("MS UI Gothic", 9);    //サムネイルのフォント
-            ThumbnailFontColor = Color.Black;               //サムネイルのフォントカラー
-                                                            //isAutoCleanOldCache = false;					//サムネイルを自動でクリーンするか
-            IsDrawThumbnailShadow = true;                   //サムネイルに影を描写するか
-            IsDrawThumbnailFrame = true;                    //サムネイルに枠を描写するか
-            IsShowTPFileName = true;                        //画像名を表示するか
-            IsShowTPFileSize = false;                       //画像のファイルサイズを表示するか
-            IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
-            //IsThumbFadein = false;
 
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
@@ -320,14 +253,13 @@ namespace Marmi
 
             //ダブルクリック機能を開放する
             DoubleClickToFullscreen = false;
-            //ver1.81 サムネイルパネルのアニメーション
-            ThumbnailPanelSmoothScroll = true;
 
             //ver1.83 アンシャープマスク
             UseUnsharpMask = true;
             UnsharpDepth = 25;
 
             //ver1.91 コンフィグ分離 2022年8月7日
+            Thumbnail.Init();
             Keys.Init();
             Mouse.Init();
             Loupe.Init();
