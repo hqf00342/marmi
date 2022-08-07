@@ -320,22 +320,6 @@ namespace Marmi
         }
 
 
-        private void Menu_RemakeThumbnail_Click(object sender, EventArgs e)
-        {
-            //ver1.81 画像数確認
-            if (App.g_pi.Items.Count == 0)
-                return;
-
-            //サムネイルをクリアする
-            for (int i = 0; i < App.g_pi.Items.Count; i++)
-            {
-                App.g_pi.Items[i].Thumbnail?.Dispose();
-                App.g_pi.Items[i].Thumbnail = null;
-            }
-            //ver 1.55再登録
-            AsyncLoadImageInfo();
-        }
-
         private void Menu_RecurseDir_Click(object sender, EventArgs e)
         {
             App.Config.IsRecurseSearchDir = !App.Config.IsRecurseSearchDir;
@@ -501,9 +485,6 @@ namespace Marmi
             Menu_keepMagnification.Checked = App.Config.KeepMagnification;
             Menu_UseBicubic.Checked = !App.Config.IsDotByDotZoom;
             Menu_DontEnlargeOver100percent.Checked = App.Config.NoEnlargeOver100p;
-
-            //ファイルを閲覧していない場合のナビゲーション
-            Menu_OptionReloadThumbnail.Enabled = App.g_pi.Items?.Count > 1;
 
             //ver1.83アンシャープ
             MenuItem_Unsharp.Checked = App.Config.UseUnsharpMask;

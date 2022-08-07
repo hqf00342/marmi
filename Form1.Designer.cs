@@ -100,7 +100,6 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_Option = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_OptionOption = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_OptionReloadThumbnail = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_OptionRecurseDir = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_keepMagnification = new System.Windows.Forms.ToolStripMenuItem();
@@ -810,7 +809,6 @@
             // 
             this.Menu_Option.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_OptionOption,
-            this.Menu_OptionReloadThumbnail,
             this.toolStripSeparator9,
             this.Menu_OptionRecurseDir,
             this.Menu_keepMagnification,
@@ -831,13 +829,6 @@
             this.MenuItem_OptionOption.Size = new System.Drawing.Size(301, 26);
             this.MenuItem_OptionOption.Text = "オプション...";
             this.MenuItem_OptionOption.Click += new System.EventHandler(this.Menu_Option_Click);
-            // 
-            // Menu_OptionReloadThumbnail
-            // 
-            this.Menu_OptionReloadThumbnail.Name = "Menu_OptionReloadThumbnail";
-            this.Menu_OptionReloadThumbnail.Size = new System.Drawing.Size(301, 26);
-            this.Menu_OptionReloadThumbnail.Text = "サムネイル強制再作成";
-            this.Menu_OptionReloadThumbnail.Click += new System.EventHandler(this.Menu_RemakeThumbnail_Click);
             // 
             // toolStripSeparator9
             // 
@@ -1294,7 +1285,6 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_HelpVersion;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_FileSaveThumbnail;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_OptionOption;
-		private System.Windows.Forms.ToolStripMenuItem Menu_OptionReloadThumbnail;
 		private System.Windows.Forms.ToolStripMenuItem Menu_OptionRecurseDir;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextNext;
