@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Marmi
 {
@@ -161,5 +163,33 @@ namespace Marmi
 
         /// <summary>Job一覧を取得</summary>
         public static KeyValuePair<int, Action>[] GetAllJob() => _queue.ToArrayHigh();
+
+
+
+        public static async Task<Bitmap> GetBitmapAsync2(int ix)
+        {
+            if (!App.g_pi.Items[ix].CacheImage.HasImage)
+            {
+                bool complete = false;
+                AddJob(ix, () => { complete = true; });
+                await Task.Yield();
+                while (!complete)
+                {
+                    await Task.Delay(10);
+                }
+            }
+            return App.g_pi.Items[ix].CacheImage.ToBitmap();
+        }
+
+        public static async Task<Bitmap> GetBitmapAsync3(int ix)
+        {
+            if(!App.g_pi.Items[ix].CacheImage.HasImage)
+            {
+                var ss = new SemaphoreSlim(1);
+                AddJob(ix, () => { ss.Release(); });
+                await ss.WaitAsync();
+            }
+            return App.g_pi.Items[ix].CacheImage.ToBitmap();
+        }
     }
 }
