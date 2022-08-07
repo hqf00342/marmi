@@ -184,7 +184,7 @@ namespace Marmi
             using (var g = Graphics.FromImage(m_loupeBmp))
             {
                 //いったんクリア
-                g.Clear(App.Config.BackColor);
+                g.Clear(App.Config.General.BackColor);
 
                 //指定位置をキャプチャの中心部に変換
                 int sx = left;

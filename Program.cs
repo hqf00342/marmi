@@ -30,7 +30,7 @@ namespace Marmi
                 App.Config = new AppGlobalConfig();
 
             //多重起動確認
-            if (App.Config.DisableMultipleStarts)
+            if (App.Config.General.DisableMultipleStarts)
             {
                 //多重起動は禁止されているためmutexで制御
                 var APPNAME = Application.ProductName;

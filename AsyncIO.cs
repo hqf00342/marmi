@@ -120,7 +120,7 @@ namespace Marmi
                         Debug.WriteLine("AsyncIO : 7zOpen");
                     }
 
-                    if (App.g_pi.isSolid && App.Config.IsExtractIfSolidArchive)
+                    if (App.g_pi.isSolid && App.Config.General.IsExtractIfSolidArchive)
                     {
                         //ソリッド書庫は一時フォルダの画像ファイルから読取り
                         string tempname = Path.Combine(App.g_pi.tempDirname, filename);

@@ -22,7 +22,7 @@ namespace Marmi
             _sidebar.Visible = App.Config.VisibleNavibar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
-            if (App.Config.SimpleCalcForWindowLocation)
+            if (App.Config.General.SimpleCalcForWindowLocation)
             {
                 //簡易：as is
                 this.Size = App.Config.windowSize;
@@ -32,7 +32,7 @@ namespace Marmi
                 SetFormPosLocation();
 
             //ver1.77全画面モード対応
-            if (App.Config.SaveFullScreenMode && App.Config.isFullScreen)
+            if (App.Config.General.SaveFullScreenMode && App.Config.isFullScreen)
                 SetFullScreen(true);
 
             //2枚表示
@@ -46,7 +46,7 @@ namespace Marmi
             Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
 
             //左右矢印交換対応
-            if (App.Config.IsReplaceArrowButton)
+            if (App.Config.General.IsReplaceArrowButton)
             {
                 toolButtonLeft.Tag = "次のページに移動します";
                 toolButtonLeft.Text = "次へ";
@@ -150,7 +150,7 @@ namespace Marmi
                 App.Config.windowLocation.Y = disp.Y + disp.Height - App.Config.windowSize.Height;
 
             //中央表示強制かどうか
-            if (App.Config.IsWindowPosCenter)
+            if (App.Config.General.IsWindowPosCenter)
             {
                 App.Config.windowLocation.X = disp.X + (disp.Width - App.Config.windowSize.Width) / 2;
                 App.Config.windowLocation.Y = disp.Y + (disp.Height - App.Config.windowSize.Height) / 2;

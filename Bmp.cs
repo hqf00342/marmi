@@ -78,7 +78,7 @@ namespace Marmi
 
                 using (var g = Graphics.FromImage(returnBmp))
                 {
-                    g.Clear(App.Config.BackColor);
+                    g.Clear(App.Config.General.BackColor);
                     if (App.g_pi.PageDirectionIsLeft)
                     {
                         //左から右へ

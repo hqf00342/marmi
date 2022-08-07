@@ -91,7 +91,7 @@ namespace Marmi
 
             //初期設定
             this.KeyPreview = true;
-            this.BackColor = App.Config.BackColor;
+            this.BackColor = App.Config.General.BackColor;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.SetStyle(ControlStyles.Opaque, true);
             Application.Idle += Application_Idle;
@@ -113,7 +113,7 @@ namespace Marmi
             PicPanel.Enabled = true;
             PicPanel.Visible = true;
             PicPanel.Width = ClientRectangle.Width;
-            PicPanel.BackColor = App.Config.BackColor;
+            PicPanel.BackColor = App.Config.General.BackColor;
             PicPanel.MouseClick += (s, e) => OnMouseClick(e);
             PicPanel.MouseDoubleClick += (s, e) => OnMouseDoubleClick(e);
             PicPanel.MouseMove += (s, e) => OnMouseMove(e);
@@ -240,7 +240,7 @@ namespace Marmi
 
             //ver1.10
             //設定の保存
-            if (App.Config.IsSaveConfig)
+            if (App.Config.General.IsSaveConfig)
             {
                 //設定ファイルを保存する
                 App.Config.windowLocation = this.Location;
@@ -458,7 +458,7 @@ namespace Marmi
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
             //if (needRecurse )
-            if (needRecurse || App.g_pi.isSolid || App.Config.AlwaysExtractArchive)
+            if (needRecurse || App.g_pi.isSolid || App.Config.General.AlwaysExtractArchive)
             {
                 using (AsyncExtractForm ae = new AsyncExtractForm())
                 {
@@ -530,7 +530,7 @@ namespace Marmi
 
             //サムネイルDBがあれば読み込む
             //loadThumbnailDBFile();
-            if (App.Config.IsContinueZipView)
+            if (App.Config.General.IsContinueZipView)
             {
                 //読み込み値を無視し、０にセット
                 //g_pi.NowViewPage = 0;
@@ -841,7 +841,7 @@ namespace Marmi
             string tempDir;
 
             //tempフォルダのルートとなるフォルダを決める。
-            string rootPath = App.Config.TmpFolder;
+            string rootPath = App.Config.General.TmpFolder;
             if (string.IsNullOrEmpty(rootPath))
                 rootPath = Application.StartupPath; //アプリのパス
                                                     //Path.GetTempPath(),		//windows標準のTempDir
@@ -1131,7 +1131,7 @@ namespace Marmi
                 MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
 
                 //ver1.73 MRU表示数の制限
-                if (++menuCount >= App.Config.NumberOfMru)
+                if (++menuCount >= App.Config.General.NumberOfMru)
                     break;
             }
         }
@@ -1337,7 +1337,7 @@ namespace Marmi
                     toolStripButton_Rotate.Enabled = true;
 
                     //左右ボタンの有効無効
-                    if (App.Config.IsReplaceArrowButton)
+                    if (App.Config.General.IsReplaceArrowButton)
                     {
                         //入れ替え
                         toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
@@ -1476,7 +1476,7 @@ namespace Marmi
         /// </summary>
         private void SetToolbarString()
         {
-            if (App.Config.EraseToolbarItemString)
+            if (App.Config.General.EraseToolbarItemString)
             {
                 toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
                 toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;

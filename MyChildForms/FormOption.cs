@@ -24,26 +24,18 @@ namespace Marmi
             //config = set.Clone();
 
             //全般タブ
-            bSaveConfig.Checked = set.IsSaveConfig;                     //設定の保存
-                                                                        //bSaveThumbnailCache.Checked = set.isSaveThumbnailCache;		//キャッシュの保存
-            bContinueZip.Checked = set.IsContinueZipView;               //zipファイルは前回の続きから
-                                                                        //bDeleteOldCache.Checked = set.isAutoCleanOldCache;			//古いキャッシュの削除
-            bReplaceArrowButton.Checked = set.IsReplaceArrowButton;     //矢印ボタンの入れ替え
-            pictureBox_BackColor.BackColor = set.BackColor;             //背景色
             isFastDraw.Checked = set.IsFastDrawAtResize;
-            isWindowPosCenter.Checked = set.IsWindowPosCenter;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.IsStopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
+            LoadGeneralConfig(set);
             LoadThumbnailConfig(set);
             LoadLoupeConfig(set);
             LoadMouseConfig(set);
             LoadAdvanceConfig(set);
 
-            //ver1.09 書庫関連
-            isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
 
 
             //画面切り替わり方法
@@ -56,36 +48,17 @@ namespace Marmi
             //ver1.35 ループ
             //isLoopToTopPage.Checked = set.isLoopToTopPage;
 
-            //ver1.65ツールバーアイテムの文字消し
-            eraseToolbarItemString.Checked = set.EraseToolbarItemString;
-
             //ver1.70 2枚表示の厳密チェック
             //dualview_exactCheck.Checked = set.dualview_exactCheck;
 
-            //ver1.70 サイドバーのスムーススクロール機能
-            sidebar_smoothscroll.Checked = set.Sidebar_smoothScroll;
 
             //ver1.71 最終ページの動作
             lastPage_stay.Checked = set.LastPage_stay;
             lastPage_toTop.Checked = set.LastPage_toTop;
             //lastPage_toNextArchive.Checked = set.LastPage_toNextArchive;
 
-            //ver1.73 一時フォルダ
-            tmpFolder.Text = set.TmpFolder;
-
-            //ver1.73 MRU保持数
-            numOfMru.Text = set.NumberOfMru.ToString();
-
-            //ver1.76多重起動
-            disableMultipleStarts.Checked = set.DisableMultipleStarts;
-            //ver1.77 ウィンドウ表示位置を簡易にするか
-            simpleCalcWindowPos.Checked = set.SimpleCalcForWindowLocation;
-            //ver1.77 フルスクリーン状態を復元できるようにする
-            saveFullScreenMode.Checked = set.SaveFullScreenMode;
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
-            //ver1.79 書庫は必ず展開
-            alwaysExtractArchive.Checked = set.AlwaysExtractArchive;
             //ver1.79 2ページモードアルゴリズム
             dualView_Force.Checked = set.DualView_Force;
             dualView_Normal.Checked = set.DualView_Normal;
@@ -99,6 +72,24 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             useUnsharpMask.Checked = set.UseUnsharpMask;
             unsharpDepth.Value = (decimal)set.UnsharpDepth;
+        }
+
+        private void LoadGeneralConfig(AppGlobalConfig set)
+        {
+            bSaveConfig.Checked = set.General.IsSaveConfig;
+            bContinueZip.Checked = set.General.IsContinueZipView;
+            isExtractIfSolidArchive.Checked = set.General.IsExtractIfSolidArchive;
+            bReplaceArrowButton.Checked = set.General.IsReplaceArrowButton;
+            pictureBox_BackColor.BackColor = set.General.BackColor;
+            isWindowPosCenter.Checked = set.General.IsWindowPosCenter;
+            eraseToolbarItemString.Checked = set.General.EraseToolbarItemString;
+            sidebar_smoothscroll.Checked = set.General.Sidebar_smoothScroll;
+            tmpFolder.Text = set.General.TmpFolder;
+            numOfMru.Text = set.General.NumberOfMru.ToString();
+            disableMultipleStarts.Checked = set.General.DisableMultipleStarts;
+            simpleCalcWindowPos.Checked = set.General.SimpleCalcForWindowLocation;
+            saveFullScreenMode.Checked = set.General.SaveFullScreenMode;
+            alwaysExtractArchive.Checked = set.General.AlwaysExtractArchive;
         }
 
         private void LoadThumbnailConfig(AppGlobalConfig set)
@@ -171,25 +162,15 @@ namespace Marmi
 
         public void SaveConfig(ref AppGlobalConfig set)
         {
-            //全般タブ
-            set.IsSaveConfig = bSaveConfig.Checked;
-            //set.isSaveThumbnailCache = bSaveThumbnailCache.Checked;
-            set.IsContinueZipView = bContinueZip.Checked;
-            //set.isAutoCleanOldCache = bDeleteOldCache.Checked;
-            set.IsReplaceArrowButton = bReplaceArrowButton.Checked;
-            set.BackColor = pictureBox_BackColor.BackColor;
-            set.IsFastDrawAtResize = isFastDraw.Checked;
-            set.IsWindowPosCenter = isWindowPosCenter.Checked;
+            SaveGnereralConfig(ref set);
 
+            set.IsFastDrawAtResize = isFastDraw.Checked;
             //高度な設定タブ
             set.IsStopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //サムネイルタブ
             SaveThumbnailConfig(ref set);
 
-
-            //ver1.09 書庫関連
-            set.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
 
             //画面切り替わり方法
             set.PictureSwitchMode =
@@ -202,36 +183,18 @@ namespace Marmi
             //ver1.35 ループ
             //set.isLoopToTopPage = isLoopToTopPage.Checked;
 
-            //ver1.65ツールバーアイテムの文字消し
-            set.EraseToolbarItemString = eraseToolbarItemString.Checked;
 
             //ver1.70 2枚表示の厳密チェック
             //set.dualview_exactCheck = dualview_exactCheck.Checked;
 
-            //ver1.70 サイドバーのスムーススクロール機能
-            set.Sidebar_smoothScroll = sidebar_smoothscroll.Checked;
 
             //ver1.71 最終ページの動作
             set.LastPage_stay = lastPage_stay.Checked;
             set.LastPage_toTop = lastPage_toTop.Checked;
             //set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
 
-            //ver1.73 一時フォルダ
-            set.TmpFolder = tmpFolder.Text;
-            //ver1.73 MRU保持数
-            if (!int.TryParse(numOfMru.Text, out set.NumberOfMru))
-                set.NumberOfMru = 10;   //デフォルト値
-
-            //ver1.76多重起動
-            set.DisableMultipleStarts = disableMultipleStarts.Checked;
-            //ver1.77 ウィンドウ表示位置を簡易にするか
-            set.SimpleCalcForWindowLocation = simpleCalcWindowPos.Checked;
-            //ver1.77 フルスクリーン状態を復元できるようにする
-            set.SaveFullScreenMode = saveFullScreenMode.Checked;
             //ver1.78 倍率の保持
             set.KeepMagnification = keepMagnification.Checked;
-            //ver1.79 書庫は必ず展開
-            set.AlwaysExtractArchive = alwaysExtractArchive.Checked;
             //ver1.79 2ページモードアルゴリズム
             set.DualView_Force = dualView_Force.Checked;
             set.DualView_Normal = dualView_Normal.Checked;
@@ -248,6 +211,24 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             set.UseUnsharpMask = useUnsharpMask.Checked;
             set.UnsharpDepth = (int)unsharpDepth.Value;
+        }
+
+        private void SaveGnereralConfig(ref AppGlobalConfig set)
+        {
+            set.General.IsSaveConfig = bSaveConfig.Checked;
+            set.General.IsContinueZipView = bContinueZip.Checked;
+            set.General.IsReplaceArrowButton = bReplaceArrowButton.Checked;
+            set.General.BackColor = pictureBox_BackColor.BackColor;
+            set.General.IsWindowPosCenter = isWindowPosCenter.Checked;
+            set.General.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
+            set.General.EraseToolbarItemString = eraseToolbarItemString.Checked;
+            set.General.Sidebar_smoothScroll = sidebar_smoothscroll.Checked;
+            set.General.TmpFolder = tmpFolder.Text;
+            set.General.NumberOfMru = int.TryParse(numOfMru.Text, out var n) ? n : 10;
+            set.General.DisableMultipleStarts = disableMultipleStarts.Checked;
+            set.General.SimpleCalcForWindowLocation = simpleCalcWindowPos.Checked;
+            set.General.SaveFullScreenMode = saveFullScreenMode.Checked;
+            set.General.AlwaysExtractArchive = alwaysExtractArchive.Checked;
         }
 
         private void SaveThumbnailConfig(ref AppGlobalConfig set)
@@ -268,7 +249,7 @@ namespace Marmi
 
         private void SaveAdvanceConfig(ref AppGlobalConfig set)
         {
-            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs: 100;
+            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 100;
         }
 
         private void SaveLoupeConfig(ref AppGlobalConfig set)

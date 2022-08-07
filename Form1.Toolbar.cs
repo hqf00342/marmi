@@ -47,7 +47,7 @@ namespace Marmi
 
         private async void ToolButtonLeft_Click(object sender, EventArgs e)
         {
-            if (App.Config.IsReplaceArrowButton)
+            if (App.Config.General.IsReplaceArrowButton)
                 await NavigateToForwordAsync();
             else
                 await NavigateToBackAsync();
@@ -55,7 +55,7 @@ namespace Marmi
 
         private async void ToolButtonRight_Click(object sender, EventArgs e)
         {
-            if (App.Config.IsReplaceArrowButton)
+            if (App.Config.General.IsReplaceArrowButton)
                 await NavigateToBackAsync();
             else
                 await NavigateToForwordAsync();

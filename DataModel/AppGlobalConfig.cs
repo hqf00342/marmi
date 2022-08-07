@@ -32,13 +32,9 @@ namespace Marmi
         public bool VisibleMenubar { get; set; }                 //メニューバーの表示
         public bool VisibleToolBar { get; set; }                 //ツールバーの表示
         public bool VisibleStatusBar { get; set; }               //ステータスバーの表示
-        public bool IsSaveConfig { get; set; }                   //コンフィグの保存
 
         public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
-        public bool IsReplaceArrowButton { get; set; }               //ツールバーの左右ボタンを入れ替える
-
-        public bool IsContinueZipView { get; set; }              //zipファイルは前回の続きから
         public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
         public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
         public bool VisibleNavibar { get; set; }                 //ナビバーの表示
@@ -49,9 +45,6 @@ namespace Marmi
         //サイドバー関連
         //public bool isFixSidebar;					//サイドバーを固定にするかどうか
         public int SidebarWidth { get; set; }                    //サイドバーの幅
-
-        //ver1.09 書庫関連
-        public bool IsExtractIfSolidArchive { get; set; }        //ソリッド書庫なら一時展開するか
 
         //ver1.25
         public bool NoEnlargeOver100p { get; set; }          //画面フィッティングは100%未満にする
@@ -64,18 +57,8 @@ namespace Marmi
         ////ver1.35 スクリーンショー時間[ms]
         public int SlideShowTime { get; set; }
 
-
-        //ver1.49 ウィンドウの初期位置
-        public bool IsWindowPosCenter { get; set; }
-
         //ver1.62 ツールバーの位置
         public bool IsToolbarTop { get; set; }
-
-        //ver1.65 ツールバーアイテムの文字を消すか
-        public bool EraseToolbarItemString { get; set; }
-
-        //ver1.70 サイドバーのスムーススクロール
-        public bool Sidebar_smoothScroll { get; set; }
 
         //ver1.70 2枚表示の厳格化
         //public bool dualview_exactCheck;
@@ -86,24 +69,6 @@ namespace Marmi
         public bool LastPage_toTop { get; set; }
         //public bool LastPage_toNextArchive { get; set; }
 
-        //ver1.73 一時展開フォルダ
-        public string TmpFolder { get; set; }
-
-        //ver1.73 MRU保持数
-        public int NumberOfMru;
-
-        [XmlIgnore]
-        public Color BackColor;
-
-        [XmlElement("XmlMainBackColor")]
-        public string XmlMainColor
-        {
-            set { BackColor = ColorTranslator.FromHtml(value); }
-            get { return ColorTranslator.ToHtml(BackColor); }
-        }
-
-
-
         //ver1.77 画面モード保存対象にする。
         public bool isFullScreen;
 
@@ -111,20 +76,8 @@ namespace Marmi
         [XmlIgnore]
         public bool isThumbnailView;
 
-        //ver1.76 多重起動禁止フラグ
-        public bool DisableMultipleStarts { get; set; }
-
-        //ver1.77 画面表示位置調整を簡易にするか
-        public bool SimpleCalcForWindowLocation { get; set; }
-
-        //ver1.77 フルスクリーン状態を復元できるようにする
-        public bool SaveFullScreenMode { get; set; }
-
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
-
-        //ver1.79 書庫を常に展開するかどうか
-        public bool AlwaysExtractArchive { get; set; }
 
         //ver1.79 2ページモード
         public bool DualView_Force { get; set; }
@@ -135,18 +88,17 @@ namespace Marmi
         //ver1.80 ダブルクリック
         public bool DoubleClickToFullscreen { get; set; }
 
-
         //ver1.83 アンシャープマスク
         public bool UseUnsharpMask { get; set; }
 
         public int UnsharpDepth { get; set; }
 
+        public GeneralConfig General { get; set; } = new GeneralConfig();
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
         public MouseConfig Mouse { get; set; } = new MouseConfig();
 
         public LoupeConfig Loupe { get; set; } = new LoupeConfig();
-
 
         public AdvanceConfig Advance { get; set; } = new AdvanceConfig();
 
@@ -177,18 +129,13 @@ namespace Marmi
             isThumbnailView = false;
             windowSize = new Size(640, 480);
             windowLocation = new Point(0, 0);
-            IsSaveConfig = false;
             //isSaveThumbnailCache = false;
             IsRecurseSearchDir = false;
             //BackColor = Color.DarkGray;
-            BackColor = Color.LightSlateGray;
-            IsReplaceArrowButton = false;
             IsFitScreenAndImage = true;
 
-            IsContinueZipView = false;
             IsFitScreenAndImage = true;
             IsStopPaintingAtResize = false;
-
 
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
@@ -196,9 +143,8 @@ namespace Marmi
             //高度な設定
             IsFastDrawAtResize = true;                      //リサイズ時に高速描写をするかどうか
                                                             //書庫
-            IsExtractIfSolidArchive = true;
-            //クロスフェード
-            //isCrossfadeTransition = false;
+                                                            //クロスフェード
+                                                            //isCrossfadeTransition = false;
 
             // 画面切り替えモード
             PictureSwitchMode = AnimateMode.Slide;
@@ -212,17 +158,8 @@ namespace Marmi
             //スクリーンショー時間
             SlideShowTime = 3000;
 
-            //画面の初期位置
-            IsWindowPosCenter = false;
-
             //ツールバーの位置
             IsToolbarTop = true;
-
-            //ver1.64ツールバーアイテムの文字を消す
-            EraseToolbarItemString = false;
-
-            //ver1.70 サイドバーのスムーススクロールはOn
-            Sidebar_smoothScroll = true;
 
             //ver1.70 2枚表示はデフォルトで簡易チェック
             //dualview_exactCheck = false;
@@ -232,20 +169,9 @@ namespace Marmi
             LastPage_toTop = false;
             //LastPage_toNextArchive = false;
 
-            //ver1.73 一時展開フォルダ
-            TmpFolder = string.Empty;
-            NumberOfMru = 10;
-
-            //ver1.76 多重起動
-            DisableMultipleStarts = false;
-            //ver1.77 ウィンドウ位置を簡易計算にするか
-            SimpleCalcForWindowLocation = false;
-            //ver1.77 フルスクリーン状態を復元できるようにする
-            SaveFullScreenMode = true;
             //ver1.78 倍率の保持
             KeepMagnification = false;
             //ver1.79 書庫は必ず展開
-            AlwaysExtractArchive = false;
             //ver1.79 2ページモードアルゴリズム
             DualView_Force = false;
             DualView_Normal = true;
@@ -259,12 +185,12 @@ namespace Marmi
             UnsharpDepth = 25;
 
             //ver1.91 コンフィグ分離 2022年8月7日
+            General.Init();
             Thumbnail.Init();
             Keys.Init();
             Mouse.Init();
             Loupe.Init();
             Advance.Init();
-            
         }
 
         /// <summary>

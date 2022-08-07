@@ -1105,7 +1105,7 @@ namespace Marmi
                 //画像描写モード：低品質に
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-                g.Clear(App.Config.BackColor);
+                g.Clear(App.Config.General.BackColor);
                 //中心に描写
                 double width = (double)bmp.Width * r;
                 double height = (double)bmp.Height * r;
