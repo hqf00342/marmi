@@ -23,8 +23,8 @@ namespace Marmi
                 MessageBox.Show($"ファイルが見つかりませんでした\n{filename}", "ファイルオープンエラー");
 
                 //MRUリストから削除
-                var target = App.Config.Mru.Find(a=>a.Name == filename);
-                if(target != null)
+                var target = App.Config.Mru.Find(a => a.Name == filename);
+                if (target != null)
                 {
                     App.Config.Mru.Remove(target);
                 }
@@ -319,7 +319,6 @@ namespace Marmi
             }
         }
 
-
         private void Menu_RecurseDir_Click(object sender, EventArgs e)
         {
             App.Config.IsRecurseSearchDir = !App.Config.IsRecurseSearchDir;
@@ -333,12 +332,12 @@ namespace Marmi
 
         private void Menu_UseBicubic_Click(object sender, EventArgs e)
         {
-            App.Config.IsDotByDotZoom = !App.Config.IsDotByDotZoom;
+            App.Config.View.IsDotByDotZoom = !App.Config.View.IsDotByDotZoom;
         }
 
         private async void Menu_DontEnlargeOver100percent_Click(object sender, EventArgs e)
         {
-            App.Config.NoEnlargeOver100p = !App.Config.NoEnlargeOver100p;
+            App.Config.View.NoEnlargeOver100p = !App.Config.View.NoEnlargeOver100p;
             await SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
@@ -483,11 +482,11 @@ namespace Marmi
             Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
             //MenuItem_OptionSidebarFix.Checked = App.Config.isFixSidebar;
             Menu_keepMagnification.Checked = App.Config.KeepMagnification;
-            Menu_UseBicubic.Checked = !App.Config.IsDotByDotZoom;
-            Menu_DontEnlargeOver100percent.Checked = App.Config.NoEnlargeOver100p;
+            Menu_UseBicubic.Checked = !App.Config.View.IsDotByDotZoom;
+            Menu_DontEnlargeOver100percent.Checked = App.Config.View.NoEnlargeOver100p;
 
             //ver1.83アンシャープ
-            MenuItem_Unsharp.Checked = App.Config.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.View.UseUnsharpMask;
         }
 
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)

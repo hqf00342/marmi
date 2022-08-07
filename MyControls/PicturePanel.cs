@@ -234,7 +234,7 @@ namespace Marmi
             //ドラッグスクロール ||高速描写フラグ || 整数倍拡大 なら簡易品質
             if (_mouseDowmFlag
                 || FastDraw
-                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.IsDotByDotZoom)
+                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.View.IsDotByDotZoom)
                 )
             {
                 e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -249,7 +249,7 @@ namespace Marmi
             if (Opacity == 1.0f)
             {
                 //アンシャープを適用するかどうか
-                if (App.Config.UseUnsharpMask
+                if (App.Config.View.UseUnsharpMask
                     && LastDrawMode == InterpolationMode.HighQualityBicubic
                     && ZoomRatio != 100.0f
                     )
@@ -262,7 +262,7 @@ namespace Marmi
                         g.Transform = _amat;
                         g.DrawImage(Bmp, 0, 0, Bmp.Width, Bmp.Height);
                     }
-                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.UnsharpDepth);
+                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.View.UnsharpDepth);
                     e.Graphics.DrawImage(unsharpBmp, 0, 0, unsharpBmp.Width, unsharpBmp.Height);
                 }
                 else
@@ -298,7 +298,7 @@ namespace Marmi
             if (IsAutoFit)
             {
                 float r = GetScreenFitRatio();
-                if (r > 1.0f && App.Config.NoEnlargeOver100p)
+                if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
                     r = 1.0f;
                 ZoomRatio = r;
             }

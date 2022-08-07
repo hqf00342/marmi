@@ -31,47 +31,37 @@ namespace Marmi
 
             //サムネイルタブ
             LoadGeneralConfig(set);
+            LoadViewConfig(set);
             LoadThumbnailConfig(set);
             LoadLoupeConfig(set);
             LoadMouseConfig(set);
+            LoadKeyConfig(set);
             LoadAdvanceConfig(set);
-
-
-
-            //画面切り替わり方法
-            SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
-
-            //拡大表示関連
-            noEnlargeOver100p.Checked = set.NoEnlargeOver100p;
-            isDotByDotZoom.Checked = set.IsDotByDotZoom;
-
-            //ver1.35 ループ
-            //isLoopToTopPage.Checked = set.isLoopToTopPage;
 
             //ver1.70 2枚表示の厳密チェック
             //dualview_exactCheck.Checked = set.dualview_exactCheck;
 
-
-            //ver1.71 最終ページの動作
-            lastPage_stay.Checked = set.LastPage_stay;
-            lastPage_toTop.Checked = set.LastPage_toTop;
-            //lastPage_toNextArchive.Checked = set.LastPage_toNextArchive;
+            //画面切り替わり方法
+            SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
 
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
-            //ver1.79 2ページモードアルゴリズム
-            dualView_Force.Checked = set.DualView_Force;
-            dualView_Normal.Checked = set.DualView_Normal;
-            dualView_withSizeCheck.Checked = set.DualView_withSizeCheck;
-
-            //ver1.91 キーコンフィグ分離
-            LoadKeyConfig(set);
 
             //ダブルクリックで全画面
             DoubleClickToFullscreen.Checked = set.DoubleClickToFullscreen;
-            //ver1.83 アンシャープマスク
-            useUnsharpMask.Checked = set.UseUnsharpMask;
-            unsharpDepth.Value = (decimal)set.UnsharpDepth;
+        }
+
+        private void LoadViewConfig(AppGlobalConfig set)
+        {
+            noEnlargeOver100p.Checked = set.View.NoEnlargeOver100p;
+            isDotByDotZoom.Checked = set.View.IsDotByDotZoom;
+            lastPage_stay.Checked = set.View.LastPage_stay;
+            lastPage_toTop.Checked = set.View.LastPage_toTop;
+            dualView_Force.Checked = set.View.DualView_Force;
+            dualView_Normal.Checked = set.View.DualView_Normal;
+            dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
+            useUnsharpMask.Checked = set.View.UseUnsharpMask;
+            unsharpDepth.Value = (decimal)set.View.UnsharpDepth;
         }
 
         private void LoadGeneralConfig(AppGlobalConfig set)
@@ -171,34 +161,23 @@ namespace Marmi
             //サムネイルタブ
             SaveThumbnailConfig(ref set);
 
-
             //画面切り替わり方法
             set.PictureSwitchMode =
                 //(AppGlobalConfig.AnimateMode)SwitchPicMode.SelectedIndex;
                 (AnimateMode)SwitchPicMode.SelectedIndex;
             //拡大表示関連
-            set.NoEnlargeOver100p = noEnlargeOver100p.Checked;
-            set.IsDotByDotZoom = isDotByDotZoom.Checked;
+            SaveViewConfig(ref set);
 
             //ver1.35 ループ
             //set.isLoopToTopPage = isLoopToTopPage.Checked;
 
-
             //ver1.70 2枚表示の厳密チェック
             //set.dualview_exactCheck = dualview_exactCheck.Checked;
 
-
-            //ver1.71 最終ページの動作
-            set.LastPage_stay = lastPage_stay.Checked;
-            set.LastPage_toTop = lastPage_toTop.Checked;
             //set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
 
             //ver1.78 倍率の保持
             set.KeepMagnification = keepMagnification.Checked;
-            //ver1.79 2ページモードアルゴリズム
-            set.DualView_Force = dualView_Force.Checked;
-            set.DualView_Normal = dualView_Normal.Checked;
-            set.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
 
             //ver1.91 キーコンフィグ
             SaveKeyConfig(ref set);
@@ -208,9 +187,19 @@ namespace Marmi
 
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
-            //ver1.83 アンシャープマスク
-            set.UseUnsharpMask = useUnsharpMask.Checked;
-            set.UnsharpDepth = (int)unsharpDepth.Value;
+        }
+
+        private void SaveViewConfig(ref AppGlobalConfig set)
+        {
+            set.View.NoEnlargeOver100p = noEnlargeOver100p.Checked;
+            set.View.IsDotByDotZoom = isDotByDotZoom.Checked;
+            set.View.LastPage_stay = lastPage_stay.Checked;
+            set.View.LastPage_toTop = lastPage_toTop.Checked;
+            set.View.DualView_Force = dualView_Force.Checked;
+            set.View.DualView_Normal = dualView_Normal.Checked;
+            set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
+            set.View.UseUnsharpMask = useUnsharpMask.Checked;
+            set.View.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
         private void SaveGnereralConfig(ref AppGlobalConfig set)

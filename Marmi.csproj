@@ -127,6 +127,7 @@
     <Compile Include="DataModel\MouseConfig.cs" />
     <Compile Include="DataModel\ThumbnailConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
+    <Compile Include="DataModel\ViewConfig.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Interfaces\I7zipWrapper.cs" />
     <Compile Include="ScreenCache.cs" />

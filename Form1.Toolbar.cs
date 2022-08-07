@@ -11,7 +11,6 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
-
         private void ToolStrip1_Resize(object sender, EventArgs e)
         {
             //リサイズドラッグ中は表示させない
@@ -125,7 +124,7 @@ namespace Marmi
             PicPanel.IsAutoFit = true;
             //表示倍率の調整
             float r = PicPanel.FittingRatio;
-            if (r > 1.0f && App.Config.NoEnlargeOver100p)
+            if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
                 r = 1.0f;
             PicPanel.ZoomRatio = r;
             //PicPanel.Refresh();

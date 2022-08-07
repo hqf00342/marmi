@@ -60,7 +60,6 @@
             this.dualView_Force = new System.Windows.Forms.RadioButton();
             this.keepMagnification = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lastPage_toNextArchive = new System.Windows.Forms.RadioButton();
             this.lastPage_toTop = new System.Windows.Forms.RadioButton();
             this.lastPage_stay = new System.Windows.Forms.RadioButton();
             this.SwitchPicMode = new System.Windows.Forms.ComboBox();
@@ -595,7 +594,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lastPage_toNextArchive);
             this.groupBox3.Controls.Add(this.lastPage_toTop);
             this.groupBox3.Controls.Add(this.lastPage_stay);
             this.groupBox3.Location = new System.Drawing.Point(12, 263);
@@ -604,20 +602,6 @@
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "最終ページの動作";
-            // 
-            // lastPage_toNextArchive
-            // 
-            this.lastPage_toNextArchive.AutoSize = true;
-            this.lastPage_toNextArchive.Enabled = false;
-            this.lastPage_toNextArchive.Location = new System.Drawing.Point(7, 65);
-            this.lastPage_toNextArchive.Name = "lastPage_toNextArchive";
-            this.lastPage_toNextArchive.Size = new System.Drawing.Size(363, 16);
-            this.lastPage_toNextArchive.TabIndex = 2;
-            this.lastPage_toNextArchive.TabStop = true;
-            this.lastPage_toNextArchive.Tag = "書庫の場合、次のファイルを自動的に探し移動します。ディレクトリの場合は先頭に戻ります。";
-            this.lastPage_toNextArchive.Text = "次の書庫ファイルを探し自動的に開く。ディレクトリの場合は先頭へ移動。";
-            this.lastPage_toNextArchive.UseVisualStyleBackColor = true;
-            this.lastPage_toNextArchive.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // lastPage_toTop
             // 
@@ -1918,7 +1902,6 @@
 		private System.Windows.Forms.CheckBox sidebar_smoothscroll;
 		private System.Windows.Forms.TabPage view;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.RadioButton lastPage_toNextArchive;
 		private System.Windows.Forms.RadioButton lastPage_toTop;
 		private System.Windows.Forms.RadioButton lastPage_stay;
 		private System.Windows.Forms.ComboBox SwitchPicMode;

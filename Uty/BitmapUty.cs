@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;				//Debug, Stopwatch
 using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
 using System.Drawing.Drawing2D;			// GraphicsPath
@@ -1096,7 +1095,7 @@ namespace Marmi
 
             //è¨Ç≥Ç¢ÇŸÇ§ÇégÇ§
             double r = rx < ry ? rx : ry;
-            if (r > 1.0f && App.Config.NoEnlargeOver100p)
+            if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
                 r = 1.0f;
 
             Bitmap newbmp = new Bitmap(screenSize.Width, screenSize.Height);

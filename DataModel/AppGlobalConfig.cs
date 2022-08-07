@@ -46,11 +46,6 @@ namespace Marmi
         //public bool isFixSidebar;					//サイドバーを固定にするかどうか
         public int SidebarWidth { get; set; }                    //サイドバーの幅
 
-        //ver1.25
-        public bool NoEnlargeOver100p { get; set; }          //画面フィッティングは100%未満にする
-
-        public bool IsDotByDotZoom { get; set; }             //Dot-by-Dot補間モードにする
-
         //ver1.21画像切り替え方法
         public AnimateMode PictureSwitchMode { get; set; }
 
@@ -63,12 +58,6 @@ namespace Marmi
         //ver1.70 2枚表示の厳格化
         //public bool dualview_exactCheck;
 
-        //ver1.71 最終ページの動作
-        public bool LastPage_stay { get; set; }
-
-        public bool LastPage_toTop { get; set; }
-        //public bool LastPage_toNextArchive { get; set; }
-
         //ver1.77 画面モード保存対象にする。
         public bool isFullScreen;
 
@@ -79,21 +68,12 @@ namespace Marmi
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
 
-        //ver1.79 2ページモード
-        public bool DualView_Force { get; set; }
-
-        public bool DualView_Normal { get; set; }
-        public bool DualView_withSizeCheck { get; set; }
-
         //ver1.80 ダブルクリック
         public bool DoubleClickToFullscreen { get; set; }
 
-        //ver1.83 アンシャープマスク
-        public bool UseUnsharpMask { get; set; }
-
-        public int UnsharpDepth { get; set; }
-
         public GeneralConfig General { get; set; } = new GeneralConfig();
+
+        public ViewConfig View { get; set; } = new ViewConfig();
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
         public MouseConfig Mouse { get; set; } = new MouseConfig();
@@ -148,9 +128,6 @@ namespace Marmi
 
             // 画面切り替えモード
             PictureSwitchMode = AnimateMode.Slide;
-            //zoom
-            NoEnlargeOver100p = true;       //画面フィッティングは100%未満にする
-            IsDotByDotZoom = false;         //Dot-by-Dot補間モードにする
 
             //ループするかどうか
             //isLoopToTopPage = false;
@@ -164,28 +141,16 @@ namespace Marmi
             //ver1.70 2枚表示はデフォルトで簡易チェック
             //dualview_exactCheck = false;
 
-            //ver1.71 最終ページの動作
-            LastPage_stay = true;
-            LastPage_toTop = false;
-            //LastPage_toNextArchive = false;
-
             //ver1.78 倍率の保持
             KeepMagnification = false;
             //ver1.79 書庫は必ず展開
-            //ver1.79 2ページモードアルゴリズム
-            DualView_Force = false;
-            DualView_Normal = true;
-            DualView_withSizeCheck = false;
 
             //ダブルクリック機能を開放する
             DoubleClickToFullscreen = false;
 
-            //ver1.83 アンシャープマスク
-            UseUnsharpMask = true;
-            UnsharpDepth = 25;
-
             //ver1.91 コンフィグ分離 2022年8月7日
             General.Init();
+            View.Init();
             Thumbnail.Init();
             Keys.Init();
             Mouse.Init();

@@ -56,7 +56,6 @@ namespace Marmi
 
         #endregion --- データクラス ---
 
-
         //マウスクリックされた位置を保存。ドラッグ操作用
         private Point g_LastClickPoint = Point.Empty;
 
@@ -866,7 +865,6 @@ namespace Marmi
                 //ラムダ式の外で文字列作成
                 var msg = $"画像情報読み込み中...{cnt + 1}/{App.g_pi.Items.Count}";
 
-
                 //サムネイルを作成するだけなのでawaitせず高速に回す。
                 AsyncIO.AddJobLow(cnt, () =>
                 {
@@ -1244,7 +1242,7 @@ namespace Marmi
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
-                if (r > 1.0f && App.Config.NoEnlargeOver100p)
+                if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
                     r = 1.0f;
                 PicPanel.ZoomRatio = r;
             }
@@ -1407,7 +1405,7 @@ namespace Marmi
             {
                 await SetViewPageAsync(next, drawOrderTick);
             }
-            else if (App.Config.LastPage_toTop)
+            else if (App.Config.View.LastPage_toTop)
             {
                 //先頭ページへループ
                 await SetViewPageAsync(0, drawOrderTick);
@@ -1642,7 +1640,7 @@ namespace Marmi
                 return false;
 
             //ver1.79：2ページ強制表示
-            if (App.Config.DualView_Force)
+            if (App.Config.View.DualView_Force)
                 return true;
 
             //1枚目読み込み
@@ -1656,7 +1654,7 @@ namespace Marmi
                 return false;
 
             //2枚目読み込み
-            if (App.g_pi.Items[index+1].ImgSize == Size.Empty)
+            if (App.g_pi.Items[index + 1].ImgSize == Size.Empty)
             {
                 await Bmp.LoadBitmapAsync(index + 1, true);
             }
@@ -1666,7 +1664,7 @@ namespace Marmi
                 return false; //横長だった
 
             //全て縦長だった時の処理
-            if (App.Config.DualView_Normal)
+            if (App.Config.View.DualView_Normal)
                 return true; //縦画像2枚
 
             //2画像の高さがほとんど変わらなければtrue
@@ -1809,8 +1807,8 @@ namespace Marmi
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)
         {
-            App.Config.UseUnsharpMask = !App.Config.UseUnsharpMask;
-            MenuItem_Unsharp.Checked = App.Config.UseUnsharpMask;
+            App.Config.View.UseUnsharpMask = !App.Config.View.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.View.UseUnsharpMask;
 
             //再描写
             PicPanel.Invalidate();
