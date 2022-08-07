@@ -5,41 +5,36 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+SideBarクラス
+
+半透明の画像一覧を左端に表示するバー/パネル。
+画像自体はPackageInfoそのもののポインタをもらって描写している。
+タイマー遅延によって閉じるタイミングを指定可能。
+*/
+
 namespace Marmi
 {
-    /// <summary>
-    /// SideBarクラス
-    ///
-    /// 半透明の画像一覧を左端に表示するバー/パネル。
-    /// 画像自体はPackageInfoそのもののポインタをもらって描写している。
-    /// タイマー遅延によって閉じるタイミングを指定可能。
-    /// </summary>
     public class SideBar : UserControl
     {
-        private int GRIP_WIDTH = 8;         //グリップ全体の幅
-        private int GRIP_HEIGHT = 32;       //グリップ描写部分の高さ
-        private int THUMBSIZE = 120;        //サムネイルサイズ
-        private int PADDING = 2;            //各種の余白
-        private int NUM_WIDTH = 32;         //番号部分の幅
-        private int BOX_HEIGHT;             //BOXサイズ：コンストラクタで計算
-
-        private int m_hoverItem;            //選択されているアイテム
-        private Point m_mouseDragPoint;     //グリップをドラッグされたときのPoint
-        private PackageInfo m_packageInfo;  //g_piそのものを挿す
-        private VScrollBar m_vsBar = new VScrollBar();          //スクロールバー
-        private ToolTip m_tooltip = null;   //ツールチップ
-
-        private System.Windows.Forms.Timer m_scrollTimer;       //スクロールに慣性をつけるためのタイマー
-        private int m_drawScrollValue;      //表示に使うスクロール位置。≒m_vsBar.ValueだがTimer制御。Draw()参照
-
+        private readonly int GRIP_WIDTH = 8;        //グリップ全体の幅
+        private readonly int GRIP_HEIGHT = 32;      //グリップ描写部分の高さ
+        private readonly int THUMBSIZE = 120;       //サムネイルサイズ
+        private readonly int PADDING = 2;           //各種の余白
+        private readonly int NUM_WIDTH = 32;        //番号部分の幅
+        private readonly int BOX_HEIGHT;            //BOXサイズ：コンストラクタで計算
+        private int m_hoverItem;                    //選択されているアイテム
+        private Point m_mouseDragPoint;             //グリップをドラッグされたときのPoint
+        private PackageInfo m_packageInfo;          //g_piそのものを挿す
+        private int m_drawScrollValue;              //スクロール位置。≒m_vsBar.Valueだが慣性を考慮。Draw()参照
+        private readonly Timer m_scrollTimer;       //スクロールに慣性をつけるためのタイマー
         private readonly Color m_NormalBackColor = Color.Black;
         private readonly Brush m_brNormalBack = Brushes.Black;
         private readonly SolidBrush m_brSelectBack = new SolidBrush(Color.FromArgb(224, Color.RoyalBlue));
         private readonly SolidBrush m_brHoverBack = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
-
-        //フォント
+        private readonly VScrollBar m_vsBar = new VScrollBar();          //スクロールバー
+        private readonly ToolTip m_tooltip = null;   //ツールチップ
         private readonly Font fontL = new Font("ＭＳ Ｐ ゴシック", 10.5F);
-
         private readonly Font fontS = new Font("ＭＳ Ｐ ゴシック", 9F);
 
         //フォントサイズの初期計算用
@@ -94,9 +89,8 @@ namespace Marmi
             }
 
             //スクロールタイマーの設定
-            m_scrollTimer = new System.Windows.Forms.Timer();
-            m_scrollTimer.Interval = 10;
-            m_scrollTimer.Tick += new EventHandler(m_scrollTimer_Tick);
+            m_scrollTimer = new Timer { Interval = 10 };
+            m_scrollTimer.Tick += new EventHandler(ScrollTimer_Tick);
 
             //ツールチップの設定
             m_tooltip = new ToolTip();
@@ -119,15 +113,6 @@ namespace Marmi
 
             SetScrollbar();
         }
-
-        //public void Init()
-        //{
-        //    m_packageInfo = null;
-        //    m_vsBar.Value = 0;
-        //    m_vsBar.Visible = false;
-        //}
-
-        // publicメソッド/プロパティ
 
         /// <summary>
         /// 指定したアイテムを中心位置にする
@@ -157,35 +142,6 @@ namespace Marmi
                     m_vsBar.Value = val;
             }
         }
-
-        /// <summary>
-        /// 指定アイテムが更新されたことを受け取るメソッド
-        /// サムネイル作成スレッドから呼び出される。
-        /// 必要があればInvalidate()を発行して表示を更新
-        /// </summary>
-        /// <param name="item">更新されたアイテム番号</param>
-        public void UpdateViewItem(int item)
-        {
-            if (m_packageInfo == null)
-                return;
-
-            ////アイテム描写のための変数定義
-            //int scbarWidth = (m_vsBar.Visible) ? m_vsBar.Width : 0;	//縦スクロールバーの幅
-            //int ItemCount = m_packageInfo.Items.Count;				//総アイテム数
-            //int startItem = m_drawScrollValue / BOX_HEIGHT;						//一番上のアイテムインデックス
-            //if (startItem < 0)
-            //    startItem = 0;
-            //int endItem = (m_drawScrollValue + this.Height) / BOX_HEIGHT + 1;		//一番下のアイテムインデックス
-            //if (endItem > ItemCount)
-            //    endItem = ItemCount;
-
-            if (CheckNessesaryToDraw(item))
-                this.Invalidate();
-        }
-
-        //--------------------------------------------------------------------------------
-        // override
-        //
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -219,7 +175,7 @@ namespace Marmi
             this.Refresh();
         }
 
-        protected override void OnClick(EventArgs e)
+        protected override async void OnClick(EventArgs e)
         {
             base.OnClick(e);
 
@@ -229,7 +185,7 @@ namespace Marmi
                 return;
 
             //((Form1)Parent).SetViewPage(item);
-            ((Form1)Form1._instance).SetViewPage(item);
+            await ((Form1)Form1._instance).SetViewPage(item);
 
             //アイテムを中央に持ってくる
             SetItemToCenter(item);
@@ -238,12 +194,7 @@ namespace Marmi
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-            //if (this.Visible == false || m_vsBar.Visible == false)
-            //{
-            //    //Debug.WriteLine("NaviBar2_MouseWheel");
-            //    //((Form1)Form1._instance).Form1_MouseWheel(sender, e);
-            //}
-            //else
+
             if (this.Visible && m_vsBar.Visible)
             {
                 int delta = BOX_HEIGHT;
@@ -316,17 +267,6 @@ namespace Marmi
             //アイテムがなければ何もしない
             if (m_packageInfo == null)
                 return;
-
-            //ver0.9833
-            //クローズ動作中にToolTipが変わる事象がある。
-            //これはScrollBarを消したせいでhoverItemが変わったように見えるせい。
-            //そもそもClose動作中にここの処理はして欲しくないので
-            //Close処理中の動きであれば何もしない
-            //if (m_isClose)
-            //{
-            //    Debug.WriteLine("SideBar.MouseMove(), but Closing", DateTime.Now.ToString());
-            //    return;
-            //}
 
             //マウスホバーが変わっていれば再描写する。
             int item = MousePointToItemNumber();
@@ -434,7 +374,7 @@ namespace Marmi
             }
         }
 
-        private void m_scrollTimer_Tick(object sender, EventArgs e)
+        private void ScrollTimer_Tick(object sender, EventArgs e)
         {
             int algorithm = 1;  //描写アルゴリズム。下のswitch分で利用
             int mag = 10;       //慣性力。algorithm = 1で利用
@@ -526,13 +466,17 @@ namespace Marmi
             //アイテムを表示数分廻すルーチン
             for (int index = startItem; index <= endItem; index++)
             {
-                Rectangle rc = new Rectangle(
+                var rc = new Rectangle(
                     0,                                      // 描写開始位置x = 0;
                     index * BOX_HEIGHT - top,               // 描写開始位置y = ボックスの絶対高さ-スクロール値
                     this.Width - GRIP_WIDTH - scbarWidth,   // 幅はグリップとスクロールバーの幅を除く
                     (THUMBSIZE + PADDING * 2)               // 高さはTHUMBSIZEに
                     );
+
+#pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
+                //並列に描写されることを想定し、awaitしない
                 DrawItem(index, g, rc);
+#pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
             }
 
             //背景が透明なのでアイテムが少ないと透明のままになる
@@ -629,59 +573,14 @@ namespace Marmi
                     Pens.LightGray,
                     Rectangle.Round(drawImageRect));
 
-                //画像を非同期で取ってくる
-                //ThreadPool.QueueUserWorkItem((dummy) => {
-                //    //2重に非同期取得が発行されることがあるのでチェック
-                //    if (m_packageInfo.Items[index].ThumbImage != null)
-                //        return;
-                //    if (!CheckNessesaryToDraw(index))
-                //    {
-                //        Uty.printf("Sidebar::SkipItem={0}", index);	//ちゃんと効いている
-                //        return;
-                //    }
-                //    Form1._instance.GetBitmap(index);
-                //    BeginInvoke((MethodInvoker)(() =>
-                //    {
-                //        if (this.Visible)
-                //            this.Invalidate();
-                //    }));
-                //});
-
-                //Uty.WriteLine("Sidebar AsyncGetBitmap()");
-                //Form1._instance.AsyncGetBitmap(index, (MethodInvoker)(() =>
-                //{
-                //	Form1.g_pi.AsyncThumnailMaker(index);
-                //	//if (this.Visible)
-                //	//	this.Invalidate();
-                //}));
-
                 //ver1.81 画像を取りに行く
                 //その後サムネイル登録.タイマーが止まってから実行
                 if (m_scrollTimer == null || !m_scrollTimer.Enabled)
                 {
                     Debug.WriteLine("Sidebar AsyncGetBitmap()");
-                    //Form1.PushLow(index, (Action)(() =>
-                    //{
-                    //    //Form1.g_pi.AsyncThumnailMaker(index);
-                    //    var bmp = Form1.SyncGetBitmap(index);
-                    //    App.g_pi.ThumnailMaker(index, bmp);
-                    //    if (this.Visible)
-                    //        this.Invalidate();
-                    //}));
-                    //AsyncIO.AddJobLow(index, () =>
-                    //{
-                    //    var bmp = Bmp.SyncGetBitmap(index);
-                    //    //2021年2月25日コメントアウト：サムネイル作成は1か所
-                    //    //App.g_pi.ThumnailMaker(index, bmp);
-                    //    if (this.Visible)
-                    //        this.Invalidate();
-                    //});
-                    var bmp = await Bmp.GetBitmapAsync(index);
-                    //2021年2月25日コメントアウト：サムネイル作成は1か所
-                    //App.g_pi.ThumnailMaker(index, bmp);
+                    await Bmp.LoadBitmapAsync(index);
                     if (this.Visible)
                         this.Invalidate();
-
                 }
             }
 
@@ -744,29 +643,6 @@ namespace Marmi
             g.DrawLine(SystemPens.ControlLightLight, sx, sy, sx, sy + GRIP_HEIGHT);
             sx++;
             g.DrawLine(SystemPens.ControlDark, sx, sy, sx, sy + GRIP_HEIGHT);
-        }
-
-        /// <summary>
-        /// アイテムが描写対象かどうか確認する
-        /// </summary>
-        /// <param name="index">対象アイテム</param>
-        /// <returns>描写対象ならtrue</returns>
-        private bool CheckNessesaryToDraw(int index)
-        {
-            //アイテム描写のための変数定義
-            int top = m_drawScrollValue;
-            int scbarWidth = (m_vsBar.Visible) ? m_vsBar.Width : 0; //縦スクロールバーの幅
-            int ItemCount = m_packageInfo.Items.Count;              //総アイテム数
-
-            int startItem = top / BOX_HEIGHT;                       //一番上のアイテムインデックス
-            if (startItem < 0)
-                startItem = 0;
-
-            int endItem = (top + this.Height) / BOX_HEIGHT + 1;     //一番下のアイテムインデックス
-            if (endItem > ItemCount)
-                endItem = ItemCount;
-
-            return (index >= startItem && index <= endItem);
         }
     }
 }
