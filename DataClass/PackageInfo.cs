@@ -219,5 +219,11 @@ namespace Marmi
                     Items[i].IsBookMark = true;
             }
         }
+
+        public void ThrowIfOutOfRange(int index)
+        {
+            if (index < 0 || index >= Items.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+        }
     }
 }
