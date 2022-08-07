@@ -18,7 +18,7 @@ namespace Marmi
         public static void AsyncGetBitmap(int index, Action uiAction)
         {
             //キャッシュを持っていれば非同期しない
-            if (App.g_pi.HasCacheImage(index))
+            if (App.g_pi.Items[index].CacheImage.HasImage)
             {
                 uiAction?.Invoke();
             }

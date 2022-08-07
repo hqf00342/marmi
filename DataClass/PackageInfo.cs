@@ -93,15 +93,7 @@ namespace Marmi
         /// <returns>Bitmap –³‚¯‚ê‚Îcache‚ª‚È‚¯‚ê‚Înull</returns>
         public Bitmap GetBitmapFromCache(int index)
         {
-            return HasCacheImage(index) ? Items[index].CacheImage.ToBitmap() : null;
-        }
-
-        public bool HasCacheImage(int index)
-        {
-            if (index < 0 || index >= Items.Count)
-                return false;
-
-            return Items[index].CacheImage.HasImage;
+            return Items[index].CacheImage.ToBitmap();
         }
 
         public void ClearCache(int index)
