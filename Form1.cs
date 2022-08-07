@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -1172,7 +1173,7 @@ namespace Marmi
         /// </summary>
         /// <param name="index">インデックス番号</param>
         /// <param name="drawOrderTick">描写順序を示すオーダー時間 = DateTime.Now.Ticks</param>
-        public void SetViewPage(int index, long drawOrderTick = 0)
+        public async Task SetViewPage(int index, long drawOrderTick = 0)
         {
             if (drawOrderTick == 0)
                 drawOrderTick = DateTime.Now.Ticks;
@@ -1210,21 +1211,15 @@ namespace Marmi
                 SetStatusbarInfo("Now Loading ... " + (index + 1).ToString());
 
                 //画像作成をスレッドプールに登録
-                ThreadPool.QueueUserWorkItem(_ =>
+                var img = await Bmp.MakeOriginalSizeImage(index);
+                if (img == null)
                 {
-                    var img = Bmp.MakeOriginalSizeImage(index);
-                    this.Invoke((MethodInvoker)(() =>
-                    {
-                        if (img == null)
-                        {
-                            PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
-                        }
-                        else
-                        {
-                            SetViewPage2(index, pageDirection, img, drawOrderTick);
-                        }
-                    }));
-                });
+                    PicPanel.Message = "読込みに時間がかかってます.リロードしてください";
+                }
+                else
+                {
+                    SetViewPage2(index, pageDirection, img, drawOrderTick);
+                }
 
                 //カーソルをWaitに
                 this.Cursor = Cursors.WaitCursor;

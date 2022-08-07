@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -16,29 +17,43 @@ namespace Marmi
         /// 前後ページの画面キャッシュを作成する
         /// 現在見ているページを中心とする
         /// </summary>
-        internal static void MakeCacheForPreAndNextPages()
+        internal static async void MakeCacheForPreAndNextPages()
         {
             //ver1.37 スレッドで使うことを前提にロック
+            //前のページ
+            int ix = Form1.GetPrevPageIndex(App.g_pi.NowViewPage);
+            if (ix >= 0 && !_screenCache.ContainsKey(ix))
+            {
+                Debug.WriteLine(ix, "getScreenCache() Add Prev");
+                var bmp = await Bmp.MakeOriginalSizeImage(ix);
+                AddImage(ix, bmp);
+            }
+
+            //前のページ
+            ix = Form1.GetNextPageIndex(App.g_pi.NowViewPage);
+            if (ix >= 0 && !_screenCache.ContainsKey(ix))
+            {
+                Debug.WriteLine(ix, "getScreenCache() Add Next");
+                var bmp = await Bmp.MakeOriginalSizeImage(ix);
+                AddImage(ix, bmp);
+            }
+        }
+
+        private static void AddImage(int ix, Bitmap bmp)
+        {
+            if (bmp == null) return;
             lock ((_screenCache as ICollection).SyncRoot)
             {
-                //前のページ
-                int ix = Form1.GetPrevPageIndex(App.g_pi.NowViewPage);
-                if (ix >= 0 && !_screenCache.ContainsKey(ix))
+                try
                 {
-                    Debug.WriteLine(ix, "getScreenCache() Add Prev");
-                    var bmp = Bmp.MakeOriginalSizeImage(ix);
-                    if (bmp != null)
-                        _screenCache.Add(ix, bmp);
+                    _screenCache.Add(ix, bmp);
                 }
-
-                //前のページ
-                ix = Form1.GetNextPageIndex(App.g_pi.NowViewPage);
-                if (ix >= 0 && !_screenCache.ContainsKey(ix))
+                catch(Exception e)
                 {
-                    Debug.WriteLine(ix, "getScreenCache() Add Next");
-                    var bmp = Bmp.MakeOriginalSizeImage(ix);
-                    if (bmp != null)
-                        _screenCache.Add(ix, bmp);
+                    Debug.WriteLine(e.Message);
+                    //高速画面遷移されるとどうしても同じタイミングで
+                    //キャッシュ追加されることがあるので
+                    //Key重複例外は無視
                 }
             }
         }

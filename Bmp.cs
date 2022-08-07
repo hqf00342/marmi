@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -39,11 +40,27 @@ namespace Marmi
             AsyncIO.AddJob(index, uiAction);
         }
 
+        public static async Task<Bitmap> GetBitmapAsync(int ix)
+        {
+            if (!App.g_pi.Items[ix].CacheImage.HasImage)
+            {
+                bool complete = false;
+                AsyncIO.AddJob(ix, () => { complete = true; });
+                await Task.Yield();
+                while (!complete)
+                {
+                    await Task.Delay(10);
+                }
+            }
+            return App.g_pi.Items[ix].CacheImage.ToBitmap();
+        }
+
         /// <summary>
         /// Bitmapを取得する
         /// </summary>
         /// <param name="index">取得したいBitmapのIndex</param>
         /// <returns>Bitmap。失敗した場合はnull</returns>
+        [Obsolete("GetBitmapAsync()への移行推奨")]
         public static Bitmap SyncGetBitmap(int index)
         {
             var bmp = App.g_pi.GetBitmapFromCache(index);
@@ -99,12 +116,13 @@ namespace Marmi
             }
         }
 
-        internal static Bitmap MakeOriginalSizeImage(int index)
+        internal async static Task<Bitmap> MakeOriginalSizeImage(int index)
         {
             Debug.WriteLine($"MakeOriginalSizeImage({index})");
 
             //とりあえず1枚読め！
-            Bitmap bmp1 = SyncGetBitmap(index);
+            //Bitmap bmp1 = SyncGetBitmap(index);
+            var bmp1 = await GetBitmapAsync(index);
             if (bmp1 == null)
             {
                 //if (g_pi.isSolid && App.Config.isExtractIfSolidArchive)
@@ -120,7 +138,8 @@ namespace Marmi
             if (App.Config.DualView && Form1.CanDualView(index))
             {
                 //2枚表示
-                Bitmap bmp2 = SyncGetBitmap(index + 1);
+                //Bitmap bmp2 = SyncGetBitmap(index + 1);
+                Bitmap bmp2 = await GetBitmapAsync(index + 1);
                 if (bmp2 == null)
                 {
                     //2枚目の読み込みがエラーなので1枚表示にする
