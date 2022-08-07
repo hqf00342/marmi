@@ -57,7 +57,7 @@ namespace Marmi
             isExtractIfSolidArchive.Checked = set.IsExtractIfSolidArchive;
 
             //マウスコンフィグ
-            mouseConfigWheel.Text = set.MouseConfigWheel;
+            LoadMouseConfig(set);
 
             //画面切り替わり方法
             SwitchPicMode.SelectedIndex = (int)set.PictureSwitchMode;
@@ -68,11 +68,6 @@ namespace Marmi
 
             //ver1.35 ループ
             //isLoopToTopPage.Checked = set.isLoopToTopPage;
-
-            //ver1.64 画面ナビ
-            radioRightScrToNextPic.Checked = set.RightScrClickIsNextPic;
-            radioLeftScrToNextPic.Checked = !set.RightScrClickIsNextPic;
-            reverseClickPointWhenLeftBook.Checked = set.ReverseDirectionWhenLeftBook;
 
             //ver1.65ツールバーアイテムの文字消し
             eraseToolbarItemString.Checked = set.EraseToolbarItemString;
@@ -119,6 +114,16 @@ namespace Marmi
             //ver1.83 アンシャープマスク
             useUnsharpMask.Checked = set.UseUnsharpMask;
             unsharpDepth.Value = (decimal)set.UnsharpDepth;
+        }
+
+        private void LoadMouseConfig(AppGlobalConfig set)
+        {
+            mouseConfigWheel.Text = set.Mouse.MouseConfigWheel;
+
+            //ver1.64 画面ナビ
+            radioRightScrToNextPic.Checked = set.Mouse.RightScrClickIsNextPic;
+            radioLeftScrToNextPic.Checked = !set.Mouse.RightScrClickIsNextPic;
+            reverseClickPointWhenLeftBook.Checked = set.Mouse.ReverseDirectionWhenLeftBook;
         }
 
         private void LoadKeyConfig(AppGlobalConfig set)
@@ -186,10 +191,6 @@ namespace Marmi
             //ver1.09 書庫関連
             set.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
 
-
-            //マウスコンフィグ
-            set.MouseConfigWheel = mouseConfigWheel.Text;
-
             //画面切り替わり方法
             set.PictureSwitchMode =
                 //(AppGlobalConfig.AnimateMode)SwitchPicMode.SelectedIndex;
@@ -200,10 +201,6 @@ namespace Marmi
 
             //ver1.35 ループ
             //set.isLoopToTopPage = isLoopToTopPage.Checked;
-
-            //ver1.64 画面ナビ
-            set.RightScrClickIsNextPic = radioRightScrToNextPic.Checked;
-            set.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
 
             //ver1.65ツールバーアイテムの文字消し
             set.EraseToolbarItemString = eraseToolbarItemString.Checked;
@@ -241,7 +238,10 @@ namespace Marmi
             set.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
 
             //ver1.91 キーコンフィグ
-            SaveKeyConfig(set);
+            SaveKeyConfig(ref set);
+
+            //マウスコンフィグ
+            SaveMouseConfig(ref set);
 
             //1.80 ダブルクリックで全画面
             set.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
@@ -252,7 +252,16 @@ namespace Marmi
             set.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
-        private void SaveKeyConfig(AppGlobalConfig set)
+        private void SaveMouseConfig(ref AppGlobalConfig set)
+        {
+            set.Mouse.MouseConfigWheel = mouseConfigWheel.Text;
+
+            //ver1.64 画面ナビ
+            set.Mouse.RightScrClickIsNextPic = radioRightScrToNextPic.Checked;
+            set.Mouse.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
+        }
+
+        private void SaveKeyConfig(ref AppGlobalConfig set)
         {
             set.Keys.Key_Exit1 = ka_exit1.keyData;
             set.Keys.Key_Exit2 = ka_exit2.keyData;

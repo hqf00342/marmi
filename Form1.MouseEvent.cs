@@ -16,7 +16,7 @@ namespace Marmi
     {
         private async void PicPanel_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (App.Config.MouseConfigWheel == "拡大縮小")
+            if (App.Config.Mouse.MouseConfigWheel == "拡大縮小")
             {
                 //PicPanel内部で処理しているのでなにもしない
             }
@@ -89,7 +89,7 @@ namespace Marmi
             //ページナビゲートをする。
             bool isForword = PicPanel.CheckMousePosRight();
             //コンフィグ確認
-            if (!App.Config.RightScrClickIsNextPic)
+            if (!App.Config.Mouse.RightScrClickIsNextPic)
                 isForword = !isForword;
             //左開きなら入れ替え
             if (!App.g_pi.PageDirectionIsLeft)

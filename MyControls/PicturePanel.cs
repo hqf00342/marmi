@@ -415,7 +415,7 @@ namespace Marmi
                 return;
 
             //ver1.30 Ctrlキーを押しているときは強制的にズーム
-            if (App.Config.MouseConfigWheel == "拡大縮小"
+            if (App.Config.Mouse.MouseConfigWheel == "拡大縮小"
                 || (Control.ModifierKeys & Keys.Control) == Keys.Control)
             {
                 if (e.Delta > 0)
@@ -580,7 +580,7 @@ namespace Marmi
             }
         }
 
-        #endregion
+        #endregion 表示関連の調整
 
         #region 拡大縮小関連
 
@@ -825,7 +825,7 @@ namespace Marmi
             Win32.SendMessage(this.Handle, Win32.WM_SETREDRAW, Win32.WIN32_TRUE, 0);
         }
 
-        #endregion
+        #endregion P/Invoke
 
         /// <summary>
         /// 指定した画像をスライドインする

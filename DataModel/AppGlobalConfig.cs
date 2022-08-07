@@ -71,9 +71,6 @@ namespace Marmi
         //ver1.09 書庫関連
         public bool IsExtractIfSolidArchive { get; set; }        //ソリッド書庫なら一時展開するか
 
-        //ver1.24 マウスホイール
-        public string MouseConfigWheel { get; set; }
-
         //ver1.25
         public bool NoEnlargeOver100p { get; set; }          //画面フィッティングは100%未満にする
 
@@ -94,12 +91,6 @@ namespace Marmi
 
         //ver1.62 ツールバーの位置
         public bool IsToolbarTop { get; set; }
-
-        //ver1.64 画面ナビゲーション.右画面クリックで進む
-        public bool RightScrClickIsNextPic { get; set; }
-
-        //ver1.64 左綴じ本でクリック位置逆転
-        public bool ReverseDirectionWhenLeftBook { get; set; }
 
         //ver1.65 ツールバーアイテムの文字を消すか
         public bool EraseToolbarItemString { get; set; }
@@ -202,7 +193,6 @@ namespace Marmi
         public bool DualView_Normal { get; set; }
         public bool DualView_withSizeCheck { get; set; }
 
-
         //ver1.80 ダブルクリック
         public bool DoubleClickToFullscreen { get; set; }
 
@@ -214,6 +204,8 @@ namespace Marmi
         public int UnsharpDepth { get; set; }
 
         public KeyConfig Keys { get; set; } = new KeyConfig();
+
+        public MouseConfig Mouse { get; set; } = new MouseConfig();
 
         /*******************************************************************************/
 
@@ -279,8 +271,6 @@ namespace Marmi
             //クロスフェード
             //isCrossfadeTransition = false;
 
-            //マウスコンフィグ
-            MouseConfigWheel = "拡大縮小";
             // 画面切り替えモード
             PictureSwitchMode = AnimateMode.Slide;
             //zoom
@@ -290,19 +280,15 @@ namespace Marmi
 
             //ループするかどうか
             //isLoopToTopPage = false;
-            
+
             //スクリーンショー時間
             SlideShowTime = 3000;
-            
+
             //画面の初期位置
             IsWindowPosCenter = false;
-            
+
             //ツールバーの位置
             IsToolbarTop = true;
-
-            //ver1.64 画面クリックナビゲーション
-            RightScrClickIsNextPic = true;
-            ReverseDirectionWhenLeftBook = true;
 
             //ver1.64ツールバーアイテムの文字を消す
             EraseToolbarItemString = false;
@@ -337,7 +323,6 @@ namespace Marmi
             DualView_Normal = true;
             DualView_withSizeCheck = false;
 
-
             //ダブルクリック機能を開放する
             DoubleClickToFullscreen = false;
             //ver1.81 サムネイルパネルのアニメーション
@@ -349,6 +334,8 @@ namespace Marmi
 
             //ver1.91 キーコンフィグ 2022年8月7日
             Keys.Init();
+
+            //ver1.91 マウスコンフィグ 2022年8月7日
         }
 
         /// <summary>
