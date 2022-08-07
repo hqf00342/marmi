@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Marmi.DataModel
+﻿namespace Marmi.DataModel
 {
     public class AdvanceConfig
     {
-        //memModel == userDefinedのときのキャッシュサイズ[MB]
-        public int CacheSize { get; set; }                       
+        public bool IsFastDrawAtResize { get; set; }
 
+        public int CacheSize { get; set; }
+
+        public bool UseUnsharpMask { get; set; }
+
+        public int UnsharpDepth { get; set; }
 
         public void Init()
         {
-            //ver1.53 100MB
+            IsFastDrawAtResize = true;
             CacheSize = 100;
-
+            UseUnsharpMask = true;
+            UnsharpDepth = 25;
         }
     }
 }

@@ -249,7 +249,7 @@ namespace Marmi
             if (Opacity == 1.0f)
             {
                 //アンシャープを適用するかどうか
-                if (App.Config.View.UseUnsharpMask
+                if (App.Config.Advance.UseUnsharpMask
                     && LastDrawMode == InterpolationMode.HighQualityBicubic
                     && ZoomRatio != 100.0f
                     )
@@ -262,7 +262,7 @@ namespace Marmi
                         g.Transform = _amat;
                         g.DrawImage(Bmp, 0, 0, Bmp.Width, Bmp.Height);
                     }
-                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.View.UnsharpDepth);
+                    var unsharpBmp = BitmapUty.Unsharpness_unsafe(orgBmp, App.Config.Advance.UnsharpDepth);
                     e.Graphics.DrawImage(unsharpBmp, 0, 0, unsharpBmp.Width, unsharpBmp.Height);
                 }
                 else

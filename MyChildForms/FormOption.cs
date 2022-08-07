@@ -24,7 +24,6 @@ namespace Marmi
             //config = set.Clone();
 
             //全般タブ
-            isFastDraw.Checked = set.IsFastDrawAtResize;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.IsStopPaintingAtResize; //リサイズ描写
@@ -60,8 +59,6 @@ namespace Marmi
             dualView_Force.Checked = set.View.DualView_Force;
             dualView_Normal.Checked = set.View.DualView_Normal;
             dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
-            useUnsharpMask.Checked = set.View.UseUnsharpMask;
-            unsharpDepth.Value = (decimal)set.View.UnsharpDepth;
         }
 
         private void LoadGeneralConfig(AppGlobalConfig set)
@@ -101,7 +98,10 @@ namespace Marmi
 
         private void LoadAdvanceConfig(AppGlobalConfig set)
         {
+            isFastDraw.Checked = set.Advance.IsFastDrawAtResize;
             tb_cachesize.Text = set.Advance.CacheSize.ToString();
+            useUnsharpMask.Checked = set.Advance.UseUnsharpMask;
+            unsharpDepth.Value = (decimal)set.Advance.UnsharpDepth;
         }
 
         private void LoadLoupeConfig(AppGlobalConfig set)
@@ -154,7 +154,6 @@ namespace Marmi
         {
             SaveGnereralConfig(ref set);
 
-            set.IsFastDrawAtResize = isFastDraw.Checked;
             //高度な設定タブ
             set.IsStopPaintingAtResize = bStopPaintingAtResize.Checked;
 
@@ -198,8 +197,6 @@ namespace Marmi
             set.View.DualView_Force = dualView_Force.Checked;
             set.View.DualView_Normal = dualView_Normal.Checked;
             set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
-            set.View.UseUnsharpMask = useUnsharpMask.Checked;
-            set.View.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
         private void SaveGnereralConfig(ref AppGlobalConfig set)
@@ -238,7 +235,10 @@ namespace Marmi
 
         private void SaveAdvanceConfig(ref AppGlobalConfig set)
         {
+            set.Advance.IsFastDrawAtResize = isFastDraw.Checked;
             set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 100;
+            set.Advance.UseUnsharpMask = useUnsharpMask.Checked;
+            set.Advance.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
         private void SaveLoupeConfig(ref AppGlobalConfig set)

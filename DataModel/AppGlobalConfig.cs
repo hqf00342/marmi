@@ -40,8 +40,6 @@ namespace Marmi
         public bool VisibleNavibar { get; set; }                 //ナビバーの表示
         public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
 
-        public bool IsFastDrawAtResize { get; set; }             // 高速描写をするかどうか
-
         //サイドバー関連
         //public bool isFixSidebar;					//サイドバーを固定にするかどうか
         public int SidebarWidth { get; set; }                    //サイドバーの幅
@@ -119,12 +117,6 @@ namespace Marmi
 
             //サイドバー
             SidebarWidth = SIDEBAR_INIT_WIDTH;
-
-            //高度な設定
-            IsFastDrawAtResize = true;                      //リサイズ時に高速描写をするかどうか
-                                                            //書庫
-                                                            //クロスフェード
-                                                            //isCrossfadeTransition = false;
 
             // 画面切り替えモード
             PictureSwitchMode = AnimateMode.Slide;

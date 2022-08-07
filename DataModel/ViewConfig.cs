@@ -2,14 +2,6 @@
 {
     public class ViewConfig
     {
-        #region Draw
-
-        public bool UseUnsharpMask { get; set; }
-
-        public int UnsharpDepth { get; set; }
-
-        #endregion Draw
-
         //画像サイズ調整は100%未満にする
         public bool NoEnlargeOver100p { get; set; }
 
@@ -36,8 +28,6 @@
             DualView_Force = false;
             DualView_Normal = true;
             DualView_withSizeCheck = false;
-            UseUnsharpMask = true;
-            UnsharpDepth = 25;
         }
     }
 }

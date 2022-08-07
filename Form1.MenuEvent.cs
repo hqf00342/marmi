@@ -486,7 +486,7 @@ namespace Marmi
             Menu_DontEnlargeOver100percent.Checked = App.Config.View.NoEnlargeOver100p;
 
             //ver1.83アンシャープ
-            MenuItem_Unsharp.Checked = App.Config.View.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
         }
 
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)
@@ -512,8 +512,9 @@ namespace Marmi
                 Menu_ViewHalfPageForword.Enabled = false;//半ページ
                 Menu_ViewFitScreenSize.Enabled = false; //フルスクリーン
                 Menu_ViewPictureInfo.Enabled = false;   //画像情報
-                                                        //Menu_ViewAddBookmark.Checked = false;	//しおり
-                                                        //Menu_ViewAddBookmark.Enabled = false;	//しおり
+
+                //Menu_ViewAddBookmark.Checked = false;	//しおり
+                //Menu_ViewAddBookmark.Enabled = false;	//しおり
                 Menu_ViewZoom.Enabled = false;  //Zoom
                 Menu_ViewReload.Enabled = false;
                 Menu_SlideShow.Enabled = false;

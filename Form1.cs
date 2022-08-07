@@ -1807,8 +1807,8 @@ namespace Marmi
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)
         {
-            App.Config.View.UseUnsharpMask = !App.Config.View.UseUnsharpMask;
-            MenuItem_Unsharp.Checked = App.Config.View.UseUnsharpMask;
+            App.Config.Advance.UseUnsharpMask = !App.Config.Advance.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
 
             //çƒï`é 
             PicPanel.Invalidate();

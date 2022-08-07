@@ -51,9 +51,6 @@
             this.bSaveConfig = new System.Windows.Forms.CheckBox();
             this.isWindowPosCenter = new System.Windows.Forms.CheckBox();
             this.view = new System.Windows.Forms.TabPage();
-            this.unsharpDepth = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.useUnsharpMask = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dualView_withSizeCheck = new System.Windows.Forms.RadioButton();
             this.dualView_Normal = new System.Windows.Forms.RadioButton();
@@ -160,11 +157,13 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.useUnsharpMask = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.unsharpDepth = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
             this.view.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.Thumbnail.SuspendLayout();
@@ -179,6 +178,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRightScr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeftScr)).BeginInit();
             this.Detail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -474,9 +474,6 @@
             // 
             // view
             // 
-            this.view.Controls.Add(this.unsharpDepth);
-            this.view.Controls.Add(this.label11);
-            this.view.Controls.Add(this.useUnsharpMask);
             this.view.Controls.Add(this.groupBox4);
             this.view.Controls.Add(this.keepMagnification);
             this.view.Controls.Add(this.groupBox3);
@@ -491,48 +488,6 @@
             this.view.TabIndex = 6;
             this.view.Text = "表示";
             this.view.UseVisualStyleBackColor = true;
-            // 
-            // unsharpDepth
-            // 
-            this.unsharpDepth.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.unsharpDepth.Location = new System.Drawing.Point(426, 42);
-            this.unsharpDepth.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.unsharpDepth.Name = "unsharpDepth";
-            this.unsharpDepth.Size = new System.Drawing.Size(57, 19);
-            this.unsharpDepth.TabIndex = 24;
-            this.unsharpDepth.Tag = "アンシャープマスクの強度を指定します。0～255まで設定可能。大きいほど画像のエッジが強調されます。";
-            this.unsharpDepth.Enter += new System.EventHandler(this.OnFocus_Enter);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(300, 44);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(110, 12);
-            this.label11.TabIndex = 3;
-            this.label11.Tag = "アンシャープマスクの強度を指定します。0～255まで設定可能。大きいほど画像のエッジが強調されます。";
-            this.label11.Text = "アンシャープマスク強度";
-            this.label11.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
-            // 
-            // useUnsharpMask
-            // 
-            this.useUnsharpMask.AutoSize = true;
-            this.useUnsharpMask.Location = new System.Drawing.Point(302, 18);
-            this.useUnsharpMask.Name = "useUnsharpMask";
-            this.useUnsharpMask.Size = new System.Drawing.Size(176, 16);
-            this.useUnsharpMask.TabIndex = 23;
-            this.useUnsharpMask.Tag = "画像のエッジを強調するアンシャープマスクをかけます。";
-            this.useUnsharpMask.Text = "画像にアンシャープマスクをかける";
-            this.useUnsharpMask.UseVisualStyleBackColor = true;
-            this.useUnsharpMask.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // groupBox4
             // 
@@ -1677,6 +1632,9 @@
             // 
             // Detail
             // 
+            this.Detail.Controls.Add(this.unsharpDepth);
+            this.Detail.Controls.Add(this.label11);
+            this.Detail.Controls.Add(this.useUnsharpMask);
             this.Detail.Controls.Add(this.tb_cachesize);
             this.Detail.Controls.Add(this.label22);
             this.Detail.Controls.Add(this.label21);
@@ -1712,11 +1670,11 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Enabled = false;
-            this.label21.Location = new System.Drawing.Point(6, 43);
+            this.label21.Location = new System.Drawing.Point(23, 43);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(136, 12);
+            this.label21.Size = new System.Drawing.Size(101, 12);
             this.label21.TabIndex = 10;
-            this.label21.Text = "先読みキャッシュメモリサイズ";
+            this.label21.Text = "キャッシュメモリサイズ";
             // 
             // bStopPaintingAtResize
             // 
@@ -1790,6 +1748,45 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // useUnsharpMask
+            // 
+            this.useUnsharpMask.AutoSize = true;
+            this.useUnsharpMask.Location = new System.Drawing.Point(8, 65);
+            this.useUnsharpMask.Name = "useUnsharpMask";
+            this.useUnsharpMask.Size = new System.Drawing.Size(176, 16);
+            this.useUnsharpMask.TabIndex = 24;
+            this.useUnsharpMask.Tag = "画像のエッジを強調するアンシャープマスクをかけます。";
+            this.useUnsharpMask.Text = "画像にアンシャープマスクをかける";
+            this.useUnsharpMask.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(23, 94);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(110, 12);
+            this.label11.TabIndex = 25;
+            this.label11.Tag = "アンシャープマスクの強度を指定します。0～255まで設定可能。大きいほど画像のエッジが強調されます。";
+            this.label11.Text = "アンシャープマスク強度";
+            // 
+            // unsharpDepth
+            // 
+            this.unsharpDepth.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.unsharpDepth.Location = new System.Drawing.Point(139, 90);
+            this.unsharpDepth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.unsharpDepth.Name = "unsharpDepth";
+            this.unsharpDepth.Size = new System.Drawing.Size(57, 19);
+            this.unsharpDepth.TabIndex = 26;
+            this.unsharpDepth.Tag = "アンシャープマスクの強度を指定します。0～255まで設定可能。大きいほど画像のエッジが強調されます。";
+            // 
             // FormOption
             // 
             this.AcceptButton = this.btnOK;
@@ -1813,7 +1810,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).EndInit();
             this.view.ResumeLayout(false);
             this.view.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -1837,6 +1833,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeftScr)).EndInit();
             this.Detail.ResumeLayout(false);
             this.Detail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1969,11 +1966,11 @@
 		private KeyAccelerator ka_prevhalf2;
 		private System.Windows.Forms.CheckBox DoubleClickToFullscreen;
 		private System.Windows.Forms.CheckBox ThumbnailPanelSmoothScroll;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.CheckBox useUnsharpMask;
-		private System.Windows.Forms.NumericUpDown unsharpDepth;
         private System.Windows.Forms.Label label12;
         private KeyAccelerator ka_rotate1;
         private KeyAccelerator ka_rotate2;
+        private System.Windows.Forms.NumericUpDown unsharpDepth;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox useUnsharpMask;
     }
 }
