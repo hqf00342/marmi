@@ -14,7 +14,7 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
-        private void PicPanel_MouseWheel(object sender, MouseEventArgs e)
+        private async void PicPanel_MouseWheel(object sender, MouseEventArgs e)
         {
             if (App.Config.MouseConfigWheel == "拡大縮小")
             {
@@ -27,13 +27,13 @@ namespace Marmi
                 //    return;
 
                 if (e.Delta > 0)
-                    NavigateToBackAsync();
+                    await NavigateToBackAsync();
                 else
-                    NavigateToForwordAsync();
+                    await NavigateToForwordAsync();
             }
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override async void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
 
@@ -67,9 +67,8 @@ namespace Marmi
             }
 
             //ver1.80キー設定に基づく動作
-            MethodInvoker func = null;
             if (e.Button == MouseButtons.Middle
-                && KeyDefines.TryGetValue(Keys.MButton, out func))
+                && KeyDefines.TryGetValue(Keys.MButton, out MethodInvoker func))
             {
                 func?.Invoke();
                 return;
@@ -101,11 +100,11 @@ namespace Marmi
             //ナビゲート
             if (isForword)
             {
-                NavigateToForwordAsync();
+                await NavigateToForwordAsync();
             }
             else
             {
-                NavigateToBackAsync();
+                await NavigateToBackAsync();
             }
         }
 
@@ -264,28 +263,9 @@ namespace Marmi
             //ver1.27 マウス位置を補正
             float ratio = PicPanel.ZoomRatio;   //拡縮率をローカルに取る
 
-            if (App.Config.IsOriginalSizeLoupe    //原寸ルーペ設定が有効
-                                                  //&& viewPages == 1				//1ページ表示モード.コメントアウト2011年7月22日
-                && ratio < 0.99F                //100%未満表示である.99%にしておく
-                )
+            //原寸ルーペ設定が有効 && 100%未満表示である.99%にしておく
+            if (App.Config.IsOriginalSizeLoupe && ratio < 0.99F)
             {
-                ////ver0.982
-                ////オリジナルサイズ（原寸）でのルーペ表示
-                //int _bmpHeight = g_originalSizeBitmap.Height;
-                //int _bmpWidth = g_originalSizeBitmap.Width;
-                ////TODO 簡易復旧
-                //int x0 = (cRect.Width - (int)(_bmpWidth * ratio)) / 2 + cRect.Left;	//ver0.986サイドバー補正
-                //int y0 = (cRect.Height - (int)(_bmpHeight * ratio)) / 2 + cRect.Top;
-                ////縮小画像内でのマウス位置を計算
-                //int x1 = mouseX - x0;
-                //int y1 = mouseY - y0;
-                ////TODO 簡易復旧
-                //x1 = (int)(x1 / ratio);
-                //y1 = (int)(y1 / ratio);
-                ////原寸描写
-                //loupe.DrawOriginalSizeLoupe(x1, y1, g_originalSizeBitmap);
-                //loupe.Refresh();
-
                 //ver1.27 左上座標に補正
                 //元画像サイズをローカルに取る
                 Bitmap screenImage = PicPanel.Bmp;
