@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -549,7 +550,7 @@ namespace Marmi
         /// <param name="index">対象アイテム番号</param>
         /// <param name="g">書き出し先Graphics</param>
         /// <param name="rect">描写する位置</param>
-        private void DrawItem(int index, Graphics g, Rectangle rect)
+        private async Task DrawItem(int index, Graphics g, Rectangle rect)
         {
             if (m_packageInfo == null)
                 return;
@@ -667,14 +668,20 @@ namespace Marmi
                     //    if (this.Visible)
                     //        this.Invalidate();
                     //}));
-                    AsyncIO.AddJobLow(index, () =>
-                    {
-                        var bmp = Bmp.SyncGetBitmap(index);
-                        //2021年2月25日コメントアウト：サムネイル作成は1か所
-                        //App.g_pi.ThumnailMaker(index, bmp);
-                        if (this.Visible)
-                            this.Invalidate();
-                    });
+                    //AsyncIO.AddJobLow(index, () =>
+                    //{
+                    //    var bmp = Bmp.SyncGetBitmap(index);
+                    //    //2021年2月25日コメントアウト：サムネイル作成は1か所
+                    //    //App.g_pi.ThumnailMaker(index, bmp);
+                    //    if (this.Visible)
+                    //        this.Invalidate();
+                    //});
+                    var bmp = await Bmp.GetBitmapAsync(index);
+                    //2021年2月25日コメントアウト：サムネイル作成は1か所
+                    //App.g_pi.ThumnailMaker(index, bmp);
+                    if (this.Visible)
+                        this.Invalidate();
+
                 }
             }
 

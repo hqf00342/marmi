@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace Marmi
 {
@@ -14,7 +15,7 @@ namespace Marmi
         /// キーコンフィグをDicに登録するメソッド
         /// マウスの中ボタン、進む戻るはマウスイベントで実施
         /// </summary>
-        private void SetKeyConfig2()
+        private async void SetKeyConfig2()
         {
             KeyDefines.Clear();
 
@@ -25,10 +26,10 @@ namespace Marmi
             }
 
             //前後ページ移動
-            setkey(App.Config.Key_Nextpage1, NavigateToForword);
-            setkey(App.Config.Key_Nextpage2, NavigateToForword);
-            setkey(App.Config.Key_Prevpage1, NavigateToBack);
-            setkey(App.Config.Key_Prevpage2, NavigateToBack);
+            setkey(App.Config.Key_Nextpage1, async ()=> { await NavigateToForword(); });
+            setkey(App.Config.Key_Nextpage2, async () => { await NavigateToForword(); });
+            setkey(App.Config.Key_Prevpage1, async () => { await NavigateToBack(); });
+            setkey(App.Config.Key_Prevpage2, async () => { await NavigateToBack(); });
 
             //前後ページ移動（半分）
             setkey(App.Config.Key_Nexthalf1, () => SetViewPage(++App.g_pi.NowViewPage));

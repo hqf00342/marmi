@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using FormTimer = System.Windows.Forms.Timer;
 
@@ -346,7 +347,7 @@ namespace Marmi
         /// </summary>
         /// <param name="g">描写先のGraphics</param>
         /// <param name="index">描写アイテム番号</param>
-        private void DrawItem(Graphics g, int index, int offset)
+        private async Task DrawItem(Graphics g, int index, int offset)
         {
             //Indexチェック
             //if (index < 0 || index >= m_packageInfo.Items.Count)
@@ -410,15 +411,20 @@ namespace Marmi
                     //    if (this.Visible)
                     //        this.Invalidate();
                     //}));
-                    AsyncIO.AddJobLow(index, () =>
-                    {
-                        var bmp = Bmp.SyncGetBitmap(index);
-                        //2021年2月25日コメントアウト：サムネイル作成は1か所
-                        //App.g_pi.ThumnailMaker(index, bmp);
-                        CalcAllItemPos();
-                        if (this.Visible)
-                            this.Invalidate();
-                    });
+                    //AsyncIO.AddJobLow(index, () =>
+                    //{
+                    //    var bmp = Bmp.SyncGetBitmap(index);
+                    //    //2021年2月25日コメントアウト：サムネイル作成は1か所
+                    //    //App.g_pi.ThumnailMaker(index, bmp);
+                    //    CalcAllItemPos();
+                    //    if (this.Visible)
+                    //        this.Invalidate();
+                    //});
+
+                    await Bmp.LoadBitmapAsync(index);
+                    CalcAllItemPos();
+                    if (this.Visible)
+                        this.Invalidate();
                 }
             }
 

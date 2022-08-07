@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Marmi
 {
@@ -17,24 +18,24 @@ namespace Marmi
         /// 前後ページの画面キャッシュを作成する
         /// 現在見ているページを中心とする
         /// </summary>
-        internal static async void MakeCacheForPreAndNextPages()
+        internal static async Task MakeCacheForPreAndNextPages()
         {
             //ver1.37 スレッドで使うことを前提にロック
             //前のページ
-            int ix = Form1.GetPrevPageIndex(App.g_pi.NowViewPage);
+            int ix = await Form1.GetPrevPageIndex(App.g_pi.NowViewPage);
             if (ix >= 0 && !_screenCache.ContainsKey(ix))
             {
                 Debug.WriteLine(ix, "getScreenCache() Add Prev");
-                var bmp = await Bmp.MakeOriginalSizeImage(ix);
+                var bmp = await Bmp.MakeOriginalSizeImageAsync(ix);
                 AddImage(ix, bmp);
             }
 
             //前のページ
-            ix = Form1.GetNextPageIndex(App.g_pi.NowViewPage);
+            ix = await Form1.GetNextPageIndex(App.g_pi.NowViewPage);
             if (ix >= 0 && !_screenCache.ContainsKey(ix))
             {
                 Debug.WriteLine(ix, "getScreenCache() Add Next");
-                var bmp = await Bmp.MakeOriginalSizeImage(ix);
+                var bmp = await Bmp.MakeOriginalSizeImageAsync(ix);
                 AddImage(ix, bmp);
             }
         }

@@ -16,30 +16,37 @@ namespace Marmi
         /// </summary>
         /// <param name="index">対象画像ののインデックス番号</param>
         /// <param name="uiAction">読み込み完了後に実行するAction</param>
-        public static void AsyncGetBitmap(int index, Action uiAction)
-        {
-            //キャッシュを持っていれば非同期しない
-            if (App.g_pi.Items[index].CacheImage.HasImage)
-            {
-                uiAction?.Invoke();
-            }
+        //[Obsolete("GetBitmapAsync()への移行推奨")]
 
-            //ver1.54 HighQueueとして登録されているかどうか確認する。
-            //ToDo:2021年2月22日 この方法ではuiActionが実行されない。
-            var array = AsyncIO.GetAllJob();
-            foreach (var elem in array)
-            {
-                if (elem.Key == index)
-                {
-                    Debug.WriteLine($"AsyncGetBitmap() : Skip. {index} is already queued.");
-                    return;
-                }
-            }
+        //public static void AsyncGetBitmap(int index, Action uiAction)
+        //{
+        //    //キャッシュを持っていれば非同期しない
+        //    if (App.g_pi.Items[index].CacheImage.HasImage)
+        //    {
+        //        uiAction?.Invoke();
+        //    }
 
-            //非同期するためにPush
-            AsyncIO.AddJob(index, uiAction);
-        }
+        //    //ver1.54 HighQueueとして登録されているかどうか確認する。
+        //    //ToDo:2021年2月22日 この方法ではuiActionが実行されない。
+        //    var array = AsyncIO.GetAllJob();
+        //    foreach (var elem in array)
+        //    {
+        //        if (elem.Key == index)
+        //        {
+        //            Debug.WriteLine($"AsyncGetBitmap() : Skip. {index} is already queued.");
+        //            return;
+        //        }
+        //    }
 
+        //    //非同期するためにPush
+        //    AsyncIO.AddJob(index, uiAction);
+        //}
+
+        /// <summary>
+        /// Bitmapを非同期で取得
+        /// </summary>
+        /// <param name="ix"></param>
+        /// <returns></returns>
         public static async Task<Bitmap> GetBitmapAsync(int ix)
         {
             if (!App.g_pi.Items[ix].CacheImage.HasImage)
@@ -56,38 +63,59 @@ namespace Marmi
         }
 
         /// <summary>
+        /// Bitmapを非同期で読み込み、キャッシュに保存
+        /// RawCacheとして持ったままとし、Bitmap化はしない。
+        /// 画像サイズが欲しいときに利用する。
+        /// </summary>
+        /// <param name="ix"></param>
+        /// <returns></returns>
+        public static async Task LoadBitmapAsync(int ix)
+        {
+            if (App.g_pi.Items[ix].CacheImage.HasImage)
+                return;
+            bool complete = false;
+            AsyncIO.AddJob(ix, () => { complete = true; });
+            await Task.Yield();
+            while (!complete)
+            {
+                await Task.Delay(10);
+            }
+        }
+
+
+        /// <summary>
         /// Bitmapを取得する
         /// </summary>
         /// <param name="index">取得したいBitmapのIndex</param>
         /// <returns>Bitmap。失敗した場合はnull</returns>
-        [Obsolete("GetBitmapAsync()への移行推奨")]
-        public static Bitmap SyncGetBitmap(int index)
-        {
-            var bmp = App.g_pi.GetBitmapFromCache(index);
+        //[Obsolete("GetBitmapAsync()への移行推奨")]
+        //public static Bitmap SyncGetBitmap(int index)
+        //{
+        //    var bmp = App.g_pi.GetBitmapFromCache(index);
 
-            if (bmp != null)
-            {
-                return bmp;
-            }
-            else
-            {
-                bool asyncFinished = false;
-                Stopwatch sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, () => asyncFinished = true);
+        //    if (bmp != null)
+        //    {
+        //        return bmp;
+        //    }
+        //    else
+        //    {
+        //        bool asyncFinished = false;
+        //        Stopwatch sw = Stopwatch.StartNew();
+        //        AsyncGetBitmap(index, () => asyncFinished = true);
 
-                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    Application.DoEvents();
-                sw.Stop();
+        //        while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
+        //            Application.DoEvents();
+        //        sw.Stop();
 
-                if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    return App.g_pi.GetBitmapFromCache(index);
-                else
-                {
-                    Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
-                    return null;
-                }
-            }
-        }
+        //        if (sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
+        //            return App.g_pi.GetBitmapFromCache(index);
+        //        else
+        //        {
+        //            Debug.WriteLine($"SyncGetBitmap({index}) timeOut");
+        //            return null;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Bitmapサイズを取得する
@@ -95,28 +123,30 @@ namespace Marmi
         /// </summary>
         /// <param name="index">取得したいBitmapのIndex</param>
         /// <returns>サイズ</returns>
-        internal static Size SyncGetBitmapSize(int index)
-        {
-            if (App.g_pi.Items[index].HasInfo)
-                return App.g_pi.Items[index].ImgSize;
-            else
-            {
-                //非同期のGetBitmap()を読み終わるまで待つ
-                bool asyncFinished = false;
-                var sw = Stopwatch.StartNew();
-                AsyncGetBitmap(index, () => asyncFinished = true);
-                while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
-                    Application.DoEvents();
-                sw.Stop();
+        //[Obsolete("LoadBitmapAsync()への移行推奨")]
 
-                if (App.g_pi.Items[index].HasInfo)
-                    return App.g_pi.Items[index].ImgSize;
-                else
-                    return Size.Empty;
-            }
-        }
+        //internal static Size SyncGetBitmapSize(int index)
+        //{
+        //    if (App.g_pi.Items[index].HasInfo)
+        //        return App.g_pi.Items[index].ImgSize;
+        //    else
+        //    {
+        //        //非同期のGetBitmap()を読み終わるまで待つ
+        //        bool asyncFinished = false;
+        //        var sw = Stopwatch.StartNew();
+        //        AsyncGetBitmap(index, () => asyncFinished = true);
+        //        while (!asyncFinished && sw.ElapsedMilliseconds < App.ASYNC_TIMEOUT)
+        //            Application.DoEvents();
+        //        sw.Stop();
 
-        internal async static Task<Bitmap> MakeOriginalSizeImage(int index)
+        //        if (App.g_pi.Items[index].HasInfo)
+        //            return App.g_pi.Items[index].ImgSize;
+        //        else
+        //            return Size.Empty;
+        //    }
+        //}
+
+        internal async static Task<Bitmap> MakeOriginalSizeImageAsync(int index)
         {
             Debug.WriteLine($"MakeOriginalSizeImage({index})");
 
@@ -135,7 +165,7 @@ namespace Marmi
             //ver1.81 サムネイル登録：2021年2月25日コメントアウト
             //App.g_pi.AsyncThumnailMaker(index, bmp1.Clone() as Bitmap);
 
-            if (App.Config.DualView && Form1.CanDualView(index))
+            if (App.Config.DualView && await Form1.CanDualView(index))
             {
                 //2枚表示
                 //Bitmap bmp2 = SyncGetBitmap(index + 1);

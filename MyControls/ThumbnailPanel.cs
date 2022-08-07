@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 /*
 サムネイルパネル
@@ -702,7 +703,16 @@ namespace Marmi
             {
                 //画像がないときは非同期で取ってくる
                 //スタック型の非同期GetBitmapに変更
-                Bmp.AsyncGetBitmap(item, () =>
+                //Bmp.AsyncGetBitmap(item, () =>
+                //{
+                //    //読み込んだらすぐに描写
+                //    if (this.Visible)
+                //    {
+                //        this.Invalidate(GetThumbboxRectanble(item));
+                //    }
+                //});
+
+                AsyncIO.AddJob(item, () =>
                 {
                     //読み込んだらすぐに描写
                     if (this.Visible)
@@ -771,7 +781,7 @@ namespace Marmi
         /// </summary>
         /// <param name="g"></param>
         /// <param name="item"></param>
-        private void DrawItemHQ2(Graphics g, int item)
+        private async Task DrawItemHQ2(Graphics g, int item)
         {
             //対象矩形を背景色で塗りつぶす.
             g.FillRectangle(
@@ -791,7 +801,8 @@ namespace Marmi
                 return;
             }
 
-            Bitmap drawBitmap = GetBitmap(item);
+            //Bitmap drawBitmap = GetBitmap(item);
+            var drawBitmap = await Bmp.GetBitmapAsync(item);
 
             //フラグ設定
             bool drawFrame = true;          //枠線を描写するか
@@ -872,25 +883,25 @@ namespace Marmi
 
         //*** 描写支援ルーチン ****************************************************************
 
-        private Bitmap GetBitmap(int item)
-        {
-            //Form1::GetBitmap()を使うので親ウィンドウチェック
-            if (Parent == null)
-                return null;
+        //private Bitmap GetBitmap(int item)
+        //{
+        //    //Form1::GetBitmap()を使うので親ウィンドウチェック
+        //    if (Parent == null)
+        //        return null;
 
-            //画像読み込み
-            Bitmap orgBitmap = null;
-            if (InvokeRequired)
-            {
-                this.Invoke((Action)(() => orgBitmap = Bmp.SyncGetBitmap(item)));
-            }
-            else
-            {
-                orgBitmap = Bmp.SyncGetBitmap(item);
-            }
+        //    //画像読み込み
+        //    Bitmap orgBitmap = null;
+        //    if (InvokeRequired)
+        //    {
+        //        this.Invoke((Action)(() => orgBitmap = Bmp.SyncGetBitmap(item)));
+        //    }
+        //    else
+        //    {
+        //        orgBitmap = Bmp.SyncGetBitmap(item);
+        //    }
 
-            return orgBitmap;
-        }
+        //    return orgBitmap;
+        //}
 
         /// <summary>
         /// 再描写関数

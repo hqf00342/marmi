@@ -68,17 +68,18 @@ namespace Marmi
                     {
                         Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
 
-                        //画像読み込み
                         if (!App.g_pi.Items[index].CacheImage.HasImage)
+                        {
+                            //画像読み込み
                             LoadImage(AsyncSZ, index);
 
-                        //画像サイズ設定
-                        App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
+                            //画像サイズ設定
+                            App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
 
 
-                        //サムネイル作成。ここ1か所に集約(2021年2月25日)
-                        App.g_pi.ThumnailMaker(index);
-
+                            //サムネイル作成。ここ1か所に集約(2021年2月25日)
+                            App.g_pi.ThumnailMaker(index);
+                        }
 
                         //Invoke(action)を実行
                         if (Form1._instance.IsHandleCreated && action != null)
