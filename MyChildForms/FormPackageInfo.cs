@@ -113,15 +113,14 @@ namespace Marmi
             this.ShowDialog(m_parent);
         }
 
-        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private async void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int ix = listBox1.SelectedIndex;
             //pictureBox2.Image = m_packageInfo.Items[ix].ThumbImage;
 
             if (checkBoxChangeMainWindow.Checked)
             {
-                m_parent.SetViewPageAsync(ix);
-                //m_parent.setViewImage(((ImageInfo)(listBox1.Items[ix])).nOrgIndex);
+                await m_parent.SetViewPageAsync(ix);
             }
 
             //選択色を更新するためInvalidate()
