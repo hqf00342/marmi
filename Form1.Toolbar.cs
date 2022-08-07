@@ -1,13 +1,16 @@
 using System;
-using System.Diagnostics;				//Debug, Stopwatch
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+
+/*
+ツールバー
+*/
 
 namespace Marmi
 {
     public partial class Form1 : Form
     {
-        // ツールバー *******************************************************************/
 
         private void ToolStrip1_Resize(object sender, EventArgs e)
         {
@@ -42,20 +45,20 @@ namespace Marmi
             }
         }
 
-        private void ToolButtonLeft_Click(object sender, EventArgs e)
+        private async void ToolButtonLeft_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
-                NavigateToForwordAsync();
+                await NavigateToForwordAsync();
             else
-                NavigateToBackAsync();
+                await NavigateToBackAsync();
         }
 
-        private void ToolButtonRight_Click(object sender, EventArgs e)
+        private async void ToolButtonRight_Click(object sender, EventArgs e)
         {
             if (App.Config.IsReplaceArrowButton)
-                NavigateToBackAsync();
+                await NavigateToBackAsync();
             else
-                NavigateToForwordAsync();
+                await NavigateToForwordAsync();
         }
 
         private void ToolButton_MouseHover(object sender, EventArgs e)
@@ -139,51 +142,28 @@ namespace Marmi
 
         private void Trackbar_ValueChanged(object sender, EventArgs e)
         {
-            //Debug.WriteLine(g_trackbar.Value, "g_trackbar_ValueChanged");
-            if (_trackbar.Value != App.g_pi.NowViewPage)
-            {
-                ////トラックバー用のツールチップを表示する。
-                //Point p = PointToClient(MousePosition);
-                //p.Y += 16;	//表示位置をちょっと下に
-                //g_toolTip.Location = p;
-
-                //int ix = g_trackbar.Value;
-                //string s = string.Format(
-                //    "{0} : {1}",
-                //    ix+1,	//ページ番号
-                //    Path.GetFileName(g_pi.Items[ix].filename)	//ファイル名
-                //    );
-                //g_toolTip.Text = s;
-            }
-
-            //サムネイル表示がされていたら中央を更新
+            //選択アイテムを中央に表示
             if (_trackNaviPanel != null)
                 _trackNaviPanel.SetCenterItem(_trackbar.Value);
         }
 
         private void Trackbar_MouseDown(object sender, MouseEventArgs e)
         {
+            //Navibar3を生成
             if (_trackNaviPanel == null)
                 _trackNaviPanel = new NaviBar3(App.g_pi);
-
-            //g_n3.Parent = this;
-            //if(!this.Controls.Contains(g_n3))
-            //    this.Controls.Add(g_n3);
 
             if (!PicPanel.Controls.Contains(_trackNaviPanel))
             {
                 PicPanel.Controls.Add(_trackNaviPanel);
-                //Debug.WriteLine("add navigatebar");
             }
 
             //Navibarの位置を決める
-            //Rectangle r = GetClientRectangle();
             Rectangle r = PicPanel.ClientRectangle;
             if (toolStrip1.Dock == DockStyle.Top)
             {
                 if (App.Config.isFullScreen)
                     r.Y += toolStrip1.Height;
-                //Debug.WriteLine(r, "add navigatebar");
                 _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
             else
@@ -194,14 +174,11 @@ namespace Marmi
                 _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }
 
+            //現在のアイテムを中央に表示
             Trackbar_ValueChanged(null, null);
-
-            //ツールチップの表示
-            //g_toolTip.BringToFront();		//最前面に
-            //g_toolTip.Show();
         }
 
-        private void Trackbar_MouseUp(object sender, MouseEventArgs e)
+        private async void Trackbar_MouseUp(object sender, MouseEventArgs e)
         {
             //ValueChanged()の代わりにこのイベントで処理
 
@@ -218,11 +195,7 @@ namespace Marmi
             {
                 //ページ位置確定
                 App.g_pi.NowViewPage = _trackbar.Value;
-                SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
-
-                //ツールチップを隠す。
-                //g_toolTip.Hide();
-                //g_toolTip.Visible = false;
+                await SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
             }
         }
 
