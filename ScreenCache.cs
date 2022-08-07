@@ -18,7 +18,7 @@ namespace Marmi
         /// 前後ページの画面キャッシュを作成する
         /// 現在見ているページを中心とする
         /// </summary>
-        internal static async Task MakeCacheForPreAndNextPages()
+        internal static async Task MakeCacheForPreAndNextPagesAsync()
         {
             //ver1.37 スレッドで使うことを前提にロック
             //前のページ
@@ -31,7 +31,7 @@ namespace Marmi
             }
 
             //前のページ
-            ix = await Form1.GetNextPageIndex(App.g_pi.NowViewPage);
+            ix = await Form1.GetNextPageIndexAsync(App.g_pi.NowViewPage);
             if (ix >= 0 && !_screenCache.ContainsKey(ix))
             {
                 Debug.WriteLine(ix, "getScreenCache() Add Next");

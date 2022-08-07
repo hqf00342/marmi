@@ -1,13 +1,11 @@
 #define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -199,7 +197,7 @@ namespace Marmi
         //    base.OnDpiChanged(e);
         //}
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             //設定をFormに適用する
             ApplyConfigToWindow();
@@ -221,7 +219,7 @@ namespace Marmi
 
                 //ファイルを渡して開始
                 //CheckAndStart(a);
-                Start(a);
+                await Start(a);
             }
         }
 
@@ -382,7 +380,7 @@ namespace Marmi
             ResizeTrackBar();
         }
 
-        private void Application_Idle(object sender, EventArgs e)
+        private async void Application_Idle(object sender, EventArgs e)
         {
             UpdateToolbar();
 
@@ -398,12 +396,9 @@ namespace Marmi
             if (needMakeScreenCache)
             {
                 needMakeScreenCache = false;
-                ThreadPool.QueueUserWorkItem(_ =>
-                {
-                    ScreenCache.MakeCacheForPreAndNextPages();
-                    ScreenCache.Purge();
-                    App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
-                });
+                await ScreenCache.MakeCacheForPreAndNextPagesAsync();
+                ScreenCache.Purge();
+                App.g_pi.FileCacheCleanUp2(App.Config.CacheSize);
             }
         }
 
@@ -439,10 +434,11 @@ namespace Marmi
         /// <param name="files"></param>
         private void AsyncStart(string[] files)
         {
-            ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
+            //ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
+            Task.Run(() => this.Invoke((MethodInvoker)(async () => await Start(files))));
         }
 
-        private void Start(string[] filenames)
+        private async Task Start(string[] filenames)
         {
             //ver1.73 MRUリストの更新
             //今まで見ていたものを登録する
@@ -606,7 +602,7 @@ namespace Marmi
 
             //画像を表示
             PicPanel.Message = string.Empty;
-            SetViewPageAsync(App.g_pi.NowViewPage);
+            await SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
         /// <summary>
@@ -784,7 +780,7 @@ namespace Marmi
             }
         }
 
-        private void OpenDialog()
+        private async Task OpenDialog()
         {
             using (OpenFileDialog of = new OpenFileDialog())
             {
@@ -803,7 +799,7 @@ namespace Marmi
                 {
                     //ver1.09 OpenFileAndStart()とりやめに伴い展開
                     //OpenFileAndStart(of.FileName);
-                    Start(of.FileNames);
+                    await Start(of.FileNames);
                 }
             }
         }
@@ -1429,7 +1425,7 @@ namespace Marmi
             //ver1.35 ループ機能を実装
             long drawOrderTick = DateTime.Now.Ticks;
             int now = App.g_pi.NowViewPage;
-            int next = await GetNextPageIndex(App.g_pi.NowViewPage);
+            int next = await GetNextPageIndexAsync(App.g_pi.NowViewPage);
             Debug.WriteLine($"NavigateToForword() {now} -> {next}");
             if (next >= 0)
             {
@@ -1482,7 +1478,7 @@ namespace Marmi
         }
 
         //ver1.36次のページ番号。すでに最終ページなら-1
-        internal static async Task<int> GetNextPageIndex(int index)
+        internal static async Task<int> GetNextPageIndexAsync(int index)
         {
             int pages = await CanDualView(index) ? 2 : 1;
 
@@ -1518,7 +1514,7 @@ namespace Marmi
 
         #region Screen操作
 
-        private void SetDualViewMode(bool isDual)
+        private async Task SetDualViewModeAsync(bool isDual)
         {
             Debug.WriteLine(isDual, "SetDualViewMode()");
             App.Config.DualView = isDual;
@@ -1529,7 +1525,7 @@ namespace Marmi
             //ClearScreenCache();
             ScreenCache.Clear();
 
-            SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
+            await SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
         }
 
         private void ToggleFullScreen()
@@ -1683,7 +1679,7 @@ namespace Marmi
             //２枚目チェック
             //if (!App.g_pi.Items[index + 1].HasInfo)
             //    Bmp.SyncGetBitmapSize(index + 1);
-            await Bmp.LoadBitmapAsync(index+1);
+            await Bmp.LoadBitmapAsync(index + 1);
             if (App.g_pi.Items[index + 1].IsFat)
                 return false; //横長だった
 
@@ -1704,7 +1700,6 @@ namespace Marmi
 
         #endregion Screen操作
 
-
         /// <summary>
         /// 現在のページをゴミ箱に入れる。削除後にページ遷移を行う。(ver1.35)
         /// </summary>
@@ -1724,7 +1719,7 @@ namespace Marmi
             string nowfile = App.g_pi.Items[now].Filename;
 
             //ページ遷移
-            int next = await GetNextPageIndex(now);
+            int next = await GetNextPageIndexAsync(now);
             if (next != -1)
             {
                 //次ページがあるので次ページを表示
@@ -1787,10 +1782,10 @@ namespace Marmi
 
         private async void SlideShowTimer_Tick(object sender, EventArgs e)
         {
-            if (await GetNextPageIndex(App.g_pi.NowViewPage) == -1)
+            if (await GetNextPageIndexAsync(App.g_pi.NowViewPage) == -1)
                 StopSlideShow();
             else
-                NavigateToForwordAsync();
+                await NavigateToForwordAsync();
         }
 
         private void StopSlideShow()

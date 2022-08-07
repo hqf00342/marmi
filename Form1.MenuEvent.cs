@@ -10,13 +10,13 @@ namespace Marmi
     {
         // メニューイベント ************************************************************************
 
-        private void OnClickMRUMenu(object sender, EventArgs e)
+        private async void OnClickMRUMenu(object sender, EventArgs e)
         {
             var filename = ((ToolStripDropDownItem)sender).Text;
 
             if (File.Exists(filename) || Directory.Exists(filename))
             {
-                Start(new string[] { filename });
+                await Start(new string[] { filename });
             }
             else
             {
@@ -33,9 +33,9 @@ namespace Marmi
 
         //ファイルメニュー**************************************************************************
 
-        private void Menu_FileOpen_Click(object sender, EventArgs e)
+        private async void Menu_FileOpen_Click(object sender, EventArgs e)
         {
-            OpenDialog();
+            await OpenDialog();
         }
 
         private void Menu_SaveThumbnail_Click(object sender, EventArgs e)
@@ -139,10 +139,10 @@ namespace Marmi
             await ReloadPageAsync();
         }
 
-        private void Menu_ViewDualPage_Click(object sender, EventArgs e)
+        private async void Menu_ViewDualPage_Click(object sender, EventArgs e)
         {
             //トグル切り替え
-            SetDualViewMode(!App.Config.DualView);
+            await SetDualViewModeAsync(!App.Config.DualView);
         }
 
         private async void Menu_ViewHalfPageBack_Click(object sender, EventArgs e)

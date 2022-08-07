@@ -50,8 +50,8 @@ namespace Marmi
             setkey(App.Config.Key_Fullscreen1, ToggleFullScreen);
             setkey(App.Config.Key_Fullscreen2, ToggleFullScreen);
             //２画面モード切替
-            setkey(App.Config.Key_Dualview1, () => SetDualViewMode(!App.Config.DualView));
-            setkey(App.Config.Key_Dualview2, () => SetDualViewMode(!App.Config.DualView));
+            setkey(App.Config.Key_Dualview1, async () => { await SetDualViewModeAsync(!App.Config.DualView); });
+            setkey(App.Config.Key_Dualview2, async () => { await SetDualViewModeAsync(!App.Config.DualView); });
             // ゴミ箱
             setkey(App.Config.Key_Recycle1, async () => { await RecycleBinNowPageAsync(); });
             setkey(App.Config.Key_Recycle2, async () => { await RecycleBinNowPageAsync(); });
