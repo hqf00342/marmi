@@ -13,7 +13,7 @@
         public void Init()
         {
             IsFastDrawAtResize = true;
-            CacheSize = 100;
+            CacheSize = 500;
             UseUnsharpMask = true;
             UnsharpDepth = 25;
         }

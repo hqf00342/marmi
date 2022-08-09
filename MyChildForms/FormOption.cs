@@ -226,7 +226,7 @@ namespace Marmi
         private void SaveAdvanceConfig(ref AppGlobalConfig set)
         {
             set.Advance.IsFastDrawAtResize = isFastDraw.Checked;
-            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 100;
+            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 500;
             set.Advance.UseUnsharpMask = useUnsharpMask.Checked;
             set.Advance.UnsharpDepth = (int)unsharpDepth.Value;
         }
