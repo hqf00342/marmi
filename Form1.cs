@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -272,7 +273,7 @@ namespace Marmi
                 drgevent.Effect = DragDropEffects.None;
         }
 
-        protected override void OnDragDrop(DragEventArgs drgevent)
+        protected async override void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
 
@@ -285,7 +286,8 @@ namespace Marmi
                 this.Activate();
                 string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
                 //Start(files);
-                AsyncStart(files);
+                //AsyncStart(files);
+                await Start(files);
             }
             Debug.WriteLine("OnDragDrop() End");
         }
@@ -409,7 +411,9 @@ namespace Marmi
         private void AsyncStart(string[] files)
         {
             //ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
-            Task.Run(() => this.Invoke((MethodInvoker)(async () => await Start(files))));
+            //ThreadPool.QueueUserWorkItem(async _ => await Start(files)); だめ、UIスレッド違反
+            ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(async () => await Start(files))));
+            //Task.Run(() => this.Invoke((MethodInvoker)(async () => await Start(files))));
         }
 
         private async Task Start(string[] filenames)
@@ -431,6 +435,9 @@ namespace Marmi
             AsyncIO.ClearJob();
             AsyncIO.AddJob(-1, null);
             App.g_pi.Initialize();
+
+            //v1.92 画面を一度すべて消す
+            PicPanel.Clear();
             SetStatusbarInfo("準備中・・・" + filenames[0]);
 
             //ver1.35スクリーンキャッシュをクリア

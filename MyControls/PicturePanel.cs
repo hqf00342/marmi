@@ -187,6 +187,15 @@ namespace Marmi
             _amat.Translate((float)dx, (float)dy, MatrixOrder.Append);
         }
 
+        /// <summary>
+        /// 画像を消しクリアする
+        /// </summary>
+        public void Clear()
+        {
+            Bmp = null;
+            this.Invalidate();
+        }
+
         #region override
 
         protected override bool IsInputKey(Keys keyData)

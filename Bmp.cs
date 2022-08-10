@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Marmi
@@ -24,23 +25,22 @@ namespace Marmi
         /// </summary>
         /// <param name="ix"></param>
         /// <returns>なし</returns>
-        public static async Task LoadBitmapAsync(int ix, bool highPriority)
+        public static Task<bool> LoadBitmapAsync(int ix, bool highPriority)
         {
+            var tcs = new TaskCompletionSource<bool>();
             if (App.g_pi.Items[ix].CacheImage.HasImage)
-                return;
-
-            bool complete = false;
-
-            if (highPriority)
-                AsyncIO.AddJob(ix, () => { complete = true; });
-            else
-                AsyncIO.AddJobLow(ix, () => { complete = true; });
-
-            await Task.Yield();
-            while (!complete)
             {
-                await Task.Delay(10);
+                tcs.SetResult(true);
             }
+            else
+            {
+                if (highPriority)
+                    AsyncIO.AddJob(ix, () => { tcs.SetResult(true); });
+                else
+                    AsyncIO.AddJobLow(ix, () => { tcs.SetResult(true); });
+            }
+            return tcs.Task;
+
         }
 
         /// <summary>
