@@ -121,29 +121,19 @@ namespace Marmi
             ka_exit1.keyData = set.Keys.Key_Exit1;
             ka_exit2.keyData = set.Keys.Key_Exit2;
             ka_bookmark1.keyData = set.Keys.Key_Bookmark1;
-            ka_bookmark2.keyData = set.Keys.Key_Bookmark2;
             ka_fullscreen1.keyData = set.Keys.Key_Fullscreen1;
-            ka_fullscreen2.keyData = set.Keys.Key_Fullscreen2;
             ka_dualview1.keyData = set.Keys.Key_Dualview1;
-            ka_dualview2.keyData = set.Keys.Key_Dualview2;
             ka_viewratio1.keyData = set.Keys.Key_ViewRatio1;
-            ka_viewratio2.keyData = set.Keys.Key_ViewRatio2;
             ka_recycle1.keyData = set.Keys.Key_Recycle1;
-            ka_recycle2.keyData = set.Keys.Key_Recycle2;
             ka_rotate1.keyData = set.Keys.Key_Rotate1;
-            ka_rotate2.keyData = set.Keys.Key_Rotate2;
             ka_nextpage1.keyData = set.Keys.Key_Nextpage1;
             ka_nextpage2.keyData = set.Keys.Key_Nextpage2;
             ka_prevpage1.keyData = set.Keys.Key_Prevpage1;
             ka_prevpage2.keyData = set.Keys.Key_Prevpage2;
             ka_prevhalf1.keyData = set.Keys.Key_Prevhalf1;
-            ka_prevhalf2.keyData = set.Keys.Key_Prevhalf2;
             ka_nexthalf1.keyData = set.Keys.Key_Nexthalf1;
-            ka_nexthalf2.keyData = set.Keys.Key_Nexthalf2;
             ka_toppage1.keyData = set.Keys.Key_Toppage1;
-            ka_toppage2.keyData = set.Keys.Key_Toppage2;
             ka_lastpage1.keyData = set.Keys.Key_Lastpage1;
-            ka_lastpage2.keyData = set.Keys.Key_Lastpage2;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -252,30 +242,20 @@ namespace Marmi
             set.Keys.Key_Exit1 = ka_exit1.keyData;
             set.Keys.Key_Exit2 = ka_exit2.keyData;
             set.Keys.Key_Bookmark1 = ka_bookmark1.keyData;
-            set.Keys.Key_Bookmark2 = ka_bookmark2.keyData;
             set.Keys.Key_Fullscreen1 = ka_fullscreen1.keyData;
-            set.Keys.Key_Fullscreen2 = ka_fullscreen2.keyData;
             set.Keys.Key_Dualview1 = ka_dualview1.keyData;
-            set.Keys.Key_Dualview2 = ka_dualview2.keyData;
             set.Keys.Key_ViewRatio1 = ka_viewratio1.keyData;
-            set.Keys.Key_ViewRatio2 = ka_viewratio2.keyData;
             set.Keys.Key_Recycle1 = ka_recycle1.keyData;
-            set.Keys.Key_Recycle2 = ka_recycle2.keyData;
             set.Keys.Key_Rotate1 = ka_rotate1.keyData;
-            set.Keys.Key_Rotate2 = ka_rotate2.keyData;
             //1.80キーコンフィグナビゲーション関連;
             set.Keys.Key_Nextpage1 = ka_nextpage1.keyData;
             set.Keys.Key_Nextpage2 = ka_nextpage2.keyData;
             set.Keys.Key_Prevpage1 = ka_prevpage1.keyData;
             set.Keys.Key_Prevpage2 = ka_prevpage2.keyData;
             set.Keys.Key_Prevhalf1 = ka_prevhalf1.keyData;
-            set.Keys.Key_Prevhalf2 = ka_prevhalf2.keyData;
             set.Keys.Key_Nexthalf1 = ka_nexthalf1.keyData;
-            set.Keys.Key_Nexthalf2 = ka_nexthalf2.keyData;
             set.Keys.Key_Toppage1 = ka_toppage1.keyData;
-            set.Keys.Key_Toppage2 = ka_toppage2.keyData;
             set.Keys.Key_Lastpage1 = ka_lastpage1.keyData;
-            set.Keys.Key_Lastpage2 = ka_lastpage2.keyData;
         }
 
         private void InitButton_Click(object sender, EventArgs e)
