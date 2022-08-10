@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,10 +16,6 @@ namespace Marmi
     {
         private async Task Start(string[] filenames)
         {
-            //ver1.73 MRUリストの更新
-            //今まで見ていたものを登録する
-            UpdateMRUList();
-
             //ファイルがすでに開いているかどうかチェック
             if (filenames.Length == 1 && filenames[0] == App.g_pi.PackageName)
             {
@@ -30,21 +25,8 @@ namespace Marmi
                     return;
             }
 
-            //ver1.41 非同期IOを停止
-            AsyncIO.ClearJob();
-            AsyncIO.AddJob(-1, null);
-            App.g_pi.Initialize();
-
-            //v1.92 画面を一度すべて消す
-            PicPanel.Clear();
-            SetStatusbarInfo("準備中・・・" + filenames[0]);
-
-            //ver1.35スクリーンキャッシュをクリア
-            ScreenCache.Clear();
-
-            //コントロールの初期化
+            //初期化
             InitMarmi();
-            //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
 
             //ver1.78単一ファイルの場合、そのディレクトリを対象とする
             string onePicFile = string.Empty;
@@ -310,6 +292,8 @@ namespace Marmi
         /// ・サイドバーの初期化
         /// ・トラックナビの初期化
         /// ・メイン画面の消去
+        /// ・MRU更新
+        /// ・スクリーンキャッシュクリア
         /// ・PackageInfo初期化
         /// ・一時フォルダ削除
         /// ・非同期IO停止
@@ -324,7 +308,6 @@ namespace Marmi
             _thumbPanel.Init();
 
             //2011年11月11日 ver1.24 サイドバー
-            //g_Sidebar.Init();
             _sidebar.Init(null);   //ver1.37
             if (_sidebar.Visible)
                 _sidebar.Invalidate();
@@ -339,8 +322,15 @@ namespace Marmi
             //メインパネルの画像表示をやめる
             PicPanel.Clear();
 
+            //ver1.73 MRUリストの更新
+            UpdateMRUList();
+
+            //ver1.35スクリーンキャッシュをクリア
+            ScreenCache.Clear();
+
             //パッケージ情報を初期化
             App.g_pi.Initialize();
+            //App.g_pi = new PackageInfo();
 
             //一時フォルダの削除
             foreach (string dir in DeleteDirList)
@@ -364,6 +354,5 @@ namespace Marmi
             //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
             //Uty.ForceGC();
         }
-
     }
 }

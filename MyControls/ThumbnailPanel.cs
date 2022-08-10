@@ -15,7 +15,7 @@ namespace Marmi
 {
     public sealed class ThumbnailPanel : UserControl
     {
-        private readonly List<ImageInfo> m_thumbnailSet; //ImageInfoのリスト, = g_pi.Items
+        private List<ImageInfo> m_ImgSet => App.g_pi.Items; //ImageInfoのリスト, = g_pi.Items
         private FormSaveThumbnail m_saveForm;   //サムネイル保存用ダイアログ
         private int m_mouseHoverItem = -1;      //現在マウスがホバーしているアイテム
 
@@ -53,7 +53,7 @@ namespace Marmi
             this.ResizeRedraw = true;
 
             //画像一覧
-            m_thumbnailSet = App.g_pi.Items;
+            //m_ImgSet = App.g_pi.Items;
 
             //ダブルバッファ追加。昔の方法も書いておく
             this.SetStyle(ControlStyles.DoubleBuffer, true);
@@ -240,7 +240,7 @@ namespace Marmi
                 {
                     //filename.Text = Path.GetFileName(m_thumbnailSet[index].filename);
                     //filename.Enabled = true;
-                    addBookmark.Checked = m_thumbnailSet[index].IsBookMark;
+                    addBookmark.Checked = m_ImgSet[index].IsBookMark;
                     addBookmark.Enabled = true;
                 }
                 else
@@ -285,7 +285,7 @@ namespace Marmi
 
                 //しおり一覧
                 Bookmarks.DropDownItems.Clear();
-                foreach (ImageInfo i in m_thumbnailSet)
+                foreach (ImageInfo i in m_ImgSet)
                 {
                     if (i.IsBookMark)
                     {
@@ -337,7 +337,7 @@ namespace Marmi
 
                 case "しおりをはさむ":
                     int index = (int)m_ContextMenu.Tag;
-                    m_thumbnailSet[index].IsBookMark = !m_thumbnailSet[index].IsBookMark;
+                    m_ImgSet[index].IsBookMark = !m_ImgSet[index].IsBookMark;
                     //this.Invalidate();
                     break;
 
@@ -380,7 +380,7 @@ namespace Marmi
             e.Graphics.Clear(this.BackColor);
 
             //描写対象チェック。無ければ終了
-            if (m_thumbnailSet == null || m_thumbnailSet.Count == 0)
+            if (m_ImgSet == null || m_ImgSet.Count == 0)
                 return;
 
             //描写品質の決定
@@ -399,8 +399,8 @@ namespace Marmi
 
             //右下のアイテム番号＝(スクロール量＋画面縦）÷BOX縦 の切り上げ×横アイテム数
             int endItem = (int)Math.Ceiling((-AutoScrollPosition.Y + e.ClipRectangle.Bottom) / (double)_thumbBoxHeight) * xItemsCount;
-            if (endItem >= m_thumbnailSet.Count)
-                endItem = m_thumbnailSet.Count - 1;
+            if (endItem >= m_ImgSet.Count)
+                endItem = m_ImgSet.Count - 1;
 
             //必要なものを描写
             for (int item = startItem; item <= endItem; item++)
@@ -414,7 +414,7 @@ namespace Marmi
             base.OnMouseMove(e);
 
             //アイテムが1つもないときは何もしない
-            if (m_thumbnailSet == null)
+            if (m_ImgSet == null)
                 return;
 
             //マウス位置をクライアント座標で取得
@@ -442,7 +442,7 @@ namespace Marmi
                 return;
 
             //ステータスバー変更
-            string s = $"[{itemIndex + 1}]{m_thumbnailSet[m_mouseHoverItem].Filename}";
+            string s = $"[{itemIndex + 1}]{m_ImgSet[m_mouseHoverItem].Filename}";
             Form1._instance.SetStatusbarInfo(s);
         }
 
@@ -556,7 +556,7 @@ namespace Marmi
         private void SetScrollBar()
         {
             //初期化済みか確認
-            if (m_thumbnailSet == null)
+            if (m_ImgSet == null)
             {
                 this.AutoScrollMinSize = this.ClientRectangle.Size;
                 return;
@@ -579,7 +579,7 @@ namespace Marmi
         private Size CalcScreenSize()
         {
             //アイテム数を確認
-            int itemCount = m_thumbnailSet.Count;
+            int itemCount = m_ImgSet.Count;
 
             //ver1.20ClientRectangleを使うことでスクロールバー考慮
             //const int scrollControllWidth = 20;
@@ -644,7 +644,7 @@ namespace Marmi
             //}
 
             //描写するビットマップを準備
-            Bitmap drawBitmap = m_thumbnailSet[item].Thumbnail;
+            Bitmap drawBitmap = m_ImgSet[item].Thumbnail;
             Rectangle imageRect = GetThumbImageRectangle(item);
 
             if (drawBitmap == null)
@@ -693,7 +693,7 @@ namespace Marmi
                 }
 
                 //Bookmarkマークを描く
-                if (m_thumbnailSet[item].IsBookMark)
+                if (m_ImgSet[item].IsBookMark)
                 {
                     using (Pen p = new Pen(Color.DarkRed, 2f))
                         g.DrawRectangle(p, frameRect);
@@ -873,7 +873,7 @@ namespace Marmi
             int w;                      //描写画像の幅
             int h;                      //描写画像の高さ
 
-            Image drawBitmap = m_thumbnailSet[itemIndex].Thumbnail;
+            Image drawBitmap = m_ImgSet[itemIndex].Thumbnail;
             if (drawBitmap == null)
             {
                 //まだサムネイルは準備できていないので画像マークを呼んでおく
@@ -882,13 +882,13 @@ namespace Marmi
                 w = drawBitmap.Width;
                 h = drawBitmap.Height;
             }
-            else if (m_thumbnailSet[itemIndex].Width <= _thumbnailSize
-                     && m_thumbnailSet[itemIndex].Height <= _thumbnailSize)
+            else if (m_ImgSet[itemIndex].Width <= _thumbnailSize
+                     && m_ImgSet[itemIndex].Height <= _thumbnailSize)
             {
                 //オリジナルが小さいのでリサイズしない。
                 //canExpand = false;
-                w = m_thumbnailSet[itemIndex].Width;
-                h = m_thumbnailSet[itemIndex].Height;
+                w = m_ImgSet[itemIndex].Width;
+                h = m_ImgSet[itemIndex].Height;
             }
             else
             {
@@ -940,7 +940,7 @@ namespace Marmi
             //ファイル名を書く
             if (App.Config.Thumbnail.IsShowTPFileName)
             {
-                string filename = Path.GetFileName(m_thumbnailSet[item].Filename);
+                string filename = Path.GetFileName(m_ImgSet[item].Filename);
                 if (filename != null)
                 {
                     g.DrawString(filename, _font, new SolidBrush(_fontColor), textRect, sf);
@@ -951,7 +951,7 @@ namespace Marmi
             //ファイルサイズを書く
             if (App.Config.Thumbnail.IsShowTPFileSize)
             {
-                string s = String.Format("{0:#,0} bytes", m_thumbnailSet[item].FileLength);
+                string s = String.Format("{0:#,0} bytes", m_ImgSet[item].FileLength);
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }
@@ -961,8 +961,8 @@ namespace Marmi
             {
                 string s = String.Format(
                     "{0:#,0}x{1:#,0} px",
-                    m_thumbnailSet[item].Width,
-                    m_thumbnailSet[item].Height);
+                    m_ImgSet[item].Width,
+                    m_ImgSet[item].Height);
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }
@@ -1005,7 +1005,7 @@ namespace Marmi
             int index = (itemPointY * horizonItems) + itemPointX;
 
             //指定ポイントにアイテムがあるか
-            return itemPointX > horizonItems - 1 || index > m_thumbnailSet.Count - 1 ? -1 : index;
+            return itemPointX > horizonItems - 1 || index > m_ImgSet.Count - 1 ? -1 : index;
         }
 
         //***************************************************************************************
@@ -1020,14 +1020,14 @@ namespace Marmi
         /// <param name="filenameCandidate">保存ファイル名の候補</param>
         public void SaveThumbnail(string filenameCandidate)
         {
-            if (m_thumbnailSet == null || m_thumbnailSet.Count == 0)
+            if (m_ImgSet == null || m_ImgSet.Count == 0)
                 return;
 
             //いったん保存
             int tmpThumbnailSize = _thumbnailSize;
             //int tmpScrollbarValue = m_vScrollBar.Value;
 
-            m_saveForm = new FormSaveThumbnail(this, m_thumbnailSet, filenameCandidate);
+            m_saveForm = new FormSaveThumbnail(this, m_ImgSet, filenameCandidate);
             m_saveForm.ShowDialog(this);
             m_saveForm.Dispose();
 
@@ -1047,11 +1047,11 @@ namespace Marmi
         public async Task<bool> SaveThumbnailImageAsync(int thumbSize, int numX, string FilenameCandidate)
         {
             //初期化済みか確認
-            if (m_thumbnailSet == null)
+            if (m_ImgSet == null)
                 return false;
 
             //アイテム数を確認
-            int ItemCount = m_thumbnailSet.Count;
+            int ItemCount = m_ImgSet.Count;
             if (ItemCount <= 0)
                 return false;
 
@@ -1075,7 +1075,7 @@ namespace Marmi
                 //対象矩形を背景色で塗りつぶす.
                 g.Clear(BackColor);
 
-                for (int item = 0; item < m_thumbnailSet.Count; item++)
+                for (int item = 0; item < m_ImgSet.Count; item++)
                 {
                     using (Graphics dummyg = Graphics.FromImage(dummyBmp))
                     {
@@ -1093,7 +1093,7 @@ namespace Marmi
                     ThumbnailEventArgs ev = new ThumbnailEventArgs
                     {
                         HoverItemNumber = item,
-                        HoverItemName = m_thumbnailSet[item].Filename
+                        HoverItemName = m_ImgSet[item].Filename
                     };
 
                     //ver1.31 nullチェック

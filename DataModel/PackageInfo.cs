@@ -1,23 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
+
 /*
 閲覧対象の画像一覧クラス
 シリアライズ対応
 */
+
 namespace Marmi
 {
     [Serializable]
     public class PackageInfo // : IDisposable
     {
         /// <summary>Zipファイル名、もしくはディレクトリ名</summary>
-        public string PackageName { get; set; }
+        public string PackageName { get; set; } = string.Empty;
 
         /// <summary>現在見ているアイテム番号</summary>
-        public int NowViewPage { get; set; }
+        public int NowViewPage { get; set; } = 0;
 
         /// <summary>Zipファイルサイズ</summary>
         public long PackageSize { get; set; }
@@ -32,15 +32,15 @@ namespace Marmi
         public PackageType PackType { get; set; } = PackageType.None;
 
         /// <summary>ver1.30 ページ送り方向</summary>
-        public bool PageDirectionIsLeft { get; set; }
+        public bool PageDirectionIsLeft { get; set; } = true;
 
         /// <summary>ver1.09 書庫のモード</summary>
         [NonSerialized]
-        public bool isSolid;
+        public bool isSolid = false;
 
         /// <summary>書庫一時展開先ディレクトリ</summary>
         [NonSerialized]
-        public string tempDirname;
+        public string tempDirname = string.Empty;
 
         /// <summary>
         /// コンストラクタ
@@ -144,13 +144,11 @@ namespace Marmi
             //foreach (var i in Items)
             //    i.CacheImage.Clear();
 
-
             //現在のサイズを計算
             int nowBufferSize = Items.Sum(i => i.CacheImage.Length);
 
             if (nowBufferSize <= MaxCacheSize)
                 return;
-
 
             //サイズオーバーしたのでMacCacheSizeの半分になるまで開放
 

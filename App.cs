@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -54,9 +53,9 @@ namespace Marmi
         /// <param name="msg"></param>
         public static void SetStatusbarInfo(string msg)
         {
-            if(Form1._instance.InvokeRequired)
+            if (Form1._instance.InvokeRequired)
             {
-                Form1._instance.BeginInvoke( (Action)(()=> { SetStatusbarInfo(msg); }));;
+                Form1._instance.BeginInvoke((Action)(() => { SetStatusbarInfo(msg); })); ;
             }
             else
             {
