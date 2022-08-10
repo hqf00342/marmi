@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -399,7 +398,6 @@ namespace Marmi
 
         #endregion Event
 
-
         // メニュー操作 *****************************************************************/
 
         public void SetThumbnailView(bool isShow)
@@ -529,32 +527,7 @@ namespace Marmi
             }
         }
 
-        /// <summary>
-        /// 一時フォルダの名前を返す。
-        /// 作れない場合はnullが返る。
-        /// </summary>
-        /// <returns>一時フォルダのフルパス。作れない場合はnull</returns>
-        private static string SuggestTempDirName()
-        {
-            //存在しないランダムなフォルダ名を作る
-            string tempDir;
 
-            //tempフォルダのルートとなるフォルダを決める。
-            string rootPath = App.Config.General.TmpFolder;
-            if (string.IsNullOrEmpty(rootPath))
-                rootPath = Application.StartupPath; //アプリのパス
-                                                    //Path.GetTempPath(),		//windows標準のTempDir
-
-            //ユニークなフォルダを探す
-            do
-            {
-                tempDir = Path.Combine(
-                    rootPath,
-                    "TEMP7Z" + Path.GetRandomFileName().Substring(0, 8));
-            }
-            while (Directory.Exists(tempDir));
-            return tempDir;
-        }
 
         private void AsyncLoadImageInfo()
         {
@@ -594,7 +567,6 @@ namespace Marmi
             }
         }
 
-
         #region パッケージ操作
 
         private void SortPackage()
@@ -606,56 +578,6 @@ namespace Marmi
                 App.g_pi.Items.Sort(comparer);
             }
             return;
-        }
-
-        /// <summary>
-        /// 書庫情報を取得
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns>書庫内書庫がある場合はtrye</returns>
-        private static bool GetArchivedFileInfo(string filename)
-        {
-            var szw = new SevenZipWrapper();
-            bool retval = false;
-
-            if (!szw.Open(filename))
-            {
-                MessageBox.Show("エラーのため書庫は開けませんでした。");
-                App.g_pi.Initialize();
-                //2021年2月26日 GCをやめる
-                //Uty.ForceGC();      //書庫を開放・GCする必要がある
-                return false;
-            }
-
-            //Zipファイル情報を設定
-            App.g_pi.PackageName = filename;
-            var fi = new FileInfo(App.g_pi.PackageName);
-            App.g_pi.PackageSize = fi.Length;
-            App.g_pi.isSolid = szw.IsSolid;
-
-            //ver1.31 7zファイルなのにソリッドじゃないことがある！？
-            if (Path.GetExtension(filename) == ".7z")
-                App.g_pi.isSolid = true;
-
-            //g_pi.isZip = true;
-            App.g_pi.PackType = PackageType.Archive;
-
-            //ファイルをリストに追加
-            App.g_pi.Items.Clear();
-            foreach (var item in szw.Items)
-            {
-                if (item.IsDirectory)
-                    continue;
-                if (Uty.IsPictureFilename(item.FileName))
-                {
-                    App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
-                }
-                else if (Uty.IsSupportArchiveFile(item.FileName))
-                {
-                    retval = true;
-                }
-            }
-            return retval;
         }
 
         #endregion パッケージ操作

@@ -15,7 +15,10 @@ namespace Marmi
         public static async Task<Bitmap> GetBitmapAsync(int ix, bool highPriority)
         {
             await LoadBitmapAsync(ix, highPriority);
-            return App.g_pi.Items[ix].CacheImage.ToBitmap();
+            var bmp = App.g_pi.Items[ix].CacheImage.ToBitmap();
+            if (bmp == null)
+                throw new Exception("画像取得に失敗");
+            return bmp;
         }
 
         /// <summary>
@@ -73,7 +76,6 @@ namespace Marmi
             {
                 Debug.WriteLine("GetBitmapAsync()からnullがきた。");
                 throw new InvalidOperationException("nullはおかしい");
-                return null;
             }
 
             if (App.Config.DualView && await Form1.CanDualViewAsync(index))
