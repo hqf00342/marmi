@@ -658,31 +658,6 @@ namespace Marmi
             return retval;
         }
 
-        /// <summary>
-        /// ディレクトリの画像をリストに追加する。再帰的に呼び出すために関数化
-        /// </summary>
-        /// <param name="dirName">追加対象のディレクトリ名</param>
-        /// <param name="isRecurse">再帰的に走査する場合はtrue</param>
-        private static void GetDirPictureList(string dirName, bool isRecurse)
-        {
-            //画像ファイルだけを追加する
-            int index = 0;
-            foreach (string name in Directory.EnumerateFiles(dirName))
-            {
-                if (Uty.IsPictureFilename(name))
-                {
-                    App.g_pi.Items.Add(new ImageInfo(index++, name));
-                }
-            }
-
-            //再帰的に取得するかどうか。
-            if (isRecurse)
-            {
-                foreach (var name in Directory.GetDirectories(dirName))
-                    GetDirPictureList(name, isRecurse);
-            }
-        }
-
         #endregion パッケージ操作
 
         #region MRU操作

@@ -36,8 +36,6 @@ namespace Marmi
                 filenames[0] = Path.GetDirectoryName(filenames[0]);
             }
 
-            //書庫のパスワードをクリア
-            SevenZipWrapper.ClearPassword();
 
             //ファイル一覧を生成
             bool needRecurse = SetPackageInfo(filenames);
@@ -47,59 +45,26 @@ namespace Marmi
             //if (needRecurse )
             if (needRecurse || App.g_pi.isSolid || App.Config.General.AlwaysExtractArchive)
             {
-                using (AsyncExtractForm ae = new AsyncExtractForm())
+                var success = ExtractToTempDir(filenames[0]);
+                if (!success)
                 {
-                    SetStatusbarInfo("書庫を展開中です" + filenames[0]);
+                    MessageBox.Show("一時展開フォルダが作成できませんでした。設定を確認してください");
+                    return;
 
-                    //ver1.73 一時フォルダ作成
-                    try
-                    {
-                        var tempDir = SuggestTempDirName();
-                        Directory.CreateDirectory(tempDir);
-                        DeleteDirList.Add(tempDir);
-                        App.g_pi.tempDirname = tempDir;
-                    }
-                    catch
-                    {
-                        //ver1.79 一時フォルダが作れないときの対応
-                        MessageBox.Show("一時展開フォルダが作成できませんでした。設定を確認してください");
-                        App.g_pi.Initialize();
-                        return;
-                    }
-
-                    //ダイアログを表示
-                    ae.ArchivePath = filenames[0];
-                    ae.ExtractDir = App.g_pi.tempDirname;
-                    ae.ShowDialog(this);
-
-                    //ダイアログの表示が終了
-                    //ディレクトリをすべてg_piに読み込む
-                    this.Cursor = Cursors.WaitCursor;
-                    App.g_pi.PackType = PackageType.Pictures;
-                    App.g_pi.Items.Clear();
-                    GetDirPictureList(App.g_pi.tempDirname, true);
-                    this.Cursor = Cursors.Arrow;
                 }
             }
             SortPackage();
             //UIを初期化
             UpdateToolbar();
 
-            //ver1.73 MRUリストの更新
-            //ここではだめ.最終ページを保存できない。
-            //UpdateMRUList();
-
             //pdfチェック
-            if (App.g_pi.PackType == PackageType.Pdf)
+            if (App.g_pi.PackType == PackageType.Pdf
+                && !App.susie.isSupportedExtentions("pdf"))
             {
-                if (!App.susie.isSupportedExtentions("pdf"))
-                {
-                    const string str = "pdfファイルはサポートしていません";
-                    _clearPanel.ShowAndClose(str, 1000);
-                    SetStatusbarInfo(str);
-                    App.g_pi.Initialize();
-                    return;
-                }
+                const string str = "pdfファイルはサポートしていません";
+                _clearPanel.ShowAndClose(str, 1000);
+                App.g_pi.Initialize();
+                return;
             }
 
             if (App.g_pi.Items.Count == 0)
@@ -297,6 +262,7 @@ namespace Marmi
         /// ・PackageInfo初期化
         /// ・一時フォルダ削除
         /// ・非同期IO停止
+        /// ・書庫パスワードをクリア
         /// </summary>
         private void InitMarmi()
         {
@@ -346,13 +312,77 @@ namespace Marmi
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
             g_LastClickPoint = Point.Empty;
+            App.g_pi.NowViewPage = 0;
 
-            //画像表示をやめる
-            PicPanel.Message = string.Empty;
-            PicPanel.Bmp = null;
+            //書庫のパスワードをクリア
+            SevenZipWrapper.ClearPassword();
 
             //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
             //Uty.ForceGC();
+        }
+
+
+        /// <summary>
+        /// アーカイブファイルを一時ファイルに展開する。
+        /// </summary>
+        /// <param name="archiveFilename"></param>
+        /// <returns>フォルダの展開に失敗したときはfalse</returns>
+        private bool ExtractToTempDir(string archiveFilename)
+        {
+            //ver1.73 一時フォルダを作成
+            try
+            {
+                var tempDir = SuggestTempDirName();
+                Directory.CreateDirectory(tempDir);
+                DeleteDirList.Add(tempDir);
+                App.g_pi.tempDirname = tempDir;
+            }
+            catch
+            {
+                //ver1.79 一時フォルダが作れなかった
+                return false;
+            }
+
+            //ファイルを展開
+            using (var ae = new AsyncExtractForm())
+            {
+                //ダイアログを表示
+                ae.ArchivePath = archiveFilename;
+                ae.ExtractDir = App.g_pi.tempDirname;
+                ae.ShowDialog(this);
+            }
+
+            //展開終了
+            //画像を App.g_pi.Items に読み込む
+            App.g_pi.PackType = PackageType.Pictures;
+            App.g_pi.Items.Clear();
+            GetDirPictureList(App.g_pi.tempDirname, true);
+            return true;
+        }
+
+        /// <summary>
+        /// ディレクトリ内の画像を App.g_pi.Items に追加する。
+        /// </summary>
+        /// <param name="dirName">追加対象のディレクトリ名</param>
+        /// <param name="recurse">再帰走査する場合true</param>
+        private static void GetDirPictureList(string dirName, bool recurse)
+        {
+            //画像ファイルを追加
+            int index = 0;
+            foreach (string name in Directory.EnumerateFiles(dirName))
+            {
+                if (Uty.IsPictureFilename(name))
+                {
+                    App.g_pi.Items.Add(new ImageInfo(index++, name));
+                }
+            }
+
+            //再帰取得する場合はサブディレクトリも処理
+            if (recurse)
+            {
+                foreach (var name in Directory.GetDirectories(dirName))
+                    GetDirPictureList(name, recurse);
+            }
         }
     }
 }
