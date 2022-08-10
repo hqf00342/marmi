@@ -192,6 +192,7 @@ namespace Marmi
         /// </summary>
         public void Clear()
         {
+            Message = null;
             Bmp = null;
             this.Invalidate();
         }

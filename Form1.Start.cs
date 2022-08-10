@@ -43,7 +43,7 @@ namespace Marmi
             ScreenCache.Clear();
 
             //コントロールの初期化
-            InitControls();
+            InitMarmi();
             //この時点ではg_pi.PackageNameはできていない＝MRUがつくられない。
 
             //ver1.78単一ファイルの場合、そのディレクトリを対象とする
@@ -305,12 +305,16 @@ namespace Marmi
         }
 
         /// <summary>
-        /// D&Dやアプリ起動時に呼ばれる初期化ルーチン
-        /// スレッドを止め、すべての状態を初期化する。
-        /// 読み込み対象のファイルについては一切何もしない。
-        /// Form1_Load(), Form1_FormClosed(), OpenFileAndStart(), Form1_DragDrop()
+        /// 初期化ルーチン。ファイル閲覧後に初期化するために利用
+        /// ・サムネイルパネルの初期化
+        /// ・サイドバーの初期化
+        /// ・トラックナビの初期化
+        /// ・メイン画面の消去
+        /// ・PackageInfo初期化
+        /// ・一時フォルダ削除
+        /// ・非同期IO停止
         /// </summary>
-        private void InitControls()
+        private void InitMarmi()
         {
             //サムネイルモードの解放
             if (App.Config.isThumbnailView)
@@ -332,62 +336,33 @@ namespace Marmi
                 _trackNaviPanel = null;
             }
 
-            //2011/08/19 trackbarを初期化
-            //InitTrackBar();
-            //nullReferのため何もしないことにする
-            //g_trackbar.Initialize();
-
-            //MRUを更新する ver1.73 コメントアウト
-            //UpdateMRUList();
-
-            //サムネイルをバックグラウンドで保存する
-            //saveDBFile();
-            App.g_pi.Initialize();
+            //メインパネルの画像表示をやめる
+            PicPanel.Clear();
 
             //パッケージ情報を初期化
-            //古いのはスレッド中で捨てるので新しいのを作る
-            //g_pi = new PackageInfo();
+            App.g_pi.Initialize();
 
-            //7z解凍をしていたら中断
-            //m_AsyncSevenZip?.CancelExtractAll();
-            //tempフォルダがあれば削除
-            //if (!string.IsNullOrEmpty(g_pi.tempDirname))
-            //{
-            //    DeleteTempDir(g_pi.tempDirname);
-            //    setStatusbarInfo("一時フォルダを削除しました - " + g_pi.tempDirname);
-            //}
+            //一時フォルダの削除
             foreach (string dir in DeleteDirList)
             {
                 Uty.DeleteTempDir(dir);
             }
             DeleteDirList.Clear();
 
-            //2011/08/19 Bitmapキャッシュ
-            //g_FileCache.Clear();
-
             //2012/09/04 非同期IOを中止
-            //App.stack.Clear();
-            //App.stack.Push(new KeyValuePair<int, Delegate>(-1, null));
             AsyncIO.ClearJob();
             AsyncIO.AddJob(-1, null);
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
-            //g_lastDrawMode = LastDrawMode.HighQuality;	//Idleで余計なことをさせない
             g_LastClickPoint = Point.Empty;
-            //if (g_originalSizeBitmap != null)
-            //{
-            //    PicPanel.bmp = null;
-            //    g_originalSizeBitmap.Dispose();	//解放済みだったら例外が発生するかも
-            //    g_originalSizeBitmap = null;
-            //}
 
             //画像表示をやめる
             PicPanel.Message = string.Empty;
             PicPanel.Bmp = null;
 
             //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
-            Uty.ForceGC();
+            //Uty.ForceGC();
         }
 
     }

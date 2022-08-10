@@ -178,7 +178,7 @@ namespace Marmi
             ApplyConfigToWindow();
 
             //初期化
-            InitControls();
+            InitMarmi();
             UpdateToolbar();
             ResizeTrackBar();
 
@@ -231,7 +231,7 @@ namespace Marmi
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
             //ファイルハンドルの解放
-            InitControls();
+            InitMarmi();
 
             //ver1.62ツールバー位置を保存
             App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
