@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Xml.Serialization;
 
 namespace Marmi.DataModel
@@ -27,13 +22,14 @@ namespace Marmi.DataModel
         //ver1.73 一時展開フォルダ
         public string TmpFolder { get; set; }
 
-        #endregion
+        #endregion archive
 
         //ツールバーの左右ボタンを入れ替える
         public bool IsReplaceArrowButton { get; set; }
 
         //ver1.65 ツールバーアイテムの文字を消すか
         public bool EraseToolbarItemString { get; set; }
+
         //ver1.70 サイドバーのスムーススクロール
         public bool Sidebar_smoothScroll { get; set; }
 
@@ -55,8 +51,10 @@ namespace Marmi.DataModel
 
         //ver1.77 ウィンドウ位置復元を簡易にする
         public bool SimpleCalcForWindowLocation { get; set; }
+
         //ver1.77 フルスクリーン状態を復元できるようにする
         public bool SaveFullScreenMode { get; set; }
+
         //ver1.49 ウィンドウの初期位置
         public bool IsWindowPosCenter { get; set; }
 
@@ -81,7 +79,6 @@ namespace Marmi.DataModel
             //ver1.77 フルスクリーン状態を復元できるようにする
             SaveFullScreenMode = true;
             AlwaysExtractArchive = false;
-
         }
     }
 }

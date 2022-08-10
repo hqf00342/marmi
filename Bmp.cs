@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Marmi
@@ -24,7 +24,7 @@ namespace Marmi
         /// 画像サイズが欲しいときに利用する。
         /// </summary>
         /// <param name="ix"></param>
-        /// <returns>なし</returns>
+        /// <returns>戻り値は使わない。.NET Frameworkにはジェネリック版しかない</returns>
         public static Task<bool> LoadBitmapAsync(int ix, bool highPriority)
         {
             var tcs = new TaskCompletionSource<bool>();
@@ -40,7 +40,21 @@ namespace Marmi
                     AsyncIO.AddJobLow(ix, () => { tcs.SetResult(true); });
             }
             return tcs.Task;
+        }
 
+        /// <summary>
+        /// 非同期でBitmapを読み込む。
+        /// await不要でタスクを積むだけでよい場合はこれを使う。
+        /// サムネイルを作る、画像サイズを取得するだけならこれでいい。
+        /// Taskオブジェクトを作らない分、軽いはず。
+        /// </summary>
+        /// <param name="ix"></param>
+        public static void LoadBitmapAndForget(int ix)
+        {
+            if (!App.g_pi.Items[ix].CacheImage.HasImage)
+            {
+                AsyncIO.AddJobLow(ix, null);
+            }
         }
 
         /// <summary>
@@ -57,6 +71,8 @@ namespace Marmi
             var bmp1 = await GetBitmapAsync(index, true);
             if (bmp1 == null)
             {
+                Debug.WriteLine("GetBitmapAsync()からnullがきた。");
+                throw new InvalidOperationException("nullはおかしい");
                 return null;
             }
 

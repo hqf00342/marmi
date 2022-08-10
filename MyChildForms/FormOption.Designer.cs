@@ -120,6 +120,9 @@
             this.ka_prevpage2 = new Marmi.KeyAccelerator();
             this.label12 = new System.Windows.Forms.Label();
             this.ka_rotate1 = new Marmi.KeyAccelerator();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.Mouse = new System.Windows.Forms.TabPage();
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -150,9 +153,10 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.ka_thunbnail = new Marmi.KeyAccelerator();
+            this.ka_sidebar = new Marmi.KeyAccelerator();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
@@ -974,6 +978,10 @@
             this.tableLayoutPanel1.Controls.Add(this.label13, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label14, 2, 8);
             this.tableLayoutPanel1.Controls.Add(this.label15, 2, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label16, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label17, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.ka_thunbnail, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.ka_sidebar, 3, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 16;
@@ -1339,6 +1347,39 @@
             this.ka_rotate1.TabIndex = 12;
             this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
             // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(244, 27);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(94, 12);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Marmiの終了(2)";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(244, 181);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(94, 12);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "次のページ(2)";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(244, 203);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(94, 12);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "前のページ(2)";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Mouse
             // 
             this.Mouse.Controls.Add(this.DoubleClickToFullscreen);
@@ -1664,38 +1705,51 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // label13
+            // label16
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(244, 27);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(94, 12);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Marmiの終了(2)";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(244, 49);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(94, 12);
+            this.label16.TabIndex = 0;
+            this.label16.Tag = "サムネイルOnOff";
+            this.label16.Text = "サムネイル";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label14
+            // label17
             // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(244, 181);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(94, 12);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "次のページ(2)";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(244, 71);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(94, 12);
+            this.label17.TabIndex = 0;
+            this.label17.Tag = "サイドバーOnOff";
+            this.label17.Text = "サイドバー";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label15
+            // ka_thunbnail
             // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(244, 203);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(94, 12);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "前のページ(2)";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_thunbnail.keyData = System.Windows.Forms.Keys.None;
+            this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
+            this.ka_thunbnail.Name = "ka_thunbnail";
+            this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
+            this.ka_thunbnail.TabIndex = 2;
+            this.ka_thunbnail.Tag = "Marmiの終了(2)";
+            this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_sidebar
+            // 
+            this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_sidebar.keyData = System.Windows.Forms.Keys.None;
+            this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
+            this.ka_sidebar.Name = "ka_sidebar";
+            this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
+            this.ka_sidebar.TabIndex = 2;
+            this.ka_sidebar.Tag = "Marmiの終了(2)";
+            this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // FormOption
             // 
@@ -1875,5 +1929,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private KeyAccelerator ka_thunbnail;
+        private KeyAccelerator ka_sidebar;
     }
 }

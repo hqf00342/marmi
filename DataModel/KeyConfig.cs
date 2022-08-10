@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Marmi.DataModel
 {
@@ -27,38 +22,29 @@ namespace Marmi.DataModel
         public Keys Key_Toppage1 { get; set; }
         public Keys Key_Lastpage1 { get; set; }
 
+        public Keys Key_Thumbnail { get; set; }
+        public Keys Key_Sidebar { get; set; }
 
         public void Init()
         {
             Key_Exit1 = Keys.Q;
             Key_Exit2 = Keys.None;
-
             Key_Bookmark1 = Keys.B;
-
             Key_Fullscreen1 = Keys.Escape;
-
             Key_Dualview1 = Keys.D;
-
             Key_ViewRatio1 = Keys.V;
-
             Key_Recycle1 = Keys.Delete;
-
             Key_Nextpage1 = Keys.Right;
             Key_Nextpage2 = Keys.None;
-
             Key_Prevpage1 = Keys.Left;
             Key_Prevpage2 = Keys.None;
-
             Key_Prevhalf1 = Keys.PageUp;
-
             Key_Nexthalf1 = Keys.PageDown;
-
             Key_Toppage1 = Keys.Home;
-
             Key_Lastpage1 = Keys.End;
-
             Key_Rotate1 = Keys.R;
+            Key_Thumbnail = Keys.T;
+            Key_Sidebar = Keys.S;
         }
-
     }
 }

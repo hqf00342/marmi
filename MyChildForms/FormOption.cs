@@ -134,6 +134,8 @@ namespace Marmi
             ka_nexthalf1.keyData = set.Keys.Key_Nexthalf1;
             ka_toppage1.keyData = set.Keys.Key_Toppage1;
             ka_lastpage1.keyData = set.Keys.Key_Lastpage1;
+            ka_thunbnail.keyData = set.Keys.Key_Thumbnail;
+            ka_sidebar.keyData = set.Keys.Key_Sidebar;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -256,6 +258,8 @@ namespace Marmi
             set.Keys.Key_Nexthalf1 = ka_nexthalf1.keyData;
             set.Keys.Key_Toppage1 = ka_toppage1.keyData;
             set.Keys.Key_Lastpage1 = ka_lastpage1.keyData;
+            set.Keys.Key_Thumbnail = ka_thunbnail.keyData;
+            set.Keys.Key_Sidebar = ka_sidebar.keyData;
         }
 
         private void InitButton_Click(object sender, EventArgs e)

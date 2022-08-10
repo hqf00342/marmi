@@ -273,7 +273,7 @@ namespace Marmi
                 drgevent.Effect = DragDropEffects.None;
         }
 
-        protected async override void OnDragDrop(DragEventArgs drgevent)
+        protected override async void OnDragDrop(DragEventArgs drgevent)
         {
             base.OnDragDrop(drgevent);
 

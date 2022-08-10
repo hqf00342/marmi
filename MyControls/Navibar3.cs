@@ -10,7 +10,6 @@ namespace Marmi
 {
     public class NaviBar3 : UserControl
     {
-        
         private const int THUMBSIZE = 200;  //サムネイルサイズ
         private const int PADDING = 2;      //各種余白
         private const int DARKPERCENT = 50; //左右の画像の暗さ％
@@ -19,22 +18,17 @@ namespace Marmi
         private float alpha = 1.0F;         //描写時の透明度。OnPaint()で利用
         private int nowOffset;              //現在の描写位置
 
-
         private readonly PackageInfo m_packageInfo;        //g_piそのものを挿す
         private readonly SolidBrush m_BackBrush = new SolidBrush(Color.FromArgb(192, 48, 48, 48));        //背景色
 
-
         //フォント,フォーマット
         private readonly Font fontL = new Font("Century Gothic", 16F);
-        private readonly StringFormat sfCenterDown = new StringFormat(){ Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
 
+        private readonly StringFormat sfCenterDown = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
 
         private List<ItemPos> _thumbnailPosList = null; //サムネイルの位置
         private readonly Bitmap _dummyImage = null;     // Loadingイメージ
         private readonly FormTimer _timer = null;       //アニメーションタイマー
-
-
-
 
         // 初期化 ***********************************************************************/
 
@@ -60,7 +54,6 @@ namespace Marmi
             //newされたあとに高さを必要とされるので高さだけ入れておく。
             this.Height = BOX_HEIGHT        //画像部分
                 + PADDING;
-
 
             //Loadingと表示するイメージ
             _dummyImage = BitmapUty.LoadingImage(THUMBSIZE * 2 / 3, THUMBSIZE);
