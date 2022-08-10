@@ -401,21 +401,6 @@ namespace Marmi
 
         #region START
 
-        /// <summary>
-        /// 非同期タイプのStart()
-        /// 実際はThreadPoolからStartを呼び出しているだけ。
-        /// D&DでDragしたプロセスが持ちきりになってしまうのを解決。
-        /// OnDragDrop()からの呼び出しのみこれを使う。
-        /// </summary>
-        /// <param name="files"></param>
-        private void AsyncStart(string[] files)
-        {
-            //ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(() => Start(files))));
-            //ThreadPool.QueueUserWorkItem(async _ => await Start(files)); だめ、UIスレッド違反
-            ThreadPool.QueueUserWorkItem(_ => this.Invoke((MethodInvoker)(async () => await Start(files))));
-            //Task.Run(() => this.Invoke((MethodInvoker)(async () => await Start(files))));
-        }
-
         private async Task Start(string[] filenames)
         {
             //ver1.73 MRUリストの更新
@@ -1805,7 +1790,10 @@ namespace Marmi
                 //1つめに自分のexeファイル名が入っているので除く
                 if (args.Length > 1)
                 {
-                    AsyncStart(args.Skip(1).ToArray());
+                    //AsyncStart(args.Skip(1).ToArray());
+#pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
+                    Start(args.Skip(1).ToArray());
+#pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
                 }
             }));
         }
