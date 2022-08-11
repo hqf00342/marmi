@@ -33,17 +33,19 @@ namespace Marmi
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
-            //if (needRecurse )
-            if (needRecurse || App.g_pi.isSolid || App.Config.General.AlwaysExtractArchive)
+            if (App.g_pi.PackType == PackageType.Archive)
             {
-                var success = ExtractToTempDir(filenames[0]);
-                if (!success)
+                if (needRecurse || App.g_pi.isSolid || App.Config.General.AlwaysExtractArchive)
                 {
-                    MessageBox.Show("一時展開フォルダが作成できませんでした。設定を確認してください");
-                    return;
-
+                    var success = ExtractToTempDir(filenames[0]);
+                    if (!success)
+                    {
+                        MessageBox.Show("一時展開フォルダが作成できませんでした。設定を確認してください");
+                        return;
+                    }
                 }
             }
+
             SortPackage();
             //UIを初期化
             UpdateToolbar();
@@ -369,8 +371,6 @@ namespace Marmi
             {
                 MessageBox.Show("エラーのため書庫は開けませんでした。");
                 App.g_pi.Initialize();
-                //2021年2月26日 GCをやめる
-                //Uty.ForceGC();      //書庫を開放・GCする必要がある
                 return false;
             }
 
@@ -379,13 +379,12 @@ namespace Marmi
             var fi = new FileInfo(App.g_pi.PackageName);
             App.g_pi.PackageSize = fi.Length;
             App.g_pi.isSolid = szw.IsSolid;
+            App.g_pi.PackType = PackageType.Archive;
 
             //ver1.31 7zファイルなのにソリッドじゃないことがある！？
             if (Path.GetExtension(filename) == ".7z")
                 App.g_pi.isSolid = true;
 
-            //g_pi.isZip = true;
-            App.g_pi.PackType = PackageType.Archive;
 
             //ファイルをリストに追加
             App.g_pi.Items.Clear();
