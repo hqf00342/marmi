@@ -73,7 +73,7 @@ namespace Marmi
         /// <summary>画面ぴったりの拡大比率</summary>
         public float FittingRatio => GetScreenFitRatio();
 
-        /// <summary>高速描写するかどうか</summary>
+        /// <summary>高速描写するかどうか。アニメーション時にtrueにする</summary>
         public bool FastDraw { get; set; }
 
         /// <summary>最後の描写モード</summary>
@@ -120,7 +120,7 @@ namespace Marmi
         /// <summary>
         /// 拡大率、透明度をクリア
         /// </summary>
-        public void ResetView()
+        public void ResetZoomAndAlpha()
         {
             //ver1.78 倍率固定に対応
             //mat.Reset();

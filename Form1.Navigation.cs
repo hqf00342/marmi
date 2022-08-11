@@ -22,12 +22,9 @@ namespace Marmi
         /// 前のページに戻らないようにdrawOrderTickを導入
         /// </summary>
         /// <param name="index">インデックス番号</param>
-        /// <param name="drawOrderTick">描写順序を示すオーダー時間 = DateTime.Now.Ticks</param>
-        public async Task SetViewPageAsync(int index, long drawOrderTick = 0)
+        public async Task SetViewPageAsync(int index)
         {
-            if (drawOrderTick == 0)
-                drawOrderTick = DateTime.Now.Ticks;
-
+            var drawOrderTick = DateTime.Now.Ticks;
             _lastDrawOrderTick = drawOrderTick;
 
             //ver1.09 オプションダイアログを閉じると必ずここに来ることに対するチェック
@@ -90,9 +87,7 @@ namespace Marmi
         /// <param name="orderTick">オーダー時間。古い描写指示を落とすために利用</param>
         private void SetViewPage2(int index, int pageDirection, Bitmap screenImage, long orderTick)
         {
-            //ver1.55 drawOrderTickのチェック.
-            // スレッドプールに入るため稀に順序が前後する。
-            // 最新の描写でなければスキップ
+            //ver1.55 最新描写でなければスキップ
             if (_lastDrawOrderTick > orderTick)
             {
                 Debug.WriteLine($"Too old order: index={index}]");
@@ -109,8 +104,8 @@ namespace Marmi
 
             //ver1.50 表示
             PicPanel.Message = string.Empty;
-            if (App.Config.View.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
-                && !App.Config.KeepMagnification                  //倍率固定モードではアニメーションしない
+            if (App.Config.View.PictureSwitchMode != AnimateMode.none   //アニメーションモード
+                && !App.Config.KeepMagnification                        //倍率固定モードではアニメーションしない
                 && pageDirection != 0)
             {
                 //スライドインアニメーション
@@ -118,7 +113,7 @@ namespace Marmi
             }
 
             PicPanel.Bmp = screenImage;
-            PicPanel.ResetView();
+            PicPanel.ResetZoomAndAlpha();
             PicPanel.FastDraw = false;
 
             //ver1.78 倍率をオプション指定できるように変更
@@ -157,11 +152,10 @@ namespace Marmi
         private async Task NavigateToBackAsync()
         {
             //前に戻る
-            long drawOrderTick = DateTime.Now.Ticks;
             int prev = await GetPrevPageIndex(App.g_pi.NowViewPage);
             if (prev >= 0)
             {
-                await SetViewPageAsync(prev, drawOrderTick);
+                await SetViewPageAsync(prev);
             }
             else
                 _clearPanel.ShowAndClose("先頭のページです", 1000);
@@ -170,18 +164,17 @@ namespace Marmi
         private async Task NavigateToForwordAsync()
         {
             //ver1.35 ループ機能を実装
-            long drawOrderTick = DateTime.Now.Ticks;
             int now = App.g_pi.NowViewPage;
             int next = await GetNextPageIndexAsync(App.g_pi.NowViewPage);
             Debug.WriteLine($"NavigateToForword() {now} -> {next}");
             if (next >= 0)
             {
-                await SetViewPageAsync(next, drawOrderTick);
+                await SetViewPageAsync(next);
             }
             else if (App.Config.View.LastPage_toTop)
             {
                 //先頭ページへループ
-                await SetViewPageAsync(0, drawOrderTick);
+                await SetViewPageAsync(0);
                 _clearPanel.ShowAndClose("先頭ページに戻りました", 1000);
             }
             else

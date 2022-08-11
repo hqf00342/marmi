@@ -787,7 +787,7 @@ namespace Marmi
                 //next=0 : 最後のページを消した
                 Debug.WriteLine("最後のページを消した");
                 PicPanel.Bmp = null;
-                PicPanel.ResetView();
+                PicPanel.ResetZoomAndAlpha();
                 PicPanel.Refresh();
             }
 
