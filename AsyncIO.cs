@@ -76,9 +76,8 @@ namespace Marmi
                             //画像サイズ設定
                             App.g_pi.Items[index].ImgSize = App.g_pi.Items[index].CacheImage.GetImageSize();
 
-
                             //サムネイル作成。ここ1か所に集約(2021年2月25日)
-                            App.g_pi.ThumnailMaker(index);
+                            App.g_pi.Items[index].CreateThumbnail();
                         }
 
                         //Invoke(action)を実行

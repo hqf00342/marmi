@@ -96,38 +96,6 @@ namespace Marmi
             return Items[index].CacheImage.ToBitmap();
         }
 
-        public void ClearCache(int index)
-        {
-            Items[index].CacheImage.Clear();
-        }
-
-        /// <summary>
-        /// サムネイルの作成・登録
-        /// ここ1か所で行う。(2021年2月25日)
-        /// 現在はAsyncIOで行っているが本来はCache登録処理内で行いたい。
-        /// </summary>
-        /// <param name="index"></param>
-        public void ThumnailMaker(int index)
-        {
-            if (index < 0 || index >= Items.Count) return;
-
-            try
-            {
-                if (Items[index].CacheImage.HasImage)
-                {
-                    //ver1.10 サムネイル登録も行う
-                    Bitmap _bmp = Items[index].CacheImage.ToBitmap();
-                    if (_bmp != null)
-                    {
-                        Items[index].ResisterThumbnailImage(_bmp);
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
         /// <summary>
         /// FileCacheをパージする
         /// オーバーしていたらMaxの半分までクリアする。

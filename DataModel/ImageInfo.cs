@@ -1,23 +1,17 @@
 using Marmi.DataModel;
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
+
 /*
-サムネイル画像を保存するためのクラス
-Exifから画像データを収集するなど高速にサムネイルを取得する
+画像情報とキャッシュを保存するためのクラス
 */
+
 namespace Marmi
 {
     [Serializable()]
     public class ImageInfo //: IDisposable
     {
-        //サムネイル画像のサイズ。最大値
-        //private readonly int THUMBNAIL_WIDTH = App.DEFAULT_THUMBNAIL_SIZE;
-
-        private readonly int THUMBNAIL_HEIGHT = App.DEFAULT_THUMBNAIL_SIZE;
-
         /// <summary>ファイル名</summary>
         public string Filename { get; }
 
@@ -27,7 +21,7 @@ namespace Marmi
         public int Width => ImgSize.Width;
         public int Height => ImgSize.Height;
 
-        /// <summary>ファイル作成日</summary>
+        /// <summary>ファイル作成日。情報表示とソートに使う</summary>
         public DateTime CreateDate { get; }
 
         /// <summary>バイト長</summary>
@@ -44,10 +38,6 @@ namespace Marmi
         [field: NonSerialized]
         public Bitmap Thumbnail { get; set; } = null;
 
-        ///// <summary>アニメーションタイマー DateTime.Now.Ticks</summary>
-        //[field: NonSerialized]
-        //public long AnimateStartTime { get; set; } = 0;
-
         public Exif Exif { get; set; } = new Exif();
 
         /// <summary>しおり 2011年10月2日</summary>
@@ -55,20 +45,12 @@ namespace Marmi
 
         //回転情報 2011年12月24日
         private int _rotate = 0;
+
         public int Rotate
         {
             get => _rotate;
             set => _rotate = value % 360;
         }
-
-        //ver1.36 表示させるかどうか
-        public bool IsVisible { get; set; } = true;
-
-        //ver1.51 画像情報を持っているか
-        public bool HasInfo => Width != 0;
-
-        //ver1.54 縦長かどうか
-        public bool IsTall => Height > Width;
 
         //var1.54 横長かどうか
         public bool IsFat => Width > Height;
@@ -92,25 +74,18 @@ namespace Marmi
 
         /// <summary>
         /// ver1.10 サムネイル画像をオリジナル画像から登録する。
-        /// 上のLoadImage()を使わなくするために作成
+        /// Bitmapを実体化させるのでExifも同時に取得
         /// </summary>
-        /// <param name="orgImage">元画像</param>
-        public void ResisterThumbnailImage(Bitmap orgImage)
+
+        public void CreateThumbnail()
         {
-            //登録済みなら何もしない
             if (Thumbnail != null)
                 return;
+            var bmp = CacheImage.ToBitmap();
+            this.Thumbnail = BitmapUty.MakeHeightFixThumbnailImage(bmp, App.DEFAULT_THUMBNAIL_SIZE);
 
-            if (orgImage == null)
-            {
-                Thumbnail = null;
-            }
-            else
-            {
-                //ver1.26 高さ固定のサムネイルを作る
-                this.Thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgImage, THUMBNAIL_HEIGHT);
-                Exif.GetExifInfo(orgImage);
-            }
+            //せっかくBMPを作ったのでExifも登録する
+            Exif.GetExifInfo(bmp);
         }
     }
 }
