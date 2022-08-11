@@ -54,12 +54,12 @@ namespace Marmi
         public bool IsBookMark { get; set; } = false;
 
         //‰ñ“]î•ñ 2011”N12ŒŽ24“ú
-        //private int _rotate = 0;
-        //public int Rotate
-        //{
-        //    get { return _rotate; }
-        //    set { _rotate = value % 360; }
-        //}
+        private int _rotate = 0;
+        public int Rotate
+        {
+            get => _rotate;
+            set => _rotate = value % 360;
+        }
 
         //ver1.36 •\Ž¦‚³‚¹‚é‚©‚Ç‚¤‚©
         public bool IsVisible { get; set; } = true;
@@ -112,7 +112,5 @@ namespace Marmi
                 Exif.GetExifInfo(orgImage);
             }
         }
-
-
     }
 }

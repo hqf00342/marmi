@@ -781,16 +781,31 @@ namespace Marmi
         /// <summary>
         /// 画像を時計回りに回転する。
         /// </summary>
-        public void Rotate()
+        public void Rotate(int degrees)
         {
-            if (Bmp != null)
+            if (Bmp == null || degrees==0)
+                return;
+
+            switch (degrees)
             {
-                Bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                ZoomRatio = FittingRatio;
-                AjustScrollMinSize();
-                AjustViewLocation();
-                Refresh();
+                case 90:
+                    Bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                case 180:
+                    Bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                case 270:
+                    Bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+                default:
+                    break;
+
             }
+
+            ZoomRatio = FittingRatio;
+            AjustScrollMinSize();
+            AjustViewLocation();
+            Refresh();
             return;
         }
 

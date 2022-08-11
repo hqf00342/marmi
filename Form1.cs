@@ -707,6 +707,13 @@ namespace Marmi
                 //カーソルをWaitに
                 //this.Cursor = Cursors.WaitCursor;
             }
+
+            //回転情報を適用
+            var rotate = App.g_pi.Items[App.g_pi.NowViewPage].Rotate;
+            if (rotate != 0)
+            {
+                PicPanel.Rotate(rotate);
+            }
         }
 
         private void SetViewPage2(int index, int pageDirection, Bitmap screenImage, long orderTime)

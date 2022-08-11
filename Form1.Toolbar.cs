@@ -133,8 +133,12 @@ namespace Marmi
 
         private void ToolStripButton_Rotate_Click(object sender, EventArgs e)
         {
-            PicPanel.Rotate();
+            PicPanel.Rotate(90);
             PicPanel.Refresh();
+
+            //画像情報に回転情報を加える
+            var info = App.g_pi.Items[App.g_pi.NowViewPage];
+            info.Rotate += 90;
         }
 
         // コントロールイベント *********************************************************/
