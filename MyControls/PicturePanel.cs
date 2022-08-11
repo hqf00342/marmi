@@ -21,9 +21,6 @@ namespace Marmi
 
         #region --- properties ---
 
-        /// <summary>このパネルの表示状態</summary>
-        public DrawStatus State { get; set; }
-
         /// <summary>表示する画像</summary>
         public Bitmap Bmp
         {
@@ -85,8 +82,6 @@ namespace Marmi
         //表示するメッセージ
         public string Message { get; set; }
 
-        //描写命令番号
-        public long DrawOrderTime { get; set; }
 
         #endregion --- properties ---
 
@@ -107,12 +102,6 @@ namespace Marmi
             AutoScroll = true;
             SetScrollState(ScrollStateFullDrag, false);
 
-            //スクロールバー
-            //this.Controls.Add(hscrollbar);
-            //hscrollbar.Dock = DockStyle.Top;
-            //this.Controls.Add(vscrollbar);
-            //vscrollbar.Dock = DockStyle.Left;
-
             //DPIスケーリングは無効にする
             this.AutoScaleMode = AutoScaleMode.None;
 
@@ -126,9 +115,6 @@ namespace Marmi
             _cmat.Matrix33 = 1f;
             _cmat.Matrix44 = 1f;
             Opacity = 1.0f;
-
-            //プロパティの初期化
-            State = DrawStatus.idle;
         }
 
         /// <summary>
@@ -783,7 +769,7 @@ namespace Marmi
         /// </summary>
         public void Rotate(int degrees)
         {
-            if (Bmp == null || degrees==0)
+            if (Bmp == null || degrees == 0)
                 return;
 
             switch (degrees)
@@ -791,15 +777,17 @@ namespace Marmi
                 case 90:
                     Bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
+
                 case 180:
                     Bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     break;
+
                 case 270:
                     Bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
+
                 default:
                     break;
-
             }
 
             ZoomRatio = FittingRatio;

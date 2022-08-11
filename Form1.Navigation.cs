@@ -12,6 +12,8 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
+        //高速キー入力に対応するため、最後のオーダーを保存する
+        private  long _lastDrawOrderTick = 0;
 
         /// <summary>
         /// 指定したインデックスの画像を表示する。
@@ -25,6 +27,8 @@ namespace Marmi
         {
             if (drawOrderTick == 0)
                 drawOrderTick = DateTime.Now.Ticks;
+
+            _lastDrawOrderTick = drawOrderTick;
 
             //ver1.09 オプションダイアログを閉じると必ずここに来ることに対するチェック
             if (App.g_pi.Items == null || App.g_pi.Items.Count == 0)
@@ -46,7 +50,6 @@ namespace Marmi
             {
                 //スクリーンキャッシュあったのですぐに描写
                 SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
-                Debug.WriteLine(index, "Use ScreenCache");
             }
             else
             {
@@ -58,7 +61,7 @@ namespace Marmi
                 //ver1.50 読み込み中と表示
                 SetStatusbarInfo("Now Loading ... " + (index + 1).ToString());
 
-                //画像作成をスレッドプールに登録
+                //画像作成
                 var img = await Bmp.MakeOriginalSizeImageAsync(index);
                 if (img == null)
                 {
@@ -68,9 +71,6 @@ namespace Marmi
                 {
                     SetViewPage2(index, pageDirection, img, drawOrderTick);
                 }
-
-                //カーソルをWaitに
-                //this.Cursor = Cursors.WaitCursor;
             }
 
             //回転情報を適用
@@ -81,32 +81,33 @@ namespace Marmi
             }
         }
 
-        private void SetViewPage2(int index, int pageDirection, Bitmap screenImage, long orderTime)
+        /// <summary>
+        /// 実際のPicPanelへの描写を実施する
+        /// </summary>
+        /// <param name="index">ページ番号</param>
+        /// <param name="pageDirection">ページ方向。アニメーションに使う</param>
+        /// <param name="screenImage">表示するBitmap</param>
+        /// <param name="orderTick">オーダー時間。古い描写指示を落とすために利用</param>
+        private void SetViewPage2(int index, int pageDirection, Bitmap screenImage, long orderTick)
         {
             //ver1.55 drawOrderTickのチェック.
             // スレッドプールに入るため稀に順序が前後する。
             // 最新の描写でなければスキップ
-            if (PicPanel.DrawOrderTime > orderTime)
+            if (_lastDrawOrderTick > orderTick)
             {
-                Debug.WriteLine($"Skip SetViewPage2({index}) too old order={orderTime} < now={PicPanel.DrawOrderTime}");
+                Debug.WriteLine($"Too old order: index={index}]");
                 return;
             }
-
-            //描写開始
-            PicPanel.State = DrawStatus.drawing;
-            PicPanel.DrawOrderTime = orderTime;
 
             if (screenImage == null)
             {
                 Debug.WriteLine($"bmpがnull(index={index})");
-                PicPanel.State = DrawStatus.idle;
-                PicPanel.Message = "表示エラー 再度表示してみてください" + index.ToString();
+                PicPanel.Message = $"表示エラー 再度表示してみてください (index={index})";
                 PicPanel.Refresh();
                 return;
             }
 
             //ver1.50 表示
-            PicPanel.State = DrawStatus.drawing;
             PicPanel.Message = string.Empty;
             if (App.Config.View.PictureSwitchMode != AnimateMode.none  //アニメーションモードである
                 && !App.Config.KeepMagnification                  //倍率固定モードではアニメーションしない
@@ -136,7 +137,6 @@ namespace Marmi
 
             //1ページ表示か2ページ表示か
             g_viewPages = (int)screenImage.Tag;
-            PicPanel.State = DrawStatus.idle;
 
             //カーソルを元に戻す
             this.Cursor = Cursors.Default;
@@ -150,12 +150,6 @@ namespace Marmi
                 _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
 
             needMakeScreenCache = true;
-
-            //PicPanel.Message = string.Empty;
-            PicPanel.State = DrawStatus.idle;
-            //2021年2月26日 GCをやめる
-            //ToDo:ここだけはあったほうがいいかもしれないがLOHの扱いも同時にすべき
-            //Uty.ForceGC();
         }
 
         #region Navigation
