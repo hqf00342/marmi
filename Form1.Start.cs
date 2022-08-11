@@ -377,7 +377,6 @@ namespace Marmi
             //Zipファイル情報を設定
             App.g_pi.PackageName = filename;
             var fi = new FileInfo(App.g_pi.PackageName);
-            App.g_pi.PackageSize = fi.Length;
             App.g_pi.isSolid = szw.IsSolid;
             App.g_pi.PackType = PackageType.Archive;
 

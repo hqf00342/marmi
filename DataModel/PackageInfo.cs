@@ -19,13 +19,7 @@ namespace Marmi
         /// <summary>現在見ているアイテム番号</summary>
         public int NowViewPage { get; set; } = 0;
 
-        /// <summary>Zipファイルサイズ</summary>
-        public long PackageSize { get; set; }
-
-        /// <summary>Zipファイル作成日</summary>
-        public DateTime CreateDate { get; set; }
-
-        /// <summary>サムネイル画像集</summary>
+        /// <summary>画像セット</summary>
         public List<ImageInfo> Items { get; } = new List<ImageInfo>();
 
         /// <summary>ver1.31 パッケージのタイプ</summary>
@@ -59,8 +53,6 @@ namespace Marmi
             PackType = PackageType.None;
             isSolid = false;
             NowViewPage = 0;
-            PackageSize = 0;
-            CreateDate = DateTime.MinValue;
             tempDirname = string.Empty;
 
             PageDirectionIsLeft = true;
