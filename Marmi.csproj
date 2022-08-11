@@ -120,15 +120,15 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
-    <Compile Include="DataModel\AdvanceConfig.cs" />
+    <Compile Include="DataModel\Configs\AdvanceConfig.cs" />
     <Compile Include="DataModel\Exif.cs" />
-    <Compile Include="DataModel\GeneralConfig.cs" />
-    <Compile Include="DataModel\KeyConfig.cs" />
-    <Compile Include="DataModel\LoupeConfig.cs" />
-    <Compile Include="DataModel\MouseConfig.cs" />
-    <Compile Include="DataModel\ThumbnailConfig.cs" />
+    <Compile Include="DataModel\Configs\GeneralConfig.cs" />
+    <Compile Include="DataModel\Configs\KeyConfig.cs" />
+    <Compile Include="DataModel\Configs\LoupeConfig.cs" />
+    <Compile Include="DataModel\Configs\MouseConfig.cs" />
+    <Compile Include="DataModel\Configs\ThumbnailConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
-    <Compile Include="DataModel\ViewConfig.cs" />
+    <Compile Include="DataModel\Configs\ViewConfig.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Form1.Start.cs">
       <SubType>Form</SubType>
@@ -165,7 +165,7 @@
     <Compile Include="Form1.KeyConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataModel\AppGlobalConfig.cs" />
+    <Compile Include="DataModel\Configs\AppGlobalConfig.cs" />
     <Compile Include="Uty\ImageInfoComparer.cs" />
     <Compile Include="DataModel\ImageInfo.cs" />
     <Compile Include="DataModel\MRU.cs" />
