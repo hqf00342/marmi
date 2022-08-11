@@ -631,17 +631,10 @@ namespace Marmi
         /// </summary>
         /// <param name="g">Graphics</param>
         /// <param name="item">アイテム番号</param>
-        private async Task DrawItem3(Graphics g, int item)
+        private void DrawItem3(Graphics g, int item)
         {
             //描写位置の決定
             Rectangle thumbnailBoxRect = GetThumbboxRectanble(item);
-
-            //対象矩形を背景色で塗りつぶす.
-            //そうしないと前に描いたアイコンが残ってしまう可能性有り
-            //using (SolidBrush s = new SolidBrush(BackColor))
-            //{
-            //    g.FillRectangle(s, thumbnailBoxRect);
-            //}
 
             //描写するビットマップを準備
             Bitmap drawBitmap = m_ImgSet[item].Thumbnail;
@@ -649,27 +642,29 @@ namespace Marmi
 
             if (drawBitmap == null)
             {
-                await Bmp.LoadBitmapAsync(item, false);
-                if (this.Visible)
-                {
-                    this.Invalidate(GetThumbboxRectanble(item));
-                }
-
-                //AsyncIO.AddJob(item, () =>
-                //{
-                //    //読み込んだらすぐに描写
-                //    if (this.Visible)
-                //    {
-                //        this.Invalidate(GetThumbboxRectanble(item));
-                //    }
-                //});
-
-                //まだ読み込まれていないので枠だけ描写
+                //枠だけ描写
                 thumbnailBoxRect.Inflate(-PADDING, -PADDING);
                 thumbnailBoxRect.Height = _thumbnailSize;
                 g.FillRectangle(Brushes.White, thumbnailBoxRect);
                 thumbnailBoxRect.Inflate(-1, -1);
                 g.DrawRectangle(Pens.LightGray, thumbnailBoxRect);
+
+                //サムネイルを作成
+                //await Bmp.LoadBitmapAsync(item, false);
+                //if (this.Visible)
+                //{
+                //    this.Invalidate(GetThumbboxRectanble(item));
+                //}
+
+                Bmp.LoadBitmapAsync(item, true)
+                    .ContinueWith(_ => {
+                        if (this.Visible)
+                        {
+                            //this.Invalidate(GetThumbboxRectanble(item));
+                            this.Invalidate();
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+
                 return;
             }
             else
