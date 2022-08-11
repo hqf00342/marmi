@@ -130,6 +130,9 @@
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
     <Compile Include="DataModel\Configs\ViewConfig.cs" />
     <Compile Include="enums\DrawStatus.cs" />
+    <Compile Include="Form1.Navigation.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Start.cs">
       <SubType>Form</SubType>
     </Compile>
