@@ -650,18 +650,11 @@ namespace Marmi
                 g.DrawRectangle(Pens.LightGray, thumbnailBoxRect);
 
                 //ƒTƒ€ƒlƒCƒ‹‚ðì¬
-                //await Bmp.LoadBitmapAsync(item, false);
-                //if (this.Visible)
-                //{
-                //    this.Invalidate(GetThumbboxRectanble(item));
-                //}
-
                 Bmp.LoadBitmapAsync(item, true)
                     .ContinueWith(_ => {
                         if (this.Visible)
                         {
-                            //this.Invalidate(GetThumbboxRectanble(item));
-                            this.Invalidate();
+                            this.Invalidate(GetThumbboxRectanble(item));
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
