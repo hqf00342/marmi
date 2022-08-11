@@ -550,22 +550,6 @@ namespace Marmi
             AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
         }
 
-        private void InitTrackbar()
-        {
-            _trackbar.Minimum = 0;
-            if (App.g_pi.Items.Count > 0)
-            {
-                _trackbar.Maximum = App.g_pi.Items.Count - 1;
-                _trackbar.Enabled = true;
-                _trackbar.Value = App.g_pi.NowViewPage;
-            }
-            else
-            {
-                _trackbar.Maximum = 0;
-                _trackbar.Value = 0;
-                _trackbar.Enabled = false;
-            }
-        }
 
         #region パッケージ操作
 
@@ -794,109 +778,6 @@ namespace Marmi
         }
 
         // ユーティリティ系 *************************************************************/
-        private void UpdateToolbar()
-        {
-            //画面モードの状態反映
-            toolButtonDualMode.Checked = App.Config.DualView;
-            toolButtonFullScreen.Checked = App.Config.isFullScreen;
-            toolButtonThumbnail.Checked = App.Config.isThumbnailView;
-
-            //Sidebar
-            toolStripButton_Sidebar.Checked = _sidebar.Visible;
-
-            if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
-            {
-                //ファイルを閲覧していない場合のツールバー
-                _trackbar.Enabled = false;
-                toolButtonLeft.Enabled = false;
-                toolButtonRight.Enabled = false;
-                toolButtonThumbnail.Enabled = false;
-                toolStripButton_Zoom100.Checked = false;
-                toolStripButton_ZoomFit.Checked = false;
-                toolStripButton_ZoomOut.Enabled = false;
-                toolStripButton_ZoomIn.Enabled = false;
-                toolStripButton_Zoom100.Enabled = false;
-                toolStripButton_ZoomFit.Enabled = false;
-                toolStripButton_Favorite.Enabled = false;
-                toolStripButton_Rotate.Enabled = false;
-                return;
-            }
-            else
-            {
-                //サムネイルボタン
-                toolButtonThumbnail.Enabled = true;
-                //if(g_makeThumbnail)
-                //    toolButtonThumbnail.Enabled = true;
-                //else
-                //    toolButtonThumbnail.Enabled = false;
-
-                if (App.Config.isThumbnailView)
-                {
-                    //サムネイル表示中
-                    toolButtonLeft.Enabled = false;
-                    toolButtonRight.Enabled = false;
-                    toolStripButton_Zoom100.Enabled = false;
-                    toolStripButton_ZoomFit.Enabled = false;
-                    toolStripButton_Favorite.Enabled = false;
-                    toolStripButton_Sidebar.Enabled = false;
-                    //toolStripButton_Zoom100.Checked = false;
-                    //toolStripButton_ZoomFit.Checked = false;
-                }
-                else
-                {
-                    //通常表示中
-                    toolStripButton_ZoomIn.Enabled = true;
-                    toolStripButton_ZoomOut.Enabled = true;
-                    toolStripButton_Zoom100.Enabled = true;
-                    toolStripButton_ZoomFit.Enabled = true;
-                    toolStripButton_Favorite.Enabled = true;
-                    toolStripButton_Sidebar.Enabled = true;
-                    toolStripButton_Rotate.Enabled = true;
-
-                    //左右ボタンの有効無効
-                    if (App.Config.General.IsReplaceArrowButton)
-                    {
-                        //入れ替え
-                        toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
-                        toolButtonRight.Enabled = (bool)(App.g_pi.NowViewPage != 0);    //先頭ページチェック
-                    }
-                    else
-                    {
-                        toolButtonLeft.Enabled = (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
-                        toolButtonRight.Enabled = !IsLastPageViewing();     //最終ページチェック
-                    }
-
-                    //100%ズーム
-                    toolStripButton_Zoom100.Checked = IsScreen100p;
-
-                    //画面フィットズーム
-                    toolStripButton_ZoomFit.Checked = IsFitToScreen;
-
-                    //Favorite
-                    if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
-                    {
-                        toolStripButton_Favorite.Checked = true;
-                    }
-                    else if (g_viewPages == 2
-                        && App.g_pi.NowViewPage < App.g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
-                        && App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark) //
-                    {
-                        toolStripButton_Favorite.Checked = true;
-                    }
-                    else
-                    {
-                        toolStripButton_Favorite.Checked = false;
-                    }
-
-                    //Sidebar
-                    toolStripButton_Sidebar.Checked = _sidebar.Visible;
-                }
-
-                //TrackBar
-                //ここで直すとUIが遅くなる。
-                //g_trackbar.Value = g_pi.NowViewPage;
-            }
-        }
 
         #region Navigation
 
@@ -988,22 +869,7 @@ namespace Marmi
 
         #endregion Navigation
 
-        /// <summary>
-        /// ver1.67 ツールバーの文字を表示/非表示する。
-        /// </summary>
-        private void SetToolbarString()
-        {
-            if (App.Config.General.EraseToolbarItemString)
-            {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            }
-            else
-            {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-            }
-        }
+
 
         #region Screen操作
 
