@@ -109,7 +109,7 @@ namespace Marmi
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
             //サムネイルの作成
-            AsyncLoadImageInfo();
+            ImagePreloader();
 
             //画像を表示
             PicPanel.Message = string.Empty;
@@ -401,6 +401,17 @@ namespace Marmi
                 }
             }
             return retval;
+        }
+
+        //ファイルリストを並び替える
+        private static void SortPackage()
+        {
+            if (App.g_pi.Items.Count > 0)
+            {
+                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
+                App.g_pi.Items.Sort(comparer);
+            }
+            return;
         }
     }
 }

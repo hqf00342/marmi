@@ -527,12 +527,12 @@ namespace Marmi
             }
         }
 
-
-
-        private void AsyncLoadImageInfo()
+        /// <summary>
+        /// 全画像読込をジョブスタックに積む
+        /// </summary>
+        private void ImagePreloader()
         {
             //ver1.54 2013年5月7日
-            //全画像読込をスタックに積む
             for (int cnt = 0; cnt < App.g_pi.Items.Count; cnt++)
             {
                 //ラムダ式の外で文字列作成
@@ -549,22 +549,6 @@ namespace Marmi
             //読み込み完了メッセージ
             AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
         }
-
-
-        #region パッケージ操作
-
-        private void SortPackage()
-        {
-            //ファイルリストを並び替える
-            if (App.g_pi.Items.Count > 0)
-            {
-                var comparer = new ImageInfoComparer(ImageInfoComparer.Target.Filename);
-                App.g_pi.Items.Sort(comparer);
-            }
-            return;
-        }
-
-        #endregion パッケージ操作
 
         #region MRU操作
 
@@ -868,8 +852,6 @@ namespace Marmi
         }
 
         #endregion Navigation
-
-
 
         #region Screen操作
 
