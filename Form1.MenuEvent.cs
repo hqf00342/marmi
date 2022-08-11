@@ -492,7 +492,8 @@ namespace Marmi
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)
         {
             MenuItem_CheckSusie.Checked = App.susie.isSupportedExtentions("pdf");
-            MenuItem_CheckUnrar.Checked = App.unrar.dllLoaded;
+            //MenuItem_CheckUnrar.Checked = App.unrar.dllLoaded;
+            MenuItem_CheckUnrar.Checked = false;
         }
 
         private void Menu_Page_DropDownOpening(object sender, EventArgs e)

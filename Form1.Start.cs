@@ -28,17 +28,8 @@ namespace Marmi
             //初期化
             InitMarmi();
 
-            //ver1.78単一ファイルの場合、そのディレクトリを対象とする
-            string onePicFile = string.Empty;
-            if (filenames.Length == 1 && Uty.IsPictureFilename(filenames[0]))
-            {
-                onePicFile = filenames[0];
-                filenames[0] = Path.GetDirectoryName(filenames[0]);
-            }
-
-
             //ファイル一覧を生成
-            bool needRecurse = SetPackageInfo(filenames);
+            bool needRecurse = MakePackageInfo(filenames);
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
@@ -106,15 +97,6 @@ namespace Marmi
                 }
             }
 
-            //１ファイルドロップによるディレクトリ参照の場合
-            //最初に見るページをドロップしたファイルにする。
-            if (!string.IsNullOrEmpty(onePicFile))
-            {
-                int i = App.g_pi.Items.FindIndex(c => c.Filename == onePicFile);
-                if (i < 0) i = 0;
-                App.g_pi.NowViewPage = i;
-            }
-
             //トラックバーを初期化
             InitTrackbar();
 
@@ -137,7 +119,7 @@ namespace Marmi
         /// </summary>
         /// <param name="files">対象ファイル</param>
         /// <returns>書庫内書庫がある場合はtrue</returns>
-        private static bool SetPackageInfo(string[] files)
+        private static bool MakePackageInfo(string[] files)
         {
             //初期化
             App.g_pi.Initialize();
@@ -154,20 +136,20 @@ namespace Marmi
                     App.g_pi.PackType = PackageType.Directory;
                     GetDirPictureList(files[0], App.Config.IsRecurseSearchDir);
                 }
-                else if (App.unrar.dllLoaded && files[0].EndsWith(".rar", StringComparison.OrdinalIgnoreCase))
-                {
-                    //
-                    //unrar.dllを使う。
-                    //
-                    App.g_pi.PackType = PackageType.Archive;
-                    App.g_pi.isSolid = true;
+                //else if (App.unrar.dllLoaded && files[0].EndsWith(".rar"))
+                //{
+                //    //
+                //    //unrar.dllを使う。
+                //    //
+                //    App.g_pi.PackType = PackageType.Archive;
+                //    App.g_pi.isSolid = true;
 
-                    //ファイルリストを構築
-                    ListRar(files[0]);
+                //    //ファイルリストを構築
+                //    ListRar(files[0]);
 
-                    //展開が必要なのでtrueを返す
-                    return true;
-                }
+                //    //展開が必要なのでtrueを返す
+                //    return true;
+                //}
                 else if (Uty.IsSupportArchiveFile(App.g_pi.PackageName))
                 {
                     // 書庫ファイル
@@ -176,7 +158,7 @@ namespace Marmi
                     if (needRecurse)
                         return true;
                 }
-                else if (files[0].EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                else if (files[0].EndsWith(".pdf"))
                 {
                     //pdfファイル
                     return ListPdf(files[0]);
@@ -211,25 +193,25 @@ namespace Marmi
             return false;
 
             /// <summary>unrarを使ってリスト化</summary>
-            void ListRar(string file)
-            {
-                App.unrar.Open(file, Unrar.OpenMode.List);
-                int num = 0;
-                while (App.unrar.ReadHeader())
-                {
-                    if (!App.unrar.CurrentFile.IsDirectory)
-                    {
-                        App.g_pi.Items.Add(new ImageInfo(
-                            num++,
-                            App.unrar.CurrentFile.FileName,
-                            App.unrar.CurrentFile.FileTime,
-                            App.unrar.CurrentFile.UnpackedSize
-                            ));
-                    }
-                    App.unrar.Skip();
-                }
-                App.unrar.Close();
-            }
+            //void ListRar(string file)
+            //{
+            //    App.unrar.Open(file, Unrar.OpenMode.List);
+            //    int num = 0;
+            //    while (App.unrar.ReadHeader())
+            //    {
+            //        if (!App.unrar.CurrentFile.IsDirectory)
+            //        {
+            //            App.g_pi.Items.Add(new ImageInfo(
+            //                num++,
+            //                App.unrar.CurrentFile.FileName,
+            //                App.unrar.CurrentFile.FileTime,
+            //                App.unrar.CurrentFile.UnpackedSize
+            //                ));
+            //        }
+            //        App.unrar.Skip();
+            //    }
+            //    App.unrar.Close();
+            //}
 
             bool ListPdf(string file)
             {
@@ -361,6 +343,29 @@ namespace Marmi
         }
 
         /// <summary>
+        /// 一時フォルダの名前を返す。
+        /// 存在しないランダムなフォルダ名を作る
+        /// </summary>
+        /// <returns>一時フォルダのフルパス</returns>
+        private static string SuggestTempDirName()
+        {
+
+            string root = App.Config.General.TmpFolder
+                ?? Application.StartupPath;
+
+            //ユニークなフォルダを探す
+            string tempDir;
+            do
+            {
+                tempDir = Path.Combine(
+                    root,
+                    "TEMP7Z" + Path.GetRandomFileName().Substring(0, 8));
+            }
+            while (Directory.Exists(tempDir));
+            return tempDir;
+        }
+
+        /// <summary>
         /// ディレクトリ内の画像を App.g_pi.Items に追加する。
         /// </summary>
         /// <param name="dirName">追加対象のディレクトリ名</param>
@@ -383,6 +388,56 @@ namespace Marmi
                 foreach (var name in Directory.GetDirectories(dirName))
                     GetDirPictureList(name, recurse);
             }
+        }
+
+        /// <summary>
+        /// 書庫情報を取得
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns>書庫内書庫がある場合はtrye</returns>
+        private static bool GetArchivedFileInfo(string filename)
+        {
+            var szw = new SevenZipWrapper();
+            bool retval = false;
+
+            if (!szw.Open(filename))
+            {
+                MessageBox.Show("エラーのため書庫は開けませんでした。");
+                App.g_pi.Initialize();
+                //2021年2月26日 GCをやめる
+                //Uty.ForceGC();      //書庫を開放・GCする必要がある
+                return false;
+            }
+
+            //Zipファイル情報を設定
+            App.g_pi.PackageName = filename;
+            var fi = new FileInfo(App.g_pi.PackageName);
+            App.g_pi.PackageSize = fi.Length;
+            App.g_pi.isSolid = szw.IsSolid;
+
+            //ver1.31 7zファイルなのにソリッドじゃないことがある！？
+            if (Path.GetExtension(filename) == ".7z")
+                App.g_pi.isSolid = true;
+
+            //g_pi.isZip = true;
+            App.g_pi.PackType = PackageType.Archive;
+
+            //ファイルをリストに追加
+            App.g_pi.Items.Clear();
+            foreach (var item in szw.Items)
+            {
+                if (item.IsDirectory)
+                    continue;
+                if (Uty.IsPictureFilename(item.FileName))
+                {
+                    App.g_pi.Items.Add(new ImageInfo(item.Index, item.FileName, item.CreationTime, (long)item.Size));
+                }
+                else if (Uty.IsSupportArchiveFile(item.FileName))
+                {
+                    retval = true;
+                }
+            }
+            return retval;
         }
     }
 }

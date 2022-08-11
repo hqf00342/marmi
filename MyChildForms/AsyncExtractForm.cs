@@ -17,10 +17,10 @@ namespace Marmi
         public string ExtractDir { get; set; }
 
         //アニメーション用タイマー：ぐるぐる回る円
-        private System.Windows.Forms.Timer animateTimer = new System.Windows.Forms.Timer();
+        private readonly System.Windows.Forms.Timer animateTimer = new System.Windows.Forms.Timer();
 
         private Stopwatch sw = null;
-        private Pen pen = new Pen(Color.SteelBlue, 4.0f);
+        private readonly Pen pen = new Pen(Color.SteelBlue, 4.0f);
 
         //展開用のスレッド。
         private Thread ExtractThread = null;
@@ -201,57 +201,18 @@ namespace Marmi
             //処理中の書庫名を表示させるために登録。
             progressArchiveName = Path.GetFileName(archivename);
 
-            //if(SupportUnrar5 && archivename.ToLower().EndsWith(".rar"))
-            if (Unrar.DllCheck() && archivename.EndsWith(".rar", StringComparison.OrdinalIgnoreCase))
-            {
-                //unrar5で展開する
-                //ファイル一覧を読み込む。
-                using (Unrar rar = new Unrar())
-                {
-                    rar.Open(archivename, Unrar.OpenMode.List);
-                    TargetFileCount = rar.ListFiles().Length;
-                }
 
-                using (Unrar rar = new Unrar())
-                {
-                    rar.NewFile += rar_NewFile;
-                    rar.PasswordRequired += rar_PasswordRequired;
-                    rar.DestinationPath = extractDir;
-                    rar.Open(archivename, Unrar.OpenMode.Extract);
-
-                    //展開ループ
-                    while (rar.ReadHeader())
-                    {
-                        try
-                        {
-                            rar.Extract();
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show("パスワードが間違っているか書庫が壊れています");
-                            Debug.WriteLine("unrar.dll exception : " + e.Message);
-                            isCancel = true;
-                            return;
-                        }
-                        if (isCancel)
-                            return;
-                    }
-                }
-            }
-            else
-            {
-                //7zipで展開
-                var sz = new SevenZipWrapper();
-                sz.Open(archivename);
-                //キャンセル処理のため登録
-                now7z = sz;
-                //イベント登録
-                sz.ExtractEventHandler += new Action<string>(FileExtracting);
-                //書庫内ファイル数
-                TargetFileCount += sz.Items.Count;
-                //展開開始
-                sz.ExtractAll(extractDir);
-            }
+            //7zipで展開
+            var sz = new SevenZipWrapper();
+            sz.Open(archivename);
+            //キャンセル処理のため登録
+            now7z = sz;
+            //イベント登録
+            sz.ExtractEventHandler += new Action<string>(FileExtracting);
+            //書庫内ファイル数
+            TargetFileCount += sz.Items.Count;
+            //展開開始
+            sz.ExtractAll(extractDir);
 
             //ver1.34展開したディレクトリ内を走査する
             //ver1.77 usingの外に移動

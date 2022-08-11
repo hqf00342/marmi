@@ -28,7 +28,7 @@ namespace Marmi
         internal static Susie susie = new Susie();
 
         //unrar.dllプラグイン ver1.76
-        internal static Unrar unrar = new Unrar();
+        //internal static Unrar unrar = new Unrar();
 
         //Bitmap.Tagにつけるタグ:リソース文字列から移動
         //TODO:利用していない疑惑あり
