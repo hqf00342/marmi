@@ -37,9 +37,6 @@ namespace Marmi
         //現在処理中のSevenZip
         private volatile SevenZipWrapper now7z = null;
 
-        //キャンセル用フラグ
-        private volatile bool isCancel = false;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -49,7 +46,6 @@ namespace Marmi
 
             ArchivePath = string.Empty;
             ExtractDir = string.Empty;
-            isCancel = false;
         }
 
         private void AsyncExtractForm_Load(object sender, EventArgs e)
@@ -169,8 +165,6 @@ namespace Marmi
         /// </summary>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            isCancel = true; //for unrar5
-
             if (ExtractThread != null)
             {
                 while (!ExtractThread.Join(100))
@@ -192,7 +186,6 @@ namespace Marmi
         {
             //処理中の書庫名を表示させるために登録。
             progressArchiveName = Path.GetFileName(archivename);
-
 
             //7zipで展開
             var sz = new SevenZipWrapper();
