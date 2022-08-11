@@ -167,5 +167,42 @@ namespace Marmi
                 xs.Serialize(fs, obj);
             }
         }
+
+        /// <summary>
+        /// 現在閲覧しているg_pi.PackageNameをMRUに追加する
+        /// 以前も見たことがある場合、閲覧日付だけを更新
+        /// </summary>
+        public void UpdateMRUList(PackageInfo pi)
+        {
+            //var pi = App.g_pi;
+
+            //なにも無ければ追加しない
+            if (string.IsNullOrEmpty(pi.PackageName))
+                return;
+
+            //MRUに追加する必要があるか確認
+            bool needMruAdd = true;
+            for (int i = 0; i < Mru.Count; i++)
+            {
+                if (Mru[i] == null)
+                    continue;
+                if (Mru[i].Name == pi.PackageName)
+                {
+                    //登録済みのMRUを更新
+                    //日付だけ更新
+                    Mru[i].Date = DateTime.Now;
+                    //最後に見たページも更新 v1.37
+                    Mru[i].LastViewPage = pi.NowViewPage;
+                    needMruAdd = false;
+
+                    //ver1.77 Bookmarkも設定
+                    Mru[i].Bookmarks = pi.CreateBookmarkString();
+                }
+            }
+            if (needMruAdd)
+            {
+                Mru.Add(new MRU(pi.PackageName, DateTime.Now, pi.NowViewPage, pi.CreateBookmarkString()));
+            }
+        }
     }
 }

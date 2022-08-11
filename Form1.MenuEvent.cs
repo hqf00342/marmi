@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;			//EventArgs
 using System.IO;                        //Directory, File
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,7 +32,9 @@ namespace Marmi
             }
         }
 
-        //ファイルメニュー**************************************************************************
+        // #### FILE ###############################################################################
+
+        #region FILE
 
         private async void Menu_FileOpen_Click(object sender, EventArgs e)
         {
@@ -60,6 +63,55 @@ namespace Marmi
             //    App.Config.mru[i] = null;
             //}
         }
+
+        private void Menu_File_DropDownOpening(object sender, EventArgs e)
+        {
+            //MRUを追加
+            UpdateMruMenuListUI();
+
+            ////ファイルを閲覧していない場合のナビゲーション
+            //if (g_pi.Items == null || g_pi.Items.Count < 1)
+            //{
+            //	MenuItem_FileSaveThumbnail.Enabled = false;
+            //}
+            //else
+            //{
+            //	//サムネイルボタン
+            //	MenuItem_FileSaveThumbnail.Enabled = true;
+            //}
+
+            //ver1.81サムネイルはしばらく無視
+            MenuItem_FileSaveThumbnail.Enabled = false;
+        }
+
+        /// <summary>
+        /// MRUリストを更新する。実際にメニューの中身を更新
+        /// この関数を呼び出しているのはMenu_File_DropDownOpeningのみ
+        /// </summary>
+        private void UpdateMruMenuListUI()
+        {
+            MenuItem_FileRecent.DropDownItems.Clear();
+
+            //Array.Sort(App.Config.mru);
+            App.Config.Mru = App.Config.Mru.OrderBy(a => a.Date).ToList();
+
+            int menuCount = 0;
+
+            //新しい順にする
+            for (int i = App.Config.Mru.Count - 1; i >= 0; i--)
+            {
+                if (App.Config.Mru[i] == null)
+                    continue;
+
+                MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
+
+                //ver1.73 MRU表示数の制限
+                if (++menuCount >= App.Config.General.NumberOfMru)
+                    break;
+            }
+        }
+
+        #endregion FILE
 
         //表示メニュー******************************************************************************
 
@@ -429,26 +481,6 @@ namespace Marmi
         }
 
         // メニューオープニングイベント *************************************************************
-
-        private void Menu_File_DropDownOpening(object sender, EventArgs e)
-        {
-            //MRUを追加
-            UpdateMruMenuListUI();
-
-            ////ファイルを閲覧していない場合のナビゲーション
-            //if (g_pi.Items == null || g_pi.Items.Count < 1)
-            //{
-            //	MenuItem_FileSaveThumbnail.Enabled = false;
-            //}
-            //else
-            //{
-            //	//サムネイルボタン
-            //	MenuItem_FileSaveThumbnail.Enabled = true;
-            //}
-
-            //ver1.81サムネイルはしばらく無視
-            MenuItem_FileSaveThumbnail.Enabled = false;
-        }
 
         private void Menu_View_DropDownOpening(object sender, EventArgs e)
         {

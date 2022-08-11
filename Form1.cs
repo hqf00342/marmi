@@ -205,7 +205,7 @@ namespace Marmi
             this.Hide();
 
             //ver1.77 MRUリストの更新
-            UpdateMRUList();
+            App.Config.UpdateMRUList(App.g_pi);
 
             //全画面モードの解放
             if (App.Config.isFullScreen)
@@ -549,72 +549,6 @@ namespace Marmi
             //読み込み完了メッセージ
             AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
         }
-
-        #region MRU操作
-
-        /// <summary>
-        /// 現在閲覧しているg_pi.PackageNameをMRUに追加する
-        /// 以前も見たことがある場合、閲覧日付だけを更新
-        /// </summary>
-        private static void UpdateMRUList()
-        {
-            //なにも無ければ追加しない
-            if (string.IsNullOrEmpty(App.g_pi.PackageName))
-                return;
-
-            //MRUに追加する必要があるか確認
-            bool needMruAdd = true;
-            for (int i = 0; i < App.Config.Mru.Count; i++)
-            {
-                if (App.Config.Mru[i] == null)
-                    continue;
-                if (App.Config.Mru[i].Name == App.g_pi.PackageName)
-                {
-                    //登録済みのMRUを更新
-                    //日付だけ更新
-                    App.Config.Mru[i].Date = DateTime.Now;
-                    //最後に見たページも更新 v1.37
-                    App.Config.Mru[i].LastViewPage = App.g_pi.NowViewPage;
-                    needMruAdd = false;
-
-                    //ver1.77 Bookmarkも設定
-                    App.Config.Mru[i].Bookmarks = App.g_pi.CreateBookmarkString();
-                }
-            }
-            if (needMruAdd)
-            {
-                App.Config.Mru.Add(new MRU(App.g_pi.PackageName, DateTime.Now, App.g_pi.NowViewPage, App.g_pi.CreateBookmarkString()));
-            }
-        }
-
-        /// <summary>
-        /// MRUリストを更新する。実際にメニューの中身を更新
-        /// この関数を呼び出しているのはMenu_File_DropDownOpeningのみ
-        /// </summary>
-        private void UpdateMruMenuListUI()
-        {
-            MenuItem_FileRecent.DropDownItems.Clear();
-
-            //Array.Sort(App.Config.mru);
-            App.Config.Mru = App.Config.Mru.OrderBy(a => a.Date).ToList();
-
-            int menuCount = 0;
-
-            //新しい順にする
-            for (int i = App.Config.Mru.Count - 1; i >= 0; i--)
-            {
-                if (App.Config.Mru[i] == null)
-                    continue;
-
-                MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
-
-                //ver1.73 MRU表示数の制限
-                if (++menuCount >= App.Config.General.NumberOfMru)
-                    break;
-            }
-        }
-
-        #endregion MRU操作
 
         /// <summary>
         /// 指定したインデックスの画像を表示する。

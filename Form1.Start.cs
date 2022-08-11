@@ -238,7 +238,7 @@ namespace Marmi
             PicPanel.Clear();
 
             //ver1.73 MRUリストの更新
-            UpdateMRUList();
+            App.Config.UpdateMRUList(App.g_pi);
 
             //ver1.35スクリーンキャッシュをクリア
             ScreenCache.Clear();
@@ -376,7 +376,6 @@ namespace Marmi
 
             //Zipファイル情報を設定
             App.g_pi.PackageName = filename;
-            var fi = new FileInfo(App.g_pi.PackageName);
             App.g_pi.isSolid = szw.IsSolid;
             App.g_pi.PackType = PackageType.Archive;
 
