@@ -355,7 +355,7 @@ namespace Marmi
                 //サムネイルサイズはすぐに反映
                 if (_thumbPanel != null && _thumbPanel.Visible)
                 {
-                    _thumbPanel.CalcThumbboxSize(App.Config.Thumbnail.ThumbnailSize);
+                    _thumbPanel.SetThumbnailSize(App.Config.Thumbnail.ThumbnailSize);
                     _thumbPanel.BackColor = App.Config.Thumbnail.ThumbnailBackColor;
                     _thumbPanel.SetFont(App.Config.Thumbnail.ThumbnailFont, App.Config.Thumbnail.ThumbnailFontColor);
                 }

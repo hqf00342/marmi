@@ -65,7 +65,7 @@ namespace Marmi
             if (_thumbPanel != null)
             {
                 _thumbPanel.BackColor = App.Config.Thumbnail.ThumbnailBackColor;
-                _thumbPanel.CalcThumbboxSize(App.Config.Thumbnail.ThumbnailSize);
+                _thumbPanel.SetThumbnailSize(App.Config.Thumbnail.ThumbnailSize);
                 _thumbPanel.SetFont(App.Config.Thumbnail.ThumbnailFont, App.Config.Thumbnail.ThumbnailFontColor);
             }
         }

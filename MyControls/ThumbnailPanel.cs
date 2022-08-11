@@ -9,6 +9,12 @@ using System.Windows.Forms;
 
 /*
 サムネイルパネル
+キャッシュのBitmapなどはつくらずに直接サムネイルを描写している。
+
+TBOX: サムネイルの最大サイズ四角形。
+  幅 ＝ thumbnailSize + 左右PADDING
+  高 ＝ thumbnailSize + 上下PADDING +説明文字列
+
 */
 
 namespace Marmi
@@ -21,8 +27,8 @@ namespace Marmi
 
         private const int PADDING = 10;         //サムネイルの余白。2014年3月23日変更。間隔狭すぎた
         private int _thumbnailSize;             //サムネイルの大きさ。幅＝高さ
-        private int _thumbBoxWidth;             //サムネイルBOXのサイズ：幅 = PADDING + THUMBNAIL_SIZE + PADDING
-        private int _thumbBoxHeight;            //サムネイルBOXのサイズ：高さ = PADDING + THUMBNAIL_SIZE + PADDING + TEXT_HEIGHT + PADDING
+        private int _tboxWidth;                 //サムネイルBOXのサイズ：幅 = PADDING + THUMBNAIL_SIZE + PADDING
+        private int _tboxHeight;                //サムネイルBOXのサイズ：高さ = PADDING + THUMBNAIL_SIZE + PADDING + TEXT_HEIGHT + PADDING
 
         //フォント
         private Font _font;
@@ -39,7 +45,7 @@ namespace Marmi
         private readonly ContextMenuStrip m_ContextMenu = new ContextMenuStrip();
 
         //スクロールタイマー
-        private readonly Timer m_scrollTimer = null;
+        private readonly Timer m_scrollTimer = new Timer();
 
         private int m_targetScrollposY = 0;
 
@@ -48,7 +54,7 @@ namespace Marmi
         public ThumbnailPanel()
         {
             //初期化
-            this.BackColor = Color.White;   //Color.FromArgb(100, 64, 64, 64);
+            this.BackColor = Color.White;
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
 
@@ -68,16 +74,13 @@ namespace Marmi
             SetFont(new Font(FONTNAME, FONTSIZE), Color.Black);
 
             //サムネイルサイズからBOXの値を決定する。
-            CalcThumbboxSize(App.DEFAULT_THUMBNAIL_SIZE);
+            SetThumbnailSize(App.DEFAULT_THUMBNAIL_SIZE);
 
             //コンテキストメニューの初期化
             InitContextMenu();
 
             //スクロールタイマー
-            m_scrollTimer = new Timer
-            {
-                Interval = 50
-            };
+            m_scrollTimer.Interval = 50;
             m_scrollTimer.Tick += ScrollTimer_Tick;
         }
 
@@ -88,41 +91,46 @@ namespace Marmi
         }
 
         /// <summary>
-        /// サムネイル画像サイズから
-        /// BOX_HEIGHT, BOX_WIDTH, パネルサイズを再設定する。
-        /// option Formで変更されたあと再設定されることを想定
-        /// 幅：サムネイルの両脇にPADDING分が追加
-        /// 高：サムネイルの上下にPADDING分が追加
-        /// 下につく予定の文字列は入っていない
+        /// サムネイルサイズを設定する。
+        /// 設定と同時にスクロールバーなどのサイズも調整する。
         /// </summary>
-        /// <param name="thumbnailSize">新しいサムネイルサイズ</param>
-        public void CalcThumbboxSize(int thumbnailSize)
+        /// <param name="thumbnailSize">TBOXサイズ</param>
+        public void SetThumbnailSize(int thumbnailSize)
         {
-            //ver0.982 HQcacheがすぐクリアされるので変更
-            //サムネイルサイズが変わっていたら変更する
             if (_thumbnailSize != thumbnailSize)
             {
                 _thumbnailSize = thumbnailSize;
             }
 
-            //BOXサイズを確定
-            _thumbBoxWidth = _thumbnailSize + (PADDING * 2);
-            _thumbBoxHeight = _thumbnailSize + (PADDING * 2);
+            var size = CalcTboxSize(thumbnailSize);
+            _tboxWidth = size.Width;
+            _tboxHeight = size.Height;
 
-            //ver0.982ファイル名などの文字列表示を切り替えられるようにする
+            //サムネイルサイズが変わったので再計算
+            SetScrollBar();
+        }
 
+        /// <summary>
+        /// TBOXサイズを計算する。
+        /// 単純にPADDING分と文字列分を足したもの。
+        /// </summary>
+        public Size CalcTboxSize(int thumbnailSize)
+        {
+            //TBOXサイズを確定
+            var w = thumbnailSize + (PADDING * 2);
+            var h = thumbnailSize + (PADDING * 2);
+
+            //文字列部追加
             if (App.Config.Thumbnail.IsShowTPFileName)
-                _thumbBoxHeight += PADDING + FONT_HEIGHT;
+                h += PADDING + FONT_HEIGHT;
 
             if (App.Config.Thumbnail.IsShowTPFileSize)
-                _thumbBoxHeight += PADDING + FONT_HEIGHT;
+                h += PADDING + FONT_HEIGHT;
 
             if (App.Config.Thumbnail.IsShowTPPicSize)
-                _thumbBoxHeight += PADDING + FONT_HEIGHT;
+                h += PADDING + FONT_HEIGHT;
 
-            //サムネイルサイズが変わると画面に表示できる
-            //アイテム数が変わるので再計算
-            SetScrollBar();
+            return new Size(w, h);
         }
 
         public void SetFont(Font font, Color color)
@@ -139,7 +147,7 @@ namespace Marmi
             }
 
             //フォントが変わるとサムネイルサイズが変わるので計算
-            CalcThumbboxSize(_thumbnailSize);
+            SetThumbnailSize(_thumbnailSize);
         }
 
         /// <summary>
@@ -152,14 +160,12 @@ namespace Marmi
                 int size = (int)d;
                 if (size > _thumbnailSize)
                 {
-                    CalcThumbboxSize(size);
+                    SetThumbnailSize(size);
                     App.Config.Thumbnail.ThumbnailSize = size;
-                    //_fastDraw = false;
                     this.Invalidate();
                     return;
                 }
             }
-            //見つからなければなにもしない
         }
 
         /// <summary>
@@ -174,7 +180,7 @@ namespace Marmi
             {
                 if ((int)d < _thumbnailSize)
                 {
-                    CalcThumbboxSize((int)d);
+                    SetThumbnailSize((int)d);
                     App.Config.Thumbnail.ThumbnailSize = (int)d;
                     this.Invalidate();
                     return;
@@ -301,27 +307,27 @@ namespace Marmi
             switch (e.ClickedItem.Text)
             {
                 case "最小":
-                    CalcThumbboxSize((int)ThumbnailSize.Minimum);
+                    SetThumbnailSize((int)ThumbnailSize.Minimum);
                     App.Config.Thumbnail.ThumbnailSize = (int)ThumbnailSize.Minimum;
                     break;
 
                 case "小":
-                    CalcThumbboxSize((int)ThumbnailSize.Small);
+                    SetThumbnailSize((int)ThumbnailSize.Small);
                     App.Config.Thumbnail.ThumbnailSize = (int)ThumbnailSize.Small;
                     break;
 
                 case "中":
-                    CalcThumbboxSize((int)ThumbnailSize.Normal);
+                    SetThumbnailSize((int)ThumbnailSize.Normal);
                     App.Config.Thumbnail.ThumbnailSize = (int)ThumbnailSize.Normal;
                     break;
 
                 case "大":
-                    CalcThumbboxSize((int)ThumbnailSize.Large);
+                    SetThumbnailSize((int)ThumbnailSize.Large);
                     App.Config.Thumbnail.ThumbnailSize = (int)ThumbnailSize.Large;
                     break;
 
                 case "最大":
-                    CalcThumbboxSize((int)ThumbnailSize.XLarge);
+                    SetThumbnailSize((int)ThumbnailSize.XLarge);
                     App.Config.Thumbnail.ThumbnailSize = (int)ThumbnailSize.XLarge;
                     break;
 
@@ -355,16 +361,6 @@ namespace Marmi
 
         #region override関数
 
-        //protected override void OnVisibleChanged(EventArgs e)
-        //{
-        //    base.OnVisibleChanged(e);
-
-        //    //TODO いつかm_thumbnailSetをなくす。
-        //    //ver1.41 m_thumbnailSetはここでセットする.
-        //    //if (Visible)
-        //    //    m_thumbnailSet = App.g_pi.Items;
-        //}
-
         protected override void OnResize(EventArgs e)
         {
             //スクロールバーの表示を更新
@@ -384,21 +380,15 @@ namespace Marmi
                 return;
 
             //描写品質の決定
-            //e.Graphics.InterpolationMode = _fastDraw ?
-            //    InterpolationMode.NearestNeighbor :
-            //    InterpolationMode.HighQualityBicubic;
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-            //描写範囲を表示（デバッグ用：クリップ領域）
-            //e.Graphics.DrawRectangle(Pens.Red, e.ClipRectangle);
-
             //クリップ領域内のアイテム番号を算出
-            int xItemsCount = this.ClientRectangle.Width / _thumbBoxWidth;
+            int xItemsCount = this.ClientRectangle.Width / _tboxWidth;
             if (xItemsCount < 1) xItemsCount = 1;
-            int startItem = (-AutoScrollPosition.Y + e.ClipRectangle.Y) / _thumbBoxHeight * xItemsCount;
+            int startItem = (-AutoScrollPosition.Y + e.ClipRectangle.Y) / _tboxHeight * xItemsCount;
 
             //右下のアイテム番号＝(スクロール量＋画面縦）÷BOX縦 の切り上げ×横アイテム数
-            int endItem = (int)Math.Ceiling((-AutoScrollPosition.Y + e.ClipRectangle.Bottom) / (double)_thumbBoxHeight) * xItemsCount;
+            int endItem = (int)Math.Ceiling((-AutoScrollPosition.Y + e.ClipRectangle.Bottom) / (double)_tboxHeight) * xItemsCount;
             if (endItem >= m_ImgSet.Count)
                 endItem = m_ImgSet.Count - 1;
 
@@ -432,9 +422,9 @@ namespace Marmi
             int prevIndex = m_mouseHoverItem;
             m_mouseHoverItem = itemIndex;
             if (prevIndex >= 0)
-                this.Invalidate(GetThumbboxRectanble(prevIndex));
+                this.Invalidate(GetTboxRectanble(prevIndex));
             if (itemIndex >= 0)
-                this.Invalidate(GetThumbboxRectanble(itemIndex));
+                this.Invalidate(GetTboxRectanble(itemIndex));
             this.Update();
 
             //ver1.20 2011年10月9日 再描写が終わったら帰っていい
@@ -453,7 +443,7 @@ namespace Marmi
             if (e.Button == MouseButtons.Left)
             {
                 //クリック位置の画像を取得
-                int index = GetHoverItem(PointToClient(Cursor.Position));       //m_thumbnailSet内の番号
+                int index = GetHoverItem(PointToClient(Cursor.Position));
                 if (index < 0)
                 {
                     return;
@@ -536,15 +526,6 @@ namespace Marmi
 
         #endregion override関数
 
-        //public void Application_Idle()
-        //{
-        //    if (_fastDraw)
-        //    {
-        //        _fastDraw = false;
-        //        Invalidate();
-        //    }
-        //}
-
         //*** スクロールバー ********************************************************************
 
         /// <summary>
@@ -562,64 +543,72 @@ namespace Marmi
                 return;
             }
 
-            //描写に必要なサイズを確認する。
-            //描写領域の大きさ。まずは自分のクライアント領域を得る
-            Size virtualScreenSize = CalcScreenSize();
-            this.AutoScrollMinSize = new Size(1, virtualScreenSize.Height);
-            Debug.WriteLine("virtualScreenSize" + virtualScreenSize.ToString());
-            Debug.WriteLine("AutoScrollMinSize=" + this.AutoScrollMinSize.ToString());
-            Debug.WriteLine("this.clientrect=" + this.ClientRectangle.ToString());
+            //全アイテム描写に必要なサイズを確認。
+            Size vScreenSize = CalcScreenSize();
+
+            //AutoScrollMinSizeを設定する
+            //このサイズを下回るとスクロールバーが現れる。
+            //横スクロールバーはいらないのでX=1固定
+            //縦スクロールバーは仮想画面の高さ
+            this.AutoScrollMinSize = new Size(1, vScreenSize.Height);
         }
 
         /// <summary>
-        /// スクリーンサイズを計算する
-        /// 縦方向が大きければスクロールバーが必要ということ
+        /// 全アイテム描写に必要なスクリーンサイズを計算する
         /// スクロールバーは最初からサイズとして考慮
         /// </summary>
         private Size CalcScreenSize()
         {
-            //アイテム数を確認
-            int itemCount = m_ImgSet.Count;
-
-            //ver1.20ClientRectangleを使うことでスクロールバー考慮
-            //const int scrollControllWidth = 20;
-
-            //描写に必要なサイズを確認する。
-            //描写領域の大きさ。まずは自分のクライアント領域を得る
+            //描写領域幅=クライアント領域を得る
+            //ClientRectangleを使うことでスクロールバー幅も考慮されている。
             int screenWidth = this.ClientRectangle.Width;
             if (screenWidth < 1) screenWidth = 1;
-            int screenHeight = this.ClientRectangle.Height;
-            if (screenHeight < 1) screenHeight = 1;
 
-            //各アイテムの位置を決定する
-            int tempx = 0;
-            int tempy = 0;
+            //アイテムのおける個数をXYで求める。
+            var numX = screenWidth / _tboxWidth;
+            if (numX == 0) numX = 1;
+            var numY = ((m_ImgSet.Count - 1) / numX) + 1;
 
-            //TODO:スクリーンサイズは160以上あることが前提
-            //Debug.Assert(screenWidth > 160);
+            return new Size(this.ClientRectangle.Width, _tboxHeight * numY);
+        }
 
-            for (int i = 0; i < itemCount; i++)
-            {
-                //if ((tempx + THUMBNAIL_SIZE + PADDING*2) > (screenWidth - scrollControllWidth))
-                if ((tempx + _thumbnailSize + (PADDING * 2)) > screenWidth)
-                {
-                    //キャリッジリターン
-                    tempx = 0;
-                    tempy += _thumbBoxHeight;
-                }
+        /// <summary>
+        /// アイテム描写位置を計算する
+        /// dot座標ではなく、アイテム座標
+        /// </summary>
+        /// <param name="index">インデックス番号</param>
+        /// <returns>描写位置</returns>
+        private (int x, int y) CalcItemPosition(int index)
+        {
+            var numX = this.ClientRectangle.Width / _tboxWidth;
+            if (numX == 0) numX = 1;
+            return (index % numX, index / numX);
+        }
 
-                //アイテムの位置を保存しておく
-                tempx += PADDING;
-                //m_thumbnailSet[i].posX = tempx;
-                //m_thumbnailSet[i].posY = tempy;
+        /// <summary>
+        /// 指定アイテムを描写する必要があるかチェック
+        /// DrawItem3()で使うつもりだったがもっとClipRectでチェックしているので
+        /// 不要になった
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>可視領域内ならtrue</returns>
+        private bool NeedToDraw(int index)
+        {
+            //対象アイテムのRect
+            //これが画面内位置に変換済のためClientRectと直接比較できる。
+            var itemRect = GetTboxRectanble(index);
 
-                //Xを次の位置に移動させる
-                tempx += _thumbnailSize + PADDING;
-            }//for
+            //交差するかチェック
+            return this.ClientRectangle.IntersectsWith(itemRect);
 
-            //最後の列に画像の高さ分を追加
-            screenHeight = tempy + _thumbBoxHeight;
-            return new Size(screenWidth, screenHeight);
+            //デバッグ
+            //スクリーンのRect。スクロールバー考慮済
+            //var screenTop = -this.AutoScrollPosition.Y; //負数なので補正
+            //var screenRect = new Rectangle(0, screenTop, ClientRectangle.Width, ClientRectangle.Height);
+            //this.AutoScrollPosition トップで{X=0,Y=0}、下で{X=0,Y=-9498}
+            //this.AutoScrollMargin    常に{Width=0, Height=0}
+            //this.AutoScrollOffset    常に{X=0,Y=0}
+            //this.AutoScrollMinSize   {Width=1, Height=13455}
         }
 
         //***************************************************************************************
@@ -634,7 +623,14 @@ namespace Marmi
         private void DrawItem3(Graphics g, int item)
         {
             //描写位置の決定
-            Rectangle thumbnailBoxRect = GetThumbboxRectanble(item);
+            Rectangle tboxRect = GetTboxRectanble(item);
+
+            //クリップ範囲内かチェック
+            if (!g.ClipBounds.IntersectsWith(tboxRect))
+            {
+                Debug.WriteLine($"クリップ領域外: {item}");
+                return;
+            }
 
             //描写するビットマップを準備
             Bitmap drawBitmap = m_ImgSet[item].Thumbnail;
@@ -643,18 +639,21 @@ namespace Marmi
             if (drawBitmap == null)
             {
                 //枠だけ描写
-                thumbnailBoxRect.Inflate(-PADDING, -PADDING);
-                thumbnailBoxRect.Height = _thumbnailSize;
-                g.FillRectangle(Brushes.White, thumbnailBoxRect);
-                thumbnailBoxRect.Inflate(-1, -1);
-                g.DrawRectangle(Pens.LightGray, thumbnailBoxRect);
+                tboxRect.Inflate(-PADDING, -PADDING);
+                tboxRect.Height = _thumbnailSize;
+                g.FillRectangle(Brushes.White, tboxRect);
+                tboxRect.Inflate(-1, -1);
+                g.DrawRectangle(Pens.LightGray, tboxRect);
 
                 //サムネイルを作成
                 Bmp.LoadBitmapAsync(item, true)
-                    .ContinueWith(_ => {
-                        if (this.Visible)
+                    .ContinueWith(_ =>
+                    {
+                        //コントロール表示中、且つ、描写範囲内かチェック
+                        //描写範囲内なら描写させる
+                        if (this.Visible && NeedToDraw(item))
                         {
-                            this.Invalidate(GetThumbboxRectanble(item));
+                            this.Invalidate(GetTboxRectanble(item));
                         }
                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -698,7 +697,7 @@ namespace Marmi
             }
 
             //画像情報文字列を描く
-            DrawTextInfo(g, item, thumbnailBoxRect);
+            DrawTextInfo(g, item, tboxRect);
         }
 
         #endregion アイテム描写
@@ -715,7 +714,7 @@ namespace Marmi
             //対象矩形を背景色で塗りつぶす.
             g.FillRectangle(
                 new SolidBrush(BackColor),
-                0, 0, _thumbBoxWidth, _thumbBoxHeight);
+                0, 0, _tboxWidth, _tboxHeight);
 
             //描写品質を最高に
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -770,7 +769,7 @@ namespace Marmi
                 h = (int)(h * ratio);
             }
 
-            int sx = (_thumbBoxWidth - w) / 2;           //画像描写X位置
+            int sx = (_tboxWidth - w) / 2;           //画像描写X位置
             int sy = _thumbnailSize + PADDING - h;  //画像描写Y位置：下揃え
 
             Rectangle imageRect = new Rectangle(sx, sy, w, h);
@@ -825,28 +824,23 @@ namespace Marmi
         }
 
         /// <summary>
-        /// 指定サムネイルの画面内での枠を返す。
-        /// Thumbbox = 画像＋文字の大きな枠
-        /// スクロールバーについても織り込み済
-        /// m_offScreenや実画面に対して使われることを想定
+        /// 指定TBOXの「画面内での枠位置」を返す。
+        /// Tbox = 画像＋文字の大きな枠
+        /// スクロールバーによる位置調整も入っている。
         /// </summary>
-        private Rectangle GetThumbboxRectanble(int itemIndex)
+        private Rectangle GetTboxRectanble(int index)
         {
-            // ver1.20 横方向のアイテム数 ClientRectangleでスクロールバー考慮
-            //int horizonItems = this.Width/BOX_WIDTH;
-            int horizonItems = this.ClientRectangle.Width / _thumbBoxWidth;
-            if (horizonItems <= 0) horizonItems = 1;
-
-            //アイテムの位置（アイテム個数による仮想座標）
-            int vx = itemIndex % horizonItems;
-            int vy = itemIndex / horizonItems;
+            // アイテム座標
+            (int itemx, int itemy) = CalcItemPosition(index);
 
             return new Rectangle(
-                vx * _thumbBoxWidth,
-                (vy * _thumbBoxHeight) + AutoScrollPosition.Y,
-                _thumbBoxWidth,
-                _thumbBoxHeight
-                );
+                itemx * _tboxWidth,
+                (itemy * _tboxHeight) + AutoScrollPosition.Y,
+                _tboxWidth,
+                _tboxHeight);
+
+            //AutoScrollPosition.Y はスクロールすると負の値になる。
+            //それを足しこむことで画面内の位置に変換している。
         }
 
         /// <summary>
@@ -857,7 +851,6 @@ namespace Marmi
         /// </summary>
         private Rectangle GetThumbImageRectangle(int itemIndex)
         {
-            //bool canExpand = true;	//拡大できるかどうかのフラグ
             int w;                      //描写画像の幅
             int h;                      //描写画像の高さ
 
@@ -891,8 +884,8 @@ namespace Marmi
                 h = (int)(fh * ratio);
             }
 
-            Rectangle rect = GetThumbboxRectanble(itemIndex);
-            rect.X += (_thumbBoxWidth - w) / 2;  //画像描写X位置
+            Rectangle rect = GetTboxRectanble(itemIndex);
+            rect.X += (_tboxWidth - w) / 2;  //画像描写X位置
             rect.Y += _thumbnailSize + PADDING - h;     //画像描写X位置：下揃え
                                                         //rect.Y -= m_vScrollBar.Value;
             rect.Width = w;
@@ -982,11 +975,11 @@ namespace Marmi
             //縦スクロールバーが表示されているときは換算
             pos.Y -= AutoScrollPosition.Y;
 
-            int itemPointX = pos.X / _thumbBoxWidth;     //マウス位置のBOX座標換算：X
-            int itemPointY = pos.Y / _thumbBoxHeight;    //マウス位置のBOX座標換算：Y
+            int itemPointX = pos.X / _tboxWidth;     //マウス位置のBOX座標換算：X
+            int itemPointY = pos.Y / _tboxHeight;    //マウス位置のBOX座標換算：Y
 
             //横に並べられる数。最低１
-            int horizonItems = (this.ClientRectangle.Width) / _thumbBoxWidth;
+            int horizonItems = (this.ClientRectangle.Width) / _tboxWidth;
             if (horizonItems <= 0) horizonItems = 1;
 
             //ホバー中のアイテム番号
@@ -1020,7 +1013,7 @@ namespace Marmi
             m_saveForm.Dispose();
 
             //元に戻す
-            CalcThumbboxSize(tmpThumbnailSize);
+            SetThumbnailSize(tmpThumbnailSize);
             //m_vScrollBar.Value = tmpScrollbarValue;
         }
 
@@ -1044,7 +1037,7 @@ namespace Marmi
                 return false;
 
             //サムネイルサイズを設定.再計算
-            CalcThumbboxSize(thumbSize);
+            SetThumbnailSize(thumbSize);
 
             //アイテム数を設定
             //m_nItemsX = numX;
@@ -1056,7 +1049,7 @@ namespace Marmi
 
             //Bitmapを生成
             Bitmap saveBmp = new Bitmap(offscreenSize.Width, offscreenSize.Height);
-            Bitmap dummyBmp = new Bitmap(_thumbBoxWidth, _thumbBoxHeight);
+            Bitmap dummyBmp = new Bitmap(_tboxWidth, _tboxHeight);
 
             using (Graphics g = Graphics.FromImage(saveBmp))
             {
@@ -1071,7 +1064,7 @@ namespace Marmi
                         await DrawItemHQ2Async(dummyg, item);
 
                         //ダミーに描写した画像を描写する。
-                        Rectangle r = GetThumbboxRectanble(item);
+                        Rectangle r = GetTboxRectanble(item);
                         g.DrawImageUnscaled(dummyBmp, r);
 
                         //画像情報を文字描写する
