@@ -219,41 +219,6 @@ namespace Marmi
             RecurseDir(extractDir);
         }
 
-        /// <summary>rar用のパスワード処理イベント実装</summary>
-        private void rar_PasswordRequired(object sender, PasswordRequiredEventArgs e)
-        {
-            FormPassword fp = new FormPassword();
-            fp.TopMost = true;
-            fp.StartPosition = FormStartPosition.CenterParent;
-            if (fp.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                e.Password = fp.PasswordText;   //パスワードを設定
-                e.ContinueOperation = true;     //処理は続行
-            }
-            else
-            {
-                e.ContinueOperation = false;    //中止
-                isCancel = true;                //キャンセル処理にする
-            }
-        }
-
-        private void rar_NewFile(object sender, NewFileEventArgs e)
-        {
-            //throw new NotImplementedException();
-            ExtractedFiles++;
-            string s = string.Format(
-                "{0}/{1} : {2}",
-                ExtractedFiles,
-                TargetFileCount,
-                Path.GetFileName(progressArchiveName)
-                );
-
-            //if (now7z.isCancelExtraction)
-            //	s = "キャンセル処理中";
-
-            BeginInvoke((MethodInvoker)(() => { labelInfo.Text = s; }));
-        }
-
         /// <summary>
         /// 展開したディレクトリ内を走査する
         /// </summary>
