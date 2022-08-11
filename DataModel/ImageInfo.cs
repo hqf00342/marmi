@@ -1,3 +1,4 @@
+using Marmi.DataModel;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -47,17 +48,7 @@ namespace Marmi
         //[field: NonSerialized]
         //public long AnimateStartTime { get; set; } = 0;
 
-        /// <summary>EXIF: ISO値</summary>
-        public int ExifISO { get; private set; }
-
-        /// <summary>EXIF: 撮影日</summary>
-        public string ExifDate { get; private set; }
-
-        /// <summary>EXIF: メーカー</summary>
-        public string ExifMake { get; private set; }
-
-        /// <summary>EXIF: モデル</summary>
-        public string ExifModel { get; private set; }
+        public Exif Exif { get; set; } = new Exif();
 
         /// <summary>しおり 2011年10月2日</summary>
         public bool IsBookMark { get; set; } = false;
@@ -118,40 +109,10 @@ namespace Marmi
             {
                 //ver1.26 高さ固定のサムネイルを作る
                 this.Thumbnail = BitmapUty.MakeHeightFixThumbnailImage(orgImage, THUMBNAIL_HEIGHT);
-                GetExifInfo(orgImage);
+                Exif.GetExifInfo(orgImage);
             }
         }
 
-        /// <summary>
-        /// Exif情報の取得。
-        /// http://cachu.xrea.jp/perl/ExifTAG.html
-        /// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
-        /// http://exif.org/specifications.html
-        /// </summary>
-        /// <param name="img">対象の画像</param>
-        private void GetExifInfo(Image img)
-        {
-            foreach (PropertyItem pi in img.PropertyItems)
-            {
-                switch (pi.Id)
-                {
-                    case 0x8827: //ISO
-                        ExifISO = BitConverter.ToUInt16(pi.Value, 0);
-                        break;
 
-                    case 0x9003: //撮影日時「YYYY:MM:DD HH:MM:SS」形式19文字
-                        ExifDate = Encoding.ASCII.GetString(pi.Value, 0, 19);
-                        break;
-                    case 0x010f: //Make
-                        ExifMake = Encoding.ASCII.GetString(pi.Value);
-                        ExifMake = ExifMake.Trim(new char[] { '\0' });
-                        break;
-
-                    case 0x0110: //Model
-                        ExifModel = Encoding.ASCII.GetString(pi.Value).Trim(new char[] { '\0' });
-                        break;
-                }
-            }
-        }
     }
 }

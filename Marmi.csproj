@@ -121,6 +121,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Bmp.cs" />
     <Compile Include="DataModel\AdvanceConfig.cs" />
+    <Compile Include="DataModel\Exif.cs" />
     <Compile Include="DataModel\GeneralConfig.cs" />
     <Compile Include="DataModel\KeyConfig.cs" />
     <Compile Include="DataModel\LoupeConfig.cs" />

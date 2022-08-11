@@ -10,7 +10,7 @@ namespace Marmi
     public partial class FormPictureInfo : Form
     {
         private BufferedGraphics m_offScreen = null;
-        private BufferedGraphicsContext m_offScreenContext = null;
+        private readonly BufferedGraphicsContext m_offScreenContext = null;
         private Point m_mouseDownPoint;     //マウスクリック（Down）されたときのマウス位置（クライアント座標）
         private bool m_formMove;            //マウスアップしたときのフラグ。フォームが移動したか。
 
@@ -24,8 +24,8 @@ namespace Marmi
         //private const uint MA_ACTIVATE = 1;
         //private const uint MA_ACTIVATEANDEAT = 2;
 
-        private Font fontL = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
-        private Font fontS = new Font("ＭＳ Ｐ ゴシック", 9F);
+        private readonly Font fontL = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
+        private readonly Font fontS = new Font("ＭＳ Ｐ ゴシック", 9F);
 
         public FormPictureInfo()
         {
@@ -193,10 +193,10 @@ namespace Marmi
             //文字の描写:Exifその他
             sz = string.Format(
                 "{0} {1}",
-                imgInfo.ExifMake,
-                imgInfo.ExifModel);
-            if (imgInfo.ExifISO != 0)
-                sz = string.Format("ISO={0} {1}", imgInfo.ExifISO, sz);
+                imgInfo.Exif.Maker,
+                imgInfo.Exif.Model);
+            if (imgInfo.Exif.ISO != 0)
+                sz = string.Format("ISO={0} {1}", imgInfo.Exif.ISO, sz);
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
         }
 

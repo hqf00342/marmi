@@ -216,21 +216,10 @@ namespace Marmi
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
             y += HeightS + LINEPADDING;
 
-            //sz = string.Format(
-            //    "{0:N0} x {1:N0} pixels, {2:N0}bytes",
-            //    ImgInfo.originalWidth,
-            //    ImgInfo.originalHeight,
-            //    ImgInfo.length);
-            //g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
-            //y += HeightS + LINEPADDING;
-
             //文字の描写:Exifその他
-            sz = string.Format(
-                "{0} {1}",
-                ImgInfo.ExifMake,
-                ImgInfo.ExifModel);
-            if (ImgInfo.ExifISO != 0)
-                sz = string.Format("ISO={0} {1}", ImgInfo.ExifISO, sz);
+            sz = $"{ImgInfo.Exif.Maker} {ImgInfo.Exif.Model}";
+            if (ImgInfo.Exif.ISO != 0)
+                sz = $"ISO={ImgInfo.Exif.ISO} {sz}";
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
         }
 
