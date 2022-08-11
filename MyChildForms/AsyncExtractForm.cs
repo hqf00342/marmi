@@ -37,9 +37,6 @@ namespace Marmi
         //現在処理中のSevenZip
         private volatile SevenZipWrapper now7z = null;
 
-        //unrar5対応フラグ
-        //private bool SupportUnrar5 = false;
-
         //キャンセル用フラグ
         private volatile bool isCancel = false;
 
@@ -53,11 +50,6 @@ namespace Marmi
             ArchivePath = string.Empty;
             ExtractDir = string.Empty;
             isCancel = false;
-
-            //using(Unrar u = new Unrar())
-            //{
-            //	SupportUnrar5 = u.dllLoaded;
-            //}
         }
 
         private void AsyncExtractForm_Load(object sender, EventArgs e)

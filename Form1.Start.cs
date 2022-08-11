@@ -136,20 +136,6 @@ namespace Marmi
                     App.g_pi.PackType = PackageType.Directory;
                     GetDirPictureList(files[0], App.Config.IsRecurseSearchDir);
                 }
-                //else if (App.unrar.dllLoaded && files[0].EndsWith(".rar"))
-                //{
-                //    //
-                //    //unrar.dllを使う。
-                //    //
-                //    App.g_pi.PackType = PackageType.Archive;
-                //    App.g_pi.isSolid = true;
-
-                //    //ファイルリストを構築
-                //    ListRar(files[0]);
-
-                //    //展開が必要なのでtrueを返す
-                //    return true;
-                //}
                 else if (Uty.IsSupportArchiveFile(App.g_pi.PackageName))
                 {
                     // 書庫ファイル
@@ -191,27 +177,6 @@ namespace Marmi
                 }
             }//if (files.Length == 1)
             return false;
-
-            /// <summary>unrarを使ってリスト化</summary>
-            //void ListRar(string file)
-            //{
-            //    App.unrar.Open(file, Unrar.OpenMode.List);
-            //    int num = 0;
-            //    while (App.unrar.ReadHeader())
-            //    {
-            //        if (!App.unrar.CurrentFile.IsDirectory)
-            //        {
-            //            App.g_pi.Items.Add(new ImageInfo(
-            //                num++,
-            //                App.unrar.CurrentFile.FileName,
-            //                App.unrar.CurrentFile.FileTime,
-            //                App.unrar.CurrentFile.UnpackedSize
-            //                ));
-            //        }
-            //        App.unrar.Skip();
-            //    }
-            //    App.unrar.Close();
-            //}
 
             bool ListPdf(string file)
             {

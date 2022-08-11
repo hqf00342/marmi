@@ -54,7 +54,6 @@
             this.Menu_File = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_FileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_FileRecent = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_ViewThumbnail = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ClearMRU = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItem_FileSaveThumbnail = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +108,6 @@
             this.Menu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_HelpVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_CheckSusie = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuItem_CheckUnrar = new System.Windows.Forms.ToolStripMenuItem();
             this.gC実行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_ContextBack = new System.Windows.Forms.ToolStripMenuItem();
@@ -427,7 +425,6 @@
             this.Menu_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_FileOpen,
             this.MenuItem_FileRecent,
-            this.Menu_ViewThumbnail,
             this.MenuItem_ClearMRU,
             this.toolStripSeparator1,
             this.MenuItem_FileSaveThumbnail,
@@ -443,38 +440,33 @@
             // 
             this.MenuItem_FileOpen.Image = global::Marmi.Properties.Resources.folderopen;
             this.MenuItem_FileOpen.Name = "MenuItem_FileOpen";
-            this.MenuItem_FileOpen.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileOpen.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileOpen.Text = "開く...";
             this.MenuItem_FileOpen.Click += new System.EventHandler(this.Menu_FileOpen_Click);
             // 
             // MenuItem_FileRecent
             // 
             this.MenuItem_FileRecent.Name = "MenuItem_FileRecent";
-            this.MenuItem_FileRecent.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileRecent.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileRecent.Text = "最近使った書庫ファイル";
-            // 
-            // Menu_ViewThumbnail
-            // 
-            this.Menu_ViewThumbnail.Name = "Menu_ViewThumbnail";
-            this.Menu_ViewThumbnail.Size = new System.Drawing.Size(203, 22);
             // 
             // MenuItem_ClearMRU
             // 
             this.MenuItem_ClearMRU.Name = "MenuItem_ClearMRU";
-            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_ClearMRU.Text = "履歴のクリア";
             this.MenuItem_ClearMRU.Click += new System.EventHandler(this.Menu_ClearMRU_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(204, 6);
             // 
             // MenuItem_FileSaveThumbnail
             // 
             this.MenuItem_FileSaveThumbnail.Enabled = false;
             this.MenuItem_FileSaveThumbnail.Name = "MenuItem_FileSaveThumbnail";
-            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileSaveThumbnail.Text = "サムネイル一覧画像の保存";
             this.MenuItem_FileSaveThumbnail.Click += new System.EventHandler(this.Menu_SaveThumbnail_Click);
             // 
@@ -482,7 +474,7 @@
             // 
             this.MenuItem_FileExit.Image = global::Marmi.Properties.Resources.dooropen;
             this.MenuItem_FileExit.Name = "MenuItem_FileExit";
-            this.MenuItem_FileExit.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileExit.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileExit.Text = "終了";
             this.MenuItem_FileExit.Click += new System.EventHandler(this.Menu_Exit_Click);
             // 
@@ -875,7 +867,6 @@
             this.Menu_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_HelpVersion,
             this.MenuItem_CheckSusie,
-            this.MenuItem_CheckUnrar,
             this.gC実行ToolStripMenuItem});
             this.Menu_Help.Name = "Menu_Help";
             this.Menu_Help.Size = new System.Drawing.Size(65, 20);
@@ -897,13 +888,6 @@
             this.MenuItem_CheckSusie.Name = "MenuItem_CheckSusie";
             this.MenuItem_CheckSusie.Size = new System.Drawing.Size(189, 22);
             this.MenuItem_CheckSusie.Text = "Susie pdfプラグイン対応";
-            // 
-            // MenuItem_CheckUnrar
-            // 
-            this.MenuItem_CheckUnrar.Enabled = false;
-            this.MenuItem_CheckUnrar.Name = "MenuItem_CheckUnrar";
-            this.MenuItem_CheckUnrar.Size = new System.Drawing.Size(189, 22);
-            this.MenuItem_CheckUnrar.Text = "unrar.dll対応";
             // 
             // gC実行ToolStripMenuItem
             // 
@@ -1359,7 +1343,6 @@
 		private System.Windows.Forms.ToolStripMenuItem Menu_Navigation;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_ClearMRU;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_CheckSusie;
-		private System.Windows.Forms.ToolStripMenuItem MenuItem_CheckUnrar;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
 		private System.Windows.Forms.ToolStripMenuItem Menu_Bookmark;
 		private System.Windows.Forms.ToolStripMenuItem Bookmark_Add;
@@ -1369,7 +1352,6 @@
 		private System.Windows.Forms.ToolStripMenuItem Menu_UseBicubic;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_Books;
 		private System.Windows.Forms.ToolStripMenuItem Menu_DontEnlargeOver100percent;
-		private System.Windows.Forms.ToolStripMenuItem Menu_ViewThumbnail;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_Unsharp;
         private System.Windows.Forms.ToolStripMenuItem gC実行ToolStripMenuItem;
     }

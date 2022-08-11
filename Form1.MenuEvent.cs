@@ -492,8 +492,6 @@ namespace Marmi
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)
         {
             MenuItem_CheckSusie.Checked = App.susie.isSupportedExtentions("pdf");
-            //MenuItem_CheckUnrar.Checked = App.unrar.dllLoaded;
-            MenuItem_CheckUnrar.Checked = false;
         }
 
         private void Menu_Page_DropDownOpening(object sender, EventArgs e)
@@ -508,7 +506,6 @@ namespace Marmi
                 Menu_ViewEnd.Enabled = false;
                 Menu_ViewBack.Enabled = false;
                 Menu_ViewNext.Enabled = false;          //次へ
-                Menu_ViewThumbnail.Enabled = false;     //サムネイル
                 Menu_ViewHalfPageBack.Enabled = false;  //半ページ
                 Menu_ViewHalfPageForword.Enabled = false;//半ページ
                 Menu_ViewFitScreenSize.Enabled = false; //フルスクリーン
@@ -530,7 +527,6 @@ namespace Marmi
                 Menu_ViewNext.Enabled = false;
                 Menu_ViewHalfPageBack.Enabled = false;
                 Menu_ViewHalfPageForword.Enabled = false;
-                Menu_ViewThumbnail.Enabled = true;
                 Menu_ViewFitScreenSize.Enabled = true;
                 Menu_ViewPictureInfo.Enabled = true;
                 //Menu_ViewAddBookmark.Checked = false;	//しおり
@@ -550,9 +546,6 @@ namespace Marmi
 
                 //スライドショー
                 Menu_SlideShow.Enabled = true;
-
-                //サムネイルボタン
-                Menu_ViewThumbnail.Checked = App.Config.isThumbnailView;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
                 Menu_ViewHalfPageBack.Enabled = App.Config.DualView && (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
