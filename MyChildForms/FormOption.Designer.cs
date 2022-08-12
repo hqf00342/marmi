@@ -66,7 +66,6 @@
             this.isFastDraw = new System.Windows.Forms.CheckBox();
             this.Thumbnail = new System.Windows.Forms.TabPage();
             this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
-            this.isThumbFadein = new System.Windows.Forms.CheckBox();
             this.isDrawThumbnailFrame = new System.Windows.Forms.CheckBox();
             this.isShowTPPicSize = new System.Windows.Forms.CheckBox();
             this.isShowTPFileSize = new System.Windows.Forms.CheckBox();
@@ -123,6 +122,10 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.ka_thunbnail = new Marmi.KeyAccelerator();
+            this.ka_sidebar = new Marmi.KeyAccelerator();
             this.Mouse = new System.Windows.Forms.TabPage();
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -153,10 +156,6 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.ka_thunbnail = new Marmi.KeyAccelerator();
-            this.ka_sidebar = new Marmi.KeyAccelerator();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
@@ -643,7 +642,6 @@
             // Thumbnail
             // 
             this.Thumbnail.Controls.Add(this.ThumbnailPanelSmoothScroll);
-            this.Thumbnail.Controls.Add(this.isThumbFadein);
             this.Thumbnail.Controls.Add(this.isDrawThumbnailFrame);
             this.Thumbnail.Controls.Add(this.isShowTPPicSize);
             this.Thumbnail.Controls.Add(this.isShowTPFileSize);
@@ -670,25 +668,13 @@
             // ThumbnailPanelSmoothScroll
             // 
             this.ThumbnailPanelSmoothScroll.AutoSize = true;
-            this.ThumbnailPanelSmoothScroll.Location = new System.Drawing.Point(6, 268);
+            this.ThumbnailPanelSmoothScroll.Location = new System.Drawing.Point(6, 248);
             this.ThumbnailPanelSmoothScroll.Name = "ThumbnailPanelSmoothScroll";
             this.ThumbnailPanelSmoothScroll.Size = new System.Drawing.Size(264, 16);
             this.ThumbnailPanelSmoothScroll.TabIndex = 10;
             this.ThumbnailPanelSmoothScroll.Tag = "サムネイル画面内のスムーススクロールが有効になります。";
             this.ThumbnailPanelSmoothScroll.Text = "サムネイル画面内のスムーススクロールを有効にする";
             this.ThumbnailPanelSmoothScroll.UseVisualStyleBackColor = true;
-            // 
-            // isThumbFadein
-            // 
-            this.isThumbFadein.AutoSize = true;
-            this.isThumbFadein.Location = new System.Drawing.Point(6, 244);
-            this.isThumbFadein.Name = "isThumbFadein";
-            this.isThumbFadein.Size = new System.Drawing.Size(237, 16);
-            this.isThumbFadein.TabIndex = 9;
-            this.isThumbFadein.Tag = "サムネイル画像を読み込んだ時にフェードインアニメーションをします。重たいときはOffにしてください。";
-            this.isThumbFadein.Text = "サムネイル読み込み時フェードインアニメをする";
-            this.isThumbFadein.UseVisualStyleBackColor = true;
-            this.isThumbFadein.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // isDrawThumbnailFrame
             // 
@@ -1380,6 +1366,52 @@
             this.label15.Text = "前のページ(2)";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(244, 49);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(94, 12);
+            this.label16.TabIndex = 0;
+            this.label16.Tag = "サムネイルOnOff";
+            this.label16.Text = "サムネイル";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(244, 71);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(94, 12);
+            this.label17.TabIndex = 0;
+            this.label17.Tag = "サイドバーOnOff";
+            this.label17.Text = "サイドバー";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_thunbnail
+            // 
+            this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_thunbnail.keyData = System.Windows.Forms.Keys.None;
+            this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
+            this.ka_thunbnail.Name = "ka_thunbnail";
+            this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
+            this.ka_thunbnail.TabIndex = 2;
+            this.ka_thunbnail.Tag = "Marmiの終了(2)";
+            this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_sidebar
+            // 
+            this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_sidebar.keyData = System.Windows.Forms.Keys.None;
+            this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
+            this.ka_sidebar.Name = "ka_sidebar";
+            this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
+            this.ka_sidebar.TabIndex = 2;
+            this.ka_sidebar.Tag = "Marmiの終了(2)";
+            this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
             // Mouse
             // 
             this.Mouse.Controls.Add(this.DoubleClickToFullscreen);
@@ -1705,52 +1737,6 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // label16
-            // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(244, 49);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(94, 12);
-            this.label16.TabIndex = 0;
-            this.label16.Tag = "サムネイルOnOff";
-            this.label16.Text = "サムネイル";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(244, 71);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(94, 12);
-            this.label17.TabIndex = 0;
-            this.label17.Tag = "サイドバーOnOff";
-            this.label17.Text = "サイドバー";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ka_thunbnail
-            // 
-            this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_thunbnail.keyData = System.Windows.Forms.Keys.None;
-            this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
-            this.ka_thunbnail.Name = "ka_thunbnail";
-            this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
-            this.ka_thunbnail.TabIndex = 2;
-            this.ka_thunbnail.Tag = "Marmiの終了(2)";
-            this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_sidebar
-            // 
-            this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_sidebar.keyData = System.Windows.Forms.Keys.None;
-            this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
-            this.ka_sidebar.Name = "ka_sidebar";
-            this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
-            this.ka_sidebar.TabIndex = 2;
-            this.ka_sidebar.Tag = "Marmiの終了(2)";
-            this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
             // FormOption
             // 
             this.AcceptButton = this.btnOK;
@@ -1845,7 +1831,6 @@
 		private System.Windows.Forms.TextBox tb_cachesize;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.CheckBox isThumbFadein;
 		private System.Windows.Forms.TabPage Mouse;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.CheckBox reverseClickPointWhenLeftBook;

@@ -86,7 +86,6 @@ namespace Marmi
             isShowTPFileName.Checked = set.Thumbnail.IsShowTPFileName;
             isShowTPFileSize.Checked = set.Thumbnail.IsShowTPFileSize;
             isShowTPPicSize.Checked = set.Thumbnail.IsShowTPPicSize;
-            isThumbFadein.Checked = set.Thumbnail.IsThumbFadein;
             //ver1.81サムネイルのアニメーション効果
             ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.ThumbnailPanelSmoothScroll;
         }
@@ -210,7 +209,6 @@ namespace Marmi
             set.Thumbnail.IsShowTPFileName = isShowTPFileName.Checked;
             set.Thumbnail.IsShowTPFileSize = isShowTPFileSize.Checked;
             set.Thumbnail.IsShowTPPicSize = isShowTPPicSize.Checked;
-            set.Thumbnail.IsThumbFadein = isThumbFadein.Checked;
             //ver1.81サムネイルのアニメーション効果
             set.Thumbnail.ThumbnailPanelSmoothScroll = ThumbnailPanelSmoothScroll.Checked;
         }

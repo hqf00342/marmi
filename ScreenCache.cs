@@ -90,8 +90,6 @@ namespace Marmi
                     }
                 }
             }
-            //ver1.37GC
-            //Uty.ForceGC();
         }
 
         internal static void Clear() => _screenCache.Clear();

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Marmi.DataModel
@@ -49,7 +45,6 @@ namespace Marmi.DataModel
             get { return ColorTranslator.ToHtml(ThumbnailFontColor); }
         }
 
-
         //サムネイル画像の大きさ
         public int ThumbnailSize;
 
@@ -68,13 +63,7 @@ namespace Marmi.DataModel
         // ファイル名に画像サイズを表示するか
         public bool IsShowTPPicSize { get; set; }
 
-        [Obsolete]
-        public bool IsThumbFadein { get; set; }
-
         public bool ThumbnailPanelSmoothScroll { get; set; }
-
-        //public bool isSaveThumbnailCache;			//サムネイルキャッシュの保存
-
 
         public void Init()
         {
@@ -89,11 +78,8 @@ namespace Marmi.DataModel
             IsShowTPFileName = true;                        //画像名を表示するか
             IsShowTPFileSize = false;                       //画像のファイルサイズを表示するか
             IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
-            //IsThumbFadein = false;
             //ver1.81 サムネイルパネルのアニメーション
             ThumbnailPanelSmoothScroll = true;
-
         }
-
     }
 }
