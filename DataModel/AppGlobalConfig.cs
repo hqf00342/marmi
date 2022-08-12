@@ -37,7 +37,7 @@ namespace Marmi
 
         public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
         public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
-        public bool VisibleNavibar { get; set; }                 //ナビバーの表示
+        public bool VisibleSidebar { get; set; }                 //サイドバーの表示
         public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
         public int SidebarWidth { get; set; }                    //サイドバーの幅
 
@@ -60,7 +60,7 @@ namespace Marmi
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
         public ViewConfig View { get; set; } = new ViewConfig();
-        
+
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
         public MouseConfig Mouse { get; set; } = new MouseConfig();
@@ -89,7 +89,7 @@ namespace Marmi
             VisibleMenubar = true;
             VisibleToolBar = true;
             VisibleStatusBar = true;
-            VisibleNavibar = false;
+            VisibleSidebar = false;
 
             DualView = false;
             isFullScreen = false;

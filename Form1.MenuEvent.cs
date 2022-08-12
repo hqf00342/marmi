@@ -273,7 +273,7 @@ namespace Marmi
             {
                 //閉じる
                 _sidebar.Visible = false;
-                App.Config.VisibleNavibar = false;
+                App.Config.VisibleSidebar = false;
             }
             else
             {
@@ -286,7 +286,7 @@ namespace Marmi
 
                 _sidebar.Visible = true;
                 _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
-                App.Config.VisibleNavibar = true;
+                App.Config.VisibleSidebar = true;
             }
             AjustSidebarArrangement();
         }
@@ -493,7 +493,7 @@ namespace Marmi
             Menu_View2Page.Checked = App.Config.DualView;
             Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
             Menu_ViewFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
-            Menu_ViewNavibar.Checked = _sidebar.Visible;
+            Menu_ViewSidebar.Checked = _sidebar.Visible;
             //ツールバーの位置
             Menu_ToolbarBottom.Checked = (toolStrip1.Dock == DockStyle.Bottom);
             //サイドバー関連
@@ -598,7 +598,7 @@ namespace Marmi
                     Menu_ViewEnd.Enabled = false;
                     Menu_ViewNext.Enabled = false;
                     Menu_View2Page.Enabled = false;
-                    Menu_ViewNavibar.Enabled = false;
+                    Menu_ViewSidebar.Enabled = false;
                 }
                 else
                 {
@@ -608,7 +608,7 @@ namespace Marmi
                     Menu_ViewEnd.Enabled = !IsLastPageViewing();        //最終ページチェック
                     Menu_ViewNext.Enabled = !IsLastPageViewing();       //最終ページチェック
                     Menu_View2Page.Enabled = true;
-                    Menu_ViewNavibar.Enabled = true;
+                    Menu_ViewSidebar.Enabled = true;
                 }
             }
         }
@@ -627,7 +627,7 @@ namespace Marmi
             Menu_ContextFullView.Checked = App.Config.isFullScreen;
             Menu_ContextFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
 
-            Menu_ContextNavibar.Checked = _sidebar.Visible;
+            Menu_ContextSidebar.Checked = _sidebar.Visible;
 
             //ファイルを閲覧していない場合のナビゲーション
             if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
@@ -669,7 +669,7 @@ namespace Marmi
             {
                 Menu_ContextFitScreenSize.Enabled = true;
                 Menu_ContextPictureInfo.Enabled = true;
-                Menu_ContextNavibar.Enabled = true;
+                Menu_ContextSidebar.Enabled = true;
                 Menu_ContextZoom.Enabled = true;    //zoom
                 Menu_ContextRedraw.Enabled = true;
 

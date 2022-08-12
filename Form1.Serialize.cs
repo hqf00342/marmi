@@ -19,7 +19,7 @@ namespace Marmi
 
             //ナビバー
             //g_Sidebar.SetSizeAndDock(GetClientRectangle());
-            _sidebar.Visible = App.Config.VisibleNavibar;
+            _sidebar.Visible = App.Config.VisibleSidebar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
             if (App.Config.General.SimpleCalcForWindowLocation)

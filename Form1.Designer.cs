@@ -63,7 +63,7 @@
             this.Menu_ViewMenubar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ViewToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ViewStatusbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_ViewNavibar = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_ViewSidebar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ToolbarBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_ViewReload = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,7 +128,7 @@
             this.Menu_ContextMenubar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextStatusbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_ContextNavibar = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_ContextSidebar = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ContextZoomFit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ContextZoomOriginal = new System.Windows.Forms.ToolStripMenuItem();
@@ -507,7 +507,7 @@
             this.Menu_ViewMenubar,
             this.Menu_ViewToolbar,
             this.Menu_ViewStatusbar,
-            this.Menu_ViewNavibar});
+            this.Menu_ViewSidebar});
             this.Menu_ViewToggleToolbar.Name = "Menu_ViewToggleToolbar";
             this.Menu_ViewToggleToolbar.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewToggleToolbar.Text = "バーの表示切り替え";
@@ -533,12 +533,12 @@
             this.Menu_ViewStatusbar.Text = "ステータスバー";
             this.Menu_ViewStatusbar.Click += new System.EventHandler(this.Menu_ViewStatusbar_Click);
             // 
-            // Menu_ViewNavibar
+            // Menu_ViewSidebar
             // 
-            this.Menu_ViewNavibar.Name = "Menu_ViewNavibar";
-            this.Menu_ViewNavibar.Size = new System.Drawing.Size(136, 22);
-            this.Menu_ViewNavibar.Text = "サイドバー";
-            this.Menu_ViewNavibar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
+            this.Menu_ViewSidebar.Name = "Menu_ViewSidebar";
+            this.Menu_ViewSidebar.Size = new System.Drawing.Size(136, 22);
+            this.Menu_ViewSidebar.Text = "サイドバー";
+            this.Menu_ViewSidebar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
             // 
             // Menu_ToolbarBottom
             // 
@@ -1045,7 +1045,7 @@
             this.Menu_ContextMenubar,
             this.Menu_ContextToolbar,
             this.Menu_ContextStatusbar,
-            this.Menu_ContextNavibar});
+            this.Menu_ContextSidebar});
             this.Menu_ContextToggleToolbar.Name = "Menu_ContextToggleToolbar";
             this.Menu_ContextToggleToolbar.Size = new System.Drawing.Size(178, 26);
             this.Menu_ContextToggleToolbar.Text = "バーの表示切り替え";
@@ -1071,12 +1071,12 @@
             this.Menu_ContextStatusbar.Text = "ステータスバー";
             this.Menu_ContextStatusbar.Click += new System.EventHandler(this.Menu_ViewStatusbar_Click);
             // 
-            // Menu_ContextNavibar
+            // Menu_ContextSidebar
             // 
-            this.Menu_ContextNavibar.Name = "Menu_ContextNavibar";
-            this.Menu_ContextNavibar.Size = new System.Drawing.Size(136, 22);
-            this.Menu_ContextNavibar.Text = "サイドバー";
-            this.Menu_ContextNavibar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
+            this.Menu_ContextSidebar.Name = "Menu_ContextSidebar";
+            this.Menu_ContextSidebar.Size = new System.Drawing.Size(136, 22);
+            this.Menu_ContextSidebar.Text = "サイドバー";
+            this.Menu_ContextSidebar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
             // 
             // Menu_ContextZoom
             // 
@@ -1302,12 +1302,12 @@
 		private System.Windows.Forms.ToolStripMenuItem Menu_ViewMenubar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ViewToolbar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ViewStatusbar;
-		private System.Windows.Forms.ToolStripMenuItem Menu_ViewNavibar;
+		private System.Windows.Forms.ToolStripMenuItem Menu_ViewSidebar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextToggleToolbar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextMenubar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextToolbar;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextStatusbar;
-		private System.Windows.Forms.ToolStripMenuItem Menu_ContextNavibar;
+		private System.Windows.Forms.ToolStripMenuItem Menu_ContextSidebar;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_ContextOption;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextRedraw;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextAddBookmark;

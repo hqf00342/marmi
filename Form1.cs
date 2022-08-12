@@ -128,7 +128,7 @@ namespace Marmi
             _sidebar.Width = App.Config.SidebarWidth;
             _sidebar.Dock = DockStyle.Left;
             //_sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
-            _sidebar.SidebarSizeChanged += (s,e)=> OnResizeEnd(null);
+            _sidebar.SidebarSizeChanged += (s, e) => OnResizeEnd(null);
             //
             //TrackBar
             //
@@ -445,7 +445,7 @@ namespace Marmi
                 UpdateStatusbar();
 
                 //NaviBarを戻す
-                if (App.Config.VisibleNavibar)
+                if (App.Config.VisibleSidebar)
                     _sidebar.Visible = true;
 
                 //トラックバーを戻す Ver0.975
@@ -552,7 +552,6 @@ namespace Marmi
         }
 
         // ユーティリティ系 *************************************************************/
-
 
         #region Screen操作
 
@@ -690,8 +689,6 @@ namespace Marmi
 
             return rect;
         }
-
-
 
         #endregion Screen操作
 
