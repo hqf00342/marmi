@@ -118,7 +118,7 @@ namespace Marmi
 
             //ver1.78 倍率をオプション指定できるように変更
             if (!App.Config.KeepMagnification     //倍率維持モードではない
-                || IsFitToScreen)             //画面にフィットしている
+                || PicPanel.IsFitToScreen)        //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
@@ -204,7 +204,7 @@ namespace Marmi
             {
                 int declimentPages = -1;
                 //2ページ減らすことが出来るか
-                if (await CanDualViewAsync(App.g_pi.NowViewPage - 2))
+                if (await Bmp.CanDualViewAsync(App.g_pi.NowViewPage - 2))
                     declimentPages = -2;
 
                 int ret = index + declimentPages;
@@ -220,7 +220,7 @@ namespace Marmi
         //ver1.36次のページ番号。すでに最終ページなら-1
         internal static async Task<int> GetNextPageIndexAsync(int index)
         {
-            int pages = await CanDualViewAsync(index) ? 2 : 1;
+            int pages = await Bmp.CanDualViewAsync(index) ? 2 : 1;
 
             if (index + pages <= App.g_pi.Items.Count - 1)
             {

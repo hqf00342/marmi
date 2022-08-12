@@ -78,7 +78,7 @@ namespace Marmi
                 throw new InvalidOperationException("nullはおかしい");
             }
 
-            if (App.Config.DualView && await Form1.CanDualViewAsync(index))
+            if (App.Config.DualView && await CanDualViewAsync(index))
             {
                 //2枚表示
                 Bitmap bmp2 = await GetBitmapAsync(index + 1, true);
@@ -126,6 +126,55 @@ namespace Marmi
                 bmp1.Tag = 1;
                 return bmp1;
             }
+        }
+
+        /// <summary>
+        /// 指定されたインデックスから２枚表示できるかチェック
+        /// チェックはImageInfoに取り込まれた値を利用、縦横比で確認する。
+        /// </summary>
+        /// <param name="index">インデックス値</param>
+        /// <returns>2画面表示できるときはtrue</returns>
+        public static async Task<bool> CanDualViewAsync(int index)
+        {
+            //最後のページならfalse
+            if (index >= App.g_pi.Items.Count - 1 || index < 0)
+                return false;
+
+            //コンフィグ条件を確認
+            if (!App.Config.DualView)
+                return false;
+
+            //ver1.79：2ページ強制表示
+            if (App.Config.View.DualView_Force)
+                return true;
+
+            //1枚目読み込み
+            if (App.g_pi.Items[index].ImgSize == Size.Empty)
+            {
+                await Bmp.LoadBitmapAsync(index, true);
+            }
+
+            //1枚目が横長ならfalse
+            if (App.g_pi.Items[index].IsFat)
+                return false;
+
+            //2枚目読み込み
+            if (App.g_pi.Items[index + 1].ImgSize == Size.Empty)
+            {
+                await Bmp.LoadBitmapAsync(index + 1, true);
+            }
+
+            //2枚目が横長ならfalse
+            if (App.g_pi.Items[index + 1].IsFat)
+                return false; //横長だった
+
+            //全て縦長だった時の処理
+            if (App.Config.View.DualView_Normal)
+                return true; //縦画像2枚
+
+            //2画像の高さがほとんど変わらなければtrue
+            const int ACCEPTABLE_RANGE = 200;
+            return Math.Abs(App.g_pi.Items[index].Height - App.g_pi.Items[index + 1].Height) < ACCEPTABLE_RANGE;
         }
     }
 }

@@ -876,5 +876,16 @@ namespace Marmi
             }
             FastDraw = false;
         }
+
+
+        /// <summary>
+        /// 表示中の画像が画面いっぱいにフィットしているかどうか
+        /// </summary>
+        public bool IsFitToScreen => Math.Abs(ZoomRatio - FittingRatio) < 0.001f;
+
+        /// <summary>
+        /// 現在の表示が原寸かどうか
+        /// </summary>
+        public bool IsScreen100p => Math.Abs(ZoomRatio - 1.0f) < 0.001f;
     }//class
 }

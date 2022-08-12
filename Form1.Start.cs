@@ -109,7 +109,7 @@ namespace Marmi
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
             //サムネイルの作成
-            ImagePreloader();
+            PreloadAllImages();
 
             //画像を表示
             PicPanel.Message = string.Empty;

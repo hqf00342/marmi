@@ -85,10 +85,10 @@ namespace Marmi
                     }
 
                     //100%ズーム
-                    toolStripButton_Zoom100.Checked = IsScreen100p;
+                    toolStripButton_Zoom100.Checked = PicPanel.IsScreen100p;
 
                     //画面フィットズーム
-                    toolStripButton_ZoomFit.Checked = IsFitToScreen;
+                    toolStripButton_ZoomFit.Checked = PicPanel.IsFitToScreen;
 
                     //Favorite
                     if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
