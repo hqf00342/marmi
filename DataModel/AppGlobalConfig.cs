@@ -48,11 +48,12 @@ namespace Marmi
         public bool IsToolbarTop { get; set; }
 
         //ver1.77 画面モード保存対象にする。
-        public bool isFullScreen;
+        [XmlIgnore]
+        public bool isFullScreen { get; set; }
 
         //サムネイルモード
         [XmlIgnore]
-        public bool isThumbnailView;
+        public bool isThumbnailView { get; set; }
 
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
