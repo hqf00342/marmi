@@ -10,7 +10,7 @@ namespace Marmi
     internal static class ScreenCache
     {
         //ver1.35 スクリーンキャッシュ
-        private static Dictionary<int, Bitmap> _screenCache = new Dictionary<int, Bitmap>();
+        private static readonly Dictionary<int, Bitmap> _screenCache = new Dictionary<int, Bitmap>();
 
         public static IReadOnlyDictionary<int, Bitmap> Dic => _screenCache;
 
@@ -83,18 +83,10 @@ namespace Marmi
                 foreach (int ix in deleteCandidate)
                 {
                     //先に消してはだめ！
-                    //ディクショナリから削除した後BitmapをDispose()
-                    //Bitmap tempBmp = ScreenCache[key];
-                    //ScreenCache.Remove(key);
-                    //tempBmp.Dispose();
-                    if (_screenCache.TryGetValue(ix, out Bitmap tempBmp))
+                    if (_screenCache.ContainsKey(ix))
                     {
                         _screenCache.Remove(ix);
                         Debug.WriteLine($"PurgeScreenCache({ix})");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"PurgeScreenCache({ix})失敗");
                     }
                 }
             }
