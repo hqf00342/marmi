@@ -127,7 +127,8 @@ namespace Marmi
             _sidebar.Visible = false;
             _sidebar.Width = App.Config.SidebarWidth;
             _sidebar.Dock = DockStyle.Left;
-            _sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
+            //_sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
+            _sidebar.SidebarSizeChanged += (s,e)=> OnResizeEnd(null);
             //
             //TrackBar
             //
@@ -819,32 +820,5 @@ namespace Marmi
                 }
             }));
         }
-
-        #region UIエレメントからのイベント
-
-        private void Menu_Unsharp_Click(object sender, EventArgs e)
-        {
-            App.Config.Advance.UseUnsharpMask = !App.Config.Advance.UseUnsharpMask;
-            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
-
-            //再描写
-            PicPanel.Invalidate();
-        }
-
-        private void Menu_Help_GC_Clicked(object sender, EventArgs e) => Uty.ForceGC();
-
-        /// <summary>
-        /// サイドバーのサイズが変更された（され終わった）ときに呼び出される。
-        /// これが呼び出されるときはサイドバー固定の時のみ。
-        /// 2010年6月6日 ver0.985で実装
-        /// </summary>
-        /// <param name="sender">利用せず</param>
-        /// <param name="e">利用せず</param>
-        private void Sidebar_SidebarSizeChanged(object sender, EventArgs e)
-        {
-            OnResizeEnd(null);
-        }
-
-        #endregion UIエレメントからのイベント
     } // Class Form1
 }

@@ -843,5 +843,17 @@ namespace Marmi
                 SlideShowTimer.Start();
             }
         }
+
+        private void Menu_Unsharp_Click(object sender, EventArgs e)
+        {
+            App.Config.Advance.UseUnsharpMask = !App.Config.Advance.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
+
+            //Ä•`ŽÊ
+            PicPanel.Invalidate();
+        }
+
+        private void Menu_Help_GC_Clicked(object sender, EventArgs e) => Uty.ForceGC();
+
     }
 }
