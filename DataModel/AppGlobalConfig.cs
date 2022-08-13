@@ -72,6 +72,12 @@ namespace Marmi
 
         public ThumbnailConfig Thumbnail { get; set; } = new ThumbnailConfig();
 
+        #region UIなし
+
+        public bool UseScreenCache { get; set; } = false;   //スクリーンキャッシュを使うかどうか
+
+        #endregion
+
         /*******************************************************************************/
 
         /// <summary>

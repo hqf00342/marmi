@@ -43,18 +43,13 @@ namespace Marmi
             _trackbar.Value = index;
 
             //ver1.35 スクリーンキャッシュチェック
-            if (ScreenCache.Dic.TryGetValue(index, out Bitmap screenImage))
+            if (App.Config.UseScreenCache && ScreenCache.Dic.TryGetValue(index, out Bitmap screenImage))
             {
                 //スクリーンキャッシュあったのですぐに描写
                 SetViewPage2(index, pageDirection, screenImage, drawOrderTick);
             }
             else
             {
-                //ver1.50
-                //Keyだけある{key,null}キャッシュだったら消す。稀に発生するため
-                if (ScreenCache.Dic.ContainsKey(index))
-                    ScreenCache.Remove(index);
-
                 //ver1.50 読み込み中と表示
                 SetStatusbarInfo("Now Loading ... " + (index + 1).ToString());
 

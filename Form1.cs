@@ -372,8 +372,11 @@ namespace Marmi
             if (needMakeScreenCache)
             {
                 needMakeScreenCache = false;
-                await ScreenCache.MakeCacheForPreAndNextPagesAsync();
-                ScreenCache.Purge();
+                if (App.Config.UseScreenCache)
+                {
+                    await ScreenCache.MakeCacheForPreAndNextPagesAsync();
+                    ScreenCache.Purge();
+                }
                 App.g_pi.FileCacheCleanUp2(App.Config.Advance.CacheSize);
             }
         }

@@ -64,23 +64,25 @@ namespace Marmi
         /// </summary>
         internal static void Purge()
         {
-            //削除候補をリストアップ
             int now = App.g_pi.NowViewPage;
             const int DISTANCE = 2;
-            List<int> deleteCandidate = new List<int>();
+            List<int> delList = new List<int>();
 
+            //削除候補をリストアップ
             foreach (var ix in _screenCache.Keys)
             {
-                if (ix > now + DISTANCE || ix < now - DISTANCE)
+                if (ix > now + DISTANCE 
+                    || ix < now - DISTANCE
+                    || _screenCache[ix] == null)
                 {
-                    deleteCandidate.Add(ix);
+                    delList.Add(ix);
                 }
             }
 
             //削除候補を削除する
-            if (deleteCandidate.Count > 0)
+            if (delList.Count > 0)
             {
-                foreach (int ix in deleteCandidate)
+                foreach (int ix in delList)
                 {
                     //先に消してはだめ！
                     if (_screenCache.ContainsKey(ix))
