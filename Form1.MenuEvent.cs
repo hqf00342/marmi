@@ -17,7 +17,7 @@ namespace Marmi
 
             if (File.Exists(filename) || Directory.Exists(filename))
             {
-                await Start(new string[] { filename });
+                await StartAsync(new string[] { filename });
             }
             else
             {

@@ -30,6 +30,8 @@ namespace Marmi.DataModel
         /// <param name="img">対象の画像</param>
         public void GetExifInfo(Image img)
         {
+            if (img is null) return;
+
             foreach (PropertyItem pi in img.PropertyItems)
             {
                 switch (pi.Id)

@@ -14,7 +14,7 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
-        private async Task Start(string[] filenames)
+        private async Task StartAsync(string[] filenames)
         {
             //ファイルがすでに開いているかどうかチェック
             if (filenames.Length == 1 && filenames[0] == App.g_pi.PackageName)

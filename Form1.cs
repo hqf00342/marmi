@@ -194,7 +194,7 @@ namespace Marmi
 
                 //ファイルを渡して開始
                 //CheckAndStart(a);
-                await Start(a);
+                await StartAsync(a);
             }
         }
 
@@ -285,9 +285,11 @@ namespace Marmi
                 //Formをアクティブ
                 this.Activate();
                 string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
-                //Start(files);
-                //AsyncStart(files);
-                await Start(files);
+
+#pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
+                //await StartAsync(files);
+                StartAsync(files);
+#pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
             }
             Debug.WriteLine("OnDragDrop() End");
         }
@@ -475,7 +477,7 @@ namespace Marmi
                 {
                     //ver1.09 OpenFileAndStart()とりやめに伴い展開
                     //OpenFileAndStart(of.FileName);
-                    await Start(of.FileNames);
+                    await StartAsync(of.FileNames);
                 }
             }
         }
@@ -815,7 +817,7 @@ namespace Marmi
                 {
                     //AsyncStart(args.Skip(1).ToArray());
 #pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
-                    Start(args.Skip(1).ToArray());
+                    StartAsync(args.Skip(1).ToArray());
 #pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
                 }
             }));

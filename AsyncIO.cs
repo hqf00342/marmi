@@ -58,8 +58,9 @@ namespace Marmi
                         Debug.WriteLine("AsyncIO : 7z解放信号受信");
                         if (AsyncSZ.IsOpen)
                         {
-                            Debug.WriteLine($"AsyncIO : {AsyncSZ.Filename}解放");
                             AsyncSZ.Close();
+                            Debug.WriteLine($"AsyncIO : {AsyncSZ.Filename} をClose()");
+                            Debug.WriteLine($"AsyncIO : App.g_pi.PackageName = {App.g_pi.PackageName}");
                         }
                         continue;
                     }
