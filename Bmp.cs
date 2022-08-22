@@ -17,7 +17,7 @@ namespace Marmi
             await LoadBitmapAsync(ix, highPriority);
             var bmp = App.g_pi.Items[ix].CacheImage.ToBitmap();
             if (bmp == null)
-                throw new Exception("画像取得に失敗");
+                throw new Exception("GetBitmapAsync():画像取得に失敗");
             return bmp;
         }
 

@@ -63,8 +63,8 @@ namespace Marmi
                         if (AsyncSZ.IsOpen)
                         {
                             AsyncSZ.Close();
-                            Debug.WriteLine($"AsyncIO : {AsyncSZ.Filename} をClose()");
-                            Debug.WriteLine($"AsyncIO : App.g_pi.PackageName = {App.g_pi.PackageName}");
+                            AsyncSZ = new SevenZipWrapper();
+                            Debug.WriteLine($"AsyncIO : sz Close()");
                         }
                         continue;
                     }
@@ -111,25 +111,25 @@ namespace Marmi
         /// PackageTypeごとの画像読み込み。
         /// AsyncIO.Work()内で都度呼び出される。
         /// </summary>
-        /// <param name="AsyncSZ"></param>
+        /// <param name="sz"></param>
         /// <param name="index"></param>
         /// <exception cref="NotImplementedException"></exception>
-        private static void LoadImage(SevenZipWrapper AsyncSZ, int index)
+        private static void LoadImage(SevenZipWrapper sz, int index)
         {
             var filename = App.g_pi.Items[index].Filename;
+
+            if((uint)index >= App.g_pi.Items.Count)
+                throw new IndexOutOfRangeException(nameof(index));
+            if (sz == null)
+                throw new ArgumentNullException(nameof(sz));
+
 
             switch (App.g_pi.PackType)
             {
                 case PackageType.Archive:
-                    if (AsyncSZ == null )
+                    if ( !sz.IsOpen)
                     {
-                        AsyncSZ = new SevenZipWrapper();
-                    }
-
-                    if ( !AsyncSZ.IsOpen)
-                    {
-                        //AsyncSZ = new SevenZipWrapper();
-                        AsyncSZ.Open(App.g_pi.PackageName);
+                        sz.Open(App.g_pi.PackageName);
                         Debug.WriteLine("AsyncIO : 7zOpen");
                     }
 
@@ -142,7 +142,7 @@ namespace Marmi
                     else
                     {
                         //通常書庫
-                        App.g_pi.Items[index].CacheImage.Load(AsyncSZ.GetStream(filename));
+                        App.g_pi.Items[index].CacheImage.Load(sz.GetStream(filename));
                     }
                     break;
 
