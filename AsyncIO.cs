@@ -15,6 +15,9 @@ namespace Marmi
         //非同期IO用スレッド
         private static Thread _thread = null;
 
+        //タスクが空になってアイドル状態かどうか
+        private static volatile bool isIdle = false;
+
         //非同期Jobリスト
         internal static PrioritySafeQueue<KeyValuePair<int, Action>> _queue = new PrioritySafeQueue<KeyValuePair<int, Action>>();
 
@@ -48,6 +51,7 @@ namespace Marmi
             {
                 if (_queue.Count > 0)
                 {
+                    isIdle = false;
                     var kv = _queue.Pop();
                     int index = kv.Key;
                     Delegate action = kv.Value;
@@ -67,7 +71,9 @@ namespace Marmi
 
                     try
                     {
-                        Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count}");
+                        Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count} : {Path.GetFileName(App.g_pi.PackageName)}");
+
+                        App.g_pi.ThrowIfOutOfRange(index);
 
                         if (!App.g_pi.Items[index].CacheImage.HasImage)
                         {
@@ -95,6 +101,7 @@ namespace Marmi
                 else
                 {
                     //少し休憩
+                    isIdle = true;
                     Thread.Sleep(50);
                 }
             }
@@ -114,8 +121,14 @@ namespace Marmi
             switch (App.g_pi.PackType)
             {
                 case PackageType.Archive:
-                    if (!AsyncSZ.IsOpen)
+                    if (AsyncSZ == null )
                     {
+                        AsyncSZ = new SevenZipWrapper();
+                    }
+
+                    if ( !AsyncSZ.IsOpen)
+                    {
+                        //AsyncSZ = new SevenZipWrapper();
                         AsyncSZ.Open(App.g_pi.PackageName);
                         Debug.WriteLine("AsyncIO : 7zOpen");
                     }
@@ -164,5 +177,20 @@ namespace Marmi
 
         /// <summary>Job一覧を取得</summary>
         public static KeyValuePair<int, Action>[] GetAllJob() => _queue.ToArrayHigh();
+
+        /// <summary>
+        /// ジョブをオールクリアする。
+        /// クリアし、szも閉じるまで待つ。
+        /// </summary>
+        /// <returns></returns>
+        public static async Task ClearJobAndWaitAsync()
+        {
+            _queue.Clear();
+            AddJob(-1,null);
+            while(isIdle==false)
+            {
+                await Task.Delay(50);
+            }
+        }
     }
 }

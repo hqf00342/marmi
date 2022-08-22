@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -27,9 +28,11 @@ namespace Marmi
 
             //初期化
             InitMarmi();
+            Debug.WriteLine($"Start: InitMarmi() 完了");
 
             //ファイル一覧を生成
             bool needRecurse = MakePackageInfo(filenames);
+            Debug.WriteLine($"Start: MakePackageInfo() 完了");
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
@@ -47,6 +50,7 @@ namespace Marmi
             }
 
             SortPackage();
+
             //UIを初期化
             UpdateToolbar();
 
@@ -73,8 +77,7 @@ namespace Marmi
             App.g_pi.NowViewPage = 0;
             //CheckAndStart();
 
-            //サムネイルDBがあれば読み込む
-            //loadThumbnailDBFile();
+            //書庫の場合、MRUからページ番号などを得る
             if (App.Config.General.IsContinueZipView)
             {
                 //読み込み値を無視し、０にセット
@@ -109,11 +112,15 @@ namespace Marmi
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
             //サムネイルの作成
+            Debug.WriteLine($"Start: サムネイル作成開始");
             PreloadAllImages();
 
             //画像を表示
+            Debug.WriteLine($"Start: 1ページ目表示命令");
             PicPanel.Message = string.Empty;
             await SetViewPageAsync(App.g_pi.NowViewPage);
+
+            Debug.WriteLine($"Start: 完了");
         }
 
         /// <summary>
@@ -213,8 +220,10 @@ namespace Marmi
         /// ・非同期IO停止
         /// ・書庫パスワードをクリア
         /// </summary>
-        private void InitMarmi()
+        private async void InitMarmi()
         {
+            Debug.WriteLine("InitMarmi()");
+
             //サムネイルモードの解放
             if (App.Config.isThumbnailView)
                 SetThumbnailView(false);
@@ -243,6 +252,11 @@ namespace Marmi
             //ver1.35スクリーンキャッシュをクリア
             ScreenCache.Clear();
 
+            //2012/09/04 非同期IOを中止
+            //AsyncIO.ClearJob();
+            //AsyncIO.AddJob(-1, null);
+            await AsyncIO.ClearJobAndWaitAsync();
+
             //パッケージ情報を初期化
             App.g_pi.Initialize();
             //App.g_pi = new PackageInfo();
@@ -253,10 +267,6 @@ namespace Marmi
                 Uty.DeleteTempDir(dir);
             }
             DeleteDirList.Clear();
-
-            //2012/09/04 非同期IOを中止
-            AsyncIO.ClearJob();
-            AsyncIO.AddJob(-1, null);
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
