@@ -12,6 +12,9 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// ツールバーの状態をコンフィグに合わせる
+        /// </summary>
         private void UpdateToolbar()
         {
             //画面モードの状態反映
@@ -121,7 +124,7 @@ namespace Marmi
         /// </summary>
         private void SetToolbarString()
         {
-            if (App.Config.General.EraseToolbarItemString)
+            if (App.Config.General.HideToolbarString)
             {
                 toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
                 toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -133,6 +136,9 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// TrackBarを初期化。画像枚数を反映させる
+        /// </summary>
         private void InitTrackbar()
         {
             _trackbar.Minimum = 0;
@@ -150,20 +156,30 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// ツールバーリサイズイベント処理
+        /// リサイズ中は何もせず、リサイズ完了したらTrackBarサイズを変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolStrip1_Resize(object sender, EventArgs e)
         {
             //リサイズドラッグ中は表示させない
             if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left)
                 return;
 
+            //TrackBarサイズを更新
             //最大化直後に呼ばれるみたい
             ResizeTrackBar();
         }
 
+        /// <summary>
+        /// トラックバーサイズを計算し反映
+        /// </summary>
         private void ResizeTrackBar()
         {
-            //g_trackbarのサイズを決定する
-            //g_trackbar.width = toolbar.width - sum(items.width)
+            //g_trackbarのサイズを計算
+            //ツールバーの空き領域サイズを計算する。
             int trackbarWidth = toolStrip1.Width;
             foreach (ToolStripItem o in toolStrip1.Items)
             {
@@ -171,13 +187,12 @@ namespace Marmi
                     trackbarWidth -= o.Width;
             }
 
-            Debug.WriteLine($"ResizeTrackbar:{trackbarWidth}");
-
             toolStrip1.CanOverflow = false;
             if (_trackbar != null) //起動時にエラーが出るので
             {
+                //10はグリップの大きさ分ぐらい・・・
                 if (trackbarWidth > 10)
-                    _trackbar.Width = trackbarWidth - 10;  //10はグリップの大きさ分ぐらい・・・
+                    _trackbar.Width = trackbarWidth - 10;
                 else
                     _trackbar.Width = 0;
             }
@@ -203,6 +218,7 @@ namespace Marmi
         {
             Statusbar_InfoLabel.Text = (string)((ToolStripButton)sender).Tag;
 
+            //フォームにフォーカスがなくともこのイベントは来る
             //1クリック対応用に保持しておく
             _hoverStripItem = sender;
         }

@@ -28,7 +28,7 @@ namespace Marmi.DataModel
         public bool IsReplaceArrowButton { get; set; }
 
         //ver1.65 ツールバーアイテムの文字を消すか
-        public bool EraseToolbarItemString { get; set; }
+        public bool HideToolbarString { get; set; }
 
         //ver1.70 サイドバーのスムーススクロール
         public bool Sidebar_smoothScroll { get; set; }
@@ -66,7 +66,7 @@ namespace Marmi.DataModel
             IsContinueZipView = false;
             IsExtractIfSolidArchive = true;
             IsWindowPosCenter = false;
-            EraseToolbarItemString = false;
+            HideToolbarString = false;
             Sidebar_smoothScroll = true;
             //ver1.73 一時展開フォルダ
             TmpFolder = string.Empty;

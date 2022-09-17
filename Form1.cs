@@ -825,5 +825,17 @@ namespace Marmi
                 }
             }));
         }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            //フォーカスをもらった時のクリックがツールバーアイテムを押していたなら
+            //そのツールバーを実行する。
+            if(_hoverStripItem is ToolStripItem cnt)
+            {
+                cnt.PerformClick();
+            }
+        }
     } // Class Form1
 }

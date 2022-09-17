@@ -64,7 +64,7 @@ namespace Marmi
             bReplaceArrowButton.Checked = set.General.IsReplaceArrowButton;
             pictureBox_BackColor.BackColor = set.General.BackColor;
             isWindowPosCenter.Checked = set.General.IsWindowPosCenter;
-            eraseToolbarItemString.Checked = set.General.EraseToolbarItemString;
+            eraseToolbarItemString.Checked = set.General.HideToolbarString;
             sidebar_smoothscroll.Checked = set.General.Sidebar_smoothScroll;
             tmpFolder.Text = set.General.TmpFolder;
             numOfMru.Text = set.General.NumberOfMru.ToString();
@@ -188,7 +188,7 @@ namespace Marmi
             set.General.BackColor = pictureBox_BackColor.BackColor;
             set.General.IsWindowPosCenter = isWindowPosCenter.Checked;
             set.General.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
-            set.General.EraseToolbarItemString = eraseToolbarItemString.Checked;
+            set.General.HideToolbarString = eraseToolbarItemString.Checked;
             set.General.Sidebar_smoothScroll = sidebar_smoothscroll.Checked;
             set.General.TmpFolder = tmpFolder.Text;
             set.General.NumberOfMru = int.TryParse(numOfMru.Text, out var n) ? n : 10;
