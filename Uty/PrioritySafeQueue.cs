@@ -60,6 +60,9 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// High, Low 両方のキューをクリア
+        /// </summary>
         public void Clear()
         {
             lock (_syncRoot)

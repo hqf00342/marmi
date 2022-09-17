@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,8 +14,8 @@ namespace Marmi
         //非同期IO用スレッド
         private static Thread _thread = null;
 
-        //タスクが空になってアイドル状態かどうか
-        private static volatile bool isIdle = false;
+        //Worker内部のSzがOpenしているかどうか
+        private static volatile bool szOpen = false;
 
         //非同期Jobリスト
         internal static PrioritySafeQueue<KeyValuePair<int, Action>> _queue = new PrioritySafeQueue<KeyValuePair<int, Action>>();
@@ -51,13 +50,14 @@ namespace Marmi
             {
                 if (_queue.Count > 0)
                 {
-                    isIdle = false;
                     var kv = _queue.Pop();
                     int index = kv.Key;
                     Delegate action = kv.Value;
 
+                    Debug.WriteLine($"AsyncIO.Worker() : ix={index}, queue={_queue.Count} : {Path.GetFileName(App.g_pi.PackageName)}");
+
                     //終了信号受信
-                    if (index < 0 && action == null)
+                    if (index < 0)
                     {
                         Debug.WriteLine("AsyncIO : 7z解放信号受信");
                         if (AsyncSZ.IsOpen)
@@ -66,13 +66,12 @@ namespace Marmi
                             AsyncSZ = new SevenZipWrapper();
                             Debug.WriteLine($"AsyncIO : sz Close()");
                         }
+                        //szOpen = false;
                         continue;
                     }
 
                     try
                     {
-                        Debug.WriteLine($"AsyncIO : index={index}, remain={_queue.Count} : {Path.GetFileName(App.g_pi.PackageName)}");
-
                         App.g_pi.ThrowIfOutOfRange(index);
 
                         if (!App.g_pi.Items[index].CacheImage.HasImage)
@@ -93,15 +92,15 @@ namespace Marmi
                             Form1._instance.Invoke(action);
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        Debug.WriteLine($"AsyncIO : {e.GetType().Name}");
+                        Debug.WriteLine($"AsyncIO : EXCEPTION: {e.GetType().Name}");
                     }
                 }
                 else
                 {
                     //少し休憩
-                    isIdle = true;
+                    szOpen = AsyncSZ.IsOpen;
                     Thread.Sleep(50);
                 }
             }
@@ -116,32 +115,34 @@ namespace Marmi
         /// <exception cref="NotImplementedException"></exception>
         private static void LoadImage(SevenZipWrapper sz, int index)
         {
-            var filename = App.g_pi.Items[index].Filename;
-
-            if((uint)index >= App.g_pi.Items.Count)
-                throw new IndexOutOfRangeException(nameof(index));
             if (sz == null)
                 throw new ArgumentNullException(nameof(sz));
 
+            App.g_pi.ThrowIfOutOfRange(index);
+
+            var filename = App.g_pi.Items[index].Filename;
 
             switch (App.g_pi.PackType)
             {
                 case PackageType.Archive:
-                    if ( !sz.IsOpen)
+                    if (!sz.IsOpen)
                     {
+                        //書庫をOpenする
                         sz.Open(App.g_pi.PackageName);
-                        Debug.WriteLine("AsyncIO : 7zOpen");
+                        Debug.WriteLine($"AsyncIO.LoadImage() : Open 7z: {App.g_pi.PackageName}");
                     }
 
                     if (App.g_pi.isSolid && App.Config.General.IsExtractIfSolidArchive)
                     {
-                        //ソリッド書庫は一時フォルダの画像ファイルから読取り
+                        //ソリッド書庫 又は オプション指定あり
+                        //一時フォルダの画像を利用
                         string tempname = Path.Combine(App.g_pi.tempDirname, filename);
                         App.g_pi.Items[index].CacheImage.Load(tempname);
                     }
                     else
                     {
                         //通常書庫
+                        //書庫から直接読みだす
                         App.g_pi.Items[index].CacheImage.Load(sz.GetStream(filename));
                     }
                     break;
@@ -151,7 +152,6 @@ namespace Marmi
                     //生ファイルを読み込む
                     App.g_pi.Items[index].CacheImage.Load(filename);
                     break;
-
 
                 case PackageType.Pdf:
                     //pdfファイルの読み込み
@@ -170,7 +170,7 @@ namespace Marmi
         public static void AddJobLow(int index, Action uiAction) => _queue.PushLow(new KeyValuePair<int, Action>(index, uiAction));
 
         /// <summary>High Queue Jobを追加</summary>
-        public static void AddJob(int index, Action uiAction) => _queue.PushHigh(new KeyValuePair<int, Action>(index, uiAction));
+        public static void AddJobHigh(int index, Action uiAction) => _queue.PushHigh(new KeyValuePair<int, Action>(index, uiAction));
 
         /// <summary>Jobをクリアする</summary>
         public static void ClearJob() => _queue.Clear();
@@ -186,8 +186,8 @@ namespace Marmi
         public static async Task ClearJobAndWaitAsync()
         {
             _queue.Clear();
-            AddJob(-1,null);
-            while(isIdle==false)
+            AddJobHigh(-1, null);
+            while (szOpen)
             {
                 await Task.Delay(50);
             }

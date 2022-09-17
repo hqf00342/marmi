@@ -63,7 +63,7 @@ namespace Marmi
         private bool needMakeScreenCache = false;
 
         //ver1.35 スライドショータイマー
-        private readonly System.Windows.Forms.Timer SlideShowTimer = new System.Windows.Forms.Timer();
+        private readonly Timer SlideShowTimer = new Timer();
 
         //スライドショー中かどうか
         public bool IsSlideShow => SlideShowTimer.Enabled;
@@ -178,7 +178,7 @@ namespace Marmi
             ApplyConfigToWindow();
 
             //初期化
-            InitMarmi();
+            await InitMarmiAsync();
             UpdateToolbar();
             ResizeTrackBar();
 
@@ -198,7 +198,7 @@ namespace Marmi
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        protected override async void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
 
@@ -231,7 +231,7 @@ namespace Marmi
             //スレッドが動作していたら停止させる.
             //サムネイルの保存
             //ファイルハンドルの解放
-            InitMarmi();
+            await InitMarmiAsync();
 
             //ver1.62ツールバー位置を保存
             App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
@@ -285,6 +285,9 @@ namespace Marmi
                 //Formをアクティブ
                 this.Activate();
                 string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
+
+                //2022年9月17日 非同期IOを中止
+                await AsyncIO.ClearJobAndWaitAsync();
 
 #pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
                 //await StartAsync(files);

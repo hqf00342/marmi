@@ -1,10 +1,10 @@
 #define X86ONLY		//x86
 
+using SevenZip;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using SevenZip;
 using ArchivedFiles = System.Collections.ObjectModel.ReadOnlyCollection<SevenZip.ArchiveFileInfo>;
 
 namespace Marmi
@@ -69,9 +69,7 @@ namespace Marmi
         {
             var libname = Environment.Is64BitOperatingSystem ? "7z64.dll" : "7z.dll";
             SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, libname));
-
         }
-
 
         /// <summary>
         /// パスワードをクリアする。

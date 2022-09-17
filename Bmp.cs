@@ -38,7 +38,7 @@ namespace Marmi
             else
             {
                 if (highPriority)
-                    AsyncIO.AddJob(ix, () => { tcs.SetResult(true); });
+                    AsyncIO.AddJobHigh(ix, () => { tcs.SetResult(true); });
                 else
                     AsyncIO.AddJobLow(ix, () => { tcs.SetResult(true); });
             }

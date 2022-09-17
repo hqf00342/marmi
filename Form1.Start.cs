@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,6 +16,8 @@ namespace Marmi
     {
         private async Task StartAsync(string[] filenames)
         {
+            Debug.WriteLine($"StartAsync()");
+
             //ファイルがすでに開いているかどうかチェック
             if (filenames.Length == 1 && filenames[0] == App.g_pi.PackageName)
             {
@@ -27,8 +28,7 @@ namespace Marmi
             }
 
             //初期化
-            InitMarmi();
-            Debug.WriteLine($"Start: InitMarmi() 完了");
+            await InitMarmiAsync();
 
             //ファイル一覧を生成
             bool needRecurse = MakePackageInfo(filenames);
@@ -220,9 +220,12 @@ namespace Marmi
         /// ・非同期IO停止
         /// ・書庫パスワードをクリア
         /// </summary>
-        private async void InitMarmi()
+        private async Task InitMarmiAsync()
         {
-            Debug.WriteLine("InitMarmi()");
+            Debug.WriteLine("InitMarmiAsync()");
+
+            //2022年9月17日 非同期IOを中止、書庫のclose
+            await AsyncIO.ClearJobAndWaitAsync();
 
             //サムネイルモードの解放
             if (App.Config.isThumbnailView)
@@ -252,11 +255,6 @@ namespace Marmi
             //ver1.35スクリーンキャッシュをクリア
             ScreenCache.Clear();
 
-            //2012/09/04 非同期IOを中止
-            //AsyncIO.ClearJob();
-            //AsyncIO.AddJob(-1, null);
-            await AsyncIO.ClearJobAndWaitAsync();
-
             //パッケージ情報を初期化
             App.g_pi.Initialize();
             //App.g_pi = new PackageInfo();
@@ -275,11 +273,7 @@ namespace Marmi
 
             //書庫のパスワードをクリア
             SevenZipWrapper.ClearPassword();
-
-            //GC: 2021年2月26日 前の書庫のガベージを消すためここでやっておく。
-            //Uty.ForceGC();
         }
-
 
         /// <summary>
         /// アーカイブファイルを一時ファイルに展開する。
@@ -326,7 +320,6 @@ namespace Marmi
         /// <returns>一時フォルダのフルパス</returns>
         private static string SuggestTempDirName()
         {
-
             string root = App.Config.General.TmpFolder
                 ?? Application.StartupPath;
 
@@ -392,7 +385,6 @@ namespace Marmi
             //ver1.31 7zファイルなのにソリッドじゃないことがある！？
             if (Path.GetExtension(filename) == ".7z")
                 App.g_pi.isSolid = true;
-
 
             //ファイルをリストに追加
             App.g_pi.Items.Clear();
