@@ -837,5 +837,10 @@ namespace Marmi
                 cnt.PerformClick();
             }
         }
+
+        private void Menu_Help_GC_Clicked(object sender, EventArgs e)
+        {
+
+        }
     } // Class Form1
 }

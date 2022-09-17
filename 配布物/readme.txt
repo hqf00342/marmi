@@ -7,7 +7,7 @@
 【HomePage】 http://yk.tea-nifty.com/netdev/
 【連 絡 先】 b4rsk.yk@gmail.com
 【転　　載】 自由
-【著 作 権】 Copyright (C) 2009-2014 by T.Nagashima
+【著 作 権】 Copyright (C) 2009-2021 by T.Nagashima
 =====================================================================
 
 
@@ -25,21 +25,19 @@
   ・フォルダごと閲覧可、再帰的にサブフォルダまで検索
   ・サムネイル一覧表示機能
   ・pdfに対応(ver1.57より。susie pluginが必要）
-  ・rar5に対応(最新のunrar.dllが必要）
-
 
 ■動作環境
 
-  WindowsXP/Vista/7/8/8.1で確認。
-  XPでは.NetFramework 3.5以上が必要です。
+ Windows10で動作確認。
+  Windows 7～ 8.1では .NET Framework4.8が必要になります。
 
 
 ■対応書庫、対応画像形式
 
-  書庫： zip, lzh, rar, tar, 7z, gz ,tgz, rar5(オプション)
-  画像： bmp, jpg, png, gif, ico, tiff, pdf(オプション)
+  書庫： zip, lzh, rar, tar, 7z, gz ,tgz
+  画像： bmp, jpg, png, gif, ico, tiff, pdf
   アニメーション形式には対応していません。
-  （最初のフレームだけ表示します）
+  pdfは32bit環境のみ。64bit環境では閲覧できません。
 
 
 ■インストール・アンインストール
@@ -118,6 +116,14 @@ http://yk.tea-nifty.com/netdev/2009/07/marmi-e771.html
 
 
 ■変更履歴
+
+ver 1.95 2022年9月18日
+  ・ Windows10に対応しました。.NET Framework4.8が必要です（Windows10では不要）
+  ・高解像度DPIに対応
+  ・64bit環境に対応しました。
+  ・rar5対応を除外しました。通常のrarは閲覧可能です。
+  ・64bitモードの場合のプラグインの制約でpdfに未対応です。
+
 ver1.82 2014年4月6日
   ・しおりメニューに画像を表示するように変更
   ・書庫を常に一時フォルダに展開するオプションを追加

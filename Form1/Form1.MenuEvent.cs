@@ -852,8 +852,5 @@ namespace Marmi
             //Ä•`ŽÊ
             PicPanel.Invalidate();
         }
-
-        private void Menu_Help_GC_Clicked(object sender, EventArgs e) => Uty.ForceGC();
-
     }
 }

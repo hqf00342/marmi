@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Marmi - アーカイブ画像ビューア")]
-[assembly: AssemblyCopyright("Copyright (C)  2009-2014 T.Nagashima")]
+[assembly: AssemblyCopyright("Copyright (C)  2009-2021 T.Nagashima")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,5 +28,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.9.4.*")]
-[assembly: AssemblyFileVersion("1.9.4.0")]
+[assembly: AssemblyVersion("1.9.5.*")]
+[assembly: AssemblyFileVersion("1.9.5.0")]
