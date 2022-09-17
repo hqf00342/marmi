@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <None Include="SharpCompress\ScWrapper.cs" />
     <Compile Include="Uty\Bmp.cs" />
     <Compile Include="DataModel\AdvanceConfig.cs" />
     <Compile Include="DataModel\Exif.cs" />
@@ -140,7 +141,7 @@
     <Compile Include="Uty\ScreenCache.cs" />
     <Compile Include="Uty\Uty.cs" />
     <Compile Include="Uty\NaturalStringComparer.cs" />
-    <Compile Include="Uty\SharpCompressHelper.cs" />
+    <None Include="SharpCompress\SharpCompressHelper.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
     <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\ThumbnailSize.cs" />
@@ -402,11 +403,6 @@
       <ProductName>Windows インストーラー 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="SharpCompress">
-      <Version>0.32.2</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
