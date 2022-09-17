@@ -52,9 +52,9 @@ namespace Marmi
             m_isOpen = false;
 
             //強制的に32bitライブラリに
-            //SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z.dll"));
+            SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z.dll"));
             //SevenZipExtractor.SetLibraryPath(Path.Combine(Application.StartupPath, "7z64.dll"));
-            SetLibraryPath();
+            //SetLibraryPath();
 
             //ver1.10 キャンセル処理のための初期化
             IsCancelExtraction = false;
