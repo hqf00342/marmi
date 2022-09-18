@@ -29,7 +29,7 @@
 ■動作環境
 
  Windows10で動作確認。
-  Windows 7～ 8.1では .NET Framework4.8が必要になります。
+ Windows 7～ 8.1で動作するには .NET Framework4.8が必要になります。
 
 
 ■対応書庫、対応画像形式
@@ -48,17 +48,16 @@
   レジストリは使用しておりません。
   アンインストールはこのフォルダごと削除すれば完了です。
 
-  pdf対応
-  pdfを閲覧する場合にはsusie pluginを利用して表示できます。
-  axpdf.spi ver1.14で動作確認しています。
+■pdf対応
+
+  pdf閲覧にはsusie plugin axpdf.spiで動作確認しています。
+  ただし64bit環境では動作しません。
+
+  axpdf.spi (GPLv3)
+  http://mimizunoapp.appspot.com/susie/
+
   同spiファイルをmarmi.exeと同じフォルダに入れてください。
   うまく読み込めていない場合はpdfはサポートされないと警告が出ます。
-
-  rar5対応
-  rar5書庫を読み込む場合にはunrar.dllを同じフォルダに入れてください。
-  unrar.dllがない場合でも以前のrar形式は対応しています。
-  必要に応じて導入してください。
-
 
 ■使い方
 
@@ -87,15 +86,11 @@
   また、本ソフトウェアは以下のライブラリを利用しています。作成、公開されている
   皆様に感謝いたします。
 
-  SevenZipSharp（GNU LGPL3.0）http://sevenzipsharp.codeplex.com/
+  SevenZipSharp（GNU LGPL3.0）
+  http://sevenzipsharp.codeplex.com/
   
-  7z.dll http://7-zip.org
-
-  またプラグインとして以下のものを利用できるようにしています。
-  
-  unrar.dll
-  http://www.rarlab.com/
-  http://www.rarlab.com/rar_add.htm
+  7z.dll
+  http://7-zip.org
 
   axpdf.spi (GPLv3)
   http://mimizunoapp.appspot.com/susie/
@@ -118,11 +113,12 @@ http://yk.tea-nifty.com/netdev/2009/07/marmi-e771.html
 ■変更履歴
 
 ver 1.95 2022年9月18日
-  ・ Windows10に対応しました。.NET Framework4.8が必要です（Windows10では不要）
-  ・高解像度DPIに対応
+  ・ Windows10に対応しました。
+  ・.NET Framework4.8が必要です（Windows10では不要）
+  ・高解像度ディスプレイに対応
   ・64bit環境に対応しました。
   ・rar5対応を除外しました。通常のrarは閲覧可能です。
-  ・64bitモードの場合のプラグインの制約でpdfに未対応です。
+  ・64bitモードの場合、プラグインの制約でpdfに未対応です。
 
 ver1.82 2014年4月6日
   ・しおりメニューに画像を表示するように変更
