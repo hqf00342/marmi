@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -208,56 +207,20 @@ namespace Marmi
             //ver1.77 MRUリストの更新
             App.Config.UpdateMRUList(App.g_pi);
 
-            //全画面モードを戻す
-            //戻さないとxml保存されるウィンドウサイズが全画面になってしまう
-            if (App.Config.isFullScreen)
-            {
-                SetFullScreen(false);
-            }
-
             //非同期IOスレッドの終了
             AsyncIO.StopThread();
-
-            //サムネイルモードの解放
-            //if (App.Config.isThumbnailView)
-            //{
-            //    SetThumbnailView(false);
-            //}
-
-            //7z解凍をしていたら中断
-            //m_AsyncSevenZip?.CancelExtractAll();
-
-            //スレッドが動作していたら停止させる.
-            //サムネイルの保存
-            //ファイルハンドルの解放
-            //2022年9月23日コメントアウト
-            //await InitMarmiAsync();
 
             //Tempディレクトリの削除
             DeleteAllTempDirs();
 
-            //ver1.62ツールバー位置を保存
-            //App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
-
-            ////////////////////////////////////////ver1.10
-
-            //ver1.10
             //設定の保存
             if (App.Config.General.IsSaveConfig)
             {
-                //設定ファイルを保存する
-                App.Config.windowLocation = this.Location;
-                App.Config.windowSize = this.Size;
+                //ウィンドウ位置、サイズの保存->OnResizeEnd()で実施。
+                //App.Config.windowLocation = this.Location;
+                //App.Config.windowSize = this.Size;
                 AppGlobalConfig.SaveToXmlFile(App.Config);
             }
-            //else
-            //{
-            //    //設定ファイルがあれば削除する
-            //    //string configFile = AppGlobalConfig.getConfigFileName();
-            //    string configFile = AppGlobalConfig.ConfigFilename;
-            //    if (File.Exists(configFile))
-            //        File.Delete(configFile);
-            //}
 
             //Application.Idleの解放
             Application.Idle -= Application_Idle;
@@ -346,7 +309,14 @@ namespace Marmi
         protected override void OnResizeEnd(EventArgs e)
         {
             base.OnResizeEnd(e);
-            //Debug.WriteLine("OnResizeEnd()");
+            Debug.WriteLine("OnResizeEnd()");
+
+            //ウィンドウサイズ、位置を保存
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                App.Config.windowSize = this.Size; //new Size(this.Width, this.Height);
+                App.Config.windowLocation = this.Location; // new Point(this.Left, this.Top);
+            }
 
             if (_thumbPanel != null && App.Config.isThumbnailView)
             {
@@ -835,17 +805,21 @@ namespace Marmi
 
             //フォーカスをもらった時のクリックがツールバーアイテムを押していたなら
             //そのツールバーを実行する。
-            if(_hoverStripItem is ToolStripItem cnt)
+            if (_hoverStripItem is ToolStripItem cnt)
             {
                 cnt.PerformClick();
             }
         }
 
+        /// <summary>
+        /// ウィンドウを最小化する。
+        /// Toggleにしたが実質最小化のみ。
+        /// </summary>
         private void ToggleFormSizeMinNormal()
         {
             this.WindowState = (this.WindowState == FormWindowState.Minimized)
                 ? FormWindowState.Normal
                 : FormWindowState.Minimized;
         }
-    } // Class Form1
+    }
 }
