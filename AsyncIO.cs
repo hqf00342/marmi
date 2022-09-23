@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Marmi
 {
@@ -15,7 +16,11 @@ namespace Marmi
         private static Thread _thread = null;
 
         //Worker内部のSzがOpenしているかどうか
-        private static volatile bool szOpen = false;
+        //ClearJobAndWaitAsync()でszがオープンしているか判定するのに利用する。
+        private static volatile bool _szOpen = false;
+
+        //スレッドが生きているかどうか。終了したいときにfalseにすると無限ループを終了する。
+        private static volatile bool _threadAlive = true;
 
         //非同期Jobリスト
         internal static PrioritySafeQueue<KeyValuePair<int, Action>> _queue = new PrioritySafeQueue<KeyValuePair<int, Action>>();
@@ -32,8 +37,9 @@ namespace Marmi
         /// <summary>スレッドを停止する。Marmiが終了するときに呼ばれる。</summary>
         public static void StopThread()
         {
-            _thread?.Abort();
-            _thread?.Join();
+            //_thread?.Abort();
+            _threadAlive = false;
+            _thread?.Join(3000);//最悪3秒待つ
         }
 
         /// <summary>
@@ -46,7 +52,8 @@ namespace Marmi
             //スレッド専用SevenZip
             SevenZipWrapper AsyncSZ = new SevenZipWrapper();
 
-            while (true)
+
+            while (_threadAlive)
             {
                 if (_queue.Count > 0)
                 {
@@ -100,10 +107,18 @@ namespace Marmi
                 else
                 {
                     //少し休憩
-                    szOpen = AsyncSZ.IsOpen;
+                    _szOpen = AsyncSZ.IsOpen;
                     Thread.Sleep(50);
                 }
             }
+
+            //スレッド終了処理
+            if (AsyncSZ.IsOpen)
+            {
+                AsyncSZ?.Close();
+                Debug.WriteLine($"AsyncIO : sz Close()");
+            }
+            Debug.WriteLine("AsyncIO.Worker()スレッドは終了しました");
         }
 
         /// <summary>
@@ -187,9 +202,14 @@ namespace Marmi
         {
             _queue.Clear();
             AddJobHigh(-1, null);
-            while (szOpen)
+
+            if (_threadAlive)
             {
-                await Task.Delay(50);
+                while (_szOpen)
+                {
+                    await Task.Delay(50);
+                }
+                Debug.WriteLine("AsyncIO.ClearJobAndWaitAsync() 完了");
             }
         }
     }
