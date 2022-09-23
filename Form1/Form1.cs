@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -220,6 +221,12 @@ namespace Marmi
                 //App.Config.windowLocation = this.Location;
                 //App.Config.windowSize = this.Size;
                 AppGlobalConfig.SaveToXmlFile(App.Config);
+            }
+            else
+            {
+                //コンフィグファイルを削除
+                if (File.Exists(AppGlobalConfig.ConfigFilename))
+                    File.Delete(AppGlobalConfig.ConfigFilename);
             }
 
             //Application.Idleの解放
