@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -78,27 +79,15 @@ namespace Marmi
             //CheckAndStart();
 
             //書庫の場合、MRUからページ番号などを得る
-            if (App.Config.General.IsContinueZipView)
+            var mru = App.Config.Mru.FirstOrDefault(a => a.Name == App.g_pi.PackageName);
+            if(mru!= null)
             {
-                //読み込み値を無視し、０にセット
-                //g_pi.NowViewPage = 0;
-                foreach (var mru in App.Config.Mru)
+                //ブックマークを読み込み
+                App.g_pi.LoadBookmarkString(mru.Bookmarks);
+                //続きから読む
+                if (App.Config.General.IsContinueZipView)
                 {
-                    if (mru == null)
-                    {
-                        continue;
-                    }
-                    else if (mru.Name == App.g_pi.PackageName
-                        //ver1.79 コメントアウト
-                        //&& g_pi.packType == PackageType.Archive)
-                        )
-                    {
-                        //最終ページを設定する。
-                        App.g_pi.NowViewPage = mru.LastViewPage;
-                        //Bookmarkを設定する
-                        App.g_pi.LoadBookmarkString(mru.Bookmarks);
-                        break;
-                    }
+                    App.g_pi.NowViewPage = mru.LastViewPage;
                 }
             }
 
@@ -260,11 +249,7 @@ namespace Marmi
             //App.g_pi = new PackageInfo();
 
             //一時フォルダの削除
-            foreach (string dir in DeleteDirList)
-            {
-                Uty.DeleteTempDir(dir);
-            }
-            DeleteDirList.Clear();
+            DeleteAllTempDirs();
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
@@ -273,6 +258,15 @@ namespace Marmi
 
             //書庫のパスワードをクリア
             SevenZipWrapper.ClearPassword();
+        }
+
+        private void DeleteAllTempDirs()
+        {
+            foreach (string dir in DeleteDirList)
+            {
+                Uty.DeleteTempDir(dir);
+            }
+            DeleteDirList.Clear();
         }
 
         /// <summary>

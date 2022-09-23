@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -13,7 +14,7 @@ namespace Marmi
     /********************************************************************************/
 
     [Serializable]
-    public class AppGlobalConfig //: INotifyPropertyChanged
+    public class AppGlobalConfig
     {
         //コンフィグファイル名。XmlSerializeで利用
         private const string CONFIGNAME = "Marmi.xml";
@@ -21,11 +22,14 @@ namespace Marmi
         //サイドバーの基本の幅
         private const int SIDEBAR_INIT_WIDTH = 200;
 
+        public Size windowSize;                     //ウィンドウサイズ
+        public Point windowLocation;                //ウィンドウ表示位置
+
+        [XmlIgnore]
         public static string ConfigFilename => Path.Combine(Application.StartupPath, CONFIGNAME);
 
         public bool DualView { get; set; }          //2画面並べて表示
-        public Size windowSize;                     //ウィンドウサイズ
-        public Point windowLocation;                //ウィンドウ表示位置
+
 
         public List<MRU> Mru { get; set; } = new List<MRU>();     //MRUリスト用配列
 
@@ -181,35 +185,23 @@ namespace Marmi
         /// </summary>
         public void UpdateMRUList(PackageInfo pi)
         {
-            //var pi = App.g_pi;
-
-            //なにも無ければ追加しない
             if (string.IsNullOrEmpty(pi.PackageName))
                 return;
 
-            //MRUに追加する必要があるか確認
-            bool needMruAdd = true;
-            for (int i = 0; i < Mru.Count; i++)
+            var mru = Mru.FirstOrDefault(a=>a.Name==pi.PackageName);
+            if(mru == null)
             {
-                if (Mru[i] == null)
-                    continue;
-                if (Mru[i].Name == pi.PackageName)
-                {
-                    //登録済みのMRUを更新
-                    //日付だけ更新
-                    Mru[i].Date = DateTime.Now;
-                    //最後に見たページも更新 v1.37
-                    Mru[i].LastViewPage = pi.NowViewPage;
-                    needMruAdd = false;
-
-                    //ver1.77 Bookmarkも設定
-                    Mru[i].Bookmarks = pi.CreateBookmarkString();
-                }
-            }
-            if (needMruAdd)
-            {
+                //新規追加
                 Mru.Add(new MRU(pi.PackageName, DateTime.Now, pi.NowViewPage, pi.CreateBookmarkString()));
             }
+            else
+            {
+                //過去データを更新
+                mru.Date = DateTime.Now;
+                mru.LastViewPage = pi.NowViewPage;
+                mru.Bookmarks = pi.CreateBookmarkString();
+            }
+            return;
         }
     }
 }

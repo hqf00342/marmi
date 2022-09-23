@@ -63,7 +63,7 @@ namespace Marmi.DataModel
             IsSaveConfig = false;
             BackColor = Color.LightSlateGray;
             IsReplaceArrowButton = false;
-            IsContinueZipView = false;
+            IsContinueZipView = true;
             IsExtractIfSolidArchive = true;
             IsWindowPosCenter = false;
             HideToolbarString = false;
