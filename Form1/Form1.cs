@@ -841,9 +841,11 @@ namespace Marmi
             }
         }
 
-        private void Menu_Help_GC_Clicked(object sender, EventArgs e)
+        private void ToggleFormSizeMinNormal()
         {
-
+            this.WindowState = (this.WindowState == FormWindowState.Minimized)
+                ? FormWindowState.Normal
+                : FormWindowState.Minimized;
         }
     } // Class Form1
 }

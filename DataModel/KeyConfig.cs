@@ -25,6 +25,8 @@ namespace Marmi.DataModel
         public Keys Key_Thumbnail { get; set; }
         public Keys Key_Sidebar { get; set; }
 
+        public Keys Key_MinWindow { get; set; }
+
         public void Init()
         {
             Key_Exit1 = Keys.Q;
@@ -45,6 +47,7 @@ namespace Marmi.DataModel
             Key_Rotate1 = Keys.R;
             Key_Thumbnail = Keys.T;
             Key_Sidebar = Keys.S;
+            Key_MinWindow = Keys.Z;
         }
     }
 }

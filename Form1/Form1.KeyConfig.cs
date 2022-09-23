@@ -57,6 +57,9 @@ namespace Marmi
             //サムネイル・サイドバー
             setkey(App.Config.Keys.Key_Thumbnail, () => Menu_ViewThumbnail_Click(null, null));
             setkey(App.Config.Keys.Key_Sidebar, () => Menu_ViewSidebar_Click(null, null));
+
+            //最小化
+            setkey(App.Config.Keys.Key_MinWindow, ToggleFormSizeMinNormal);
         }
     }
 }

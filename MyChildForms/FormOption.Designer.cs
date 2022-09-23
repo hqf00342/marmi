@@ -156,6 +156,8 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label18 = new System.Windows.Forms.Label();
+            this.ka_minWindow = new Marmi.KeyAccelerator();
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
@@ -968,6 +970,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label17, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.ka_thunbnail, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.ka_sidebar, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label18, 0, 14);
+            this.tableLayoutPanel1.Controls.Add(this.ka_minWindow, 1, 14);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 16;
@@ -1737,6 +1741,27 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(3, 313);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(94, 12);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "最小化";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_windowsize
+            // 
+            this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_minWindow.keyData = System.Windows.Forms.Keys.None;
+            this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
+            this.ka_minWindow.Name = "ka_windowsize";
+            this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
+            this.ka_minWindow.TabIndex = 14;
+            this.ka_minWindow.Tag = "半ページ戻る";
+            // 
             // FormOption
             // 
             this.AcceptButton = this.btnOK;
@@ -1918,5 +1943,7 @@
         private System.Windows.Forms.Label label17;
         private KeyAccelerator ka_thunbnail;
         private KeyAccelerator ka_sidebar;
+        private System.Windows.Forms.Label label18;
+        private KeyAccelerator ka_minWindow;
     }
 }

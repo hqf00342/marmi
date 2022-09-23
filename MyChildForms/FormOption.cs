@@ -135,6 +135,7 @@ namespace Marmi
             ka_lastpage1.keyData = set.Keys.Key_Lastpage1;
             ka_thunbnail.keyData = set.Keys.Key_Thumbnail;
             ka_sidebar.keyData = set.Keys.Key_Sidebar;
+            ka_minWindow.keyData = set.Keys.Key_MinWindow;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -258,6 +259,7 @@ namespace Marmi
             set.Keys.Key_Lastpage1 = ka_lastpage1.keyData;
             set.Keys.Key_Thumbnail = ka_thunbnail.keyData;
             set.Keys.Key_Sidebar = ka_sidebar.keyData;
+            set.Keys.Key_MinWindow = ka_minWindow.keyData;
         }
 
         private void InitButton_Click(object sender, EventArgs e)
