@@ -198,7 +198,7 @@ namespace Marmi
             }
         }
 
-        protected override async void OnFormClosing(FormClosingEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
 
@@ -208,22 +208,21 @@ namespace Marmi
             //ver1.77 MRUリストの更新
             App.Config.UpdateMRUList(App.g_pi);
 
-            //全画面モードの解放
+            //全画面モードを戻す
+            //戻さないとxml保存されるウィンドウサイズが全画面になってしまう
             if (App.Config.isFullScreen)
             {
                 SetFullScreen(false);
-                //ver1.77 元に戻すけどモード保存はさせる
-                App.Config.isFullScreen = true;
             }
 
             //非同期IOスレッドの終了
             AsyncIO.StopThread();
 
             //サムネイルモードの解放
-            if (App.Config.isThumbnailView)
-            {
-                SetThumbnailView(false);
-            }
+            //if (App.Config.isThumbnailView)
+            //{
+            //    SetThumbnailView(false);
+            //}
 
             //7z解凍をしていたら中断
             //m_AsyncSevenZip?.CancelExtractAll();
@@ -238,7 +237,7 @@ namespace Marmi
             DeleteAllTempDirs();
 
             //ver1.62ツールバー位置を保存
-            App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
+            //App.Config.IsToolbarTop = (toolStrip1.Dock == DockStyle.Top);
 
             ////////////////////////////////////////ver1.10
 
@@ -251,20 +250,20 @@ namespace Marmi
                 App.Config.windowSize = this.Size;
                 AppGlobalConfig.SaveToXmlFile(App.Config);
             }
-            else
-            {
-                //設定ファイルがあれば削除する
-                //string configFile = AppGlobalConfig.getConfigFileName();
-                string configFile = AppGlobalConfig.ConfigFilename;
-                if (File.Exists(configFile))
-                    File.Delete(configFile);
-            }
+            //else
+            //{
+            //    //設定ファイルがあれば削除する
+            //    //string configFile = AppGlobalConfig.getConfigFileName();
+            //    string configFile = AppGlobalConfig.ConfigFilename;
+            //    if (File.Exists(configFile))
+            //        File.Delete(configFile);
+            //}
 
             //Application.Idleの解放
             Application.Idle -= Application_Idle;
 
             //ver1.57 susie解放
-            App.susie.Dispose();
+            App.susie?.Dispose();
         }
 
         protected override void OnDragEnter(DragEventArgs drgevent)
