@@ -219,11 +219,11 @@
     <Compile Include="Form1\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\FormOption.cs">
+    <Compile Include="MyChildForms\OptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\FormOption.Designer.cs">
-      <DependentUpon>FormOption.cs</DependentUpon>
+    <Compile Include="MyChildForms\OptionForm.Designer.cs">
+      <DependentUpon>OptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MyChildForms\FormPackageInfo.cs">
       <SubType>Form</SubType>
@@ -279,9 +279,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\FormOption.resx">
+    <EmbeddedResource Include="MyChildForms\OptionForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>FormOption.cs</DependentUpon>
+      <DependentUpon>OptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyChildForms\FormPackageInfo.resx">
       <SubType>Designer</SubType>

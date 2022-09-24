@@ -1,6 +1,6 @@
 ﻿namespace Marmi
 {
-	partial class FormOption
+	partial class OptionForm
 	{
 		/// <summary>
 		/// 必要なデザイナ変数です。

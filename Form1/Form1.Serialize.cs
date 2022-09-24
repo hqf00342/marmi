@@ -12,24 +12,29 @@ namespace Marmi
         /// </summary>
         private void ApplyConfigToWindow()
         {
-            //バー関連
+            //背景色
+            PicPanel.BackColor = App.Config.General.BackColor;
+
+            //メニューバー、ツールバー、ステータスバー
             menuStrip1.Visible = App.Config.VisibleMenubar;
             toolStrip1.Visible = App.Config.VisibleToolBar;
             statusbar.Visible = App.Config.VisibleStatusBar;
 
             //ナビバー
-            //g_Sidebar.SetSizeAndDock(GetClientRectangle());
             _sidebar.Visible = App.Config.VisibleSidebar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
             if (App.Config.General.SimpleCalcForWindowLocation)
             {
-                //簡易：as is
+                //単純に位置とサイズを指定
                 this.Size = App.Config.windowSize;
                 this.Location = App.Config.windowLocation;
             }
             else
+            {
+                //デュアルディスプレイを考慮して配置
                 SetFormPosLocation();
+            }
 
             //ver1.77全画面モード対応
             if (App.Config.General.SaveFullScreenMode && App.Config.isFullScreen)
@@ -68,8 +73,28 @@ namespace Marmi
                 _thumbPanel.SetThumbnailSize(App.Config.Thumbnail.ThumbnailSize);
                 _thumbPanel.SetFont(App.Config.Thumbnail.ThumbnailFont, App.Config.Thumbnail.ThumbnailFontColor);
             }
+
+            //キーコンフィグ反映
+            SetKeyConfig2();
+
+            //ver1.65 ツールバーの文字はすぐ反映
+            SetToolbarString();
+            ResizeTrackBar();
+
+            //サムネイルビュー中ならすぐに再描写
+            if (App.Config.isThumbnailView)
+            {
+                _thumbPanel.ReDraw();
+            }
+
+            //ver1.79 ScreenCacheをクリアする。
+            //ScreenCache.Clear();
         }
 
+        /// <summary>
+        /// デュアルディスプレイ対応のフォーム位置指定
+        /// 2画面をまたがらないようにする。
+        /// </summary>
         private void SetFormPosLocation()
         {
             //デュアルディスプレイ対応
@@ -82,9 +107,9 @@ namespace Marmi
                     return;
                 }
             }
-            //ここに来た時はどのディスプレイにも属さなかったとき
 
-            //どの画面にも属さないのでプライマリに行ってもらう
+            //ここに来た時はどのディスプレイにも属さなかったとき。
+            //->プライマリに行ってもらう
             //setFormPosLocation2(Screen.PrimaryScreen);
             //return;
             //どの画面にも属さないので一番近いディスプレイを探す
@@ -115,7 +140,7 @@ namespace Marmi
         private void SetFormPosLocation2(Screen scr)
         {
             //このスクリーンのワーキングエリアをチェックする
-            var disp = scr.WorkingArea;
+            var dispRect = scr.WorkingArea;
 
             //ver1.77 ウィンドウサイズの調整(小さすぎるとき）
             if (App.Config.windowSize.Width < this.MinimumSize.Width)
@@ -124,36 +149,36 @@ namespace Marmi
                 App.Config.windowSize.Height = this.MinimumSize.Height;
 
             //ウィンドウサイズの調整(大きすぎるとき）
-            if (disp.Width < App.Config.windowSize.Width)
+            if (dispRect.Width < App.Config.windowSize.Width)
             {
                 App.Config.windowLocation.X = 0;
-                App.Config.windowSize.Width = disp.Width;
+                App.Config.windowSize.Width = dispRect.Width;
             }
-            if (disp.Height < App.Config.windowSize.Height)
+            if (dispRect.Height < App.Config.windowSize.Height)
             {
                 App.Config.windowLocation.Y = 0;
-                App.Config.windowSize.Height = disp.Height;
+                App.Config.windowSize.Height = dispRect.Height;
             }
 
             //ウィンドウ位置の調整（画面外:マイナス方向）
-            if (App.Config.windowLocation.X < disp.X)
-                App.Config.windowLocation.X = disp.X;
-            if (App.Config.windowLocation.Y < disp.Y)
-                App.Config.windowLocation.Y = disp.Y;
+            if (App.Config.windowLocation.X < dispRect.X)
+                App.Config.windowLocation.X = dispRect.X;
+            if (App.Config.windowLocation.Y < dispRect.Y)
+                App.Config.windowLocation.Y = dispRect.Y;
 
             //右下も画面外に表示させない
             var right = App.Config.windowLocation.X + App.Config.windowSize.Width;
             var bottom = App.Config.windowLocation.Y + App.Config.windowSize.Height;
-            if (right > disp.X + disp.Width)
-                App.Config.windowLocation.X = disp.X + disp.Width - App.Config.windowSize.Width;
-            if (bottom > disp.Y + disp.Height)
-                App.Config.windowLocation.Y = disp.Y + disp.Height - App.Config.windowSize.Height;
+            if (right > dispRect.X + dispRect.Width)
+                App.Config.windowLocation.X = dispRect.X + dispRect.Width - App.Config.windowSize.Width;
+            if (bottom > dispRect.Y + dispRect.Height)
+                App.Config.windowLocation.Y = dispRect.Y + dispRect.Height - App.Config.windowSize.Height;
 
             //中央表示強制かどうか
             if (App.Config.General.IsWindowPosCenter)
             {
-                App.Config.windowLocation.X = disp.X + (disp.Width - App.Config.windowSize.Width) / 2;
-                App.Config.windowLocation.Y = disp.Y + (disp.Height - App.Config.windowSize.Height) / 2;
+                App.Config.windowLocation.X = dispRect.X + (dispRect.Width - App.Config.windowSize.Width) / 2;
+                App.Config.windowLocation.Y = dispRect.Y + (dispRect.Height - App.Config.windowSize.Height) / 2;
             }
             //サイズの適用
             this.Size = App.Config.windowSize;

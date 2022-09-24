@@ -4,14 +4,14 @@ using System.Windows.Forms;
 
 namespace Marmi
 {
-    public partial class FormOption : Form
+    public partial class OptionForm : Form
     {
         //static List<KeyConfig> keyConfigList = new List<KeyConfig>();
         private bool KeyDuplicationError = false;
 
         //AppGlobalConfig config = new AppGlobalConfig();
 
-        public FormOption()
+        public OptionForm()
         {
             InitializeComponent();
 

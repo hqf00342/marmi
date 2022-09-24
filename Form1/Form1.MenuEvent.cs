@@ -334,40 +334,16 @@ namespace Marmi
 
         //オプションメニュー*************************************************************************
 
-        private async void Menu_Option_Click(object sender, EventArgs e)
+        private void Menu_Option_Click(object sender, EventArgs e)
         {
-            var fo = new FormOption();
+            var fo = new OptionForm();
             fo.LoadConfig(App.Config);
             if (fo.ShowDialog() == DialogResult.OK)
             {
+                //App.Configに取り込み
                 fo.SaveConfig(ref App.Config);
-
-                //キーコンフィグ反映
-                SetKeyConfig2();
-
-                //ver1.65 ツールバーの文字はすぐ反映
-                SetToolbarString();
-                ResizeTrackBar();
-
-                //ver1.79 ScreenCacheをクリアする。
-                ScreenCache.Clear();
-
-                //サムネイルサイズはすぐに反映
-                if (_thumbPanel != null && _thumbPanel.Visible)
-                {
-                    _thumbPanel.SetThumbnailSize(App.Config.Thumbnail.ThumbnailSize);
-                    _thumbPanel.BackColor = App.Config.Thumbnail.ThumbnailBackColor;
-                    _thumbPanel.SetFont(App.Config.Thumbnail.ThumbnailFont, App.Config.Thumbnail.ThumbnailFontColor);
-                }
-                if (App.Config.isThumbnailView)
-                {
-                    _thumbPanel.ReDraw();
-                }
-                else
-                {
-                    //通常画面を再描写
-                    await SetViewPageAsync(App.g_pi.NowViewPage);
-                }
+                //App.Configをウィンドウに反映
+                ApplyConfigToWindow();
             }
         }
 
