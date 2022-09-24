@@ -818,9 +818,12 @@ namespace Marmi
         /// </summary>
         public void ReDraw()
         {
-            //MakeThumbnailScreen();
-            SetScrollBar(); //スクロールバーの設定とサムネイルへの場所登録
-            this.Invalidate();
+            if (this.Visible)
+            {
+                //MakeThumbnailScreen();
+                SetScrollBar(); //スクロールバーの設定とサムネイルへの場所登録
+                this.Invalidate();
+            }
         }
 
         /// <summary>

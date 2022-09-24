@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -11,6 +12,14 @@ namespace Marmi
 
         //サムネイル標準サイズ
         public static readonly int DEFAULT_THUMBNAIL_SIZE = 400;
+
+        //サイドバーの基本の幅
+        internal const int SIDEBAR_INIT_WIDTH = 200;
+
+        //コンフィグファイル名。XmlSerializeで利用
+        internal const string CONFIGNAME = "Marmi.xml";
+
+        internal static string ConfigFilename => Path.Combine(Application.StartupPath, CONFIGNAME);
 
         //現在見ているパッケージ情報
         public static PackageInfo g_pi = new PackageInfo();

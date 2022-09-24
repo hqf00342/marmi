@@ -225,8 +225,8 @@ namespace Marmi
             else
             {
                 //コンフィグファイルを削除
-                if (File.Exists(AppGlobalConfig.ConfigFilename))
-                    File.Delete(AppGlobalConfig.ConfigFilename);
+                if (File.Exists(App.ConfigFilename))
+                    File.Delete(App.ConfigFilename);
             }
 
             //Application.Idleの解放
@@ -289,7 +289,7 @@ namespace Marmi
 
             //サムネイルか？
             //Formが表示する前にも呼ばれるのでThumbPanel != nullは必須
-            if (_thumbPanel != null && App.Config.isThumbnailView)
+            if (_thumbPanel != null && ViewState.ThumbnailView)
             {
                 //ver1.64 DockStyleにしたのでコメントアウト
                 //Rectangle rect = GetClientRectangle();
@@ -325,7 +325,7 @@ namespace Marmi
                 App.Config.windowLocation = this.Location; // new Point(this.Left, this.Top);
             }
 
-            if (_thumbPanel != null && App.Config.isThumbnailView)
+            if (_thumbPanel != null && ViewState.ThumbnailView)
             {
                 //サムネイル表示モード中
             }
@@ -394,7 +394,7 @@ namespace Marmi
             if (isShow)
             {
                 //表示準備する
-                App.Config.isThumbnailView = true;
+                ViewState.ThumbnailView = true;
 
                 //SideBarがある場合は消す
                 if (_sidebar.Visible)
@@ -410,7 +410,7 @@ namespace Marmi
                 //表示する
                 if (!this.Controls.Contains(_thumbPanel))
                     this.Controls.Add(_thumbPanel);
-                if (!App.Config.isFullScreen)
+                if (!ViewState.FullScreen)
                     _thumbPanel.BringToFront();        //ver1.83 最前面になるようにする。ツールバー対策
                 _thumbPanel.Dock = DockStyle.Fill; //ver1.64
                 _thumbPanel.Visible = true;
@@ -420,7 +420,7 @@ namespace Marmi
             else
             {
                 //表示をやめる
-                App.Config.isThumbnailView = false;
+                ViewState.ThumbnailView = false;
                 //this.Controls.Remove(g_ThumbPanel);
                 _thumbPanel.Visible = false;
                 _thumbPanel.Dock = DockStyle.None; //ver1.64
@@ -433,7 +433,7 @@ namespace Marmi
                 UpdateStatusbar();
 
                 //NaviBarを戻す
-                if (App.Config.VisibleSidebar)
+                if (ViewState.VisibleSidebar)
                     _sidebar.Visible = true;
 
                 //トラックバーを戻す Ver0.975
@@ -546,7 +546,7 @@ namespace Marmi
         private async Task SetDualViewModeAsync(bool isDual)
         {
             Debug.WriteLine(isDual, "SetDualViewMode()");
-            App.Config.DualView = isDual;
+            ViewState.DualView = isDual;
             toolButtonDualMode.Checked = isDual;
             Menu_View2Page.Checked = isDual;
 
@@ -559,7 +559,7 @@ namespace Marmi
 
         private void ToggleFullScreen()
         {
-            SetFullScreen(!App.Config.isFullScreen);
+            SetFullScreen(!ViewState.FullScreen);
         }
 
         private void SetFullScreen(bool isFullScreen)
@@ -567,7 +567,7 @@ namespace Marmi
             if (isFullScreen)
             {
                 //全画面にする
-                App.Config.isFullScreen = true;
+                ViewState.FullScreen = true;
 
                 menuStrip1.Visible = false;
                 toolStrip1.Visible = false;
@@ -599,7 +599,7 @@ namespace Marmi
             else
             {
                 //全画面を解除する
-                App.Config.isFullScreen = false;
+                ViewState.FullScreen = false;
                 this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.WindowState = FormWindowState.Normal;
 
@@ -622,15 +622,15 @@ namespace Marmi
                 this.Controls.Add(menuStrip1);
 
                 toolButtonFullScreen.Checked = false;
-                toolStrip1.Visible = App.Config.VisibleToolBar;
-                menuStrip1.Visible = App.Config.VisibleMenubar;
-                statusbar.Visible = App.Config.VisibleStatusBar;
+                toolStrip1.Visible = ViewState.VisibleToolBar;
+                menuStrip1.Visible = ViewState.VisibleMenubar;
+                statusbar.Visible = ViewState.VisibleStatusBar;
             }
 
             //メニュー、ツールバーの更新
-            Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
-            Menu_ContextFullView.Checked = App.Config.isFullScreen;
-            toolButtonFullScreen.Checked = App.Config.isFullScreen;
+            Menu_ViewFullScreen.Checked = ViewState.FullScreen;
+            Menu_ContextFullView.Checked = ViewState.FullScreen;
+            toolButtonFullScreen.Checked = ViewState.FullScreen;
 
             AjustSidebarArrangement();
             UpdateStatusbar();
@@ -654,13 +654,13 @@ namespace Marmi
             var rect = this.ClientRectangle; // this.Bounds;
 
             //ツールバーの高さ
-            int toolbarHeight = (toolStrip1.Visible && !App.Config.isFullScreen) ? toolStrip1.Height : 0;
+            int toolbarHeight = (toolStrip1.Visible && !ViewState.FullScreen) ? toolStrip1.Height : 0;
 
             //メニューバーの高さ
             int menubarHeight = (menuStrip1.Visible) ? menuStrip1.Height : 0;
 
             //ステータスバーの高さ
-            int statusbarHeight = (statusbar.Visible && !App.Config.isFullScreen) ? statusbar.Height : 0;
+            int statusbarHeight = (statusbar.Visible && !ViewState.FullScreen) ? statusbar.Height : 0;
 
             //ツールバーが上の時だけYから控除
             if (App.Config.IsToolbarTop)

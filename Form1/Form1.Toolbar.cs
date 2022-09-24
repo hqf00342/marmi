@@ -18,9 +18,9 @@ namespace Marmi
         private void UpdateToolbar()
         {
             //画面モードの状態反映
-            toolButtonDualMode.Checked = App.Config.DualView;
-            toolButtonFullScreen.Checked = App.Config.isFullScreen;
-            toolButtonThumbnail.Checked = App.Config.isThumbnailView;
+            toolButtonDualMode.Checked = ViewState.DualView;
+            toolButtonFullScreen.Checked = ViewState.FullScreen;
+            toolButtonThumbnail.Checked = ViewState.ThumbnailView;
 
             //Sidebar
             toolStripButton_Sidebar.Checked = _sidebar.Visible;
@@ -51,7 +51,7 @@ namespace Marmi
                 //else
                 //    toolButtonThumbnail.Enabled = false;
 
-                if (App.Config.isThumbnailView)
+                if (ViewState.ThumbnailView)
                 {
                     //サムネイル表示中
                     toolButtonLeft.Enabled = false;
@@ -236,7 +236,7 @@ namespace Marmi
 
         private void ToolStripButton_ZoomIn_Click(object sender, EventArgs e)
         {
-            if (App.Config.isThumbnailView)
+            if (ViewState.ThumbnailView)
             {
                 //サムネイル対応
                 _thumbPanel.ThumbSizeZoomIn();
@@ -250,7 +250,7 @@ namespace Marmi
 
         private void ToolStripButton_ZoomOut_Click(object sender, EventArgs e)
         {
-            if (App.Config.isThumbnailView)
+            if (ViewState.ThumbnailView)
             {
                 //サムネイル対応
                 _thumbPanel.ThumbSizeZoomOut();
@@ -320,7 +320,7 @@ namespace Marmi
             Rectangle r = PicPanel.ClientRectangle;
             if (toolStrip1.Dock == DockStyle.Top)
             {
-                if (App.Config.isFullScreen)
+                if (ViewState.FullScreen)
                     r.Y += toolStrip1.Height;
                 _trackNaviPanel.OpenPanel(r, App.g_pi.NowViewPage);
             }

@@ -80,7 +80,7 @@ namespace Marmi
 
             //書庫の場合、MRUからページ番号などを得る
             var mru = App.Config.Mru.FirstOrDefault(a => a.Name == App.g_pi.PackageName);
-            if(mru!= null)
+            if (mru != null)
             {
                 //ブックマークを読み込み
                 App.g_pi.LoadBookmarkString(mru.Bookmarks);
@@ -217,7 +217,7 @@ namespace Marmi
             await AsyncIO.ClearJobAndWaitAsync();
 
             //サムネイルモードの解放
-            if (App.Config.isThumbnailView)
+            if (ViewState.ThumbnailView)
                 SetThumbnailView(false);
 
             //2011/08/19 サムネイル初期化

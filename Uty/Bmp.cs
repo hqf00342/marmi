@@ -78,7 +78,7 @@ namespace Marmi
                 throw new InvalidOperationException("nullはおかしい");
             }
 
-            if (App.Config.DualView && await CanDualViewAsync(index))
+            if (ViewState.DualView && await CanDualViewAsync(index))
             {
                 //2枚表示
                 Bitmap bmp2 = await GetBitmapAsync(index + 1, true);
@@ -141,7 +141,7 @@ namespace Marmi
                 return false;
 
             //コンフィグ条件を確認
-            if (!App.Config.DualView)
+            if (!ViewState.DualView)
                 return false;
 
             //ver1.79：2ページ強制表示

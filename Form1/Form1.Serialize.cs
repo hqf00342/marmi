@@ -16,12 +16,12 @@ namespace Marmi
             PicPanel.BackColor = App.Config.General.BackColor;
 
             //メニューバー、ツールバー、ステータスバー
-            menuStrip1.Visible = App.Config.VisibleMenubar;
-            toolStrip1.Visible = App.Config.VisibleToolBar;
-            statusbar.Visible = App.Config.VisibleStatusBar;
+            menuStrip1.Visible = ViewState.VisibleMenubar;
+            toolStrip1.Visible = ViewState.VisibleToolBar;
+            statusbar.Visible = ViewState.VisibleStatusBar;
 
             //ナビバー
-            _sidebar.Visible = App.Config.VisibleSidebar;
+            _sidebar.Visible = ViewState.VisibleSidebar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
             if (App.Config.General.SimpleCalcForWindowLocation)
@@ -37,11 +37,11 @@ namespace Marmi
             }
 
             //ver1.77全画面モード対応
-            if (App.Config.General.SaveFullScreenMode && App.Config.isFullScreen)
+            if (App.Config.General.SaveFullScreenMode && ViewState.FullScreen)
                 SetFullScreen(true);
 
             //2枚表示
-            toolButtonDualMode.Checked = App.Config.DualView;
+            toolButtonDualMode.Checked = ViewState.DualView;
 
             //MRU反映
             //オープンするときに実施するのでコメントアウト
@@ -82,7 +82,7 @@ namespace Marmi
             ResizeTrackBar();
 
             //サムネイルビュー中ならすぐに再描写
-            if (App.Config.isThumbnailView)
+            if (ViewState.ThumbnailView)
             {
                 _thumbPanel.ReDraw();
             }

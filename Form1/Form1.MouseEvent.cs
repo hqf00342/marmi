@@ -170,7 +170,7 @@ namespace Marmi
             }
 
             //全画面モードの時にツールバーを表示するか
-            if (App.Config.isFullScreen)
+            if (ViewState.FullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
                 if (e.Y < 10 && !toolStrip1.Visible)
@@ -185,7 +185,7 @@ namespace Marmi
                     toolStrip1.Visible = true;
                     statusbar.Visible = true;
                 }
-                else if (e.Y > toolStrip1.Height && toolStrip1.Visible && !App.Config.isThumbnailView)
+                else if (e.Y > toolStrip1.Height && toolStrip1.Visible && !ViewState.ThumbnailView)
                 {
                     //スクロールバーが出る可能性があるので消しておく
                     //PicPanel.AutoScroll = true;
@@ -351,7 +351,7 @@ namespace Marmi
                 Cursor.Current = Cursors.Default;
                 PicPanel.Visible = true;
             }
-            else if (e.Button == MouseButtons.Right && !App.Config.isThumbnailView)
+            else if (e.Button == MouseButtons.Right && !ViewState.ThumbnailView)
             {
                 //右クリックで且つサムネイル中ではないので
                 //コンテキストメニューを表示する
@@ -387,7 +387,7 @@ namespace Marmi
         private void ThumbPanel_MouseMove(object sender, MouseEventArgs e)
         {
             //全画面モードの時にツールバーを表示するか
-            if (App.Config.isFullScreen)
+            if (ViewState.FullScreen)
             {
                 //全画面表示中。表示非表示を切り替え
                 if (e.Y < 1 && !toolStrip1.Visible)

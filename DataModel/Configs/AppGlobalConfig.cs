@@ -4,44 +4,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Xml.Serialization;
+
+/********************************************************************************
+ 設定を保存するクラス
+XmlSerializeされる設定を管理している。
+********************************************************************************/
 
 namespace Marmi
 {
-    /********************************************************************************/
-    // 設定を保存するクラス。
-    /********************************************************************************/
-
     [Serializable]
     public class AppGlobalConfig
     {
-        //コンフィグファイル名。XmlSerializeで利用
-        private const string CONFIGNAME = "Marmi.xml";
-
-        //サイドバーの基本の幅
-        private const int SIDEBAR_INIT_WIDTH = 200;
-
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
 
-        [XmlIgnore]
-        public static string ConfigFilename => Path.Combine(Application.StartupPath, CONFIGNAME);
-
-        public bool DualView { get; set; }          //2画面並べて表示
-
-
         public List<MRU> Mru { get; set; } = new List<MRU>();     //MRUリスト用配列
-
-        public bool VisibleMenubar { get; set; }                 //メニューバーの表示
-        public bool VisibleToolBar { get; set; }                 //ツールバーの表示
-        public bool VisibleStatusBar { get; set; }               //ステータスバーの表示
 
         public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
         public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
         public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
-        public bool VisibleSidebar { get; set; }                 //サイドバーの表示
         public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
         public int SidebarWidth { get; set; }                    //サイドバーの幅
 
@@ -50,14 +33,6 @@ namespace Marmi
 
         //ver1.62 ツールバーの位置
         public bool IsToolbarTop { get; set; }
-
-        //ver1.77 画面モード保存対象にする。
-        [XmlIgnore]
-        public bool isFullScreen { get; set; }
-
-        //サムネイルモード
-        [XmlIgnore]
-        public bool isThumbnailView { get; set; }
 
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
@@ -80,7 +55,7 @@ namespace Marmi
 
         public bool UseScreenCache { get; set; } = false;   //スクリーンキャッシュを使うかどうか
 
-        #endregion
+        #endregion UIなし
 
         /*******************************************************************************/
 
@@ -97,14 +72,6 @@ namespace Marmi
         /// </summary>
         private void Initialize()
         {
-            VisibleMenubar = true;
-            VisibleToolBar = true;
-            VisibleStatusBar = true;
-            VisibleSidebar = false;
-
-            DualView = false;
-            isFullScreen = false;
-            isThumbnailView = false;
             windowSize = new Size(640, 480);
             windowLocation = new Point(0, 0);
             //isSaveThumbnailCache = false;
@@ -116,7 +83,7 @@ namespace Marmi
             IsStopPaintingAtResize = false;
 
             //サイドバー
-            SidebarWidth = SIDEBAR_INIT_WIDTH;
+            SidebarWidth = App.SIDEBAR_INIT_WIDTH;
 
             //ループするかどうか
             //isLoopToTopPage = false;
@@ -150,7 +117,7 @@ namespace Marmi
         /// <returns></returns>
         public static object LoadFromXmlFile()
         {
-            string path = AppGlobalConfig.ConfigFilename;
+            string path = App.ConfigFilename;
 
             if (File.Exists(path))
             {
@@ -170,7 +137,7 @@ namespace Marmi
         /// <param name="obj"></param>
         public static void SaveToXmlFile(object obj)
         {
-            string path = AppGlobalConfig.ConfigFilename;
+            string path = App.ConfigFilename;
 
             using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
@@ -188,8 +155,8 @@ namespace Marmi
             if (string.IsNullOrEmpty(pi.PackageName))
                 return;
 
-            var mru = Mru.FirstOrDefault(a=>a.Name==pi.PackageName);
-            if(mru == null)
+            var mru = Mru.FirstOrDefault(a => a.Name == pi.PackageName);
+            if (mru == null)
             {
                 //新規追加
                 Mru.Add(new MRU(pi.PackageName, DateTime.Now, pi.NowViewPage, pi.CreateBookmarkString()));

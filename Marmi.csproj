@@ -121,16 +121,17 @@
     <Compile Include="App.cs" />
     <None Include="dlls\axpdf.spi" />
     <None Include="SharpCompress\ScWrapper.cs" />
+    <Compile Include="Form1\ViewState.cs" />
     <Compile Include="Uty\Bmp.cs" />
-    <Compile Include="DataModel\AdvanceConfig.cs" />
+    <Compile Include="DataModel\Configs\AdvanceConfig.cs" />
     <Compile Include="DataModel\Exif.cs" />
-    <Compile Include="DataModel\GeneralConfig.cs" />
-    <Compile Include="DataModel\KeyConfig.cs" />
-    <Compile Include="DataModel\LoupeConfig.cs" />
-    <Compile Include="DataModel\MouseConfig.cs" />
-    <Compile Include="DataModel\ThumbnailConfig.cs" />
+    <Compile Include="DataModel\Configs\GeneralConfig.cs" />
+    <Compile Include="DataModel\Configs\KeyConfig.cs" />
+    <Compile Include="DataModel\Configs\LoupeConfig.cs" />
+    <Compile Include="DataModel\Configs\MouseConfig.cs" />
+    <Compile Include="DataModel\Configs\ThumbnailConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
-    <Compile Include="DataModel\ViewConfig.cs" />
+    <Compile Include="DataModel\Configs\ViewConfig.cs" />
     <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Form1\Form1.Navigation.cs">
       <SubType>Form</SubType>
@@ -170,7 +171,7 @@
     <Compile Include="Form1\Form1.KeyConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataModel\AppGlobalConfig.cs" />
+    <Compile Include="DataModel\Configs\AppGlobalConfig.cs" />
     <Compile Include="Uty\ImageInfoComparer.cs" />
     <Compile Include="DataModel\ImageInfo.cs" />
     <Compile Include="DataModel\MRU.cs" />
@@ -338,7 +339,6 @@
     <None Include="Resources\zippedFile.png" />
     <None Include="Resources\Folder_Open.png" />
     <None Include="Resources\Image_File.png" />
-    <Content Include="DataModel\ReadMe.txt" />
     <Content Include="MyChildForms\ReadMe.txt" />
     <Content Include="MyControls\ReadMe.txt" />
     <None Include="Resources\heart24.png" />

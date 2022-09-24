@@ -140,26 +140,26 @@ namespace Marmi
             if (App.g_pi.Items.Count > 0)
             {
                 //全画面であればメニュー系は全て非表示
-                if (App.Config.isFullScreen)
+                if (ViewState.FullScreen)
                 {
                     toolStrip1.Visible = false;
                     statusbar.Visible = false;
                     menuStrip1.Visible = false;
                 }
-                SetThumbnailView(!App.Config.isThumbnailView);
+                SetThumbnailView(!ViewState.ThumbnailView);
             }
         }
 
         private void Menu_ViewFullScreen_Click(object sender, EventArgs e)
         {
-            SetFullScreen(!App.Config.isFullScreen);
+            SetFullScreen(!ViewState.FullScreen);
         }
 
         private async void Menu_ViewMenubar_Click(object sender, EventArgs e)
         {
             //トグル切り替え
-            App.Config.VisibleMenubar = !App.Config.VisibleMenubar;
-            menuStrip1.Visible = App.Config.VisibleMenubar;
+            ViewState.VisibleMenubar = !ViewState.VisibleMenubar;
+            menuStrip1.Visible = ViewState.VisibleMenubar;
 
             //ver0.972 サイドバーの位置調整
             //AjustControlArrangement();
@@ -170,8 +170,8 @@ namespace Marmi
         private async void Menu_ViewToolbar_Click(object sender, EventArgs e)
         {
             //トグル切り替え
-            App.Config.VisibleToolBar = !App.Config.VisibleToolBar;
-            toolStrip1.Visible = App.Config.VisibleToolBar;
+            ViewState.VisibleToolBar = !ViewState.VisibleToolBar;
+            toolStrip1.Visible = ViewState.VisibleToolBar;
 
             //ver0.972 ナビバーがあればリサイズ
             //AjustControlArrangement();
@@ -182,8 +182,8 @@ namespace Marmi
         private async void Menu_ViewStatusbar_Click(object sender, EventArgs e)
         {
             //トグル切り替え
-            App.Config.VisibleStatusBar = !App.Config.VisibleStatusBar;
-            statusbar.Visible = App.Config.VisibleStatusBar;
+            ViewState.VisibleStatusBar = !ViewState.VisibleStatusBar;
+            statusbar.Visible = ViewState.VisibleStatusBar;
 
             //ver0.972 サイドバーの位置調整
             //AjustControlArrangement();
@@ -194,12 +194,12 @@ namespace Marmi
         private async void Menu_ViewDualPage_Click(object sender, EventArgs e)
         {
             //トグル切り替え
-            await SetDualViewModeAsync(!App.Config.DualView);
+            await SetDualViewModeAsync(!ViewState.DualView);
         }
 
         private async void Menu_ViewHalfPageBack_Click(object sender, EventArgs e)
         {
-            if (App.Config.DualView)
+            if (ViewState.DualView)
             {
                 if (App.g_pi.NowViewPage > 0)
                 {
@@ -214,7 +214,7 @@ namespace Marmi
 
         private async void Menu_ViewHalfPageForword_Click(object sender, EventArgs e)
         {
-            if (App.Config.DualView)
+            if (ViewState.DualView)
             {
                 if (App.g_pi.NowViewPage < App.g_pi.Items.Count)
                 {
@@ -273,7 +273,7 @@ namespace Marmi
             {
                 //閉じる
                 _sidebar.Visible = false;
-                App.Config.VisibleSidebar = false;
+                ViewState.VisibleSidebar = false;
             }
             else
             {
@@ -286,7 +286,7 @@ namespace Marmi
 
                 _sidebar.Visible = true;
                 _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
-                App.Config.VisibleSidebar = true;
+                ViewState.VisibleSidebar = true;
             }
             AjustSidebarArrangement();
         }
@@ -302,7 +302,7 @@ namespace Marmi
         private async void Menu_View_LeftOpen_Click(object sender, EventArgs e)
         {
             App.g_pi.PageDirectionIsLeft = !App.g_pi.PageDirectionIsLeft;
-            if (App.Config.DualView)
+            if (ViewState.DualView)
             {
                 await SetViewPageAsync(App.g_pi.NowViewPage);
             }
@@ -387,7 +387,7 @@ namespace Marmi
                 App.g_pi.Items.Sort(comparer);
 
                 //サムネイル表示中であれば再描写させる
-                if (App.Config.isThumbnailView)
+                if (ViewState.ThumbnailView)
                 {
                     _thumbPanel.ReDraw();
                 }
@@ -403,21 +403,14 @@ namespace Marmi
             //ファイルリストを並び替える
             if (App.g_pi.Items.Count > 0)
             {
-                //StopThumbnailMakerThread();	//ソート中にスレッドが動いていないことを担保
-                //PauseThumbnailMakerThread();	//ver1.09 スレッド中断（Pause）
-
                 var comparer = new ImageInfoComparer(ImageInfoComparer.Target.CreateDate);
                 App.g_pi.Items.Sort(comparer);
 
                 //サムネイル表示中であれば再描写させる
-                if (App.Config.isThumbnailView)
+                if (ViewState.ThumbnailView)
                 {
-                    //ThumbPanel.MakeThumbnailScreen(true);	//強制再描写
-                    //ThumbPanel.Invalidate();
                     _thumbPanel.ReDraw();
                 }
-                //StartThumnailMakerThread();//ソート完了、スレッド再開
-                //ResumeThumbnailMakerThread();	//ver1.09 スレッド再開
 
                 //ver1.38 ソート後に画面を書き直す
                 ScreenCache.Clear();
@@ -452,7 +445,7 @@ namespace Marmi
         private void MenuStrip1_MenuDeactivate(object sender, EventArgs e)
         {
             //全画面モードでフォーカスを失ったときは隠す
-            if (App.Config.isFullScreen)
+            if (ViewState.FullScreen)
                 menuStrip1.Visible = false;
         }
 
@@ -461,13 +454,13 @@ namespace Marmi
         private void Menu_View_DropDownOpening(object sender, EventArgs e)
         {
             //バー関連のメニュー
-            Menu_ViewToolbar.Enabled = !App.Config.isFullScreen;
-            Menu_ViewStatusbar.Enabled = !App.Config.isFullScreen;
+            Menu_ViewToolbar.Enabled = !ViewState.FullScreen;
+            Menu_ViewStatusbar.Enabled = !ViewState.FullScreen;
             Menu_ViewMenubar.Checked = menuStrip1.Visible;
             Menu_ViewToolbar.Checked = toolStrip1.Visible;
             Menu_ViewStatusbar.Checked = statusbar.Visible;
-            Menu_View2Page.Checked = App.Config.DualView;
-            Menu_ViewFullScreen.Checked = App.Config.isFullScreen;
+            Menu_View2Page.Checked = ViewState.DualView;
+            Menu_ViewFullScreen.Checked = ViewState.FullScreen;
             Menu_ViewFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
             Menu_ViewSidebar.Checked = _sidebar.Visible;
             //ツールバーの位置
@@ -556,8 +549,8 @@ namespace Marmi
                 Menu_SlideShow.Enabled = true;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
-                Menu_ViewHalfPageBack.Enabled = App.Config.DualView && (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
-                Menu_ViewHalfPageForword.Enabled = App.Config.DualView && !IsLastPageViewing();       //最終ページチェック
+                Menu_ViewHalfPageBack.Enabled = ViewState.DualView && (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
+                Menu_ViewHalfPageForword.Enabled = ViewState.DualView && !IsLastPageViewing();       //最終ページチェック
 
                 //しおり機能
                 //ver1.79コメントアウト
@@ -566,7 +559,7 @@ namespace Marmi
                 //	g_pi.Items[g_pi.NowViewPage].isBookMark;
 
                 //サムネイル表示中
-                if (App.Config.isThumbnailView)
+                if (ViewState.ThumbnailView)
                 {
                     //サムネイル中は左右はDisable
                     Menu_ViewTop.Enabled = false;
@@ -592,15 +585,15 @@ namespace Marmi
         private void ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             //バー関連のメニュー
-            Menu_ContextToolbar.Enabled = !App.Config.isFullScreen;
-            Menu_ContextStatusbar.Enabled = !App.Config.isFullScreen;
+            Menu_ContextToolbar.Enabled = !ViewState.FullScreen;
+            Menu_ContextStatusbar.Enabled = !ViewState.FullScreen;
 
-            Menu_ContextMenubar.Checked = App.Config.VisibleMenubar;
-            Menu_ContextToolbar.Checked = App.Config.VisibleToolBar;
-            Menu_ContextStatusbar.Checked = App.Config.VisibleStatusBar;
+            Menu_ContextMenubar.Checked = ViewState.VisibleMenubar;
+            Menu_ContextToolbar.Checked = ViewState.VisibleToolBar;
+            Menu_ContextStatusbar.Checked = ViewState.VisibleStatusBar;
 
-            Menu_ContextDualView.Checked = App.Config.DualView;
-            Menu_ContextFullView.Checked = App.Config.isFullScreen;
+            Menu_ContextDualView.Checked = ViewState.DualView;
+            Menu_ContextFullView.Checked = ViewState.FullScreen;
             Menu_ContextFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
 
             Menu_ContextSidebar.Checked = _sidebar.Visible;
@@ -656,14 +649,14 @@ namespace Marmi
 
                 //サムネイルボタン
                 //MenuItem_ContextThumbnailView.Enabled = g_makeThumbnail;	//サムネイルを作っているかどうか
-                Menu_ContextThumbnailView.Checked = App.Config.isThumbnailView;
+                Menu_ContextThumbnailView.Checked = ViewState.ThumbnailView;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
-                Menu_ContextHalfPageBack.Enabled = App.Config.DualView && (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
-                Menu_ContextHalfPageForword.Enabled = App.Config.DualView && !IsLastPageViewing();    //最終ページチェック
+                Menu_ContextHalfPageBack.Enabled = ViewState.DualView && (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
+                Menu_ContextHalfPageForword.Enabled = ViewState.DualView && !IsLastPageViewing();    //最終ページチェック
 
                 //サムネイル表示中
-                if (App.Config.isThumbnailView)
+                if (ViewState.ThumbnailView)
                 {
                     //サムネイル中はContext関係なし
                 }
@@ -784,10 +777,10 @@ namespace Marmi
             if (App.g_pi == null || App.g_pi.Items.Count == 0)
                 return;
 
-            //ver0.972 ナビバーがあればリサイズ
+            //ver0.972 サイドバーがあればリサイズ
             AjustSidebarArrangement();
 
-            if (App.Config.isThumbnailView)
+            if (ViewState.ThumbnailView)
                 _thumbPanel.ReDraw();
             else
                 await SetViewPageAsync(App.g_pi.NowViewPage);
