@@ -90,6 +90,7 @@
             this.KeyConfig = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ka_exit2 = new Marmi.KeyAccelerator();
+            this.keyConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ka_exit1 = new Marmi.KeyAccelerator();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
@@ -161,7 +162,6 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.keyConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -180,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.loupeConfigBindingSource)).BeginInit();
             this.KeyConfig.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).BeginInit();
             this.Mouse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -189,7 +190,6 @@
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -210,7 +210,6 @@
             this.tabControl1.Size = new System.Drawing.Size(505, 390);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Tag = "アプリケーション設定項目を切り替えます";
-            this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabControl1_Selecting);
             this.tabControl1.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // General
@@ -443,7 +442,6 @@
             this.bSaveConfig.Tag = "設定を保存します。設定ファイルはアプリケーションと同じパスにあります。";
             this.bSaveConfig.Text = "設定を保存";
             this.bSaveConfig.UseVisualStyleBackColor = true;
-            this.bSaveConfig.CheckedChanged += new System.EventHandler(this.SaveConfig_CheckedChanged);
             this.bSaveConfig.Enter += new System.EventHandler(this.OnFocus_Enter);
             this.bSaveConfig.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
@@ -1035,6 +1033,10 @@
             this.ka_exit2.Tag = "Marmiの終了(2)";
             this.ka_exit2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
+            // keyConfigBindingSource
+            // 
+            this.keyConfigBindingSource.DataSource = typeof(Marmi.DataModel.KeyConfig);
+            // 
             // ka_exit1
             // 
             this.ka_exit1.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1378,6 +1380,7 @@
             this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
             this.ka_rotate1.TabIndex = 12;
             this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
+            this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label13
             // 
@@ -1481,6 +1484,7 @@
             this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
             this.ka_minWindow.TabIndex = 14;
             this.ka_minWindow.Tag = "半ページ戻る";
+            this.ka_minWindow.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // Mouse
             // 
@@ -1599,7 +1603,6 @@
             this.pictureBoxRightScr.TabIndex = 3;
             this.pictureBoxRightScr.TabStop = false;
             this.pictureBoxRightScr.Tag = "画面の右側をクリックすると次のページに進みます";
-            this.pictureBoxRightScr.Click += new System.EventHandler(this.PictureBoxRightScr_Click);
             this.pictureBoxRightScr.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // pictureBoxLeftScr
@@ -1611,7 +1614,6 @@
             this.pictureBoxLeftScr.TabIndex = 3;
             this.pictureBoxLeftScr.TabStop = false;
             this.pictureBoxLeftScr.Tag = "画面の左側をクリックすると次のページに進みます";
-            this.pictureBoxLeftScr.Click += new System.EventHandler(this.PictureBoxLeftScr_Click);
             this.pictureBoxLeftScr.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // reverseClickPointWhenLeftBook
@@ -1774,7 +1776,6 @@
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 
@@ -1787,7 +1788,6 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // InitButton
             // 
@@ -1824,10 +1824,6 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // keyConfigBindingSource
-            // 
-            this.keyConfigBindingSource.DataSource = typeof(Marmi.DataModel.KeyConfig);
-            // 
             // OptionForm
             // 
             this.AcceptButton = this.btnOK;
@@ -1844,7 +1840,6 @@
             this.Name = "OptionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "オプション設定";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormOption_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.General.ResumeLayout(false);
             this.General.PerformLayout();
@@ -1870,6 +1865,7 @@
             this.KeyConfig.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).EndInit();
             this.Mouse.ResumeLayout(false);
             this.Mouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).EndInit();
@@ -1883,7 +1879,6 @@
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
