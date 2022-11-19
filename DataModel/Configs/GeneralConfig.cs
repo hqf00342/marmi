@@ -1,5 +1,4 @@
 ﻿using Marmi.Interfaces;
-using System;
 using System.Drawing;
 using System.Xml.Serialization;
 
@@ -9,7 +8,6 @@ namespace Marmi.DataModel
     {
         //コンフィグの保存
         public bool SaveConfig { get; set; }
-
 
         //書庫は前回の続きから
         public bool ContinueReading { get; set; }
@@ -22,7 +20,6 @@ namespace Marmi.DataModel
 
         //ver1.73 一時展開フォルダ
         public string TmpFolder { get; set; }
-
 
         //ツールバーの左右ボタンを入れ替える
         public bool ReplaceArrowButton { get; set; }
@@ -82,7 +79,7 @@ namespace Marmi.DataModel
         public GeneralConfig Clone()
         {
             var x = (GeneralConfig)this.MemberwiseClone();
-            x.BackColor= this.BackColor;
+            x.BackColor = this.BackColor;
             return x;
         }
     }

@@ -110,7 +110,7 @@ namespace Marmi
         /// </summary>
         public void AddMRU(PackageInfo pi)
         {
-            if (pi==null || string.IsNullOrEmpty(pi.PackageName))
+            if (pi == null || string.IsNullOrEmpty(pi.PackageName))
                 return;
 
             var mru = Mru.FirstOrDefault(a => a.Name == pi.PackageName);
@@ -132,10 +132,10 @@ namespace Marmi
         public AppGlobalConfig Clone()
         {
             var xs = new XmlSerializer(typeof(AppGlobalConfig));
-            using(var mem = new MemoryStream())
+            using (var mem = new MemoryStream())
             {
                 xs.Serialize(mem, this);
-                mem.Position= 0;
+                mem.Position = 0;
                 return (AppGlobalConfig)xs.Deserialize(mem);
             }
         }

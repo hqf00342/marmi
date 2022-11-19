@@ -22,7 +22,7 @@ namespace Marmi
 
             generalConfigBindingSource.DataSource = _config.General;
             advanceConfigBindingSource.DataSource = _config.Advance;
-
+            loupeConfigBindingSource.DataSource = _config.Loupe;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
@@ -31,7 +31,6 @@ namespace Marmi
             //LoadGeneralConfig(set);
             LoadViewConfig(set);
             LoadThumbnailConfig(set);
-            LoadLoupeConfig(set);
             LoadMouseConfig(set);
             LoadKeyConfig(set);
             //LoadAdvanceConfig(set);
@@ -69,13 +68,6 @@ namespace Marmi
             isShowTPPicSize.Checked = set.Thumbnail.DrawPicsize;
             //ver1.81サムネイルのアニメーション効果
             ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.SmoothScroll;
-        }
-
-
-        private void LoadLoupeConfig(AppGlobalConfig set)
-        {
-            isOriginalSizeLoupe.Checked = set.Loupe.OriginalSizeLoupe;
-            loupeMag.Text = set.Loupe.LoupeMagnifcant.ToString();
         }
 
         private void LoadMouseConfig(AppGlobalConfig set)
@@ -117,6 +109,7 @@ namespace Marmi
             //SaveGnereralConfig(ref set);
             set.General = _config.General;
             set.Advance = _config.Advance;
+            set.Loupe = _config.Loupe;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
@@ -141,7 +134,6 @@ namespace Marmi
             //ver1.91 キーコンフィグ
             SaveKeyConfig(ref set);
             SaveMouseConfig(ref set);
-            SaveLoupeConfig(ref set);
         }
 
         private void SaveViewConfig(ref AppGlobalConfig set)
@@ -169,13 +161,6 @@ namespace Marmi
             set.Thumbnail.DrawPicsize = isShowTPPicSize.Checked;
             //ver1.81サムネイルのアニメーション効果
             set.Thumbnail.SmoothScroll = ThumbnailPanelSmoothScroll.Checked;
-        }
-
-
-        private void SaveLoupeConfig(ref AppGlobalConfig set)
-        {
-            set.Loupe.OriginalSizeLoupe = isOriginalSizeLoupe.Checked;
-            set.Loupe.LoupeMagnifcant = int.TryParse(loupeMag.Text, out var m) ? m : 3;
         }
 
         private void SaveMouseConfig(ref AppGlobalConfig set)
