@@ -1,8 +1,9 @@
-﻿using System.Xml.Serialization;
+﻿using Marmi.Interfaces;
+using System.Xml.Serialization;
 
 namespace Marmi.DataModel
 {
-    public class MouseConfig
+    public class MouseConfig : IConfig
     {
         public string MouseConfigWheel { get; set; }
 

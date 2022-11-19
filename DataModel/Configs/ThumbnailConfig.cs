@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Marmi.Interfaces;
+using System;
 using System.Drawing;
 using System.Xml.Serialization;
 
 namespace Marmi.DataModel
 {
     [Serializable]
-    public class ThumbnailConfig
+    public class ThumbnailConfig : IConfig
     {
         [XmlIgnore]
         public Color ThumbnailBackColor;

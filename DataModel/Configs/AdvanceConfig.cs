@@ -1,6 +1,8 @@
-﻿namespace Marmi.DataModel
+﻿using Marmi.Interfaces;
+
+namespace Marmi.DataModel
 {
-    public class AdvanceConfig
+    public class AdvanceConfig : IConfig
     {
         /// <summary>リサイズ時に高速描写をするかどうか</summary>
         public bool FastDrawAtResize { get; set; }

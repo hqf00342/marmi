@@ -1,6 +1,8 @@
-﻿namespace Marmi.DataModel
+﻿using Marmi.Interfaces;
+
+namespace Marmi.DataModel
 {
-    public class LoupeConfig
+    public class LoupeConfig : IConfig
     {
         //ルーペ倍率
         public int LoupeMagnifcant { get; set; }

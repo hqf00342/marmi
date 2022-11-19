@@ -1,6 +1,8 @@
-﻿namespace Marmi.DataModel
+﻿using Marmi.Interfaces;
+
+namespace Marmi.DataModel
 {
-    public class ViewConfig
+    public class ViewConfig : IConfig
     {
         //画像サイズ調整は100%未満にする
         public bool ProhigitExpansionOver100p { get; set; }

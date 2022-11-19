@@ -28,8 +28,6 @@ namespace Marmi
             viewConfigBindingSource.DataSource = _config.View;
             keyConfigBindingSource.DataSource = _config.Keys;
 
-            //高度な設定タブ
-            bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
         }
 
 
@@ -42,10 +40,6 @@ namespace Marmi
             set.Thumbnail= _config.Thumbnail;
             set.View= _config.View;
             set.Keys= _config.Keys;
-
-            //高度な設定タブ
-            set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
-
         }
 
 

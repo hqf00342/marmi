@@ -33,7 +33,6 @@ namespace Marmi
         public bool RecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
         public bool FitToScreen { get; set; }            //画像とイメージをフィットさせる
-        public bool StopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
 
         public int SidebarWidth { get; set; }                    //サイドバーの幅
 
@@ -43,8 +42,6 @@ namespace Marmi
         //ver1.62 ツールバーの位置
         public bool ToolbarIsTop { get; set; }
 
-        //ver1.78 倍率の保持
-        //public bool KeepMagnification { get; set; }
 
         public GeneralConfig General { get; set; } = new GeneralConfig();
 

@@ -1,8 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using Marmi.Interfaces;
+using System.Windows.Forms;
 
 namespace Marmi.DataModel
 {
-    public class KeyConfig
+    public class KeyConfig : IConfig
     {
         public Keys Key_Exit1 { get; set; }
         public Keys Key_Exit2 { get; set; }
