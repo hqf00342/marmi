@@ -137,6 +137,7 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.generalConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ka_exit2 = new Marmi.KeyAccelerator();
             this.ka_exit1 = new Marmi.KeyAccelerator();
             this.ka_bookmark1 = new Marmi.KeyAccelerator();
@@ -175,6 +176,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeftScr)).BeginInit();
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -229,6 +231,7 @@
             // alwaysExtractArchive
             // 
             this.alwaysExtractArchive.AutoSize = true;
+            this.alwaysExtractArchive.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "ExtractArchiveAlways", true));
             this.alwaysExtractArchive.Location = new System.Drawing.Point(251, 16);
             this.alwaysExtractArchive.Name = "alwaysExtractArchive";
             this.alwaysExtractArchive.Size = new System.Drawing.Size(147, 16);
@@ -240,6 +243,7 @@
             // saveFullScreenMode
             // 
             this.saveFullScreenMode.AutoSize = true;
+            this.saveFullScreenMode.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "SaveFullScreenMode", true));
             this.saveFullScreenMode.Location = new System.Drawing.Point(8, 309);
             this.saveFullScreenMode.Name = "saveFullScreenMode";
             this.saveFullScreenMode.Size = new System.Drawing.Size(161, 16);
@@ -254,6 +258,7 @@
             // disableMultipleStarts
             // 
             this.disableMultipleStarts.AutoSize = true;
+            this.disableMultipleStarts.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "SingleProcess", true));
             this.disableMultipleStarts.Location = new System.Drawing.Point(8, 265);
             this.disableMultipleStarts.Name = "disableMultipleStarts";
             this.disableMultipleStarts.Size = new System.Drawing.Size(235, 16);
@@ -306,6 +311,7 @@
             // 
             // tmpFolder
             // 
+            this.tmpFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.generalConfigBindingSource, "TmpFolder", true));
             this.tmpFolder.Location = new System.Drawing.Point(154, 200);
             this.tmpFolder.Name = "tmpFolder";
             this.tmpFolder.Size = new System.Drawing.Size(180, 19);
@@ -327,6 +333,7 @@
             // sidebar_smoothscroll
             // 
             this.sidebar_smoothscroll.AutoSize = true;
+            this.sidebar_smoothscroll.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "SmoothScrollOnSidebar", true));
             this.sidebar_smoothscroll.Location = new System.Drawing.Point(11, 148);
             this.sidebar_smoothscroll.Name = "sidebar_smoothscroll";
             this.sidebar_smoothscroll.Size = new System.Drawing.Size(223, 16);
@@ -340,6 +347,7 @@
             // eraseToolbarItemString
             // 
             this.eraseToolbarItemString.AutoSize = true;
+            this.eraseToolbarItemString.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "HideToolbarString", true));
             this.eraseToolbarItemString.Location = new System.Drawing.Point(11, 126);
             this.eraseToolbarItemString.Name = "eraseToolbarItemString";
             this.eraseToolbarItemString.Size = new System.Drawing.Size(230, 16);
@@ -353,6 +361,7 @@
             // pictureBox_BackColor
             // 
             this.pictureBox_BackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox_BackColor.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", this.generalConfigBindingSource, "BackColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.pictureBox_BackColor.Location = new System.Drawing.Point(154, 177);
             this.pictureBox_BackColor.Name = "pictureBox_BackColor";
             this.pictureBox_BackColor.Size = new System.Drawing.Size(40, 16);
@@ -376,12 +385,13 @@
             // isExtractIfSolidArchive
             // 
             this.isExtractIfSolidArchive.AutoSize = true;
-            this.isExtractIfSolidArchive.Location = new System.Drawing.Point(11, 60);
+            this.isExtractIfSolidArchive.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "ExtractArchiveIfSolid", true));
+            this.isExtractIfSolidArchive.Location = new System.Drawing.Point(251, 38);
             this.isExtractIfSolidArchive.Name = "isExtractIfSolidArchive";
-            this.isExtractIfSolidArchive.Size = new System.Drawing.Size(279, 16);
+            this.isExtractIfSolidArchive.Size = new System.Drawing.Size(211, 16);
             this.isExtractIfSolidArchive.TabIndex = 3;
             this.isExtractIfSolidArchive.Tag = "7z形式などのソリッド書庫を一時的にファイルとして展開します（自動的に削除されます）。チェック推奨。";
-            this.isExtractIfSolidArchive.Text = "ソリッド書庫(7z形式)は一時フォルダに展開（強く推奨）";
+            this.isExtractIfSolidArchive.Text = "ソリッド書庫(7z)は一時展開（強く推奨）";
             this.isExtractIfSolidArchive.UseVisualStyleBackColor = true;
             this.isExtractIfSolidArchive.Enter += new System.EventHandler(this.OnFocus_Enter);
             this.isExtractIfSolidArchive.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
@@ -389,6 +399,7 @@
             // bContinueZip
             // 
             this.bContinueZip.AutoSize = true;
+            this.bContinueZip.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "ContinueReading", true));
             this.bContinueZip.Location = new System.Drawing.Point(11, 38);
             this.bContinueZip.Name = "bContinueZip";
             this.bContinueZip.Size = new System.Drawing.Size(149, 16);
@@ -402,6 +413,7 @@
             // bReplaceArrowButton
             // 
             this.bReplaceArrowButton.AutoSize = true;
+            this.bReplaceArrowButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "ReplaceArrowButton", true));
             this.bReplaceArrowButton.Location = new System.Drawing.Point(11, 82);
             this.bReplaceArrowButton.Name = "bReplaceArrowButton";
             this.bReplaceArrowButton.Size = new System.Drawing.Size(311, 16);
@@ -415,6 +427,7 @@
             // bSaveConfig
             // 
             this.bSaveConfig.AutoSize = true;
+            this.bSaveConfig.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "SaveConfig", true));
             this.bSaveConfig.Location = new System.Drawing.Point(11, 16);
             this.bSaveConfig.Name = "bSaveConfig";
             this.bSaveConfig.Size = new System.Drawing.Size(81, 16);
@@ -429,6 +442,7 @@
             // isWindowPosCenter
             // 
             this.isWindowPosCenter.AutoSize = true;
+            this.isWindowPosCenter.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.generalConfigBindingSource, "CenteredAtStart", true));
             this.isWindowPosCenter.Location = new System.Drawing.Point(8, 331);
             this.isWindowPosCenter.Name = "isWindowPosCenter";
             this.isWindowPosCenter.Size = new System.Drawing.Size(196, 16);
@@ -1524,6 +1538,10 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // generalConfigBindingSource
+            // 
+            this.generalConfigBindingSource.DataSource = typeof(Marmi.DataModel.GeneralConfig);
+            // 
             // ka_exit2
             // 
             this.ka_exit2.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1778,6 +1796,7 @@
             this.Detail.ResumeLayout(false);
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1912,5 +1931,6 @@
         private KeyAccelerator ka_sidebar;
         private System.Windows.Forms.Label label18;
         private KeyAccelerator ka_minWindow;
+        private System.Windows.Forms.BindingSource generalConfigBindingSource;
     }
 }

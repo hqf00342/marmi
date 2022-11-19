@@ -9,7 +9,7 @@ namespace Marmi
         //static List<KeyConfig> keyConfigList = new List<KeyConfig>();
         private bool KeyDuplicationError = false;
 
-        //AppGlobalConfig config = new AppGlobalConfig();
+        private AppGlobalConfig _config = null;
 
         public OptionForm()
         {
@@ -21,15 +21,15 @@ namespace Marmi
 
         public void LoadConfig(AppGlobalConfig set)
         {
-            //config = set.Clone();
+            _config = set.Clone();
 
-            //全般タブ
+            generalConfigBindingSource.DataSource = _config.General;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
-            LoadGeneralConfig(set);
+            //LoadGeneralConfig(set);
             LoadViewConfig(set);
             LoadThumbnailConfig(set);
             LoadLoupeConfig(set);
@@ -139,7 +139,8 @@ namespace Marmi
 
         public void SaveConfig(ref AppGlobalConfig set)
         {
-            SaveGnereralConfig(ref set);
+            //SaveGnereralConfig(ref set);
+            set.General = _config.General;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;

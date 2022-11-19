@@ -2,7 +2,9 @@ using Marmi.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 /********************************************************************************
  ê›íËÇï€ë∂Ç∑ÇÈÉNÉâÉX
@@ -125,6 +127,17 @@ namespace Marmi
                 mru.Bookmarks = pi.CreateBookmarkString();
             }
             return;
+        }
+
+        public AppGlobalConfig Clone()
+        {
+            var xs = new XmlSerializer(typeof(AppGlobalConfig));
+            using(var mem = new MemoryStream())
+            {
+                xs.Serialize(mem, this);
+                mem.Position= 0;
+                return (AppGlobalConfig)xs.Deserialize(mem);
+            }
         }
     }
 }

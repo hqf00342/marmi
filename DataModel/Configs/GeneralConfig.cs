@@ -1,9 +1,11 @@
-﻿using System.Drawing;
+﻿using Marmi.Interfaces;
+using System;
+using System.Drawing;
 using System.Xml.Serialization;
 
 namespace Marmi.DataModel
 {
-    public class GeneralConfig
+    public class GeneralConfig : IConfig
     {
         //コンフィグの保存
         public bool SaveConfig { get; set; }
@@ -72,6 +74,13 @@ namespace Marmi.DataModel
             SingleProcess = false;
             SaveFullScreenMode = true;
             ExtractArchiveAlways = false;
+        }
+
+        public GeneralConfig Clone()
+        {
+            var x = (GeneralConfig)this.MemberwiseClone();
+            x.BackColor= this.BackColor;
+            return x;
         }
     }
 }
