@@ -126,33 +126,20 @@ namespace Marmi
         {
             //調査元となるKeyAccelerator
             var org = sender as KeyAccelerator;
-
-            //設定がないのなら何もしない。
-            if (org.keyData == Keys.None)
+            if (org == null || org.KeyData == Keys.None)
                 return;
 
             //Tabコントロール内の子要素を全チェック
             foreach (var ctrl in tableLayoutPanel1.Controls.OfType<KeyAccelerator>())
             {
-                if (ctrl != org && ctrl.keyData == org.keyData)
+                if (ctrl != org && ctrl.KeyData == org.KeyData)
                 {
                     //自分自身はチェック対象外で重複している
-                    var ret = MessageBox.Show(
-                        $"「{ctrl.Tag}」と重複しています。上書きしますか？",
-                        "キー設定確認",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
-                    if (ret == DialogResult.Yes)
-                    {
-                        //ほかのコントロールをNoneに変更する
-                        ctrl.keyData = Keys.None;
-                        ctrl.Invalidate();
-                    }
-                    else
-                    {
-                        //Cancelする。
-                        e.Cancel = true;
-                    }
+                    MessageBox.Show(
+                        $"「{ctrl.Tag}」と重複しています。",
+                        "キー設定エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    org.KeyData = Keys.None;
+                    e.Cancel = true;
                 }
             }
         }

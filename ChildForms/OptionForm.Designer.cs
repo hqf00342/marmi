@@ -1025,7 +1025,7 @@
             // 
             this.ka_exit2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_exit2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Exit2", true));
-            this.ka_exit2.keyData = System.Windows.Forms.Keys.None;
+            this.ka_exit2.KeyData = System.Windows.Forms.Keys.None;
             this.ka_exit2.Location = new System.Drawing.Point(344, 25);
             this.ka_exit2.Name = "ka_exit2";
             this.ka_exit2.Size = new System.Drawing.Size(120, 16);
@@ -1041,7 +1041,7 @@
             // 
             this.ka_exit1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_exit1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Exit1", true));
-            this.ka_exit1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_exit1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_exit1.Location = new System.Drawing.Point(103, 25);
             this.ka_exit1.Name = "ka_exit1";
             this.ka_exit1.Size = new System.Drawing.Size(120, 16);
@@ -1185,7 +1185,7 @@
             // 
             this.ka_bookmark1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_bookmark1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Bookmark1", true));
-            this.ka_bookmark1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_bookmark1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_bookmark1.Location = new System.Drawing.Point(103, 47);
             this.ka_bookmark1.Name = "ka_bookmark1";
             this.ka_bookmark1.Size = new System.Drawing.Size(120, 16);
@@ -1197,7 +1197,7 @@
             // 
             this.ka_fullscreen1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_fullscreen1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Fullscreen1", true));
-            this.ka_fullscreen1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_fullscreen1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_fullscreen1.Location = new System.Drawing.Point(103, 69);
             this.ka_fullscreen1.Name = "ka_fullscreen1";
             this.ka_fullscreen1.Size = new System.Drawing.Size(120, 16);
@@ -1209,7 +1209,7 @@
             // 
             this.ka_dualview1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_dualview1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Dualview1", true));
-            this.ka_dualview1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_dualview1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_dualview1.Location = new System.Drawing.Point(103, 91);
             this.ka_dualview1.Name = "ka_dualview1";
             this.ka_dualview1.Size = new System.Drawing.Size(120, 16);
@@ -1221,7 +1221,7 @@
             // 
             this.ka_viewratio1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_viewratio1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_ViewRatio1", true));
-            this.ka_viewratio1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_viewratio1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_viewratio1.Location = new System.Drawing.Point(103, 113);
             this.ka_viewratio1.Name = "ka_viewratio1";
             this.ka_viewratio1.Size = new System.Drawing.Size(120, 16);
@@ -1233,7 +1233,7 @@
             // 
             this.ka_recycle1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_recycle1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Recycle1", true));
-            this.ka_recycle1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_recycle1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_recycle1.Location = new System.Drawing.Point(103, 135);
             this.ka_recycle1.Name = "ka_recycle1";
             this.ka_recycle1.Size = new System.Drawing.Size(120, 16);
@@ -1245,7 +1245,7 @@
             // 
             this.ka_nextpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_nextpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nextpage1", true));
-            this.ka_nextpage1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_nextpage1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_nextpage1.Location = new System.Drawing.Point(103, 179);
             this.ka_nextpage1.Name = "ka_nextpage1";
             this.ka_nextpage1.Size = new System.Drawing.Size(120, 16);
@@ -1257,7 +1257,7 @@
             // 
             this.ka_prevpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_prevpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevpage1", true));
-            this.ka_prevpage1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_prevpage1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_prevpage1.Location = new System.Drawing.Point(103, 201);
             this.ka_prevpage1.Name = "ka_prevpage1";
             this.ka_prevpage1.Size = new System.Drawing.Size(120, 16);
@@ -1269,7 +1269,7 @@
             // 
             this.ka_toppage1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_toppage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Toppage1", true));
-            this.ka_toppage1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_toppage1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_toppage1.Location = new System.Drawing.Point(103, 223);
             this.ka_toppage1.Name = "ka_toppage1";
             this.ka_toppage1.Size = new System.Drawing.Size(120, 16);
@@ -1281,7 +1281,7 @@
             // 
             this.ka_lastpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_lastpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Lastpage1", true));
-            this.ka_lastpage1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_lastpage1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_lastpage1.Location = new System.Drawing.Point(103, 245);
             this.ka_lastpage1.Name = "ka_lastpage1";
             this.ka_lastpage1.Size = new System.Drawing.Size(120, 16);
@@ -1293,7 +1293,7 @@
             // 
             this.ka_nexthalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_nexthalf1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nexthalf1", true));
-            this.ka_nexthalf1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_nexthalf1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_nexthalf1.Location = new System.Drawing.Point(103, 267);
             this.ka_nexthalf1.Name = "ka_nexthalf1";
             this.ka_nexthalf1.Size = new System.Drawing.Size(120, 16);
@@ -1305,7 +1305,7 @@
             // 
             this.ka_prevhalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_prevhalf1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevhalf1", true));
-            this.ka_prevhalf1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_prevhalf1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_prevhalf1.Location = new System.Drawing.Point(103, 289);
             this.ka_prevhalf1.Name = "ka_prevhalf1";
             this.ka_prevhalf1.Size = new System.Drawing.Size(120, 16);
@@ -1339,7 +1339,7 @@
             // 
             this.ka_nextpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_nextpage2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nextpage2", true));
-            this.ka_nextpage2.keyData = System.Windows.Forms.Keys.None;
+            this.ka_nextpage2.KeyData = System.Windows.Forms.Keys.None;
             this.ka_nextpage2.Location = new System.Drawing.Point(344, 179);
             this.ka_nextpage2.Name = "ka_nextpage2";
             this.ka_nextpage2.Size = new System.Drawing.Size(120, 16);
@@ -1351,7 +1351,7 @@
             // 
             this.ka_prevpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_prevpage2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevpage2", true));
-            this.ka_prevpage2.keyData = System.Windows.Forms.Keys.None;
+            this.ka_prevpage2.KeyData = System.Windows.Forms.Keys.None;
             this.ka_prevpage2.Location = new System.Drawing.Point(344, 201);
             this.ka_prevpage2.Name = "ka_prevpage2";
             this.ka_prevpage2.Size = new System.Drawing.Size(120, 16);
@@ -1374,12 +1374,12 @@
             // 
             this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Rotate1", true));
-            this.ka_rotate1.keyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
             this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
             this.ka_rotate1.Name = "ka_rotate1";
             this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
             this.ka_rotate1.TabIndex = 12;
-            this.ka_rotate1.Tag = "ファイルをゴミ箱へ";
+            this.ka_rotate1.Tag = "回転";
             this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label13
@@ -1443,24 +1443,24 @@
             // 
             this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_thunbnail.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Thumbnail", true));
-            this.ka_thunbnail.keyData = System.Windows.Forms.Keys.None;
+            this.ka_thunbnail.KeyData = System.Windows.Forms.Keys.None;
             this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
             this.ka_thunbnail.Name = "ka_thunbnail";
             this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
             this.ka_thunbnail.TabIndex = 2;
-            this.ka_thunbnail.Tag = "Marmiの終了(2)";
+            this.ka_thunbnail.Tag = "サムネイル";
             this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // ka_sidebar
             // 
             this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_sidebar.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Sidebar", true));
-            this.ka_sidebar.keyData = System.Windows.Forms.Keys.None;
+            this.ka_sidebar.KeyData = System.Windows.Forms.Keys.None;
             this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
             this.ka_sidebar.Name = "ka_sidebar";
             this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
             this.ka_sidebar.TabIndex = 2;
-            this.ka_sidebar.Tag = "Marmiの終了(2)";
+            this.ka_sidebar.Tag = "サイドバー";
             this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label18
@@ -1478,12 +1478,12 @@
             // 
             this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_minWindow.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_MinWindow", true));
-            this.ka_minWindow.keyData = System.Windows.Forms.Keys.None;
+            this.ka_minWindow.KeyData = System.Windows.Forms.Keys.None;
             this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
             this.ka_minWindow.Name = "ka_minWindow";
             this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
             this.ka_minWindow.TabIndex = 14;
-            this.ka_minWindow.Tag = "半ページ戻る";
+            this.ka_minWindow.Tag = "最小化";
             this.ka_minWindow.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // Mouse

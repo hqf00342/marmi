@@ -1,29 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace Marmi
 {
-    public partial class KeyAccelerator : UserControl
+    public partial class KeyAccelerator : UserControl, INotifyPropertyChanged
     {
-        public Keys keyData { get; set; }
+        #region INotifyPropertyChanged
 
-        //private bool inputMode = false;
-        //private Font font_bold = new System.Drawing.Font(DefaultFont, FontStyle.Bold);
-        private Pen blue_pen = new Pen(Color.Blue, 1.0f);
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        //public delegate void ValidateEventhandler(object o, EventArgs e);
-        //public event ValidateEventhandler ValidateKey;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T store, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (object.Equals(store, value))
+                return false;
+            store = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        #endregion
+
+        private Keys _KeyData;
+        public Keys KeyData { get => _KeyData; set => SetProperty(ref _KeyData, value); }
+
+        //public Keys KeyData { get; set; }
+
+        private readonly Pen _bluePen = new Pen(Color.Blue, 1.0f);
 
         #region キーコンフィグ
 
         /// <summary>
-        /// 人間向けの文字列に変換するテーブル。
+        /// 特殊キーに対するString変換テーブル。
         /// </summary>
-        private Dictionary<Keys, string> KeyDict = new Dictionary<Keys, string>()
+        private Dictionary<Keys, string> _keyNameDic = new Dictionary<Keys, string>()
         {
             {Keys.Left, "←"},
             {Keys.Right, "→"},
@@ -70,7 +90,7 @@ namespace Marmi
         public KeyAccelerator()
         {
             InitializeComponent();
-            keyData = Keys.None;
+            KeyData = Keys.None;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -78,16 +98,14 @@ namespace Marmi
             base.OnPaint(e);
             Rectangle rect = this.ClientRectangle;
 
-            //this.BackColor = inputMode ? Color.Yellow : SystemColors.ButtonFace;
             this.BackColor = this.Focused ? Color.Yellow : SystemColors.ButtonFace;
             //テキスト描写
-            string s = KeydataToString(keyData);
+            string s = KeydataToString(KeyData);
             if (!string.IsNullOrEmpty(s))
             {
                 TextRenderer.DrawText(
                     e.Graphics,
                     s,
-                    //this.Focused ? font_bold : DefaultFont,
                     DefaultFont,
                     rect,
                     Color.Black,
@@ -98,8 +116,7 @@ namespace Marmi
             rect.Width--;
             rect.Height--;
             e.Graphics.DrawRectangle(
-                this.Focused ? blue_pen : Pens.DimGray,
-                //inputMode ? blue_pen : Pens.DimGray,
+                this.Focused ? _bluePen : Pens.DimGray,
                 rect);
         }
 
@@ -116,10 +133,7 @@ namespace Marmi
             if (kd == Keys.None)
                 return "";
 
-            //KeysConverter kc = new KeysConverter();
-            //Uty.WriteLine(kc.ConvertToString(kd));
-
-            string s = string.Empty;
+            var s = string.Empty;
 
             //修飾キーを文字列に変換
             bool alt = (kd & Keys.Alt) == Keys.Alt;
@@ -131,7 +145,7 @@ namespace Marmi
 
             //キー文字を追加
             Keys keycode = kd & Keys.KeyCode;
-            var i = KeyDict.FirstOrDefault(a => a.Key == keycode).Value;
+            var i = _keyNameDic.FirstOrDefault(a => a.Key == keycode).Value;
             string keystring = string.IsNullOrEmpty(i) ? keycode.ToString() : i;
             s += keystring;
             return s;
@@ -142,26 +156,23 @@ namespace Marmi
             base.OnMouseClick(e);
             switch (e.Button)
             {
-                case System.Windows.Forms.MouseButtons.Left:
-                    //if(this.Focused)
-                    //	inputMode = !inputMode;
+                case MouseButtons.Left:
                     break;
 
-                case System.Windows.Forms.MouseButtons.Right:
-                    //inputMode = false;
-                    keyData = Keys.None;
+                case MouseButtons.Right:
+                    KeyData = Keys.None;
                     break;
 
-                case System.Windows.Forms.MouseButtons.Middle:
-                    keyData = Keys.MButton;
+                case MouseButtons.Middle:
+                    KeyData = Keys.MButton;
                     break;
 
-                case System.Windows.Forms.MouseButtons.XButton1:
-                    keyData = Keys.XButton1;
+                case MouseButtons.XButton1:
+                    KeyData = Keys.XButton1;
                     break;
 
-                case System.Windows.Forms.MouseButtons.XButton2:
-                    keyData = Keys.XButton2;
+                case MouseButtons.XButton2:
+                    KeyData = Keys.XButton2;
                     break;
             }
             this.Invalidate();
@@ -170,36 +181,29 @@ namespace Marmi
         protected override void OnLeave(EventArgs e)
         {
             base.OnLeave(e);
-            //inputMode = false;
             this.Invalidate();
         }
 
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
-            //inputMode = true;
             this.Invalidate();
         }
 
         protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
         {
             base.OnPreviewKeyDown(e);
-            //if (!inputMode)
-            //	return;
 
             if (e.Alt)
-                keyData = e.KeyData & ~Keys.Alt;
-
-            //Uty.WriteLine(e.KeyData.ToString());
+                KeyData = e.KeyData & ~Keys.Alt;
 
             //Altキーは修飾として使わせない。
             if ((e.KeyData & Keys.Alt) == Keys.Alt)
-                keyData = e.KeyData & ~Keys.Alt;
+                KeyData = e.KeyData & ~Keys.Alt;
             else
-                keyData = e.KeyData;
-            //keyData = e.KeyData;
+                KeyData = e.KeyData;
 
-            Debug.WriteLine(keyData.ToString());
+            Debug.WriteLine(KeyData.ToString());
             //タブや矢印を普通の入力としてコントロール移動させない
             e.IsInputKey = true;
             this.Invalidate();
@@ -208,10 +212,8 @@ namespace Marmi
         protected override void OnKeyUp(KeyEventArgs e)
         {
             base.OnKeyUp(e);
-            //if (!inputMode)
-            //	return;
 
-            var keycode = keyData & Keys.KeyCode;
+            var keycode = KeyData & Keys.KeyCode;
             switch (keycode)
             {
                 case Keys.Control:
@@ -220,7 +222,7 @@ namespace Marmi
                 case Keys.Shift:
                 case Keys.ShiftKey:
                 case Keys.None:
-                    keyData = Keys.None;
+                    KeyData = Keys.None;
                     break;
             }
             this.Invalidate();
