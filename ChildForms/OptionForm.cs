@@ -23,6 +23,7 @@ namespace Marmi
             generalConfigBindingSource.DataSource = _config.General;
             advanceConfigBindingSource.DataSource = _config.Advance;
             loupeConfigBindingSource.DataSource = _config.Loupe;
+            mouseConfigBindingSource.DataSource = _config.Mouse;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
@@ -31,7 +32,7 @@ namespace Marmi
             //LoadGeneralConfig(set);
             LoadViewConfig(set);
             LoadThumbnailConfig(set);
-            LoadMouseConfig(set);
+            //LoadMouseConfig(set);
             LoadKeyConfig(set);
             //LoadAdvanceConfig(set);
 
@@ -110,6 +111,7 @@ namespace Marmi
             set.General = _config.General;
             set.Advance = _config.Advance;
             set.Loupe = _config.Loupe;
+            set.Mouse = _config.Mouse;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
@@ -133,7 +135,7 @@ namespace Marmi
 
             //ver1.91 キーコンフィグ
             SaveKeyConfig(ref set);
-            SaveMouseConfig(ref set);
+            //SaveMouseConfig(ref set);
         }
 
         private void SaveViewConfig(ref AppGlobalConfig set)
@@ -161,16 +163,6 @@ namespace Marmi
             set.Thumbnail.DrawPicsize = isShowTPPicSize.Checked;
             //ver1.81サムネイルのアニメーション効果
             set.Thumbnail.SmoothScroll = ThumbnailPanelSmoothScroll.Checked;
-        }
-
-        private void SaveMouseConfig(ref AppGlobalConfig set)
-        {
-            set.Mouse.MouseConfigWheel = mouseConfigWheel.Text;
-
-            //ver1.64 画面ナビ
-            set.Mouse.ClickRightToNextPic = radioRightScrToNextPic.Checked;
-            set.Mouse.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
-            set.Mouse.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
         }
 
         private void SaveKeyConfig(ref AppGlobalConfig set)

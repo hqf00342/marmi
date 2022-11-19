@@ -126,6 +126,9 @@
     <None Include="Properties\DataSources\Marmi.DataModel.GeneralConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.KeyConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.LoupeConfig.datasource" />
+    <None Include="Properties\DataSources\Marmi.DataModel.MouseConfig.datasource" />
+    <None Include="Properties\DataSources\Marmi.DataModel.ThumbnailConfig.datasource" />
+    <None Include="Properties\DataSources\Marmi.DataModel.ViewConfig.datasource" />
     <None Include="SharpCompress\ScWrapper.cs" />
     <Compile Include="DataModel\ViewState.cs" />
     <Compile Include="Uty\Bmp.cs" />
