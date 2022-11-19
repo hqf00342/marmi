@@ -206,7 +206,7 @@ namespace Marmi
             this.Hide();
 
             //ver1.77 MRUリストの更新
-            App.Config.UpdateMRUList(App.g_pi);
+            App.Config.AddMRU(App.g_pi);
 
             //非同期IOスレッドの終了
             AsyncIO.StopThread();
@@ -217,10 +217,7 @@ namespace Marmi
             //設定の保存
             if (App.Config.General.IsSaveConfig)
             {
-                //ウィンドウ位置、サイズの保存->OnResizeEnd()で実施。
-                //App.Config.windowLocation = this.Location;
-                //App.Config.windowSize = this.Size;
-                AppGlobalConfig.SaveToXmlFile(App.Config);
+                XmlFile.SaveToXmlFile(App.Config, App.ConfigFilename);
             }
             else
             {

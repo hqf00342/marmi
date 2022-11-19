@@ -25,7 +25,7 @@ namespace Marmi
             // 設定ファイルの読み込み
             // ver1.76 Form1::Form1()から移動
             // ここで読み込んで多重起動禁止フラグを確認する。
-            App.Config = (AppGlobalConfig)AppGlobalConfig.LoadFromXmlFile();
+            App.Config = XmlFile.LoadFromXmlFile<AppGlobalConfig>(App.ConfigFilename);
             if (App.Config == null)
                 App.Config = new AppGlobalConfig();
 

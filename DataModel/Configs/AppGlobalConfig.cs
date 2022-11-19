@@ -2,9 +2,7 @@ using Marmi.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 
 /********************************************************************************
  設定を保存するクラス
@@ -89,24 +87,12 @@ namespace Marmi
             windowLocation = new Point(0, 0);
             IsRecurseSearchDir = false;
             IsFitScreenAndImage = true;
-
-            IsFitScreenAndImage = true;
             IsStopPaintingAtResize = false;
-
-            //サイドバー
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
-
-            //スクリーンショー時間
             SlideShowTime = 3000;
-
-            //ツールバーの位置
             IsToolbarTop = true;
-
-            //ver1.78 倍率の保持
             KeepMagnification = false;
-            //ver1.79 書庫は必ず展開
 
-            //ver1.91 コンフィグ分離 2022年8月7日
             General.Init();
             View.Init();
             Thumbnail.Init();
@@ -117,45 +103,12 @@ namespace Marmi
         }
 
         /// <summary>
-        /// XML形式で保存したObjectをロードする。
-        /// </summary>
-        /// <returns></returns>
-        public static object LoadFromXmlFile()
-        {
-            string path = App.ConfigFilename;
-
-            if (File.Exists(path))
-            {
-                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                {
-                    //読み込んで逆シリアル化する
-                    var xs = new XmlSerializer(typeof(AppGlobalConfig));
-                    return xs.Deserialize(fs);
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// XML形式でObjectを保存する
-        /// </summary>
-        /// <param name="obj"></param>
-        public static void SaveToXmlFile(object obj)
-        {
-            using (var fs = new FileStream(App.ConfigFilename, FileMode.Create, FileAccess.Write))
-            {
-                var xs = new XmlSerializer(typeof(AppGlobalConfig));
-                xs.Serialize(fs, obj);
-            }
-        }
-
-        /// <summary>
         /// 現在閲覧しているg_pi.PackageNameをMRUに追加する
         /// 以前も見たことがある場合、閲覧日付だけを更新
         /// </summary>
-        public void UpdateMRUList(PackageInfo pi)
+        public void AddMRU(PackageInfo pi)
         {
-            if (string.IsNullOrEmpty(pi.PackageName))
+            if (pi==null || string.IsNullOrEmpty(pi.PackageName))
                 return;
 
             var mru = Mru.FirstOrDefault(a => a.Name == pi.PackageName);

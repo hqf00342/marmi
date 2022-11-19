@@ -239,7 +239,7 @@ namespace Marmi
             PicPanel.Clear();
 
             //ver1.73 MRUリストの更新
-            App.Config.UpdateMRUList(App.g_pi);
+            App.Config.AddMRU(App.g_pi);
 
             //ver1.35スクリーンキャッシュをクリア
             ScreenCache.Clear();

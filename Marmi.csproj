@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="XmlFile.cs" />
     <None Include="dlls\axpdf.spi" />
     <None Include="SharpCompress\ScWrapper.cs" />
     <Compile Include="DataModel\ViewState.cs" />
