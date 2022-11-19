@@ -46,24 +46,24 @@ namespace Marmi.DataModel
         }
 
         //サムネイル画像の大きさ
-        public int ThumbnailSize;
+        public int ThumbnailSize { get; set; }
 
         // サムネイルに影を描写するか
-        public bool IsDrawThumbnailShadow { get; set; }
+        public bool DrawShadowdrop { get; set; }
 
         // サムネイルに枠を描写するか
-        public bool IsDrawThumbnailFrame { get; set; }
+        public bool DrawFrame { get; set; }
 
         // サムネイルにファイル名を表示するか
-        public bool IsShowTPFileName { get; set; }
+        public bool DrawFilename { get; set; }
 
         // ファイル名にファイルサイズを表示するか
-        public bool IsShowTPFileSize { get; set; }
+        public bool DrawFilesize { get; set; }
 
         // ファイル名に画像サイズを表示するか
-        public bool IsShowTPPicSize { get; set; }
+        public bool DrawPicsize { get; set; }
 
-        public bool ThumbnailPanelSmoothScroll { get; set; }
+        public bool SmoothScroll { get; set; }
 
         public void Init()
         {
@@ -73,13 +73,12 @@ namespace Marmi.DataModel
             ThumbnailFont = new Font("MS UI Gothic", 9);    //サムネイルのフォント
             ThumbnailFontColor = Color.Black;               //サムネイルのフォントカラー
                                                             //isAutoCleanOldCache = false;					//サムネイルを自動でクリーンするか
-            IsDrawThumbnailShadow = true;                   //サムネイルに影を描写するか
-            IsDrawThumbnailFrame = true;                    //サムネイルに枠を描写するか
-            IsShowTPFileName = true;                        //画像名を表示するか
-            IsShowTPFileSize = false;                       //画像のファイルサイズを表示するか
-            IsShowTPPicSize = false;                        //画像のピクセルサイズを表示するか
-            //ver1.81 サムネイルパネルのアニメーション
-            ThumbnailPanelSmoothScroll = true;
+            DrawShadowdrop = true;                   //サムネイルに影を描写するか
+            DrawFrame = true;                    //サムネイルに枠を描写するか
+            DrawFilename = true;                        //画像名を表示するか
+            DrawFilesize = false;                       //画像のファイルサイズを表示するか
+            DrawPicsize = false;                        //画像のピクセルサイズを表示するか
+            SmoothScroll = true;
         }
     }
 }

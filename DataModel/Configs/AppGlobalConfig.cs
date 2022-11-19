@@ -28,18 +28,18 @@ namespace Marmi
             set => ViewState.DualView = value;
         }
 
-        public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
+        public bool RecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
-        public bool IsFitScreenAndImage { get; set; }            //画像とイメージをフィットさせる
-        public bool IsStopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
-        public bool IsAutoCleanOldCache { get; set; }            //古いキャッシュの自動削除
+        public bool FitToScreen { get; set; }            //画像とイメージをフィットさせる
+        public bool StopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
+
         public int SidebarWidth { get; set; }                    //サイドバーの幅
 
         ////ver1.35 スクリーンショー時間[ms]
-        public int SlideShowTime { get; set; }
+        public int SlideshowTime { get; set; }
 
         //ver1.62 ツールバーの位置
-        public bool IsToolbarTop { get; set; }
+        public bool ToolbarIsTop { get; set; }
 
         //ver1.78 倍率の保持
         public bool KeepMagnification { get; set; }
@@ -85,12 +85,12 @@ namespace Marmi
         {
             windowSize = new Size(640, 480);
             windowLocation = new Point(0, 0);
-            IsRecurseSearchDir = false;
-            IsFitScreenAndImage = true;
-            IsStopPaintingAtResize = false;
+            RecurseSearchDir = false;
+            FitToScreen = true;
+            StopPaintingAtResize = false;
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
-            SlideShowTime = 3000;
-            IsToolbarTop = true;
+            SlideshowTime = 3000;
+            ToolbarIsTop = true;
             KeepMagnification = false;
 
             General.Init();

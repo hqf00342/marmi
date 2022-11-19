@@ -147,7 +147,7 @@ namespace Marmi
                         Debug.WriteLine($"AsyncIO.LoadImage() : Open 7z: {App.g_pi.PackageName}");
                     }
 
-                    if (App.g_pi.isSolid && App.Config.General.IsExtractIfSolidArchive)
+                    if (App.g_pi.isSolid && App.Config.General.ExtractArchiveIfSolid)
                     {
                         //ソリッド書庫 又は オプション指定あり
                         //一時フォルダの画像を利用

@@ -260,8 +260,8 @@ namespace Marmi
 
         private void ToggleFitScreen()
         {
-            App.Config.IsFitScreenAndImage = !App.Config.IsFitScreenAndImage;
-            PicPanel.IsAutoFit = App.Config.IsFitScreenAndImage;
+            App.Config.FitToScreen = !App.Config.FitToScreen;
+            PicPanel.IsAutoFit = App.Config.FitToScreen;
 
             PicPanel.Refresh();
             UpdateStatusbar();
@@ -349,8 +349,8 @@ namespace Marmi
 
         private void Menu_RecurseDir_Click(object sender, EventArgs e)
         {
-            App.Config.IsRecurseSearchDir = !App.Config.IsRecurseSearchDir;
-            Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
+            App.Config.RecurseSearchDir = !App.Config.RecurseSearchDir;
+            Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
         }
 
         private void Menu_keepMagnification_Click(object sender, EventArgs e)
@@ -360,12 +360,12 @@ namespace Marmi
 
         private void Menu_UseBicubic_Click(object sender, EventArgs e)
         {
-            App.Config.View.IsDotByDotZoom = !App.Config.View.IsDotByDotZoom;
+            App.Config.View.DotByDotZoom = !App.Config.View.DotByDotZoom;
         }
 
         private async void Menu_DontEnlargeOver100percent_Click(object sender, EventArgs e)
         {
-            App.Config.View.NoEnlargeOver100p = !App.Config.View.NoEnlargeOver100p;
+            App.Config.View.ProhigitExpansionOver100p = !App.Config.View.ProhigitExpansionOver100p;
             await SetViewPageAsync(App.g_pi.NowViewPage);
         }
 
@@ -461,7 +461,7 @@ namespace Marmi
             Menu_ViewStatusbar.Checked = statusbar.Visible;
             Menu_View2Page.Checked = ViewState.DualView;
             Menu_ViewFullScreen.Checked = ViewState.FullScreen;
-            Menu_ViewFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
+            Menu_ViewFitScreenSize.Checked = App.Config.FitToScreen;
             Menu_ViewSidebar.Checked = _sidebar.Visible;
             //ツールバーの位置
             Menu_ToolbarBottom.Checked = (toolStrip1.Dock == DockStyle.Bottom);
@@ -480,14 +480,14 @@ namespace Marmi
         private void Menu_Option_DropDownOpening(object sender, EventArgs e)
         {
             //チェック状態
-            Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
+            Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
             //MenuItem_OptionSidebarFix.Checked = App.Config.isFixSidebar;
             Menu_keepMagnification.Checked = App.Config.KeepMagnification;
-            Menu_UseBicubic.Checked = !App.Config.View.IsDotByDotZoom;
-            Menu_DontEnlargeOver100percent.Checked = App.Config.View.NoEnlargeOver100p;
+            Menu_UseBicubic.Checked = !App.Config.View.DotByDotZoom;
+            Menu_DontEnlargeOver100percent.Checked = App.Config.View.ProhigitExpansionOver100p;
 
             //ver1.83アンシャープ
-            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.Advance.UnsharpMask;
         }
 
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)
@@ -594,7 +594,7 @@ namespace Marmi
 
             Menu_ContextDualView.Checked = ViewState.DualView;
             Menu_ContextFullView.Checked = ViewState.FullScreen;
-            Menu_ContextFitScreenSize.Checked = App.Config.IsFitScreenAndImage;
+            Menu_ContextFitScreenSize.Checked = App.Config.FitToScreen;
 
             Menu_ContextSidebar.Checked = _sidebar.Visible;
 
@@ -806,7 +806,7 @@ namespace Marmi
                 if (int.TryParse(s, out int msec) && msec != 0)
                     SlideShowTimer.Interval = msec;
                 else
-                    SlideShowTimer.Interval = App.Config.SlideShowTime;
+                    SlideShowTimer.Interval = App.Config.SlideshowTime;
 
                 //タイマー開始
                 SlideShowTimer.Start();
@@ -815,8 +815,8 @@ namespace Marmi
 
         private void Menu_Unsharp_Click(object sender, EventArgs e)
         {
-            App.Config.Advance.UseUnsharpMask = !App.Config.Advance.UseUnsharpMask;
-            MenuItem_Unsharp.Checked = App.Config.Advance.UseUnsharpMask;
+            App.Config.Advance.UnsharpMask = !App.Config.Advance.UnsharpMask;
+            MenuItem_Unsharp.Checked = App.Config.Advance.UnsharpMask;
 
             //再描写
             PicPanel.Invalidate();

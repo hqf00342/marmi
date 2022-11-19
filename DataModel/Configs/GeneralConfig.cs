@@ -6,77 +6,72 @@ namespace Marmi.DataModel
     public class GeneralConfig
     {
         //コンフィグの保存
-        public bool IsSaveConfig { get; set; }
+        public bool SaveConfig { get; set; }
 
-        #region archive
 
         //書庫は前回の続きから
-        public bool IsContinueZipView { get; set; }
+        public bool ContinueReading { get; set; }
 
         //ver1.79 書庫を常に展開する
-        public bool AlwaysExtractArchive { get; set; }
+        public bool ExtractArchiveAlways { get; set; }
 
         //ver1.09 ソリッド書庫を一時展開
-        public bool IsExtractIfSolidArchive { get; set; }
+        public bool ExtractArchiveIfSolid { get; set; }
 
         //ver1.73 一時展開フォルダ
         public string TmpFolder { get; set; }
 
-        #endregion archive
 
         //ツールバーの左右ボタンを入れ替える
-        public bool IsReplaceArrowButton { get; set; }
+        public bool ReplaceArrowButton { get; set; }
 
         //ver1.65 ツールバーアイテムの文字を消すか
         public bool HideToolbarString { get; set; }
 
         //ver1.70 サイドバーのスムーススクロール
-        public bool Sidebar_smoothScroll { get; set; }
+        public bool SmoothScrollOnSidebar { get; set; }
 
         //ver1.73 MRU保持数
         public int NumberOfMru;
 
         [XmlIgnore]
-        public Color BackColor;
+        public Color BackColor { get; set; } = Color.LightSlateGray;
 
-        [XmlElement("XmlMainBackColor")]
-        public string XmlMainColor
+        [XmlElement("BackColorXml")]
+        public string BackColorXml
         {
             set { BackColor = ColorTranslator.FromHtml(value); }
             get { return ColorTranslator.ToHtml(BackColor); }
         }
 
-        //ver1.76 多重起動禁止
-        public bool DisableMultipleStarts { get; set; }
+        /// <summary>
+        /// ver1.76 多重起動禁止
+        /// </summary>
+        public bool SingleProcess { get; set; }
 
-        //ver1.77 ウィンドウ位置復元を簡易にする
-        //public bool SimpleCalcForWindowLocation { get; set; }
-
-        //ver1.77 フルスクリーン状態を復元できるようにする
+        /// <summary>
+        /// ver1.77 フルスクリーン状態を復元できるようにする
+        /// </summary>
         public bool SaveFullScreenMode { get; set; }
 
-        //ver1.49 ウィンドウの初期位置
-        public bool IsWindowPosCenter { get; set; }
+        //ver1.49 ウィンドウの初期位置を中央にする
+        public bool CenteredAtStart { get; set; }
 
         public void Init()
         {
-            IsSaveConfig = false;
+            SaveConfig = false;
             BackColor = Color.LightSlateGray;
-            IsReplaceArrowButton = false;
-            IsContinueZipView = true;
-            IsExtractIfSolidArchive = true;
-            IsWindowPosCenter = false;
+            ReplaceArrowButton = false;
+            ContinueReading = true;
+            ExtractArchiveIfSolid = true;
+            CenteredAtStart = false;
             HideToolbarString = false;
-            Sidebar_smoothScroll = true;
-            //ver1.73 一時展開フォルダ
+            SmoothScrollOnSidebar = true;
             TmpFolder = string.Empty;
             NumberOfMru = 10;
-
-            //ver1.76 多重起動
-            DisableMultipleStarts = false;
-            //ver1.77 フルスクリーン状態を復元できるようにする
+            SingleProcess = false;
             SaveFullScreenMode = true;
-            AlwaysExtractArchive = false;
+            ExtractArchiveAlways = false;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Marmi
             //全般タブ
 
             //高度な設定タブ
-            bStopPaintingAtResize.Checked = set.IsStopPaintingAtResize; //リサイズ描写
+            bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
             LoadGeneralConfig(set);
@@ -46,10 +46,10 @@ namespace Marmi
 
         private void LoadViewConfig(AppGlobalConfig set)
         {
-            noEnlargeOver100p.Checked = set.View.NoEnlargeOver100p;
-            isDotByDotZoom.Checked = set.View.IsDotByDotZoom;
-            lastPage_stay.Checked = set.View.LastPage_stay;
-            lastPage_toTop.Checked = set.View.LastPage_toTop;
+            noEnlargeOver100p.Checked = set.View.ProhigitExpansionOver100p;
+            isDotByDotZoom.Checked = set.View.DotByDotZoom;
+            lastPage_stay.Checked = set.View.StayOnLastPage;
+            lastPage_toTop.Checked = set.View.MoveToTopAtLastPage;
             dualView_Force.Checked = set.View.DualView_Force;
             dualView_Normal.Checked = set.View.DualView_Normal;
             dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
@@ -58,19 +58,19 @@ namespace Marmi
 
         private void LoadGeneralConfig(AppGlobalConfig set)
         {
-            bSaveConfig.Checked = set.General.IsSaveConfig;
-            bContinueZip.Checked = set.General.IsContinueZipView;
-            isExtractIfSolidArchive.Checked = set.General.IsExtractIfSolidArchive;
-            bReplaceArrowButton.Checked = set.General.IsReplaceArrowButton;
+            bSaveConfig.Checked = set.General.SaveConfig;
+            bContinueZip.Checked = set.General.ContinueReading;
+            isExtractIfSolidArchive.Checked = set.General.ExtractArchiveIfSolid;
+            bReplaceArrowButton.Checked = set.General.ReplaceArrowButton;
             pictureBox_BackColor.BackColor = set.General.BackColor;
-            isWindowPosCenter.Checked = set.General.IsWindowPosCenter;
+            isWindowPosCenter.Checked = set.General.CenteredAtStart;
             eraseToolbarItemString.Checked = set.General.HideToolbarString;
-            sidebar_smoothscroll.Checked = set.General.Sidebar_smoothScroll;
+            sidebar_smoothscroll.Checked = set.General.SmoothScrollOnSidebar;
             tmpFolder.Text = set.General.TmpFolder;
             numOfMru.Text = set.General.NumberOfMru.ToString();
-            disableMultipleStarts.Checked = set.General.DisableMultipleStarts;
+            disableMultipleStarts.Checked = set.General.SingleProcess;
             saveFullScreenMode.Checked = set.General.SaveFullScreenMode;
-            alwaysExtractArchive.Checked = set.General.AlwaysExtractArchive;
+            alwaysExtractArchive.Checked = set.General.ExtractArchiveAlways;
         }
 
         private void LoadThumbnailConfig(AppGlobalConfig set)
@@ -80,27 +80,27 @@ namespace Marmi
             fontDialog1.Font = set.Thumbnail.ThumbnailFont;
             linkLabel1.Text = fontDialog1.Font.Name + ", " + fontDialog1.Font.Size;
             ThumbnailFontColor.BackColor = set.Thumbnail.ThumbnailFontColor;
-            isDrawThumbnailFrame.Checked = set.Thumbnail.IsDrawThumbnailFrame;
-            isDrawThumbnailShadow.Checked = set.Thumbnail.IsDrawThumbnailShadow;
-            isShowTPFileName.Checked = set.Thumbnail.IsShowTPFileName;
-            isShowTPFileSize.Checked = set.Thumbnail.IsShowTPFileSize;
-            isShowTPPicSize.Checked = set.Thumbnail.IsShowTPPicSize;
+            isDrawThumbnailFrame.Checked = set.Thumbnail.DrawFrame;
+            isDrawThumbnailShadow.Checked = set.Thumbnail.DrawShadowdrop;
+            isShowTPFileName.Checked = set.Thumbnail.DrawFilename;
+            isShowTPFileSize.Checked = set.Thumbnail.DrawFilesize;
+            isShowTPPicSize.Checked = set.Thumbnail.DrawPicsize;
             //ver1.81サムネイルのアニメーション効果
-            ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.ThumbnailPanelSmoothScroll;
+            ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.SmoothScroll;
         }
 
         private void LoadAdvanceConfig(AppGlobalConfig set)
         {
-            isFastDraw.Checked = set.Advance.IsFastDrawAtResize;
+            isFastDraw.Checked = set.Advance.FastDrawAtResize;
             tb_cachesize.Text = set.Advance.CacheSize.ToString();
-            useUnsharpMask.Checked = set.Advance.UseUnsharpMask;
+            useUnsharpMask.Checked = set.Advance.UnsharpMask;
             unsharpDepth.Value = (decimal)set.Advance.UnsharpDepth;
         }
 
         private void LoadLoupeConfig(AppGlobalConfig set)
         {
-            isOriginalSizeLoupe.Checked = set.Loupe.IsOriginalSizeLoupe;
-            loupeMag.Text = set.Loupe.loupeMagnifcant.ToString();
+            isOriginalSizeLoupe.Checked = set.Loupe.OriginalSizeLoupe;
+            loupeMag.Text = set.Loupe.LoupeMagnifcant.ToString();
         }
 
         private void LoadMouseConfig(AppGlobalConfig set)
@@ -108,8 +108,8 @@ namespace Marmi
             mouseConfigWheel.Text = set.Mouse.MouseConfigWheel;
 
             //ver1.64 画面ナビ
-            radioRightScrToNextPic.Checked = set.Mouse.RightScrClickIsNextPic;
-            radioLeftScrToNextPic.Checked = !set.Mouse.RightScrClickIsNextPic;
+            radioRightScrToNextPic.Checked = set.Mouse.ClickRightToNextPic;
+            radioLeftScrToNextPic.Checked = !set.Mouse.ClickRightToNextPic;
             reverseClickPointWhenLeftBook.Checked = set.Mouse.ReverseDirectionWhenLeftBook;
             DoubleClickToFullscreen.Checked = set.Mouse.DoubleClickToFullscreen;
         }
@@ -142,7 +142,7 @@ namespace Marmi
             SaveGnereralConfig(ref set);
 
             //高度な設定タブ
-            set.IsStopPaintingAtResize = bStopPaintingAtResize.Checked;
+            set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //サムネイルタブ
             SaveThumbnailConfig(ref set);
@@ -170,10 +170,10 @@ namespace Marmi
 
         private void SaveViewConfig(ref AppGlobalConfig set)
         {
-            set.View.NoEnlargeOver100p = noEnlargeOver100p.Checked;
-            set.View.IsDotByDotZoom = isDotByDotZoom.Checked;
-            set.View.LastPage_stay = lastPage_stay.Checked;
-            set.View.LastPage_toTop = lastPage_toTop.Checked;
+            set.View.ProhigitExpansionOver100p = noEnlargeOver100p.Checked;
+            set.View.DotByDotZoom = isDotByDotZoom.Checked;
+            set.View.StayOnLastPage = lastPage_stay.Checked;
+            set.View.MoveToTopAtLastPage = lastPage_toTop.Checked;
             set.View.DualView_Force = dualView_Force.Checked;
             set.View.DualView_Normal = dualView_Normal.Checked;
             set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
@@ -182,19 +182,19 @@ namespace Marmi
 
         private void SaveGnereralConfig(ref AppGlobalConfig set)
         {
-            set.General.IsSaveConfig = bSaveConfig.Checked;
-            set.General.IsContinueZipView = bContinueZip.Checked;
-            set.General.IsReplaceArrowButton = bReplaceArrowButton.Checked;
+            set.General.SaveConfig = bSaveConfig.Checked;
+            set.General.ContinueReading = bContinueZip.Checked;
+            set.General.ReplaceArrowButton = bReplaceArrowButton.Checked;
             set.General.BackColor = pictureBox_BackColor.BackColor;
-            set.General.IsWindowPosCenter = isWindowPosCenter.Checked;
-            set.General.IsExtractIfSolidArchive = isExtractIfSolidArchive.Checked;
+            set.General.CenteredAtStart = isWindowPosCenter.Checked;
+            set.General.ExtractArchiveIfSolid = isExtractIfSolidArchive.Checked;
             set.General.HideToolbarString = eraseToolbarItemString.Checked;
-            set.General.Sidebar_smoothScroll = sidebar_smoothscroll.Checked;
+            set.General.SmoothScrollOnSidebar = sidebar_smoothscroll.Checked;
             set.General.TmpFolder = tmpFolder.Text;
             set.General.NumberOfMru = int.TryParse(numOfMru.Text, out var n) ? n : 10;
-            set.General.DisableMultipleStarts = disableMultipleStarts.Checked;
+            set.General.SingleProcess = disableMultipleStarts.Checked;
             set.General.SaveFullScreenMode = saveFullScreenMode.Checked;
-            set.General.AlwaysExtractArchive = alwaysExtractArchive.Checked;
+            set.General.ExtractArchiveAlways = alwaysExtractArchive.Checked;
         }
 
         private void SaveThumbnailConfig(ref AppGlobalConfig set)
@@ -203,27 +203,27 @@ namespace Marmi
             set.Thumbnail.ThumbnailBackColor = ThumbnailBackColor.BackColor;
             set.Thumbnail.ThumbnailFont = fontDialog1.Font;
             set.Thumbnail.ThumbnailFontColor = ThumbnailFontColor.BackColor;
-            set.Thumbnail.IsDrawThumbnailFrame = isDrawThumbnailFrame.Checked;
-            set.Thumbnail.IsDrawThumbnailShadow = isDrawThumbnailShadow.Checked;
-            set.Thumbnail.IsShowTPFileName = isShowTPFileName.Checked;
-            set.Thumbnail.IsShowTPFileSize = isShowTPFileSize.Checked;
-            set.Thumbnail.IsShowTPPicSize = isShowTPPicSize.Checked;
+            set.Thumbnail.DrawFrame = isDrawThumbnailFrame.Checked;
+            set.Thumbnail.DrawShadowdrop = isDrawThumbnailShadow.Checked;
+            set.Thumbnail.DrawFilename = isShowTPFileName.Checked;
+            set.Thumbnail.DrawFilesize = isShowTPFileSize.Checked;
+            set.Thumbnail.DrawPicsize = isShowTPPicSize.Checked;
             //ver1.81サムネイルのアニメーション効果
-            set.Thumbnail.ThumbnailPanelSmoothScroll = ThumbnailPanelSmoothScroll.Checked;
+            set.Thumbnail.SmoothScroll = ThumbnailPanelSmoothScroll.Checked;
         }
 
         private void SaveAdvanceConfig(ref AppGlobalConfig set)
         {
-            set.Advance.IsFastDrawAtResize = isFastDraw.Checked;
+            set.Advance.FastDrawAtResize = isFastDraw.Checked;
             set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 500;
-            set.Advance.UseUnsharpMask = useUnsharpMask.Checked;
+            set.Advance.UnsharpMask = useUnsharpMask.Checked;
             set.Advance.UnsharpDepth = (int)unsharpDepth.Value;
         }
 
         private void SaveLoupeConfig(ref AppGlobalConfig set)
         {
-            set.Loupe.IsOriginalSizeLoupe = isOriginalSizeLoupe.Checked;
-            set.Loupe.loupeMagnifcant = int.TryParse(loupeMag.Text, out var m) ? m : 3;
+            set.Loupe.OriginalSizeLoupe = isOriginalSizeLoupe.Checked;
+            set.Loupe.LoupeMagnifcant = int.TryParse(loupeMag.Text, out var m) ? m : 3;
         }
 
         private void SaveMouseConfig(ref AppGlobalConfig set)
@@ -231,7 +231,7 @@ namespace Marmi
             set.Mouse.MouseConfigWheel = mouseConfigWheel.Text;
 
             //ver1.64 画面ナビ
-            set.Mouse.RightScrClickIsNextPic = radioRightScrToNextPic.Checked;
+            set.Mouse.ClickRightToNextPic = radioRightScrToNextPic.Checked;
             set.Mouse.ReverseDirectionWhenLeftBook = reverseClickPointWhenLeftBook.Checked;
             set.Mouse.DoubleClickToFullscreen = DoubleClickToFullscreen.Checked;
         }

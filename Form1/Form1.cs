@@ -86,7 +86,7 @@ namespace Marmi
             //
             // ver1.62 ツールバーの位置
             //
-            toolStrip1.Dock = App.Config.IsToolbarTop ? DockStyle.Top : DockStyle.Bottom;
+            toolStrip1.Dock = App.Config.ToolbarIsTop ? DockStyle.Top : DockStyle.Bottom;
 
             //初期設定
             this.KeyPreview = true;
@@ -215,7 +215,7 @@ namespace Marmi
             DeleteAllTempDirs();
 
             //設定の保存
-            if (App.Config.General.IsSaveConfig)
+            if (App.Config.General.SaveConfig)
             {
                 XmlFile.SaveToXmlFile(App.Config, App.ConfigFilename);
             }
@@ -660,7 +660,7 @@ namespace Marmi
             int statusbarHeight = (statusbar.Visible && !ViewState.FullScreen) ? statusbar.Height : 0;
 
             //ツールバーが上の時だけYから控除
-            if (App.Config.IsToolbarTop)
+            if (App.Config.ToolbarIsTop)
                 rect.Y += toolbarHeight;
 
             //各パラメータの補正
@@ -751,7 +751,7 @@ namespace Marmi
                 _clearPanel.ShowAndClose(
                     "スライドショーを開始します。\r\nマウスクリックまたはキー入力で終了します。",
                     1500);
-                SlideShowTimer.Interval = App.Config.SlideShowTime;
+                SlideShowTimer.Interval = App.Config.SlideshowTime;
                 //SlideShowTimer.Tick += new EventHandler(SlideShowTimer_Tick);
                 SlideShowTimer.Start();
             }

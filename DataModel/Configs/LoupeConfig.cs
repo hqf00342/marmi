@@ -9,15 +9,15 @@ namespace Marmi.DataModel
     public class LoupeConfig
     {
         //ルーペ倍率
-        public int loupeMagnifcant;
+        public int LoupeMagnifcant { get; set; }
 
         // ルーペを原寸表示とするかどうか。
-        public bool IsOriginalSizeLoupe { get; set; }
+        public bool OriginalSizeLoupe { get; set; }
 
         public void Init()
         {
-            loupeMagnifcant = 3;
-            IsOriginalSizeLoupe = true;
+            LoupeMagnifcant = 3;
+            OriginalSizeLoupe = true;
         }
     }
 }

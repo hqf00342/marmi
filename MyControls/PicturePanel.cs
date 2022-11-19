@@ -230,7 +230,7 @@ namespace Marmi
             //ドラッグスクロール ||高速描写フラグ || 整数倍拡大 なら簡易品質
             if (_mouseDowmFlag
                 || FastDraw
-                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.View.IsDotByDotZoom)
+                || (ZoomRatio > 1.0f && ZoomRatio % 1.0f <= 0.01f && App.Config.View.DotByDotZoom)
                 )
             {
                 e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -245,7 +245,7 @@ namespace Marmi
             if (Opacity == 1.0f)
             {
                 //アンシャープを適用するかどうか
-                if (App.Config.Advance.UseUnsharpMask
+                if (App.Config.Advance.UnsharpMask
                     && LastDrawMode == InterpolationMode.HighQualityBicubic
                     && ZoomRatio != 100.0f
                     )
@@ -294,7 +294,7 @@ namespace Marmi
             if (IsAutoFit)
             {
                 float r = GetScreenFitRatio();
-                if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
+                if (r > 1.0f && App.Config.View.ProhigitExpansionOver100p)
                     r = 1.0f;
                 ZoomRatio = r;
             }

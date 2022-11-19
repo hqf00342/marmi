@@ -39,10 +39,10 @@ namespace Marmi
             //UpdateMruMenuListUI();
 
             //再帰検索
-            Menu_OptionRecurseDir.Checked = App.Config.IsRecurseSearchDir;
+            Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
 
             //左右矢印交換対応
-            if (App.Config.General.IsReplaceArrowButton)
+            if (App.Config.General.ReplaceArrowButton)
             {
                 toolButtonLeft.Tag = "次のページに移動します";
                 toolButtonLeft.Text = "次へ";
@@ -166,7 +166,7 @@ namespace Marmi
                 App.Config.windowLocation.Y = dispRect.Y + dispRect.Height - App.Config.windowSize.Height;
 
             //中央表示強制かどうか
-            if (App.Config.General.IsWindowPosCenter)
+            if (App.Config.General.CenteredAtStart)
             {
                 App.Config.windowLocation.X = dispRect.X + (dispRect.Width - App.Config.windowSize.Width) / 2;
                 App.Config.windowLocation.Y = dispRect.Y + (dispRect.Height - App.Config.windowSize.Height) / 2;

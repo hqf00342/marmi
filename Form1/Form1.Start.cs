@@ -39,7 +39,7 @@ namespace Marmi
             //ver1.79 常に一時書庫に展開オプションに対応
             if (App.g_pi.PackType == PackageType.Archive)
             {
-                if (needRecurse || App.g_pi.isSolid || App.Config.General.AlwaysExtractArchive)
+                if (needRecurse || App.g_pi.isSolid || App.Config.General.ExtractArchiveAlways)
                 {
                     var success = ExtractToTempDir(filenames[0]);
                     if (!success)
@@ -85,7 +85,7 @@ namespace Marmi
                 //ブックマークを読み込み
                 App.g_pi.LoadBookmarkString(mru.Bookmarks);
                 //続きから読む
-                if (App.Config.General.IsContinueZipView)
+                if (App.Config.General.ContinueReading)
                 {
                     App.g_pi.NowViewPage = mru.LastViewPage;
                 }
@@ -132,7 +132,7 @@ namespace Marmi
                 {
                     //ディレクトリの場合
                     App.g_pi.PackType = PackageType.Directory;
-                    GetDirPictureList(files[0], App.Config.IsRecurseSearchDir);
+                    GetDirPictureList(files[0], App.Config.RecurseSearchDir);
                 }
                 else if (Uty.IsSupportArchiveFile(App.g_pi.PackageName))
                 {

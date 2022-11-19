@@ -117,7 +117,7 @@ namespace Marmi
             {
                 //画面切り替わり時はフィットモードで起動
                 float r = PicPanel.FittingRatio;
-                if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
+                if (r > 1.0f && App.Config.View.ProhigitExpansionOver100p)
                     r = 1.0f;
                 PicPanel.ZoomRatio = r;
             }
@@ -166,7 +166,7 @@ namespace Marmi
             {
                 await SetViewPageAsync(next);
             }
-            else if (App.Config.View.LastPage_toTop)
+            else if (App.Config.View.MoveToTopAtLastPage)
             {
                 //先頭ページへループ
                 await SetViewPageAsync(0);

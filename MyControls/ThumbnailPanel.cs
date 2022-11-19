@@ -121,13 +121,13 @@ namespace Marmi
             var h = thumbnailSize + (PADDING * 2);
 
             //文字列部追加
-            if (App.Config.Thumbnail.IsShowTPFileName)
+            if (App.Config.Thumbnail.DrawFilename)
                 h += PADDING + FONT_HEIGHT;
 
-            if (App.Config.Thumbnail.IsShowTPFileSize)
+            if (App.Config.Thumbnail.DrawFilesize)
                 h += PADDING + FONT_HEIGHT;
 
-            if (App.Config.Thumbnail.IsShowTPPicSize)
+            if (App.Config.Thumbnail.DrawPicsize)
                 h += PADDING + FONT_HEIGHT;
 
             return new Size(w, h);
@@ -284,8 +284,8 @@ namespace Marmi
                 }
 
                 //影・枠にチェック
-                thumbFrame.Checked = App.Config.Thumbnail.IsDrawThumbnailFrame;
-                thumbShadow.Checked = App.Config.Thumbnail.IsDrawThumbnailShadow;
+                thumbFrame.Checked = App.Config.Thumbnail.DrawFrame;
+                thumbShadow.Checked = App.Config.Thumbnail.DrawShadowdrop;
 
                 //m_tooltip.Disposed += new EventHandler((se, ee) => { m_tooltip.Active = true; });
 
@@ -332,12 +332,12 @@ namespace Marmi
                     break;
 
                 case "影をつける":
-                    App.Config.Thumbnail.IsDrawThumbnailShadow = !App.Config.Thumbnail.IsDrawThumbnailShadow;
+                    App.Config.Thumbnail.DrawShadowdrop = !App.Config.Thumbnail.DrawShadowdrop;
                     //Invalidate();
                     break;
 
                 case "枠線":
-                    App.Config.Thumbnail.IsDrawThumbnailFrame = !App.Config.Thumbnail.IsDrawThumbnailFrame;
+                    App.Config.Thumbnail.DrawFrame = !App.Config.Thumbnail.DrawFrame;
                     //Invalidate();
                     break;
 
@@ -489,7 +489,7 @@ namespace Marmi
                 if (y > availablerange)
                     y = availablerange;
             }
-            if (App.Config.Thumbnail.ThumbnailPanelSmoothScroll)
+            if (App.Config.Thumbnail.SmoothScroll)
             {
                 //アニメーションをする。
                 //スクロールタイマーの起動
@@ -664,7 +664,7 @@ namespace Marmi
                 //通常描写
                 //影の描写
                 Rectangle frameRect = imageRect;
-                if (App.Config.Thumbnail.IsDrawThumbnailShadow)
+                if (App.Config.Thumbnail.DrawShadowdrop)
                 {
                     BitmapUty.DrawDropShadow(g, frameRect);
                 }
@@ -674,7 +674,7 @@ namespace Marmi
                 g.DrawImage(drawBitmap, imageRect);
 
                 //外枠を書く。
-                if (App.Config.Thumbnail.IsDrawThumbnailFrame)
+                if (App.Config.Thumbnail.DrawFrame)
                 {
                     g.DrawRectangle(Pens.LightGray, frameRect);
                 }
@@ -775,7 +775,7 @@ namespace Marmi
             Rectangle imageRect = new Rectangle(sx, sy, w, h);
 
             //影を描写する.アイコン時（＝drawFrame==false）で描写しない
-            if (App.Config.Thumbnail.IsDrawThumbnailShadow && drawFrame)
+            if (App.Config.Thumbnail.DrawShadowdrop && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 BitmapUty.DrawDropShadow(g, frameRect);
@@ -788,7 +788,7 @@ namespace Marmi
             g.DrawImage(drawBitmap, imageRect);
 
             //写真風に外枠を書く
-            if (App.Config.Thumbnail.IsDrawThumbnailFrame && drawFrame)
+            if (App.Config.Thumbnail.DrawFrame && drawFrame)
             {
                 Rectangle frameRect = imageRect;
                 //枠がおかしいので拡大しない
@@ -922,7 +922,7 @@ namespace Marmi
             };
 
             //ファイル名を書く
-            if (App.Config.Thumbnail.IsShowTPFileName)
+            if (App.Config.Thumbnail.DrawFilename)
             {
                 string filename = Path.GetFileName(m_ImgSet[item].Filename);
                 if (filename != null)
@@ -933,7 +933,7 @@ namespace Marmi
             }
 
             //ファイルサイズを書く
-            if (App.Config.Thumbnail.IsShowTPFileSize)
+            if (App.Config.Thumbnail.DrawFilesize)
             {
                 string s = String.Format("{0:#,0} bytes", m_ImgSet[item].FileLength);
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
@@ -941,7 +941,7 @@ namespace Marmi
             }
 
             //画像サイズを書く
-            if (App.Config.Thumbnail.IsShowTPPicSize)
+            if (App.Config.Thumbnail.DrawPicsize)
             {
                 string s = String.Format(
                     "{0:#,0}x{1:#,0} px",

@@ -75,7 +75,7 @@ namespace Marmi
                     toolStripButton_Rotate.Enabled = true;
 
                     //左右ボタンの有効無効
-                    if (App.Config.General.IsReplaceArrowButton)
+                    if (App.Config.General.ReplaceArrowButton)
                     {
                         //入れ替え
                         toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
@@ -200,7 +200,7 @@ namespace Marmi
 
         private async void ToolButtonLeft_Click(object sender, EventArgs e)
         {
-            if (App.Config.General.IsReplaceArrowButton)
+            if (App.Config.General.ReplaceArrowButton)
                 await NavigateToForwordAsync();
             else
                 await NavigateToBackAsync();
@@ -208,7 +208,7 @@ namespace Marmi
 
         private async void ToolButtonRight_Click(object sender, EventArgs e)
         {
-            if (App.Config.General.IsReplaceArrowButton)
+            if (App.Config.General.ReplaceArrowButton)
                 await NavigateToBackAsync();
             else
                 await NavigateToForwordAsync();
@@ -279,7 +279,7 @@ namespace Marmi
             PicPanel.IsAutoFit = true;
             //表示倍率の調整
             float r = PicPanel.FittingRatio;
-            if (r > 1.0f && App.Config.View.NoEnlargeOver100p)
+            if (r > 1.0f && App.Config.View.ProhigitExpansionOver100p)
                 r = 1.0f;
             PicPanel.ZoomRatio = r;
             //PicPanel.Refresh();
