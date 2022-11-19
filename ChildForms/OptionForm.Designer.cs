@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.General = new System.Windows.Forms.TabPage();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.alwaysExtractArchive = new System.Windows.Forms.CheckBox();
             this.saveFullScreenMode = new System.Windows.Forms.CheckBox();
             this.disableMultipleStarts = new System.Windows.Forms.CheckBox();
-            this.numOfMru = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
             this.tmpFolderBrowse = new System.Windows.Forms.Button();
             this.tmpFolder = new System.Windows.Forms.TextBox();
@@ -157,8 +157,10 @@
             this.ka_thunbnail = new Marmi.KeyAccelerator();
             this.ka_sidebar = new Marmi.KeyAccelerator();
             this.ka_minWindow = new Marmi.KeyAccelerator();
+            this.advanceConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
             this.view.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -177,6 +179,7 @@
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -202,10 +205,10 @@
             // 
             // General
             // 
+            this.General.Controls.Add(this.numericUpDown1);
             this.General.Controls.Add(this.alwaysExtractArchive);
             this.General.Controls.Add(this.saveFullScreenMode);
             this.General.Controls.Add(this.disableMultipleStarts);
-            this.General.Controls.Add(this.numOfMru);
             this.General.Controls.Add(this.label29);
             this.General.Controls.Add(this.tmpFolderBrowse);
             this.General.Controls.Add(this.tmpFolder);
@@ -227,6 +230,14 @@
             this.General.Tag = "基本的な設定をします";
             this.General.Text = "全般";
             this.General.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.generalConfigBindingSource, "MaxMruNumber", true));
+            this.numericUpDown1.Location = new System.Drawing.Point(153, 232);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(80, 19);
+            this.numericUpDown1.TabIndex = 23;
             // 
             // alwaysExtractArchive
             // 
@@ -268,23 +279,6 @@
             this.disableMultipleStarts.UseVisualStyleBackColor = true;
             this.disableMultipleStarts.Enter += new System.EventHandler(this.OnFocus_Enter);
             this.disableMultipleStarts.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
-            // 
-            // numOfMru
-            // 
-            this.numOfMru.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.numOfMru.FormattingEnabled = true;
-            this.numOfMru.Items.AddRange(new object[] {
-            "10",
-            "20",
-            "30",
-            "40",
-            "50"});
-            this.numOfMru.Location = new System.Drawing.Point(154, 225);
-            this.numOfMru.Name = "numOfMru";
-            this.numOfMru.Size = new System.Drawing.Size(80, 20);
-            this.numOfMru.TabIndex = 19;
-            this.numOfMru.Tag = "最近使ったファイル（MRU）の数を指定します。";
-            this.numOfMru.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // label29
             // 
@@ -1402,6 +1396,7 @@
             // 
             // unsharpDepth
             // 
+            this.unsharpDepth.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.advanceConfigBindingSource, "UnsharpDepth", true));
             this.unsharpDepth.Increment = new decimal(new int[] {
             5,
             0,
@@ -1431,6 +1426,7 @@
             // useUnsharpMask
             // 
             this.useUnsharpMask.AutoSize = true;
+            this.useUnsharpMask.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.advanceConfigBindingSource, "UnsharpMask", true));
             this.useUnsharpMask.Location = new System.Drawing.Point(8, 65);
             this.useUnsharpMask.Name = "useUnsharpMask";
             this.useUnsharpMask.Size = new System.Drawing.Size(176, 16);
@@ -1441,6 +1437,7 @@
             // 
             // tb_cachesize
             // 
+            this.tb_cachesize.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.advanceConfigBindingSource, "CacheSize", true));
             this.tb_cachesize.Location = new System.Drawing.Point(148, 40);
             this.tb_cachesize.Name = "tb_cachesize";
             this.tb_cachesize.Size = new System.Drawing.Size(45, 19);
@@ -1469,6 +1466,7 @@
             // bStopPaintingAtResize
             // 
             this.bStopPaintingAtResize.AutoSize = true;
+            this.bStopPaintingAtResize.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.advanceConfigBindingSource, "FastDrawAtResize", true));
             this.bStopPaintingAtResize.Enabled = false;
             this.bStopPaintingAtResize.Location = new System.Drawing.Point(6, 18);
             this.bStopPaintingAtResize.Name = "bStopPaintingAtResize";
@@ -1749,6 +1747,10 @@
             this.ka_minWindow.TabIndex = 14;
             this.ka_minWindow.Tag = "半ページ戻る";
             // 
+            // advanceConfigBindingSource
+            // 
+            this.advanceConfigBindingSource.DataSource = typeof(Marmi.DataModel.AdvanceConfig);
+            // 
             // OptionForm
             // 
             this.AcceptButton = this.btnOK;
@@ -1769,6 +1771,7 @@
             this.tabControl1.ResumeLayout(false);
             this.General.ResumeLayout(false);
             this.General.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).EndInit();
             this.view.ResumeLayout(false);
             this.view.PerformLayout();
@@ -1797,6 +1800,7 @@
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1871,7 +1875,6 @@
 		private System.Windows.Forms.TextBox tmpFolder;
 		private System.Windows.Forms.Label label28;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.ComboBox numOfMru;
 		private System.Windows.Forms.Label label29;
 		private System.Windows.Forms.CheckBox disableMultipleStarts;
 		private System.Windows.Forms.PictureBox pictureBox_BackColor;
@@ -1932,5 +1935,7 @@
         private System.Windows.Forms.Label label18;
         private KeyAccelerator ka_minWindow;
         private System.Windows.Forms.BindingSource generalConfigBindingSource;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.BindingSource advanceConfigBindingSource;
     }
 }

@@ -122,8 +122,10 @@
     <Compile Include="Interfaces\IConfig.cs" />
     <Compile Include="Uty\XmlFile.cs" />
     <None Include="dlls\axpdf.spi" />
+    <None Include="Properties\DataSources\Marmi.DataModel.AdvanceConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.GeneralConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.KeyConfig.datasource" />
+    <None Include="Properties\DataSources\Marmi.DataModel.LoupeConfig.datasource" />
     <None Include="SharpCompress\ScWrapper.cs" />
     <Compile Include="DataModel\ViewState.cs" />
     <Compile Include="Uty\Bmp.cs" />

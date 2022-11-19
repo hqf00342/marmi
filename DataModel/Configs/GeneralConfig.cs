@@ -34,7 +34,7 @@ namespace Marmi.DataModel
         public bool SmoothScrollOnSidebar { get; set; }
 
         //ver1.73 MRU保持数
-        public int NumberOfMru;
+        public int MaxMruNumber { get; set; }
 
         [XmlIgnore]
         public Color BackColor { get; set; } = Color.LightSlateGray;
@@ -59,6 +59,9 @@ namespace Marmi.DataModel
         //ver1.49 ウィンドウの初期位置を中央にする
         public bool CenteredAtStart { get; set; }
 
+        public string TESTA { get; set; }
+        public int TESTB { get; set; }
+
         public void Init()
         {
             SaveConfig = false;
@@ -70,7 +73,7 @@ namespace Marmi.DataModel
             HideToolbarString = false;
             SmoothScrollOnSidebar = true;
             TmpFolder = string.Empty;
-            NumberOfMru = 10;
+            MaxMruNumber = 10;
             SingleProcess = false;
             SaveFullScreenMode = true;
             ExtractArchiveAlways = false;

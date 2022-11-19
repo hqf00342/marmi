@@ -106,7 +106,7 @@ namespace Marmi
                 MenuItem_FileRecent.DropDownItems.Add(App.Config.Mru[i].Name, null, new EventHandler(OnClickMRUMenu));
 
                 //ver1.73 MRU•\Ž¦”‚Ì§ŒÀ
-                if (++menuCount >= App.Config.General.NumberOfMru)
+                if (++menuCount >= App.Config.General.MaxMruNumber)
                     break;
             }
         }

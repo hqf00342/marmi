@@ -14,9 +14,6 @@ namespace Marmi
         public OptionForm()
         {
             InitializeComponent();
-
-            //TODOキーコンフィグ用ComboBoxを初期化したい
-            //alwaysExtractArchive.DataBindings.Add("Checked", config, "AlwaysExtractArchive");
         }
 
         public void LoadConfig(AppGlobalConfig set)
@@ -24,6 +21,8 @@ namespace Marmi
             _config = set.Clone();
 
             generalConfigBindingSource.DataSource = _config.General;
+            advanceConfigBindingSource.DataSource = _config.Advance;
+
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
@@ -35,7 +34,7 @@ namespace Marmi
             LoadLoupeConfig(set);
             LoadMouseConfig(set);
             LoadKeyConfig(set);
-            LoadAdvanceConfig(set);
+            //LoadAdvanceConfig(set);
 
             //ver1.70 2枚表示の厳密チェック
             //dualview_exactCheck.Checked = set.dualview_exactCheck;
@@ -56,23 +55,6 @@ namespace Marmi
             SwitchPicMode.SelectedIndex = (int)(set.View.PictureSwitchMode);
         }
 
-        private void LoadGeneralConfig(AppGlobalConfig set)
-        {
-            bSaveConfig.Checked = set.General.SaveConfig;
-            bContinueZip.Checked = set.General.ContinueReading;
-            isExtractIfSolidArchive.Checked = set.General.ExtractArchiveIfSolid;
-            bReplaceArrowButton.Checked = set.General.ReplaceArrowButton;
-            pictureBox_BackColor.BackColor = set.General.BackColor;
-            isWindowPosCenter.Checked = set.General.CenteredAtStart;
-            eraseToolbarItemString.Checked = set.General.HideToolbarString;
-            sidebar_smoothscroll.Checked = set.General.SmoothScrollOnSidebar;
-            tmpFolder.Text = set.General.TmpFolder;
-            numOfMru.Text = set.General.NumberOfMru.ToString();
-            disableMultipleStarts.Checked = set.General.SingleProcess;
-            saveFullScreenMode.Checked = set.General.SaveFullScreenMode;
-            alwaysExtractArchive.Checked = set.General.ExtractArchiveAlways;
-        }
-
         private void LoadThumbnailConfig(AppGlobalConfig set)
         {
             thumbnailSize.Text = set.Thumbnail.ThumbnailSize.ToString();
@@ -89,13 +71,6 @@ namespace Marmi
             ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.SmoothScroll;
         }
 
-        private void LoadAdvanceConfig(AppGlobalConfig set)
-        {
-            isFastDraw.Checked = set.Advance.FastDrawAtResize;
-            tb_cachesize.Text = set.Advance.CacheSize.ToString();
-            useUnsharpMask.Checked = set.Advance.UnsharpMask;
-            unsharpDepth.Value = (decimal)set.Advance.UnsharpDepth;
-        }
 
         private void LoadLoupeConfig(AppGlobalConfig set)
         {
@@ -141,6 +116,7 @@ namespace Marmi
         {
             //SaveGnereralConfig(ref set);
             set.General = _config.General;
+            set.Advance = _config.Advance;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
@@ -166,7 +142,6 @@ namespace Marmi
             SaveKeyConfig(ref set);
             SaveMouseConfig(ref set);
             SaveLoupeConfig(ref set);
-            SaveAdvanceConfig(ref set);
         }
 
         private void SaveViewConfig(ref AppGlobalConfig set)
@@ -179,23 +154,6 @@ namespace Marmi
             set.View.DualView_Normal = dualView_Normal.Checked;
             set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
             set.View.PictureSwitchMode = (AnimateMode)SwitchPicMode.SelectedIndex;
-        }
-
-        private void SaveGnereralConfig(ref AppGlobalConfig set)
-        {
-            set.General.SaveConfig = bSaveConfig.Checked;
-            set.General.ContinueReading = bContinueZip.Checked;
-            set.General.ReplaceArrowButton = bReplaceArrowButton.Checked;
-            set.General.BackColor = pictureBox_BackColor.BackColor;
-            set.General.CenteredAtStart = isWindowPosCenter.Checked;
-            set.General.ExtractArchiveIfSolid = isExtractIfSolidArchive.Checked;
-            set.General.HideToolbarString = eraseToolbarItemString.Checked;
-            set.General.SmoothScrollOnSidebar = sidebar_smoothscroll.Checked;
-            set.General.TmpFolder = tmpFolder.Text;
-            set.General.NumberOfMru = int.TryParse(numOfMru.Text, out var n) ? n : 10;
-            set.General.SingleProcess = disableMultipleStarts.Checked;
-            set.General.SaveFullScreenMode = saveFullScreenMode.Checked;
-            set.General.ExtractArchiveAlways = alwaysExtractArchive.Checked;
         }
 
         private void SaveThumbnailConfig(ref AppGlobalConfig set)
@@ -213,13 +171,6 @@ namespace Marmi
             set.Thumbnail.SmoothScroll = ThumbnailPanelSmoothScroll.Checked;
         }
 
-        private void SaveAdvanceConfig(ref AppGlobalConfig set)
-        {
-            set.Advance.FastDrawAtResize = isFastDraw.Checked;
-            set.Advance.CacheSize = int.TryParse(tb_cachesize.Text, out var cs) ? cs : 500;
-            set.Advance.UnsharpMask = useUnsharpMask.Checked;
-            set.Advance.UnsharpDepth = (int)unsharpDepth.Value;
-        }
 
         private void SaveLoupeConfig(ref AppGlobalConfig set)
         {
