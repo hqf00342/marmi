@@ -1,5 +1,7 @@
+using Mii;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -14,18 +16,13 @@ namespace Marmi
         private void Version_Load(object sender, EventArgs e)
         {
             //ÉoÅ[ÉWÉáÉìèÓïÒÇÃéÊìæ
-            System.Diagnostics.FileVersionInfo fv =
-                System.Diagnostics.FileVersionInfo.GetVersionInfo(
-                    System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var fv = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 
-            string buildInfo = fv.IsDebug ? "(Debug)" : "(Release)";
+            var configuration = fv.IsDebug ? "Debug" : "Release";
 
             Debug.Assert(label1 != null, "label1 != null");
-            label1.Text = string.Format(
-                "{0} ver{1} {2}",
-                fv.ProductName,
-                fv.ProductVersion,
-                buildInfo);
+            label1.Text = $"{fv.ProductName} ver{fv.ProductVersion} [{configuration}]";
+            label_gitinfo.Text = $"({GitInfo.BranchName}-{GitInfo.CommitId})";
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
