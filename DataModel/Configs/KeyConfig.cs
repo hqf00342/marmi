@@ -34,13 +34,13 @@ namespace Marmi.DataModel
             Key_Exit2 = Keys.None;
             Key_Bookmark1 = Keys.B;
             Key_Fullscreen1 = Keys.Escape;
-            Key_Dualview1 = Keys.D;
+            Key_Dualview1 = Keys.D | Keys.Shift;
             Key_ViewRatio1 = Keys.V;
             Key_Recycle1 = Keys.Delete;
             Key_Nextpage1 = Keys.Right;
-            Key_Nextpage2 = Keys.None;
+            Key_Nextpage2 = Keys.D;
             Key_Prevpage1 = Keys.Left;
-            Key_Prevpage2 = Keys.None;
+            Key_Prevpage2 = Keys.A;
             Key_Prevhalf1 = Keys.PageUp;
             Key_Nexthalf1 = Keys.PageDown;
             Key_Toppage1 = Keys.Home;
