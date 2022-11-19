@@ -11,7 +11,7 @@ namespace Marmi.DataModel
         public Color ThumbnailBackColor;
 
         [XmlElement("XmlThumbnailBackColor")]
-        public string XmlTbColor
+        public string XmlBackColor
         {
             set { ThumbnailBackColor = ColorTranslator.FromHtml(value); }
             get { return ColorTranslator.ToHtml(ThumbnailBackColor); }

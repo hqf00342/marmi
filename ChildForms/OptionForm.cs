@@ -24,6 +24,7 @@ namespace Marmi
             advanceConfigBindingSource.DataSource = _config.Advance;
             loupeConfigBindingSource.DataSource = _config.Loupe;
             mouseConfigBindingSource.DataSource = _config.Mouse;
+            thumbnailConfigBindingSource.DataSource = _config.Thumbnail;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
@@ -31,7 +32,7 @@ namespace Marmi
             //サムネイルタブ
             //LoadGeneralConfig(set);
             LoadViewConfig(set);
-            LoadThumbnailConfig(set);
+            //LoadThumbnailConfig(set);
             //LoadMouseConfig(set);
             LoadKeyConfig(set);
             //LoadAdvanceConfig(set);
@@ -53,33 +54,6 @@ namespace Marmi
             dualView_Normal.Checked = set.View.DualView_Normal;
             dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
             SwitchPicMode.SelectedIndex = (int)(set.View.PictureSwitchMode);
-        }
-
-        private void LoadThumbnailConfig(AppGlobalConfig set)
-        {
-            thumbnailSize.Text = set.Thumbnail.ThumbnailSize.ToString();
-            ThumbnailBackColor.BackColor = set.Thumbnail.ThumbnailBackColor;
-            fontDialog1.Font = set.Thumbnail.ThumbnailFont;
-            linkLabel1.Text = fontDialog1.Font.Name + ", " + fontDialog1.Font.Size;
-            ThumbnailFontColor.BackColor = set.Thumbnail.ThumbnailFontColor;
-            isDrawThumbnailFrame.Checked = set.Thumbnail.DrawFrame;
-            isDrawThumbnailShadow.Checked = set.Thumbnail.DrawShadowdrop;
-            isShowTPFileName.Checked = set.Thumbnail.DrawFilename;
-            isShowTPFileSize.Checked = set.Thumbnail.DrawFilesize;
-            isShowTPPicSize.Checked = set.Thumbnail.DrawPicsize;
-            //ver1.81サムネイルのアニメーション効果
-            ThumbnailPanelSmoothScroll.Checked = set.Thumbnail.SmoothScroll;
-        }
-
-        private void LoadMouseConfig(AppGlobalConfig set)
-        {
-            mouseConfigWheel.Text = set.Mouse.MouseConfigWheel;
-
-            //ver1.64 画面ナビ
-            radioRightScrToNextPic.Checked = set.Mouse.ClickRightToNextPic;
-            radioLeftScrToNextPic.Checked = !set.Mouse.ClickRightToNextPic;
-            reverseClickPointWhenLeftBook.Checked = set.Mouse.ReverseDirectionWhenLeftBook;
-            DoubleClickToFullscreen.Checked = set.Mouse.DoubleClickToFullscreen;
         }
 
         private void LoadKeyConfig(AppGlobalConfig set)
@@ -112,12 +86,13 @@ namespace Marmi
             set.Advance = _config.Advance;
             set.Loupe = _config.Loupe;
             set.Mouse = _config.Mouse;
+            set.Thumbnail= _config.Thumbnail;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //サムネイルタブ
-            SaveThumbnailConfig(ref set);
+            //SaveThumbnailConfig(ref set);
 
             //拡大表示関連
             SaveViewConfig(ref set);
@@ -150,20 +125,6 @@ namespace Marmi
             set.View.PictureSwitchMode = (AnimateMode)SwitchPicMode.SelectedIndex;
         }
 
-        private void SaveThumbnailConfig(ref AppGlobalConfig set)
-        {
-            set.Thumbnail.ThumbnailSize = int.TryParse(thumbnailSize.Text, out var s) ? s : 120;
-            set.Thumbnail.ThumbnailBackColor = ThumbnailBackColor.BackColor;
-            set.Thumbnail.ThumbnailFont = fontDialog1.Font;
-            set.Thumbnail.ThumbnailFontColor = ThumbnailFontColor.BackColor;
-            set.Thumbnail.DrawFrame = isDrawThumbnailFrame.Checked;
-            set.Thumbnail.DrawShadowdrop = isDrawThumbnailShadow.Checked;
-            set.Thumbnail.DrawFilename = isShowTPFileName.Checked;
-            set.Thumbnail.DrawFilesize = isShowTPFileSize.Checked;
-            set.Thumbnail.DrawPicsize = isShowTPPicSize.Checked;
-            //ver1.81サムネイルのアニメーション効果
-            set.Thumbnail.SmoothScroll = ThumbnailPanelSmoothScroll.Checked;
-        }
 
         private void SaveKeyConfig(ref AppGlobalConfig set)
         {
