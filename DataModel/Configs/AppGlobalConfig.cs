@@ -19,7 +19,16 @@ namespace Marmi
         public Size windowSize;                     //ウィンドウサイズ
         public Point windowLocation;                //ウィンドウ表示位置
 
-        public List<MRU> Mru { get; set; } = new List<MRU>();     //MRUリスト用配列
+        /// <summary>
+        /// 2画面モードかどうか。
+        /// シリアライズするためだけに存在
+        /// 通常はViewState.DualViewにアクセスすること。
+        /// </summary>
+        public bool DualView
+        {
+            get => ViewState.DualView;
+            set => ViewState.DualView = value;
+        }
 
         public bool IsRecurseSearchDir { get; set; }             //ディレクトリの再帰検索
 
@@ -51,11 +60,15 @@ namespace Marmi
 
         public ThumbnailConfig Thumbnail { get; set; } = new ThumbnailConfig();
 
-        #region UIなし
+        /// <summary>
+        /// スクリーンキャッシュを使うかどうか
+        /// </summary>
+        public bool UseScreenCache { get; set; } = false;
 
-        public bool UseScreenCache { get; set; } = false;   //スクリーンキャッシュを使うかどうか
-
-        #endregion UIなし
+        /// <summary>
+        /// MRUリスト
+        /// </summary>
+        public List<MRU> Mru { get; set; } = new List<MRU>();
 
         /*******************************************************************************/
 
@@ -74,9 +87,7 @@ namespace Marmi
         {
             windowSize = new Size(640, 480);
             windowLocation = new Point(0, 0);
-            //isSaveThumbnailCache = false;
             IsRecurseSearchDir = false;
-            //BackColor = Color.DarkGray;
             IsFitScreenAndImage = true;
 
             IsFitScreenAndImage = true;
@@ -85,17 +96,11 @@ namespace Marmi
             //サイドバー
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
 
-            //ループするかどうか
-            //isLoopToTopPage = false;
-
             //スクリーンショー時間
             SlideShowTime = 3000;
 
             //ツールバーの位置
             IsToolbarTop = true;
-
-            //ver1.70 2枚表示はデフォルトで簡易チェック
-            //dualview_exactCheck = false;
 
             //ver1.78 倍率の保持
             KeepMagnification = false;
@@ -137,9 +142,7 @@ namespace Marmi
         /// <param name="obj"></param>
         public static void SaveToXmlFile(object obj)
         {
-            string path = App.ConfigFilename;
-
-            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream(App.ConfigFilename, FileMode.Create, FileAccess.Write))
             {
                 var xs = new XmlSerializer(typeof(AppGlobalConfig));
                 xs.Serialize(fs, obj);

@@ -121,7 +121,7 @@
     <Compile Include="App.cs" />
     <None Include="dlls\axpdf.spi" />
     <None Include="SharpCompress\ScWrapper.cs" />
-    <Compile Include="Form1\ViewState.cs" />
+    <Compile Include="DataModel\ViewState.cs" />
     <Compile Include="Uty\Bmp.cs" />
     <Compile Include="DataModel\Configs\AdvanceConfig.cs" />
     <Compile Include="DataModel\Exif.cs" />
@@ -368,6 +368,7 @@
     <None Include="dlls\7z64.dll" />
     <None Include="ToDo.md" />
     <None Include="配布物\SevenZipSharp.dll" />
+    <None Include="DPIメモ.md" />
     <Content Include="zic.ico" />
     <None Include="Resources\rc_tif32.png" />
     <None Include="Resources\finger-right-shadow-ico.ico" />
