@@ -192,19 +192,16 @@
     <Compile Include="Form1\Form1.Toolbar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\AsyncExtractForm.cs">
+    <Compile Include="ChildForms\AsyncExtractForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\AsyncExtractForm.Designer.cs">
+    <Compile Include="ChildForms\AsyncExtractForm.Designer.cs">
       <DependentUpon>AsyncExtractForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\FormPictureInfoWhite.cs">
+    <Compile Include="ChildForms\FormSaveThumbnail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\FormSaveThumbnail.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyChildForms\FormSaveThumbnail.Designer.cs">
+    <Compile Include="ChildForms\FormSaveThumbnail.Designer.cs">
       <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
     </Compile>
     <Compile Include="Uty\BitmapUty.cs" />
@@ -220,28 +217,28 @@
     <Compile Include="Form1\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\OptionForm.cs">
+    <Compile Include="ChildForms\OptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\OptionForm.Designer.cs">
+    <Compile Include="ChildForms\OptionForm.Designer.cs">
       <DependentUpon>OptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\FormPackageInfo.cs">
+    <Compile Include="ChildForms\FormPackageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\FormPackageInfo.Designer.cs">
+    <Compile Include="ChildForms\FormPackageInfo.Designer.cs">
       <DependentUpon>FormPackageInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\FormPassword.cs">
+    <Compile Include="ChildForms\FormPassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\FormPassword.Designer.cs">
+    <Compile Include="ChildForms\FormPassword.Designer.cs">
       <DependentUpon>FormPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyChildForms\FormPictureInfo.cs">
+    <Compile Include="ChildForms\FormPictureInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\FormPictureInfo.Designer.cs">
+    <Compile Include="ChildForms\FormPictureInfo.Designer.cs">
       <DependentUpon>FormPictureInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="DataModel\PackageInfo.cs" />
@@ -273,26 +270,26 @@
     <EmbeddedResource Include="MyControls\KeyAccelerator.resx">
       <DependentUpon>KeyAccelerator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\AsyncExtractForm.resx">
+    <EmbeddedResource Include="ChildForms\AsyncExtractForm.resx">
       <DependentUpon>AsyncExtractForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\FormSaveThumbnail.resx">
+    <EmbeddedResource Include="ChildForms\FormSaveThumbnail.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\OptionForm.resx">
+    <EmbeddedResource Include="ChildForms\OptionForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>OptionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\FormPackageInfo.resx">
+    <EmbeddedResource Include="ChildForms\FormPackageInfo.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormPackageInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\FormPassword.resx">
+    <EmbeddedResource Include="ChildForms\FormPassword.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormPassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\FormPictureInfo.resx">
+    <EmbeddedResource Include="ChildForms\FormPictureInfo.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormPictureInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -301,9 +298,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyChildForms\Version.resx">
+    <EmbeddedResource Include="ChildForms\VersionForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>Version.cs</DependentUpon>
+      <DependentUpon>VersionForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -327,11 +324,11 @@
     <Compile Include="MyControls\ToolStripTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MyChildForms\Version.cs">
+    <Compile Include="ChildForms\VersionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyChildForms\Version.Designer.cs">
-      <DependentUpon>Version.cs</DependentUpon>
+    <Compile Include="ChildForms\VersionForm.Designer.cs">
+      <DependentUpon>VersionForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -339,8 +336,6 @@
     <None Include="Resources\zippedFile.png" />
     <None Include="Resources\Folder_Open.png" />
     <None Include="Resources\Image_File.png" />
-    <Content Include="MyChildForms\ReadMe.txt" />
-    <Content Include="MyControls\ReadMe.txt" />
     <None Include="Resources\heart24.png" />
     <None Include="Resources\iconHandOpen.ico" />
     <None Include="Resources\handopen.png" />
