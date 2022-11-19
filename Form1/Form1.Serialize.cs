@@ -24,17 +24,8 @@ namespace Marmi
             _sidebar.Visible = ViewState.VisibleSidebar;
 
             //ver1.77 画面位置決定：デュアルディスプレイ対応
-            if (App.Config.General.SimpleCalcForWindowLocation)
-            {
-                //単純に位置とサイズを指定
-                this.Size = App.Config.windowSize;
-                this.Location = App.Config.windowLocation;
-            }
-            else
-            {
-                //デュアルディスプレイを考慮して配置
-                SetFormPosLocation();
-            }
+            //デュアルディスプレイを考慮して配置
+            SetFormPosition();
 
             //ver1.77全画面モード対応
             if (App.Config.General.SaveFullScreenMode && ViewState.FullScreen)
@@ -95,7 +86,7 @@ namespace Marmi
         /// デュアルディスプレイ対応のフォーム位置指定
         /// 2画面をまたがらないようにする。
         /// </summary>
-        private void SetFormPosLocation()
+        private void SetFormPosition()
         {
             //デュアルディスプレイ対応
             //左上が画面内にいるスクリーンを探す

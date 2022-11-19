@@ -90,7 +90,7 @@ namespace Marmi
 
             //èâä˙ê›íË
             this.KeyPreview = true;
-            this.BackColor = App.Config.General.BackColor;
+            this.BackColor = (App.Config.General.BackColor.A==0) ? Color.SlateBlue : App.Config.General.BackColor;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.SetStyle(ControlStyles.Opaque, true);
             Application.Idle += Application_Idle;

@@ -69,7 +69,6 @@ namespace Marmi
             tmpFolder.Text = set.General.TmpFolder;
             numOfMru.Text = set.General.NumberOfMru.ToString();
             disableMultipleStarts.Checked = set.General.DisableMultipleStarts;
-            simpleCalcWindowPos.Checked = set.General.SimpleCalcForWindowLocation;
             saveFullScreenMode.Checked = set.General.SaveFullScreenMode;
             alwaysExtractArchive.Checked = set.General.AlwaysExtractArchive;
         }
@@ -194,7 +193,6 @@ namespace Marmi
             set.General.TmpFolder = tmpFolder.Text;
             set.General.NumberOfMru = int.TryParse(numOfMru.Text, out var n) ? n : 10;
             set.General.DisableMultipleStarts = disableMultipleStarts.Checked;
-            set.General.SimpleCalcForWindowLocation = simpleCalcWindowPos.Checked;
             set.General.SaveFullScreenMode = saveFullScreenMode.Checked;
             set.General.AlwaysExtractArchive = alwaysExtractArchive.Checked;
         }

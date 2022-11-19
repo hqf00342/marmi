@@ -50,7 +50,7 @@ namespace Marmi.DataModel
         public bool DisableMultipleStarts { get; set; }
 
         //ver1.77 ウィンドウ位置復元を簡易にする
-        public bool SimpleCalcForWindowLocation { get; set; }
+        //public bool SimpleCalcForWindowLocation { get; set; }
 
         //ver1.77 フルスクリーン状態を復元できるようにする
         public bool SaveFullScreenMode { get; set; }
@@ -74,8 +74,6 @@ namespace Marmi.DataModel
 
             //ver1.76 多重起動
             DisableMultipleStarts = false;
-            //ver1.77 ウィンドウ位置を簡易計算にするか
-            SimpleCalcForWindowLocation = false;
             //ver1.77 フルスクリーン状態を復元できるようにする
             SaveFullScreenMode = true;
             AlwaysExtractArchive = false;
