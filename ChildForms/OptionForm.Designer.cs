@@ -54,7 +54,6 @@
             this.dualView_withSizeCheck = new System.Windows.Forms.RadioButton();
             this.dualView_Normal = new System.Windows.Forms.RadioButton();
             this.dualView_Force = new System.Windows.Forms.RadioButton();
-            this.keepMagnification = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lastPage_toTop = new System.Windows.Forms.RadioButton();
             this.lastPage_stay = new System.Windows.Forms.RadioButton();
@@ -161,6 +160,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -187,6 +187,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -461,7 +462,6 @@
             // view
             // 
             this.view.Controls.Add(this.groupBox4);
-            this.view.Controls.Add(this.keepMagnification);
             this.view.Controls.Add(this.groupBox3);
             this.view.Controls.Add(this.SwitchPicMode);
             this.view.Controls.Add(this.label23);
@@ -490,6 +490,7 @@
             // dualView_withSizeCheck
             // 
             this.dualView_withSizeCheck.AutoSize = true;
+            this.dualView_withSizeCheck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_withSizeCheck", true));
             this.dualView_withSizeCheck.Location = new System.Drawing.Point(7, 65);
             this.dualView_withSizeCheck.Name = "dualView_withSizeCheck";
             this.dualView_withSizeCheck.Size = new System.Drawing.Size(242, 16);
@@ -501,6 +502,7 @@
             // dualView_Normal
             // 
             this.dualView_Normal.AutoSize = true;
+            this.dualView_Normal.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_Normal", true));
             this.dualView_Normal.Location = new System.Drawing.Point(7, 42);
             this.dualView_Normal.Name = "dualView_Normal";
             this.dualView_Normal.Size = new System.Drawing.Size(207, 16);
@@ -512,6 +514,7 @@
             // dualView_Force
             // 
             this.dualView_Force.AutoSize = true;
+            this.dualView_Force.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_Force", true));
             this.dualView_Force.Location = new System.Drawing.Point(7, 19);
             this.dualView_Force.Name = "dualView_Force";
             this.dualView_Force.Size = new System.Drawing.Size(204, 16);
@@ -520,18 +523,6 @@
             this.dualView_Force.Tag = "見開きモードのときは常に2ページ並べて表示します。横長の画像であっても並べます。";
             this.dualView_Force.Text = "常に2ページ表示（見開きモードのとき）";
             this.dualView_Force.UseVisualStyleBackColor = true;
-            // 
-            // keepMagnification
-            // 
-            this.keepMagnification.AutoSize = true;
-            this.keepMagnification.Location = new System.Drawing.Point(12, 84);
-            this.keepMagnification.Name = "keepMagnification";
-            this.keepMagnification.Size = new System.Drawing.Size(225, 16);
-            this.keepMagnification.TabIndex = 3;
-            this.keepMagnification.Tag = "次のページに移動する際にいまの表示倍率を維持します。チェックしない場合は画面内に収まるようにします。";
-            this.keepMagnification.Text = "ページ移動する際、表示倍率を維持する。";
-            this.keepMagnification.UseVisualStyleBackColor = true;
-            this.keepMagnification.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // groupBox3
             // 
@@ -547,6 +538,7 @@
             // lastPage_toTop
             // 
             this.lastPage_toTop.AutoSize = true;
+            this.lastPage_toTop.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "MoveToTopAtLastPage", true));
             this.lastPage_toTop.Location = new System.Drawing.Point(7, 42);
             this.lastPage_toTop.Name = "lastPage_toTop";
             this.lastPage_toTop.Size = new System.Drawing.Size(107, 16);
@@ -560,6 +552,7 @@
             // lastPage_stay
             // 
             this.lastPage_stay.AutoSize = true;
+            this.lastPage_stay.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "StayOnLastPage", true));
             this.lastPage_stay.Location = new System.Drawing.Point(7, 19);
             this.lastPage_stay.Name = "lastPage_stay";
             this.lastPage_stay.Size = new System.Drawing.Size(132, 16);
@@ -596,18 +589,20 @@
             // isDotByDotZoom
             // 
             this.isDotByDotZoom.AutoSize = true;
+            this.isDotByDotZoom.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DotByDotZoom", true));
             this.isDotByDotZoom.Location = new System.Drawing.Point(12, 62);
             this.isDotByDotZoom.Name = "isDotByDotZoom";
-            this.isDotByDotZoom.Size = new System.Drawing.Size(227, 16);
+            this.isDotByDotZoom.Size = new System.Drawing.Size(287, 16);
             this.isDotByDotZoom.TabIndex = 2;
             this.isDotByDotZoom.Tag = "画像を100%以上に拡大表示させる際には画像補正をせずにドット単位が分かるように表示します";
-            this.isDotByDotZoom.Text = "100%以上に拡大するときドット補間をしない";
+            this.isDotByDotZoom.Text = "100%以上に拡大するときドット補間をしない(dot by dot)";
             this.isDotByDotZoom.UseVisualStyleBackColor = true;
             this.isDotByDotZoom.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // noEnlargeOver100p
             // 
             this.noEnlargeOver100p.AutoSize = true;
+            this.noEnlargeOver100p.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "ProhigitExpansionOver100p", true));
             this.noEnlargeOver100p.Location = new System.Drawing.Point(12, 40);
             this.noEnlargeOver100p.Name = "noEnlargeOver100p";
             this.noEnlargeOver100p.Size = new System.Drawing.Size(232, 16);
@@ -620,6 +615,7 @@
             // isFastDraw
             // 
             this.isFastDraw.AutoSize = true;
+            this.isFastDraw.Enabled = false;
             this.isFastDraw.Location = new System.Drawing.Point(12, 18);
             this.isFastDraw.Name = "isFastDraw";
             this.isFastDraw.Size = new System.Drawing.Size(133, 16);
@@ -1803,6 +1799,10 @@
             0,
             0});
             // 
+            // viewConfigBindingSource
+            // 
+            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
+            // 
             // OptionForm
             // 
             this.AcceptButton = this.btnOK;
@@ -1857,6 +1857,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1936,7 +1937,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.CheckBox isWindowPosCenter;
 		private System.Windows.Forms.CheckBox saveFullScreenMode;
-		private System.Windows.Forms.CheckBox keepMagnification;
 		private System.Windows.Forms.CheckBox alwaysExtractArchive;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.RadioButton dualView_withSizeCheck;
@@ -1996,5 +1996,6 @@
         private System.Windows.Forms.BindingSource mouseConfigBindingSource;
         private System.Windows.Forms.BindingSource thumbnailConfigBindingSource;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.BindingSource viewConfigBindingSource;
     }
 }

@@ -353,10 +353,6 @@ namespace Marmi
             Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
         }
 
-        private void Menu_keepMagnification_Click(object sender, EventArgs e)
-        {
-            App.Config.KeepMagnification = !App.Config.KeepMagnification;
-        }
 
         private void Menu_UseBicubic_Click(object sender, EventArgs e)
         {
@@ -482,7 +478,6 @@ namespace Marmi
             //チェック状態
             Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
             //MenuItem_OptionSidebarFix.Checked = App.Config.isFixSidebar;
-            Menu_keepMagnification.Checked = App.Config.KeepMagnification;
             Menu_UseBicubic.Checked = !App.Config.View.DotByDotZoom;
             Menu_DontEnlargeOver100percent.Checked = App.Config.View.ProhigitExpansionOver100p;
 

@@ -28,8 +28,7 @@ namespace Marmi
             set
             {
                 _bmp = value;
-                if (!App.Config.KeepMagnification)
-                    _amat.Reset();
+                _amat.Reset();
                 //alpha = 1.0f;
 
                 //コメントアウト。これがあると一瞬スクロールバーが見える
@@ -122,10 +121,7 @@ namespace Marmi
         /// </summary>
         public void ResetZoomAndAlpha()
         {
-            //ver1.78 倍率固定に対応
-            //mat.Reset();
-            if (!App.Config.KeepMagnification)
-                _amat.Reset();
+            _amat.Reset();
             Opacity = 1.0f;
         }
 

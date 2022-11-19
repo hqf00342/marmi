@@ -44,7 +44,7 @@ namespace Marmi
         public bool ToolbarIsTop { get; set; }
 
         //ver1.78 î{ó¶ÇÃï€éù
-        public bool KeepMagnification { get; set; }
+        //public bool KeepMagnification { get; set; }
 
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
@@ -93,7 +93,6 @@ namespace Marmi
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
             SlideshowTime = 3000;
             ToolbarIsTop = true;
-            KeepMagnification = false;
 
             General.Init();
             View.Init();
