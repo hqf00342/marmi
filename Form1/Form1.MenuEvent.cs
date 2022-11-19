@@ -9,8 +9,6 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
-        // メニューイベント ************************************************************************
-
         private async void OnClickMRUMenu(object sender, EventArgs e)
         {
             var filename = ((ToolStripDropDownItem)sender).Text;
@@ -31,8 +29,6 @@ namespace Marmi
                 }
             }
         }
-
-        // #### FILE ###############################################################################
 
         #region FILE
 
@@ -112,8 +108,6 @@ namespace Marmi
         }
 
         #endregion FILE
-
-        //表示メニュー******************************************************************************
 
         private async void Menu_ViewNext_Click(object sender, EventArgs e)
         {
@@ -260,8 +254,8 @@ namespace Marmi
 
         private void ToggleFitScreen()
         {
-            App.Config.FitToScreen = !App.Config.FitToScreen;
-            PicPanel.IsAutoFit = App.Config.FitToScreen;
+            ViewState.FitToScreen = !ViewState.FitToScreen;
+            PicPanel.IsAutoFit = ViewState.FitToScreen;
 
             PicPanel.Refresh();
             UpdateStatusbar();
@@ -280,7 +274,7 @@ namespace Marmi
                 //サイドバーオープン
                 _sidebar.Init(App.g_pi);
                 if (App.Config != null)
-                    _sidebar.Width = App.Config.SidebarWidth;
+                    _sidebar.Width = ViewState.SidebarWidth;
                 else
                     _sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
 
@@ -352,7 +346,6 @@ namespace Marmi
             App.Config.RecurseSearchDir = !App.Config.RecurseSearchDir;
             Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
         }
-
 
         private void Menu_UseBicubic_Click(object sender, EventArgs e)
         {
@@ -457,15 +450,9 @@ namespace Marmi
             Menu_ViewStatusbar.Checked = statusbar.Visible;
             Menu_View2Page.Checked = ViewState.DualView;
             Menu_ViewFullScreen.Checked = ViewState.FullScreen;
-            Menu_ViewFitScreenSize.Checked = App.Config.FitToScreen;
+            Menu_ViewFitScreenSize.Checked = ViewState.FitToScreen;
             Menu_ViewSidebar.Checked = _sidebar.Visible;
-            //ツールバーの位置
             Menu_ToolbarBottom.Checked = (toolStrip1.Dock == DockStyle.Bottom);
-            //サイドバー関連
-            //MenuItem_ViewFixSidebar.Checked = App.Config.isFixSidebar;
-            //しおり関連機能
-            //ver1.79コメントアウト
-            //AddBookmarkMenuItem(MenuItem_ViewBookmarkList);
 
             //ver1.81 パッケージなしのときの対処
             bool isPackageOpen = (App.g_pi.Items.Count > 0);
@@ -501,15 +488,12 @@ namespace Marmi
                 Menu_ViewTop.Enabled = false;
                 Menu_ViewEnd.Enabled = false;
                 Menu_ViewBack.Enabled = false;
-                Menu_ViewNext.Enabled = false;          //次へ
-                Menu_ViewHalfPageBack.Enabled = false;  //半ページ
-                Menu_ViewHalfPageForword.Enabled = false;//半ページ
-                Menu_ViewFitScreenSize.Enabled = false; //フルスクリーン
-                Menu_ViewPictureInfo.Enabled = false;   //画像情報
-
-                //Menu_ViewAddBookmark.Checked = false;	//しおり
-                //Menu_ViewAddBookmark.Enabled = false;	//しおり
-                Menu_ViewZoom.Enabled = false;  //Zoom
+                Menu_ViewNext.Enabled = false;
+                Menu_ViewHalfPageBack.Enabled = false;
+                Menu_ViewHalfPageForword.Enabled = false;
+                Menu_ViewFitScreenSize.Enabled = false;
+                Menu_ViewPictureInfo.Enabled = false;
+                Menu_ViewZoom.Enabled = false;
                 Menu_ViewReload.Enabled = false;
                 Menu_SlideShow.Enabled = false;
                 return;
@@ -525,9 +509,7 @@ namespace Marmi
                 Menu_ViewHalfPageForword.Enabled = false;
                 Menu_ViewFitScreenSize.Enabled = true;
                 Menu_ViewPictureInfo.Enabled = true;
-                //Menu_ViewAddBookmark.Checked = false;	//しおり
-                //Menu_ViewAddBookmark.Enabled = false;	//しおり
-                Menu_ViewZoom.Enabled = true;   //Zoom
+                Menu_ViewZoom.Enabled = true;
                 Menu_ViewReload.Enabled = true;
                 Menu_SlideShow.Enabled = false;
                 return;
@@ -537,22 +519,11 @@ namespace Marmi
                 //複数枚表示
                 Menu_ViewFitScreenSize.Enabled = true;
                 Menu_ViewPictureInfo.Enabled = true;
-                Menu_ViewZoom.Enabled = true;   //Zoom
+                Menu_ViewZoom.Enabled = true;
                 Menu_ViewReload.Enabled = true;
-
-                //スライドショー
                 Menu_SlideShow.Enabled = true;
-
-                //2ページモード:半ページ送りは2ページモード時のみ
                 Menu_ViewHalfPageBack.Enabled = ViewState.DualView && (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
                 Menu_ViewHalfPageForword.Enabled = ViewState.DualView && !IsLastPageViewing();       //最終ページチェック
-
-                //しおり機能
-                //ver1.79コメントアウト
-                //Menu_ViewAddBookmark.Enabled = true;	//しおり
-                //Menu_ViewAddBookmark.Checked =
-                //	g_pi.Items[g_pi.NowViewPage].isBookMark;
-
                 //サムネイル表示中
                 if (ViewState.ThumbnailView)
                 {
@@ -567,10 +538,10 @@ namespace Marmi
                 else
                 {
                     //ナビゲーションメニューの有効無効
-                    Menu_ViewTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);   //先頭ページチェック
-                    Menu_ViewBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
-                    Menu_ViewEnd.Enabled = !IsLastPageViewing();        //最終ページチェック
-                    Menu_ViewNext.Enabled = !IsLastPageViewing();       //最終ページチェック
+                    Menu_ViewTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);
+                    Menu_ViewBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);
+                    Menu_ViewEnd.Enabled = !IsLastPageViewing();
+                    Menu_ViewNext.Enabled = !IsLastPageViewing();
                     Menu_View2Page.Enabled = true;
                     Menu_ViewSidebar.Enabled = true;
                 }
@@ -589,7 +560,7 @@ namespace Marmi
 
             Menu_ContextDualView.Checked = ViewState.DualView;
             Menu_ContextFullView.Checked = ViewState.FullScreen;
-            Menu_ContextFitScreenSize.Checked = App.Config.FitToScreen;
+            Menu_ContextFitScreenSize.Checked = ViewState.FitToScreen;
 
             Menu_ContextSidebar.Checked = _sidebar.Visible;
 
@@ -643,7 +614,6 @@ namespace Marmi
                 AddBookmarkMenuItem(Menu_ContextBookmarkList);
 
                 //サムネイルボタン
-                //MenuItem_ContextThumbnailView.Enabled = g_makeThumbnail;	//サムネイルを作っているかどうか
                 Menu_ContextThumbnailView.Checked = ViewState.ThumbnailView;
 
                 //2ページモード:半ページ送りは2ページモード時のみ
@@ -658,11 +628,10 @@ namespace Marmi
                 else
                 {
                     //ナビゲーションメニューの有効無効
-                    Menu_ContextTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);        //先頭ページチェック
-                    Menu_ContextBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);   //先頭ページチェック
-                    Menu_ContextNext.Enabled = !IsLastPageViewing();        //最終ページチェック
-                    Menu_ContextLast.Enabled = !IsLastPageViewing();        //最終ページチェック
-                                                                            //MenuItem_ContextLast.Enabled = (bool)(g_pi.ViewPage != g_pi.Items.Count - 1);
+                    Menu_ContextTop.Enabled = (bool)(App.g_pi.NowViewPage != 0);
+                    Menu_ContextBack.Enabled = (bool)(App.g_pi.NowViewPage != 0);
+                    Menu_ContextNext.Enabled = !IsLastPageViewing();
+                    Menu_ContextLast.Enabled = !IsLastPageViewing();
                 }
             }
         }
@@ -703,7 +672,6 @@ namespace Marmi
                     };
                     int ix = count;
                     item.Tag = count;
-                    //item.Click += (s, ex) => { SetViewPage((int)((s as ToolStripMenuItem).Tag)); };
                     item.Click += async (s, ex) => { await SetViewPageAsync(ix); };
                     Menu_Bookmark.DropDownItems.Add(item);
                 }

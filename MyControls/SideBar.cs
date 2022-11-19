@@ -255,7 +255,7 @@ namespace Marmi
 
                 int dx = pt.X - m_mouseDragPoint.X;
                 this.Width += dx;
-                App.Config.SidebarWidth = this.Width;
+                ViewState.SidebarWidth = this.Width;
 
                 m_mouseDragPoint = pt;
 

@@ -2,25 +2,55 @@
 {
     public static class ViewState
     {
-        //2画面並べて表示
+        /// <summary>
+        /// 2画像並べて表示するモード
+        /// AppGlobalConfig.DualViewのこのプロパティのコピーがある。
+        /// </summary>
         public static bool DualView { get; set; } = false;
 
-        //メニューバーの表示
+        /// <summary>
+        /// メニューバーの表示
+        /// </summary>
         public static bool VisibleMenubar { get; set; } = true;
 
-        //ツールバーの表示
+        /// <summary>
+        /// ツールバーの表示
+        /// </summary>
         public static bool VisibleToolBar { get; set; } = true;
 
-        //ステータスバーの表示
+        /// <summary>
+        /// ステータスバーの表示
+        /// </summary>
         public static bool VisibleStatusBar { get; set; } = true;
 
-        //サイドバーの表示
+        /// <summary>
+        ///サイドバーの表示
+        /// </summary>
         public static bool VisibleSidebar { get; set; } = false;
 
-        //ver1.77 画面モード保存対象にする。
-        public static bool FullScreen { get; set; }
+        /// <summary>
+        /// フルスクリーンモード
+        /// </summary>
+        public static bool FullScreen { get; set; } = false;
 
-        //サムネイルモード
-        public static bool ThumbnailView { get; set; }
+        /// <summary>
+        /// サムネイルモード
+        /// </summary>
+        public static bool ThumbnailView { get; set; } = false;
+
+        /// <summary>
+        /// 画像とイメージをフィットさせる
+        /// </summary>
+        public static bool FitToScreen { get; set; } = true;
+
+        /// <summary>
+        /// サイドバーの幅。pixels
+        /// </summary>
+        public static int SidebarWidth { get; set; } = App.SIDEBAR_INIT_WIDTH;
+
+        /// <summary>
+        /// ツールバーの位置
+        /// </summary>
+        public static bool ToolbarIsTop { get; set; } = true;
     }
 }

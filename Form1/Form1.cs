@@ -86,11 +86,11 @@ namespace Marmi
             //
             // ver1.62 ツールバーの位置
             //
-            toolStrip1.Dock = App.Config.ToolbarIsTop ? DockStyle.Top : DockStyle.Bottom;
+            toolStrip1.Dock = ViewState.ToolbarIsTop ? DockStyle.Top : DockStyle.Bottom;
 
             //初期設定
             this.KeyPreview = true;
-            this.BackColor = (App.Config.General.BackColor.A==0) ? Color.SlateBlue : App.Config.General.BackColor;
+            this.BackColor = (App.Config.General.BackColor.A == 0) ? Color.SlateBlue : App.Config.General.BackColor;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.SetStyle(ControlStyles.Opaque, true);
             Application.Idle += Application_Idle;
@@ -125,7 +125,7 @@ namespace Marmi
             _sidebar = new SideBar();
             this.Controls.Add(_sidebar);
             _sidebar.Visible = false;
-            _sidebar.Width = App.Config.SidebarWidth;
+            _sidebar.Width = ViewState.SidebarWidth;
             _sidebar.Dock = DockStyle.Left;
             //_sidebar.SidebarSizeChanged += Sidebar_SidebarSizeChanged;
             _sidebar.SidebarSizeChanged += (s, e) => OnResizeEnd(null);
@@ -318,8 +318,8 @@ namespace Marmi
             //ウィンドウサイズ、位置を保存
             if (this.WindowState == FormWindowState.Normal)
             {
-                App.Config.windowSize = this.Size; //new Size(this.Width, this.Height);
-                App.Config.windowLocation = this.Location; // new Point(this.Left, this.Top);
+                App.Config.WindowSize = this.Size; //new Size(this.Width, this.Height);
+                App.Config.WindowPos = this.Location; // new Point(this.Left, this.Top);
             }
 
             if (_thumbPanel != null && ViewState.ThumbnailView)
@@ -660,7 +660,7 @@ namespace Marmi
             int statusbarHeight = (statusbar.Visible && !ViewState.FullScreen) ? statusbar.Height : 0;
 
             //ツールバーが上の時だけYから控除
-            if (App.Config.ToolbarIsTop)
+            if (ViewState.ToolbarIsTop)
                 rect.Y += toolbarHeight;
 
             //各パラメータの補正

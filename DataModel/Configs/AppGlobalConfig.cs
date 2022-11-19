@@ -16,12 +16,15 @@ namespace Marmi
     [Serializable]
     public class AppGlobalConfig
     {
-        public Size windowSize;                     //ウィンドウサイズ
-        public Point windowLocation;                //ウィンドウ表示位置
+        ///ウィンドウサイズ
+        public Size WindowSize { get; set; }
+
+        ///ウィンドウ表示位置
+        public Point WindowPos { get; set; }
 
         /// <summary>
         /// 2画面モードかどうか。
-        /// シリアライズするためだけに存在
+        /// XMLシリアライズするためだけに存在
         /// 通常はViewState.DualViewにアクセスすること。
         /// </summary>
         public bool DualView
@@ -30,18 +33,11 @@ namespace Marmi
             set => ViewState.DualView = value;
         }
 
-        public bool RecurseSearchDir { get; set; }             //ディレクトリの再帰検索
-
-        public bool FitToScreen { get; set; }            //画像とイメージをフィットさせる
-
-        public int SidebarWidth { get; set; }                    //サイドバーの幅
+        //ディレクトリの再帰検索
+        public bool RecurseSearchDir { get; set; }
 
         ////ver1.35 スクリーンショー時間[ms]
         public int SlideshowTime { get; set; }
-
-        //ver1.62 ツールバーの位置
-        public bool ToolbarIsTop { get; set; }
-
 
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
@@ -74,22 +70,18 @@ namespace Marmi
         /// </summary>
         public AppGlobalConfig()
         {
-            Initialize();
+            Init();
         }
 
         /// <summary>
         /// 各パラメータの初期値
         /// </summary>
-        private void Initialize()
+        private void Init()
         {
-            windowSize = new Size(640, 480);
-            windowLocation = new Point(0, 0);
+            WindowSize = new Size(640, 480);
+            WindowPos = new Point(0, 0);
             RecurseSearchDir = false;
-            FitToScreen = true;
-            StopPaintingAtResize = false;
-            SidebarWidth = App.SIDEBAR_INIT_WIDTH;
             SlideshowTime = 3000;
-            ToolbarIsTop = true;
 
             General.Init();
             View.Init();
