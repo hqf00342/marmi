@@ -52,6 +52,7 @@
             this.view = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dualView_withSizeCheck = new System.Windows.Forms.RadioButton();
+            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dualView_Normal = new System.Windows.Forms.RadioButton();
             this.dualView_Force = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -63,8 +64,9 @@
             this.noEnlargeOver100p = new System.Windows.Forms.CheckBox();
             this.isFastDraw = new System.Windows.Forms.CheckBox();
             this.Thumbnail = new System.Windows.Forms.TabPage();
-            this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.thumbnailConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
             this.isDrawThumbnailFrame = new System.Windows.Forms.CheckBox();
             this.isShowTPPicSize = new System.Windows.Forms.CheckBox();
             this.isShowTPFileSize = new System.Windows.Forms.CheckBox();
@@ -159,8 +161,7 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.keyConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -168,8 +169,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
             this.view.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.Thumbnail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).BeginInit();
@@ -186,8 +189,7 @@
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -499,6 +501,10 @@
             this.dualView_withSizeCheck.Text = "縦画像＋同サイズの場合に2ページ表示とする";
             this.dualView_withSizeCheck.UseVisualStyleBackColor = true;
             // 
+            // viewConfigBindingSource
+            // 
+            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
+            // 
             // dualView_Normal
             // 
             this.dualView_Normal.AutoSize = true;
@@ -651,6 +657,38 @@
             this.Thumbnail.Text = "サムネイル";
             this.Thumbnail.UseVisualStyleBackColor = true;
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.thumbnailConfigBindingSource, "ThumbnailSize", true));
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Location = new System.Drawing.Point(172, 12);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(61, 19);
+            this.numericUpDown2.TabIndex = 11;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // thumbnailConfigBindingSource
+            // 
+            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
+            // 
             // ThumbnailPanelSmoothScroll
             // 
             this.ThumbnailPanelSmoothScroll.AutoSize = true;
@@ -662,10 +700,6 @@
             this.ThumbnailPanelSmoothScroll.Tag = "サムネイル画面内のスムーススクロールが有効になります。";
             this.ThumbnailPanelSmoothScroll.Text = "サムネイル画面内のスムーススクロールを有効にする";
             this.ThumbnailPanelSmoothScroll.UseVisualStyleBackColor = true;
-            // 
-            // thumbnailConfigBindingSource
-            // 
-            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
             // 
             // isDrawThumbnailFrame
             // 
@@ -992,6 +1026,7 @@
             // ka_exit2
             // 
             this.ka_exit2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_exit2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Exit2", true));
             this.ka_exit2.keyData = System.Windows.Forms.Keys.None;
             this.ka_exit2.Location = new System.Drawing.Point(344, 25);
             this.ka_exit2.Name = "ka_exit2";
@@ -1003,6 +1038,7 @@
             // ka_exit1
             // 
             this.ka_exit1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_exit1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Exit1", true));
             this.ka_exit1.keyData = System.Windows.Forms.Keys.None;
             this.ka_exit1.Location = new System.Drawing.Point(103, 25);
             this.ka_exit1.Name = "ka_exit1";
@@ -1146,6 +1182,7 @@
             // ka_bookmark1
             // 
             this.ka_bookmark1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_bookmark1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Bookmark1", true));
             this.ka_bookmark1.keyData = System.Windows.Forms.Keys.None;
             this.ka_bookmark1.Location = new System.Drawing.Point(103, 47);
             this.ka_bookmark1.Name = "ka_bookmark1";
@@ -1157,6 +1194,7 @@
             // ka_fullscreen1
             // 
             this.ka_fullscreen1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_fullscreen1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Fullscreen1", true));
             this.ka_fullscreen1.keyData = System.Windows.Forms.Keys.None;
             this.ka_fullscreen1.Location = new System.Drawing.Point(103, 69);
             this.ka_fullscreen1.Name = "ka_fullscreen1";
@@ -1168,6 +1206,7 @@
             // ka_dualview1
             // 
             this.ka_dualview1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_dualview1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Dualview1", true));
             this.ka_dualview1.keyData = System.Windows.Forms.Keys.None;
             this.ka_dualview1.Location = new System.Drawing.Point(103, 91);
             this.ka_dualview1.Name = "ka_dualview1";
@@ -1179,6 +1218,7 @@
             // ka_viewratio1
             // 
             this.ka_viewratio1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_viewratio1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_ViewRatio1", true));
             this.ka_viewratio1.keyData = System.Windows.Forms.Keys.None;
             this.ka_viewratio1.Location = new System.Drawing.Point(103, 113);
             this.ka_viewratio1.Name = "ka_viewratio1";
@@ -1190,6 +1230,7 @@
             // ka_recycle1
             // 
             this.ka_recycle1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_recycle1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Recycle1", true));
             this.ka_recycle1.keyData = System.Windows.Forms.Keys.None;
             this.ka_recycle1.Location = new System.Drawing.Point(103, 135);
             this.ka_recycle1.Name = "ka_recycle1";
@@ -1201,6 +1242,7 @@
             // ka_nextpage1
             // 
             this.ka_nextpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nextpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nextpage1", true));
             this.ka_nextpage1.keyData = System.Windows.Forms.Keys.None;
             this.ka_nextpage1.Location = new System.Drawing.Point(103, 179);
             this.ka_nextpage1.Name = "ka_nextpage1";
@@ -1212,6 +1254,7 @@
             // ka_prevpage1
             // 
             this.ka_prevpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevpage1", true));
             this.ka_prevpage1.keyData = System.Windows.Forms.Keys.None;
             this.ka_prevpage1.Location = new System.Drawing.Point(103, 201);
             this.ka_prevpage1.Name = "ka_prevpage1";
@@ -1223,6 +1266,7 @@
             // ka_toppage1
             // 
             this.ka_toppage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_toppage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Toppage1", true));
             this.ka_toppage1.keyData = System.Windows.Forms.Keys.None;
             this.ka_toppage1.Location = new System.Drawing.Point(103, 223);
             this.ka_toppage1.Name = "ka_toppage1";
@@ -1234,6 +1278,7 @@
             // ka_lastpage1
             // 
             this.ka_lastpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_lastpage1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Lastpage1", true));
             this.ka_lastpage1.keyData = System.Windows.Forms.Keys.None;
             this.ka_lastpage1.Location = new System.Drawing.Point(103, 245);
             this.ka_lastpage1.Name = "ka_lastpage1";
@@ -1245,6 +1290,7 @@
             // ka_nexthalf1
             // 
             this.ka_nexthalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nexthalf1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nexthalf1", true));
             this.ka_nexthalf1.keyData = System.Windows.Forms.Keys.None;
             this.ka_nexthalf1.Location = new System.Drawing.Point(103, 267);
             this.ka_nexthalf1.Name = "ka_nexthalf1";
@@ -1256,6 +1302,7 @@
             // ka_prevhalf1
             // 
             this.ka_prevhalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevhalf1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevhalf1", true));
             this.ka_prevhalf1.keyData = System.Windows.Forms.Keys.None;
             this.ka_prevhalf1.Location = new System.Drawing.Point(103, 289);
             this.ka_prevhalf1.Name = "ka_prevhalf1";
@@ -1289,6 +1336,7 @@
             // ka_nextpage2
             // 
             this.ka_nextpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nextpage2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Nextpage2", true));
             this.ka_nextpage2.keyData = System.Windows.Forms.Keys.None;
             this.ka_nextpage2.Location = new System.Drawing.Point(344, 179);
             this.ka_nextpage2.Name = "ka_nextpage2";
@@ -1300,6 +1348,7 @@
             // ka_prevpage2
             // 
             this.ka_prevpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevpage2.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Prevpage2", true));
             this.ka_prevpage2.keyData = System.Windows.Forms.Keys.None;
             this.ka_prevpage2.Location = new System.Drawing.Point(344, 201);
             this.ka_prevpage2.Name = "ka_prevpage2";
@@ -1322,6 +1371,7 @@
             // ka_rotate1
             // 
             this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Rotate1", true));
             this.ka_rotate1.keyData = System.Windows.Forms.Keys.None;
             this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
             this.ka_rotate1.Name = "ka_rotate1";
@@ -1389,6 +1439,7 @@
             // ka_thunbnail
             // 
             this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_thunbnail.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Thumbnail", true));
             this.ka_thunbnail.keyData = System.Windows.Forms.Keys.None;
             this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
             this.ka_thunbnail.Name = "ka_thunbnail";
@@ -1400,6 +1451,7 @@
             // ka_sidebar
             // 
             this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_sidebar.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_Sidebar", true));
             this.ka_sidebar.keyData = System.Windows.Forms.Keys.None;
             this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
             this.ka_sidebar.Name = "ka_sidebar";
@@ -1422,6 +1474,7 @@
             // ka_minWindow
             // 
             this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_minWindow.DataBindings.Add(new System.Windows.Forms.Binding("keyData", this.keyConfigBindingSource, "Key_MinWindow", true));
             this.ka_minWindow.keyData = System.Windows.Forms.Keys.None;
             this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
             this.ka_minWindow.Name = "ka_minWindow";
@@ -1771,37 +1824,9 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // numericUpDown2
+            // keyConfigBindingSource
             // 
-            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.thumbnailConfigBindingSource, "ThumbnailSize", true));
-            this.numericUpDown2.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Location = new System.Drawing.Point(172, 12);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(61, 19);
-            this.numericUpDown2.TabIndex = 11;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
-            // viewConfigBindingSource
-            // 
-            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
+            this.keyConfigBindingSource.DataSource = typeof(Marmi.DataModel.KeyConfig);
             // 
             // OptionForm
             // 
@@ -1830,10 +1855,12 @@
             this.view.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.Thumbnail.ResumeLayout(false);
             this.Thumbnail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).EndInit();
@@ -1856,8 +1883,7 @@
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1997,5 +2023,6 @@
         private System.Windows.Forms.BindingSource thumbnailConfigBindingSource;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.BindingSource viewConfigBindingSource;
+        private System.Windows.Forms.BindingSource keyConfigBindingSource;
     }
 }

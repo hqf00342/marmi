@@ -26,107 +26,28 @@ namespace Marmi
             mouseConfigBindingSource.DataSource = _config.Mouse;
             thumbnailConfigBindingSource.DataSource = _config.Thumbnail;
             viewConfigBindingSource.DataSource = _config.View;
+            keyConfigBindingSource.DataSource = _config.Keys;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
-
-            //サムネイルタブ
-            //LoadGeneralConfig(set);
-            //LoadViewConfig(set);
-            //LoadThumbnailConfig(set);
-            //LoadMouseConfig(set);
-            LoadKeyConfig(set);
-            //LoadAdvanceConfig(set);
-
-            //ver1.70 2枚表示の厳密チェック
-            //dualview_exactCheck.Checked = set.dualview_exactCheck;
-
-            //ver1.78 倍率の保持
-            //keepMagnification.Checked = set.KeepMagnification;
         }
 
-
-        private void LoadKeyConfig(AppGlobalConfig set)
-        {
-            ka_exit1.keyData = set.Keys.Key_Exit1;
-            ka_exit2.keyData = set.Keys.Key_Exit2;
-            ka_bookmark1.keyData = set.Keys.Key_Bookmark1;
-            ka_fullscreen1.keyData = set.Keys.Key_Fullscreen1;
-            ka_dualview1.keyData = set.Keys.Key_Dualview1;
-            ka_viewratio1.keyData = set.Keys.Key_ViewRatio1;
-            ka_recycle1.keyData = set.Keys.Key_Recycle1;
-            ka_rotate1.keyData = set.Keys.Key_Rotate1;
-            ka_nextpage1.keyData = set.Keys.Key_Nextpage1;
-            ka_nextpage2.keyData = set.Keys.Key_Nextpage2;
-            ka_prevpage1.keyData = set.Keys.Key_Prevpage1;
-            ka_prevpage2.keyData = set.Keys.Key_Prevpage2;
-            ka_prevhalf1.keyData = set.Keys.Key_Prevhalf1;
-            ka_nexthalf1.keyData = set.Keys.Key_Nexthalf1;
-            ka_toppage1.keyData = set.Keys.Key_Toppage1;
-            ka_lastpage1.keyData = set.Keys.Key_Lastpage1;
-            ka_thunbnail.keyData = set.Keys.Key_Thumbnail;
-            ka_sidebar.keyData = set.Keys.Key_Sidebar;
-            ka_minWindow.keyData = set.Keys.Key_MinWindow;
-        }
 
         public void SaveConfig(ref AppGlobalConfig set)
         {
-            //SaveGnereralConfig(ref set);
             set.General = _config.General;
             set.Advance = _config.Advance;
             set.Loupe = _config.Loupe;
             set.Mouse = _config.Mouse;
             set.Thumbnail= _config.Thumbnail;
             set.View= _config.View;
+            set.Keys= _config.Keys;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
 
-            //サムネイルタブ
-            //SaveThumbnailConfig(ref set);
-
-            //拡大表示関連
-            //SaveViewConfig(ref set);
-
-            //ver1.35 ループ
-            //set.isLoopToTopPage = isLoopToTopPage.Checked;
-
-            //ver1.70 2枚表示の厳密チェック
-            //set.dualview_exactCheck = dualview_exactCheck.Checked;
-
-            //set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
-
-            //ver1.78 倍率の保持
-            //set.KeepMagnification = keepMagnification.Checked;
-
-            //ver1.91 キーコンフィグ
-            SaveKeyConfig(ref set);
-            //SaveMouseConfig(ref set);
         }
 
-        private void SaveKeyConfig(ref AppGlobalConfig set)
-        {
-            set.Keys.Key_Exit1 = ka_exit1.keyData;
-            set.Keys.Key_Exit2 = ka_exit2.keyData;
-            set.Keys.Key_Bookmark1 = ka_bookmark1.keyData;
-            set.Keys.Key_Fullscreen1 = ka_fullscreen1.keyData;
-            set.Keys.Key_Dualview1 = ka_dualview1.keyData;
-            set.Keys.Key_ViewRatio1 = ka_viewratio1.keyData;
-            set.Keys.Key_Recycle1 = ka_recycle1.keyData;
-            set.Keys.Key_Rotate1 = ka_rotate1.keyData;
-            //1.80キーコンフィグナビゲーション関連;
-            set.Keys.Key_Nextpage1 = ka_nextpage1.keyData;
-            set.Keys.Key_Nextpage2 = ka_nextpage2.keyData;
-            set.Keys.Key_Prevpage1 = ka_prevpage1.keyData;
-            set.Keys.Key_Prevpage2 = ka_prevpage2.keyData;
-            set.Keys.Key_Prevhalf1 = ka_prevhalf1.keyData;
-            set.Keys.Key_Nexthalf1 = ka_nexthalf1.keyData;
-            set.Keys.Key_Toppage1 = ka_toppage1.keyData;
-            set.Keys.Key_Lastpage1 = ka_lastpage1.keyData;
-            set.Keys.Key_Thumbnail = ka_thunbnail.keyData;
-            set.Keys.Key_Sidebar = ka_sidebar.keyData;
-            set.Keys.Key_MinWindow = ka_minWindow.keyData;
-        }
 
         private void InitButton_Click(object sender, EventArgs e)
         {
