@@ -25,13 +25,14 @@ namespace Marmi
             loupeConfigBindingSource.DataSource = _config.Loupe;
             mouseConfigBindingSource.DataSource = _config.Mouse;
             thumbnailConfigBindingSource.DataSource = _config.Thumbnail;
+            viewConfigBindingSource.DataSource = _config.View;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
 
             //サムネイルタブ
             //LoadGeneralConfig(set);
-            LoadViewConfig(set);
+            //LoadViewConfig(set);
             //LoadThumbnailConfig(set);
             //LoadMouseConfig(set);
             LoadKeyConfig(set);
@@ -42,18 +43,6 @@ namespace Marmi
 
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
-        }
-
-        private void LoadViewConfig(AppGlobalConfig set)
-        {
-            noEnlargeOver100p.Checked = set.View.ProhigitExpansionOver100p;
-            isDotByDotZoom.Checked = set.View.DotByDotZoom;
-            lastPage_stay.Checked = set.View.StayOnLastPage;
-            lastPage_toTop.Checked = set.View.MoveToTopAtLastPage;
-            dualView_Force.Checked = set.View.DualView_Force;
-            dualView_Normal.Checked = set.View.DualView_Normal;
-            dualView_withSizeCheck.Checked = set.View.DualView_withSizeCheck;
-            SwitchPicMode.SelectedIndex = (int)(set.View.PictureSwitchMode);
         }
 
         private void LoadKeyConfig(AppGlobalConfig set)
@@ -95,7 +84,7 @@ namespace Marmi
             //SaveThumbnailConfig(ref set);
 
             //拡大表示関連
-            SaveViewConfig(ref set);
+            //SaveViewConfig(ref set);
 
             //ver1.35 ループ
             //set.isLoopToTopPage = isLoopToTopPage.Checked;
@@ -112,19 +101,6 @@ namespace Marmi
             SaveKeyConfig(ref set);
             //SaveMouseConfig(ref set);
         }
-
-        private void SaveViewConfig(ref AppGlobalConfig set)
-        {
-            set.View.ProhigitExpansionOver100p = noEnlargeOver100p.Checked;
-            set.View.DotByDotZoom = isDotByDotZoom.Checked;
-            set.View.StayOnLastPage = lastPage_stay.Checked;
-            set.View.MoveToTopAtLastPage = lastPage_toTop.Checked;
-            set.View.DualView_Force = dualView_Force.Checked;
-            set.View.DualView_Normal = dualView_Normal.Checked;
-            set.View.DualView_withSizeCheck = dualView_withSizeCheck.Checked;
-            set.View.PictureSwitchMode = (AnimateMode)SwitchPicMode.SelectedIndex;
-        }
-
 
         private void SaveKeyConfig(ref AppGlobalConfig set)
         {

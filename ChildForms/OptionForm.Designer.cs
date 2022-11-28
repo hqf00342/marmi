@@ -62,10 +62,10 @@
             this.label23 = new System.Windows.Forms.Label();
             this.isDotByDotZoom = new System.Windows.Forms.CheckBox();
             this.noEnlargeOver100p = new System.Windows.Forms.CheckBox();
-            this.isFastDraw = new System.Windows.Forms.CheckBox();
             this.Thumbnail = new System.Windows.Forms.TabPage();
-            this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.thumbnailConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
             this.isDrawThumbnailFrame = new System.Windows.Forms.CheckBox();
             this.isShowTPPicSize = new System.Windows.Forms.CheckBox();
             this.isShowTPFileSize = new System.Windows.Forms.CheckBox();
@@ -160,7 +160,7 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -170,6 +170,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.Thumbnail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).BeginInit();
@@ -186,7 +187,7 @@
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -467,7 +468,6 @@
             this.view.Controls.Add(this.label23);
             this.view.Controls.Add(this.isDotByDotZoom);
             this.view.Controls.Add(this.noEnlargeOver100p);
-            this.view.Controls.Add(this.isFastDraw);
             this.view.Location = new System.Drawing.Point(4, 22);
             this.view.Name = "view";
             this.view.Size = new System.Drawing.Size(497, 364);
@@ -490,6 +490,7 @@
             // dualView_withSizeCheck
             // 
             this.dualView_withSizeCheck.AutoSize = true;
+            this.dualView_withSizeCheck.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_withSizeCheck", true));
             this.dualView_withSizeCheck.Location = new System.Drawing.Point(7, 65);
             this.dualView_withSizeCheck.Name = "dualView_withSizeCheck";
             this.dualView_withSizeCheck.Size = new System.Drawing.Size(242, 16);
@@ -501,6 +502,7 @@
             // dualView_Normal
             // 
             this.dualView_Normal.AutoSize = true;
+            this.dualView_Normal.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_Normal", true));
             this.dualView_Normal.Location = new System.Drawing.Point(7, 42);
             this.dualView_Normal.Name = "dualView_Normal";
             this.dualView_Normal.Size = new System.Drawing.Size(207, 16);
@@ -512,6 +514,7 @@
             // dualView_Force
             // 
             this.dualView_Force.AutoSize = true;
+            this.dualView_Force.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DualView_Force", true));
             this.dualView_Force.Location = new System.Drawing.Point(7, 19);
             this.dualView_Force.Name = "dualView_Force";
             this.dualView_Force.Size = new System.Drawing.Size(204, 16);
@@ -547,6 +550,7 @@
             // lastPage_toTop
             // 
             this.lastPage_toTop.AutoSize = true;
+            this.lastPage_toTop.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "MoveToTopAtLastPage", true));
             this.lastPage_toTop.Location = new System.Drawing.Point(7, 42);
             this.lastPage_toTop.Name = "lastPage_toTop";
             this.lastPage_toTop.Size = new System.Drawing.Size(107, 16);
@@ -560,6 +564,7 @@
             // lastPage_stay
             // 
             this.lastPage_stay.AutoSize = true;
+            this.lastPage_stay.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "StayOnLastPage", true));
             this.lastPage_stay.Location = new System.Drawing.Point(7, 19);
             this.lastPage_stay.Name = "lastPage_stay";
             this.lastPage_stay.Size = new System.Drawing.Size(132, 16);
@@ -572,11 +577,9 @@
             // 
             // SwitchPicMode
             // 
+            this.SwitchPicMode.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.viewConfigBindingSource, "PictureSwitchMode", true));
             this.SwitchPicMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SwitchPicMode.FormattingEnabled = true;
-            this.SwitchPicMode.Items.AddRange(new object[] {
-            "なにもしない（最速）",
-            "スライドアウト"});
             this.SwitchPicMode.Location = new System.Drawing.Point(131, 111);
             this.SwitchPicMode.Name = "SwitchPicMode";
             this.SwitchPicMode.Size = new System.Drawing.Size(121, 20);
@@ -596,6 +599,7 @@
             // isDotByDotZoom
             // 
             this.isDotByDotZoom.AutoSize = true;
+            this.isDotByDotZoom.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "DotByDotZoom", true));
             this.isDotByDotZoom.Location = new System.Drawing.Point(12, 62);
             this.isDotByDotZoom.Name = "isDotByDotZoom";
             this.isDotByDotZoom.Size = new System.Drawing.Size(227, 16);
@@ -608,6 +612,7 @@
             // noEnlargeOver100p
             // 
             this.noEnlargeOver100p.AutoSize = true;
+            this.noEnlargeOver100p.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "ProhigitExpansionOver100p", true));
             this.noEnlargeOver100p.Location = new System.Drawing.Point(12, 40);
             this.noEnlargeOver100p.Name = "noEnlargeOver100p";
             this.noEnlargeOver100p.Size = new System.Drawing.Size(232, 16);
@@ -616,18 +621,6 @@
             this.noEnlargeOver100p.Text = "画像サイズ自動調整時に100%以上にしない";
             this.noEnlargeOver100p.UseVisualStyleBackColor = true;
             this.noEnlargeOver100p.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
-            // 
-            // isFastDraw
-            // 
-            this.isFastDraw.AutoSize = true;
-            this.isFastDraw.Location = new System.Drawing.Point(12, 18);
-            this.isFastDraw.Name = "isFastDraw";
-            this.isFastDraw.Size = new System.Drawing.Size(133, 16);
-            this.isFastDraw.TabIndex = 0;
-            this.isFastDraw.Tag = "一時的に画質を落とし、描写を高速にします。見苦しい場合はOffにしてください。";
-            this.isFastDraw.Text = "画像描写を高速にする";
-            this.isFastDraw.UseVisualStyleBackColor = true;
-            this.isFastDraw.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // Thumbnail
             // 
@@ -655,6 +648,38 @@
             this.Thumbnail.Text = "サムネイル";
             this.Thumbnail.UseVisualStyleBackColor = true;
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.thumbnailConfigBindingSource, "ThumbnailSize", true));
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Location = new System.Drawing.Point(172, 12);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(61, 19);
+            this.numericUpDown2.TabIndex = 11;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // thumbnailConfigBindingSource
+            // 
+            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
+            // 
             // ThumbnailPanelSmoothScroll
             // 
             this.ThumbnailPanelSmoothScroll.AutoSize = true;
@@ -666,10 +691,6 @@
             this.ThumbnailPanelSmoothScroll.Tag = "サムネイル画面内のスムーススクロールが有効になります。";
             this.ThumbnailPanelSmoothScroll.Text = "サムネイル画面内のスムーススクロールを有効にする";
             this.ThumbnailPanelSmoothScroll.UseVisualStyleBackColor = true;
-            // 
-            // thumbnailConfigBindingSource
-            // 
-            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
             // 
             // isDrawThumbnailFrame
             // 
@@ -1775,33 +1796,9 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // numericUpDown2
+            // viewConfigBindingSource
             // 
-            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.thumbnailConfigBindingSource, "ThumbnailSize", true));
-            this.numericUpDown2.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Location = new System.Drawing.Point(172, 12);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(61, 19);
-            this.numericUpDown2.TabIndex = 11;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
+            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
             // 
             // OptionForm
             // 
@@ -1834,6 +1831,7 @@
             this.groupBox3.PerformLayout();
             this.Thumbnail.ResumeLayout(false);
             this.Thumbnail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).EndInit();
@@ -1856,7 +1854,7 @@
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1925,7 +1923,6 @@
 		private System.Windows.Forms.Label label23;
 		private System.Windows.Forms.CheckBox isDotByDotZoom;
 		private System.Windows.Forms.CheckBox noEnlargeOver100p;
-		private System.Windows.Forms.CheckBox isFastDraw;
 		private System.Windows.Forms.Button tmpFolderBrowse;
 		private System.Windows.Forms.TextBox tmpFolder;
 		private System.Windows.Forms.Label label28;
@@ -1996,5 +1993,6 @@
         private System.Windows.Forms.BindingSource mouseConfigBindingSource;
         private System.Windows.Forms.BindingSource thumbnailConfigBindingSource;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.BindingSource viewConfigBindingSource;
     }
 }
