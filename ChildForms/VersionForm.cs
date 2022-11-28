@@ -18,14 +18,10 @@ namespace Marmi
                 System.Diagnostics.FileVersionInfo.GetVersionInfo(
                     System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-            string buildInfo = fv.IsDebug ? "(Debug)" : "(Release)";
+            string buildconf = fv.IsDebug ? "Debug" : "Release";
 
-            Debug.Assert(label1 != null, "label1 != null");
-            label1.Text = string.Format(
-                "{0} ver{1} {2}",
-                fv.ProductName,
-                fv.ProductVersion,
-                buildInfo);
+            label1.Text = $"{fv.ProductName} ver{fv.ProductVersion}({buildconf})\n"
+                        + $"{GitInfo.BranchName}-{GitInfo.CommitId}";
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
