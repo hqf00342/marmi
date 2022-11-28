@@ -583,9 +583,12 @@
             // 
             // SwitchPicMode
             // 
-            this.SwitchPicMode.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.viewConfigBindingSource, "PictureSwitchMode", true));
+            this.SwitchPicMode.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.viewConfigBindingSource, "PageTransitionEffect", true));
             this.SwitchPicMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SwitchPicMode.FormattingEnabled = true;
+            this.SwitchPicMode.Items.AddRange(new object[] {
+            "なし",
+            "アニメーション"});
             this.SwitchPicMode.Location = new System.Drawing.Point(131, 111);
             this.SwitchPicMode.Name = "SwitchPicMode";
             this.SwitchPicMode.Size = new System.Drawing.Size(121, 20);

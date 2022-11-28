@@ -99,8 +99,8 @@ namespace Marmi
 
             //ver1.50 表示
             PicPanel.Message = string.Empty;
-            if (App.Config.View.PictureSwitchMode != AnimateMode.none   //アニメーションモード
-                && !App.Config.KeepMagnification                        //倍率固定モードではアニメーションしない
+            if (App.Config.View.PageTransitionEffect == "アニメーション"
+                && !App.Config.KeepMagnification
                 && pageDirection != 0)
             {
                 //スライドインアニメーション

@@ -155,7 +155,6 @@
     <Compile Include="Uty\NaturalStringComparer.cs" />
     <None Include="SharpCompress\SharpCompressHelper.cs" />
     <Compile Include="Uty\WindowOperation.cs" />
-    <Compile Include="enums\AnimateMode.cs" />
     <Compile Include="enums\ThumbnailSize.cs" />
     <Compile Include="enums\DiagLocate.cs" />
     <Compile Include="enums\PackageType.cs" />

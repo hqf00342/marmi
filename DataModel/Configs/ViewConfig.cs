@@ -20,7 +20,7 @@
         public bool MoveToTopAtLastPage { get; set; }
 
         //ver1.21画像切り替え方法
-        public AnimateMode PictureSwitchMode { get; set; }
+        public string PageTransitionEffect { get; set; }
 
         public void Init()
         {
@@ -31,7 +31,7 @@
             DualView_Force = false;
             DualView_Normal = true;
             DualView_withSizeCheck = false;
-            PictureSwitchMode = AnimateMode.Slide;
+            PageTransitionEffect = "アニメーション";
         }
     }
 }
