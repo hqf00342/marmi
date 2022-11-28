@@ -14,6 +14,7 @@ namespace Marmi
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected bool SetProperty<T>(ref T store, T value, [CallerMemberName] string propertyName = null)
         {
             if (object.Equals(store, value))
@@ -22,15 +23,16 @@ namespace Marmi
             OnPropertyChanged(propertyName);
             return true;
         }
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName));
 
-        #endregion
+        #endregion INotifyPropertyChanged
 
         //public Keys KeyData { get; set; }
         private Keys _KeyData;
-        public Keys KeyData { get => _KeyData; set => SetProperty(ref _KeyData, value); }
 
+        public Keys KeyData { get => _KeyData; set => SetProperty(ref _KeyData, value); }
 
         //private bool inputMode = false;
         //private Font font_bold = new System.Drawing.Font(DefaultFont, FontStyle.Bold);

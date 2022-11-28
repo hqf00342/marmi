@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -26,46 +27,13 @@ namespace Marmi
             mouseConfigBindingSource.DataSource = _config.Mouse;
             thumbnailConfigBindingSource.DataSource = _config.Thumbnail;
             viewConfigBindingSource.DataSource = _config.View;
+            keyConfigBindingSource.DataSource = _config.Keys;
 
             //高度な設定タブ
             bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
 
-            //サムネイルタブ
-            //LoadGeneralConfig(set);
-            //LoadViewConfig(set);
-            //LoadThumbnailConfig(set);
-            //LoadMouseConfig(set);
-            LoadKeyConfig(set);
-            //LoadAdvanceConfig(set);
-
-            //ver1.70 2枚表示の厳密チェック
-            //dualview_exactCheck.Checked = set.dualview_exactCheck;
-
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
-        }
-
-        private void LoadKeyConfig(AppGlobalConfig set)
-        {
-            ka_exit1.KeyData = set.Keys.Key_Exit1;
-            ka_exit2.KeyData = set.Keys.Key_Exit2;
-            ka_bookmark1.KeyData = set.Keys.Key_Bookmark1;
-            ka_fullscreen1.KeyData = set.Keys.Key_Fullscreen1;
-            ka_dualview1.KeyData = set.Keys.Key_Dualview1;
-            ka_viewratio1.KeyData = set.Keys.Key_ViewRatio1;
-            ka_recycle1.KeyData = set.Keys.Key_Recycle1;
-            ka_rotate1.KeyData = set.Keys.Key_Rotate1;
-            ka_nextpage1.KeyData = set.Keys.Key_Nextpage1;
-            ka_nextpage2.KeyData = set.Keys.Key_Nextpage2;
-            ka_prevpage1.KeyData = set.Keys.Key_Prevpage1;
-            ka_prevpage2.KeyData = set.Keys.Key_Prevpage2;
-            ka_prevhalf1.KeyData = set.Keys.Key_Prevhalf1;
-            ka_nexthalf1.KeyData = set.Keys.Key_Nexthalf1;
-            ka_toppage1.KeyData = set.Keys.Key_Toppage1;
-            ka_lastpage1.KeyData = set.Keys.Key_Lastpage1;
-            ka_thunbnail.KeyData = set.Keys.Key_Thumbnail;
-            ka_sidebar.KeyData = set.Keys.Key_Sidebar;
-            ka_minWindow.KeyData = set.Keys.Key_MinWindow;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -75,55 +43,15 @@ namespace Marmi
             set.Advance = _config.Advance;
             set.Loupe = _config.Loupe;
             set.Mouse = _config.Mouse;
-            set.Thumbnail= _config.Thumbnail;
+            set.Thumbnail = _config.Thumbnail;
+            set.View = _config.View;
+            set.Keys = _config.Keys;
 
             //高度な設定タブ
             set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
 
-            //サムネイルタブ
-            //SaveThumbnailConfig(ref set);
-
-            //拡大表示関連
-            //SaveViewConfig(ref set);
-
-            //ver1.35 ループ
-            //set.isLoopToTopPage = isLoopToTopPage.Checked;
-
-            //ver1.70 2枚表示の厳密チェック
-            //set.dualview_exactCheck = dualview_exactCheck.Checked;
-
-            //set.LastPage_toNextArchive = lastPage_toNextArchive.Checked;
-
             //ver1.78 倍率の保持
             set.KeepMagnification = keepMagnification.Checked;
-
-            //ver1.91 キーコンフィグ
-            SaveKeyConfig(ref set);
-            //SaveMouseConfig(ref set);
-        }
-
-        private void SaveKeyConfig(ref AppGlobalConfig set)
-        {
-            set.Keys.Key_Exit1 = ka_exit1.KeyData;
-            set.Keys.Key_Exit2 = ka_exit2.KeyData;
-            set.Keys.Key_Bookmark1 = ka_bookmark1.KeyData;
-            set.Keys.Key_Fullscreen1 = ka_fullscreen1.KeyData;
-            set.Keys.Key_Dualview1 = ka_dualview1.KeyData;
-            set.Keys.Key_ViewRatio1 = ka_viewratio1.KeyData;
-            set.Keys.Key_Recycle1 = ka_recycle1.KeyData;
-            set.Keys.Key_Rotate1 = ka_rotate1.KeyData;
-            //1.80キーコンフィグナビゲーション関連;
-            set.Keys.Key_Nextpage1 = ka_nextpage1.KeyData;
-            set.Keys.Key_Nextpage2 = ka_nextpage2.KeyData;
-            set.Keys.Key_Prevpage1 = ka_prevpage1.KeyData;
-            set.Keys.Key_Prevpage2 = ka_prevpage2.KeyData;
-            set.Keys.Key_Prevhalf1 = ka_prevhalf1.KeyData;
-            set.Keys.Key_Nexthalf1 = ka_nexthalf1.KeyData;
-            set.Keys.Key_Toppage1 = ka_toppage1.KeyData;
-            set.Keys.Key_Lastpage1 = ka_lastpage1.KeyData;
-            set.Keys.Key_Thumbnail = ka_thunbnail.KeyData;
-            set.Keys.Key_Sidebar = ka_sidebar.KeyData;
-            set.Keys.Key_MinWindow = ka_minWindow.KeyData;
         }
 
         private void InitButton_Click(object sender, EventArgs e)
@@ -199,32 +127,6 @@ namespace Marmi
             toolTip1.SetToolTip((Control)sender, (string)((Control)sender).Tag);
         }
 
-        //ver1.81 KeyAccelerator 利用に伴い Validating に移行
-        /// <summary>
-        /// キー重複チェックルーチン
-        /// コントロールの値を比較する
-        /// </summary>
-        /// <returns>重複していた場合はtrue</returns>
-        //private bool CheckKeyDuplicate()
-        //{
-        //	//キーコンフィグに重複がないことをチェック
-        //	List<string> checkkey = new List<string>();
-
-        //	foreach (Control c in keyConfigGroupBox.Controls)
-        //	{
-        //		if (c is ComboBox)
-        //		{
-        //			if (c.Text.Contains("なし"))
-        //				continue;
-        //			if (checkkey.Contains(c.Text))
-        //				return true;
-        //			else
-        //				checkkey.Add(c.Text);
-        //		}
-        //	}
-        //	return false;
-        //}
-
         /// <summary>
         /// このままフォームを閉じていいかチェック
         /// ver1.21のキーコンフィグ重複チェックのため追加
@@ -292,14 +194,6 @@ namespace Marmi
             }
         }
 
-        //private void Label35_Click(object sender, EventArgs e)
-        //{
-        //}
-
-        //private void TableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        //{
-        //}
-
         private void TabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
             if (e.TabPageIndex == 7)
@@ -316,42 +210,22 @@ namespace Marmi
         {
             //調査元となるKeyAccelerator
             var org = sender as KeyAccelerator;
-
-            //設定がないのなら何もしない。
-            if (org.KeyData == Keys.None)
+            if (org == null || org.KeyData == Keys.None)
                 return;
 
-            //コントロールを列挙
-            foreach (var c in tableLayoutPanel1.Controls)
-                if (c is KeyAccelerator)
+            //Tabコントロール内の子要素を全チェック
+            foreach (var ctrl in tableLayoutPanel1.Controls.OfType<KeyAccelerator>())
+            {
+                if (ctrl != org && ctrl.KeyData == org.KeyData)
                 {
-                    KeyAccelerator testing = c as KeyAccelerator;
-                    if (testing == org)
-                        //自分自身はチェック対象外
-                        continue;
-                    else
-                        //チェック
-                        if (testing.KeyData == org.KeyData)
-                    {
-                        //重複している
-                        var ret = MessageBox.Show(
-                            string.Format("「{0}」と設定が重複しています。上書きしますか？", testing.Tag),
-                            "キー設定確認",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning);
-                        if (ret == DialogResult.Yes)
-                        {
-                            //ほかのコントロールを変更する
-                            testing.KeyData = Keys.None;
-                            testing.Invalidate();
-                        }
-                        else
-                        {
-                            //Cancelする。
-                            e.Cancel = true;
-                        }
-                    }
+                    //自分自身はチェック対象外で重複している
+                    MessageBox.Show(
+                        $"「{ctrl.Tag}」と重複しています。",
+                        "キー設定エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    org.KeyData = Keys.None;
+                    e.Cancel = true;
                 }
+            }
         }
     }//class
 }//namespace
