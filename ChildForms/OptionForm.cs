@@ -47,25 +47,25 @@ namespace Marmi
 
         private void LoadKeyConfig(AppGlobalConfig set)
         {
-            ka_exit1.keyData = set.Keys.Key_Exit1;
-            ka_exit2.keyData = set.Keys.Key_Exit2;
-            ka_bookmark1.keyData = set.Keys.Key_Bookmark1;
-            ka_fullscreen1.keyData = set.Keys.Key_Fullscreen1;
-            ka_dualview1.keyData = set.Keys.Key_Dualview1;
-            ka_viewratio1.keyData = set.Keys.Key_ViewRatio1;
-            ka_recycle1.keyData = set.Keys.Key_Recycle1;
-            ka_rotate1.keyData = set.Keys.Key_Rotate1;
-            ka_nextpage1.keyData = set.Keys.Key_Nextpage1;
-            ka_nextpage2.keyData = set.Keys.Key_Nextpage2;
-            ka_prevpage1.keyData = set.Keys.Key_Prevpage1;
-            ka_prevpage2.keyData = set.Keys.Key_Prevpage2;
-            ka_prevhalf1.keyData = set.Keys.Key_Prevhalf1;
-            ka_nexthalf1.keyData = set.Keys.Key_Nexthalf1;
-            ka_toppage1.keyData = set.Keys.Key_Toppage1;
-            ka_lastpage1.keyData = set.Keys.Key_Lastpage1;
-            ka_thunbnail.keyData = set.Keys.Key_Thumbnail;
-            ka_sidebar.keyData = set.Keys.Key_Sidebar;
-            ka_minWindow.keyData = set.Keys.Key_MinWindow;
+            ka_exit1.KeyData = set.Keys.Key_Exit1;
+            ka_exit2.KeyData = set.Keys.Key_Exit2;
+            ka_bookmark1.KeyData = set.Keys.Key_Bookmark1;
+            ka_fullscreen1.KeyData = set.Keys.Key_Fullscreen1;
+            ka_dualview1.KeyData = set.Keys.Key_Dualview1;
+            ka_viewratio1.KeyData = set.Keys.Key_ViewRatio1;
+            ka_recycle1.KeyData = set.Keys.Key_Recycle1;
+            ka_rotate1.KeyData = set.Keys.Key_Rotate1;
+            ka_nextpage1.KeyData = set.Keys.Key_Nextpage1;
+            ka_nextpage2.KeyData = set.Keys.Key_Nextpage2;
+            ka_prevpage1.KeyData = set.Keys.Key_Prevpage1;
+            ka_prevpage2.KeyData = set.Keys.Key_Prevpage2;
+            ka_prevhalf1.KeyData = set.Keys.Key_Prevhalf1;
+            ka_nexthalf1.KeyData = set.Keys.Key_Nexthalf1;
+            ka_toppage1.KeyData = set.Keys.Key_Toppage1;
+            ka_lastpage1.KeyData = set.Keys.Key_Lastpage1;
+            ka_thunbnail.KeyData = set.Keys.Key_Thumbnail;
+            ka_sidebar.KeyData = set.Keys.Key_Sidebar;
+            ka_minWindow.KeyData = set.Keys.Key_MinWindow;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -104,26 +104,26 @@ namespace Marmi
 
         private void SaveKeyConfig(ref AppGlobalConfig set)
         {
-            set.Keys.Key_Exit1 = ka_exit1.keyData;
-            set.Keys.Key_Exit2 = ka_exit2.keyData;
-            set.Keys.Key_Bookmark1 = ka_bookmark1.keyData;
-            set.Keys.Key_Fullscreen1 = ka_fullscreen1.keyData;
-            set.Keys.Key_Dualview1 = ka_dualview1.keyData;
-            set.Keys.Key_ViewRatio1 = ka_viewratio1.keyData;
-            set.Keys.Key_Recycle1 = ka_recycle1.keyData;
-            set.Keys.Key_Rotate1 = ka_rotate1.keyData;
+            set.Keys.Key_Exit1 = ka_exit1.KeyData;
+            set.Keys.Key_Exit2 = ka_exit2.KeyData;
+            set.Keys.Key_Bookmark1 = ka_bookmark1.KeyData;
+            set.Keys.Key_Fullscreen1 = ka_fullscreen1.KeyData;
+            set.Keys.Key_Dualview1 = ka_dualview1.KeyData;
+            set.Keys.Key_ViewRatio1 = ka_viewratio1.KeyData;
+            set.Keys.Key_Recycle1 = ka_recycle1.KeyData;
+            set.Keys.Key_Rotate1 = ka_rotate1.KeyData;
             //1.80キーコンフィグナビゲーション関連;
-            set.Keys.Key_Nextpage1 = ka_nextpage1.keyData;
-            set.Keys.Key_Nextpage2 = ka_nextpage2.keyData;
-            set.Keys.Key_Prevpage1 = ka_prevpage1.keyData;
-            set.Keys.Key_Prevpage2 = ka_prevpage2.keyData;
-            set.Keys.Key_Prevhalf1 = ka_prevhalf1.keyData;
-            set.Keys.Key_Nexthalf1 = ka_nexthalf1.keyData;
-            set.Keys.Key_Toppage1 = ka_toppage1.keyData;
-            set.Keys.Key_Lastpage1 = ka_lastpage1.keyData;
-            set.Keys.Key_Thumbnail = ka_thunbnail.keyData;
-            set.Keys.Key_Sidebar = ka_sidebar.keyData;
-            set.Keys.Key_MinWindow = ka_minWindow.keyData;
+            set.Keys.Key_Nextpage1 = ka_nextpage1.KeyData;
+            set.Keys.Key_Nextpage2 = ka_nextpage2.KeyData;
+            set.Keys.Key_Prevpage1 = ka_prevpage1.KeyData;
+            set.Keys.Key_Prevpage2 = ka_prevpage2.KeyData;
+            set.Keys.Key_Prevhalf1 = ka_prevhalf1.KeyData;
+            set.Keys.Key_Nexthalf1 = ka_nexthalf1.KeyData;
+            set.Keys.Key_Toppage1 = ka_toppage1.KeyData;
+            set.Keys.Key_Lastpage1 = ka_lastpage1.KeyData;
+            set.Keys.Key_Thumbnail = ka_thunbnail.KeyData;
+            set.Keys.Key_Sidebar = ka_sidebar.KeyData;
+            set.Keys.Key_MinWindow = ka_minWindow.KeyData;
         }
 
         private void InitButton_Click(object sender, EventArgs e)
@@ -318,7 +318,7 @@ namespace Marmi
             var org = sender as KeyAccelerator;
 
             //設定がないのなら何もしない。
-            if (org.keyData == Keys.None)
+            if (org.KeyData == Keys.None)
                 return;
 
             //コントロールを列挙
@@ -331,7 +331,7 @@ namespace Marmi
                         continue;
                     else
                         //チェック
-                        if (testing.keyData == org.keyData)
+                        if (testing.KeyData == org.KeyData)
                     {
                         //重複している
                         var ret = MessageBox.Show(
@@ -342,7 +342,7 @@ namespace Marmi
                         if (ret == DialogResult.Yes)
                         {
                             //ほかのコントロールを変更する
-                            testing.keyData = Keys.None;
+                            testing.KeyData = Keys.None;
                             testing.Invalidate();
                         }
                         else

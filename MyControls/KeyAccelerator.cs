@@ -1,15 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace Marmi
 {
-    public partial class KeyAccelerator : UserControl
+    public partial class KeyAccelerator : UserControl, INotifyPropertyChanged
     {
-        public Keys keyData { get; set; }
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected bool SetProperty<T>(ref T store, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (object.Equals(store, value))
+                return false;
+            store = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            => PropertyChanged?.Invoke(sender: this, e: new PropertyChangedEventArgs(propertyName));
+
+        #endregion
+
+        //public Keys KeyData { get; set; }
+        private Keys _KeyData;
+        public Keys KeyData { get => _KeyData; set => SetProperty(ref _KeyData, value); }
+
 
         //private bool inputMode = false;
         //private Font font_bold = new System.Drawing.Font(DefaultFont, FontStyle.Bold);
@@ -70,7 +91,7 @@ namespace Marmi
         public KeyAccelerator()
         {
             InitializeComponent();
-            keyData = Keys.None;
+            KeyData = Keys.None;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -81,7 +102,7 @@ namespace Marmi
             //this.BackColor = inputMode ? Color.Yellow : SystemColors.ButtonFace;
             this.BackColor = this.Focused ? Color.Yellow : SystemColors.ButtonFace;
             //テキスト描写
-            string s = KeydataToString(keyData);
+            string s = KeydataToString(KeyData);
             if (!string.IsNullOrEmpty(s))
             {
                 TextRenderer.DrawText(
@@ -149,19 +170,19 @@ namespace Marmi
 
                 case System.Windows.Forms.MouseButtons.Right:
                     //inputMode = false;
-                    keyData = Keys.None;
+                    KeyData = Keys.None;
                     break;
 
                 case System.Windows.Forms.MouseButtons.Middle:
-                    keyData = Keys.MButton;
+                    KeyData = Keys.MButton;
                     break;
 
                 case System.Windows.Forms.MouseButtons.XButton1:
-                    keyData = Keys.XButton1;
+                    KeyData = Keys.XButton1;
                     break;
 
                 case System.Windows.Forms.MouseButtons.XButton2:
-                    keyData = Keys.XButton2;
+                    KeyData = Keys.XButton2;
                     break;
             }
             this.Invalidate();
@@ -188,18 +209,18 @@ namespace Marmi
             //	return;
 
             if (e.Alt)
-                keyData = e.KeyData & ~Keys.Alt;
+                KeyData = e.KeyData & ~Keys.Alt;
 
             //Uty.WriteLine(e.KeyData.ToString());
 
             //Altキーは修飾として使わせない。
             if ((e.KeyData & Keys.Alt) == Keys.Alt)
-                keyData = e.KeyData & ~Keys.Alt;
+                KeyData = e.KeyData & ~Keys.Alt;
             else
-                keyData = e.KeyData;
+                KeyData = e.KeyData;
             //keyData = e.KeyData;
 
-            Debug.WriteLine(keyData.ToString());
+            Debug.WriteLine(KeyData.ToString());
             //タブや矢印を普通の入力としてコントロール移動させない
             e.IsInputKey = true;
             this.Invalidate();
@@ -211,7 +232,7 @@ namespace Marmi
             //if (!inputMode)
             //	return;
 
-            var keycode = keyData & Keys.KeyCode;
+            var keycode = KeyData & Keys.KeyCode;
             switch (keycode)
             {
                 case Keys.Control:
@@ -220,7 +241,7 @@ namespace Marmi
                 case Keys.Shift:
                 case Keys.ShiftKey:
                 case Keys.None:
-                    keyData = Keys.None;
+                    KeyData = Keys.None;
                     break;
             }
             this.Invalidate();
