@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Interfaces\IConfig.cs" />
+    <Compile Include="Uty\GitInfo.cs" />
     <Compile Include="Uty\XmlFile.cs" />
     <None Include="dlls\axpdf.spi" />
     <None Include="Properties\DataSources\Marmi.DataModel.AdvanceConfig.datasource" />
@@ -378,6 +379,8 @@
     <None Include="ToDo.md" />
     <None Include="配布物\SevenZipSharp.dll" />
     <None Include="DPIメモ.md" />
+    <EmbeddedResource Include="git_branch.txt" />
+    <EmbeddedResource Include="git_id.txt" />
     <Content Include="zic.ico" />
     <None Include="Resources\rc_tif32.png" />
     <None Include="Resources\finger-right-shadow-ico.ico" />
@@ -408,6 +411,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)dlls\*.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>git rev-parse --short HEAD &gt; $(ProjectDir)git_id.txt
+git branch --show-current &gt; $(ProjectDir)git_branch.txt</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
