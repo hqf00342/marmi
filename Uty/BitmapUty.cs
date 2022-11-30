@@ -1,11 +1,9 @@
 using System;
-using System.Diagnostics;				//Debug, Stopwatch
-using System.Drawing;					// Size, Bitmap, Font , Point, Graphics
-using System.Drawing.Drawing2D;			// GraphicsPath
-using System.Drawing.Imaging;			// ColorMatrix
-using System.IO;						// Directory, File, Stream
-
-//using System.Text;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 
 using System.Windows.Forms;
 
@@ -13,17 +11,17 @@ namespace Marmi
 {
     public class BitmapUty
     {
-        private const int BOX_MARGIN = 20;                      //ボックス外周部のマージン
-        private const int PADDING = 5;                         //Key-Value間のPadding
-        private const string SepareteString = " : ";           //2列表示実施時のセパレーター文字列
-        private const float LinePadding = 1f;                  //行間
+        private const int BOX_MARGIN = 20;                              //ボックス外周部のマージン
+        private const int PADDING = 5;                                  //Key-Value間のPadding
+        private const string SepareteString = " : ";                    //2列表示実施時のセパレーター文字列
+        private const float LinePadding = 1f;                           //行間
 
-        private const string FONT_NAME = "MS PGothic";          //フォント名
-        private const int FONT_POINT = 10;                      //フォントのポイント
-        private static readonly Color FONTCOLOR_KEY = Color.RoyalBlue;    //キーの色
-        private static readonly Color FONTCOLOR_VALUE = Color.Black;      //値の色（通常の色）
-        private static readonly Color BackColor = Color.White;           //背景色
-        private static readonly Color BorderColor = Color.DarkGray;      //ボーダーカラー
+        private const string FONT_NAME = "MS PGothic";                  //フォント名
+        private const int FONT_POINT = 10;                              //フォントのポイント
+        private static readonly Color FONTCOLOR_KEY = Color.RoyalBlue;  //キーの色
+        private static readonly Color FONTCOLOR_VALUE = Color.Black;    //値の色（通常の色）
+        private static readonly Color BackColor = Color.White;          //背景色
+        private static readonly Color BorderColor = Color.DarkGray;     //ボーダーカラー
 
         public static Bitmap Text2Bitmap(string str, bool isRoundCorner)
         {
@@ -77,93 +75,6 @@ namespace Marmi
             }//using font
         }
 
-        //public static Bitmap Text2Bitmap(KeyValuePair<string, string>[] kv, bool isRoundCorner)
-        //{
-        //    float keyWidth = 0;
-        //    float keyHeight = 0;
-        //    float valueWidth = 0;
-        //    float valueHeight = 0;
-
-        //    using (var font = new Font(FONT_NAME, FONT_POINT))
-        //    {
-        //        using (var tempBmp = new Bitmap(10, 10))
-        //        using (var g = Graphics.FromImage(tempBmp))
-        //        {
-        //            SizeF size;
-        //            foreach (KeyValuePair<string, string> s in kv)
-        //            {
-        //                //if (s == null)
-        //                //    continue;
-
-        //                //Keyの大きさを確認
-        //                size = g.MeasureString(s.Key + SepareteString, font);
-        //                keyWidth = (keyWidth > size.Width) ? keyWidth : size.Width;
-        //                keyHeight = (keyHeight > size.Height) ? keyHeight : size.Height;
-
-        //                //Valueの大きさを確認
-        //                size = g.MeasureString(s.Value, font);
-        //                valueWidth = (valueWidth > size.Width) ? valueWidth : size.Width;
-        //                valueHeight = (valueHeight > size.Height) ? valueHeight : size.Height;
-        //            }
-        //        }
-
-        //        float height = (valueHeight > keyHeight) ? valueHeight : keyHeight;
-        //        RectangleF rcKey = new RectangleF(0, 0, keyWidth, height);
-        //        RectangleF rcValue = new RectangleF(0, 0, valueWidth, height);
-        //        StringFormat sf = new StringFormat();
-        //        sf.Alignment = StringAlignment.Far;
-        //        sf.LineAlignment = StringAlignment.Near;
-
-        //        Bitmap returnBitmap = new Bitmap(
-        //            (int)(keyWidth + valueWidth + PADDING + BOX_MARGIN * 2),
-        //            (int)((height + LinePadding) * kv.Length + BOX_MARGIN * 2));
-
-        //        using (Graphics g = Graphics.FromImage(returnBitmap))
-        //        {
-        //            //箱の初期化
-        //            InitBackImage(g, returnBitmap.Width, returnBitmap.Height, isRoundCorner);
-
-        //            var keyBrush = new SolidBrush(FONTCOLOR_KEY);
-        //            var valueBrush = new SolidBrush(FONTCOLOR_VALUE);
-
-        //            //文字を描く
-        //            for (int i = 0; i < kv.Length; i++)
-        //            {
-        //                //if (sd[i] == null)
-        //                //    continue;
-
-        //                //g.DrawString(
-        //                //    sd[i].Key,
-        //                //    font,
-        //                //    Brushes.SteelBlue,
-        //                //    BoxMargin,
-        //                //    height * i);
-
-        //                rcKey.X = BOX_MARGIN;
-        //                rcKey.Y = (height + LinePadding) * i + BOX_MARGIN;
-
-        //                //Keyを描写
-        //                g.DrawString(
-        //                    kv[i].Key + SepareteString,
-        //                    font,
-        //                    //Brushes.SteelBlue,
-        //                    keyBrush,
-        //                    rcKey,
-        //                    sf);
-
-        //                //Valueを描写
-        //                g.DrawString(
-        //                    kv[i].Value,
-        //                    font,
-        //                    valueBrush,
-        //                    BOX_MARGIN + keyWidth + PADDING,
-        //                    (height + LinePadding) * i + BOX_MARGIN);
-        //            }
-        //        }
-        //        return returnBitmap;
-        //    }//using font
-        //}
-
         //Text2Bitmap()から呼び出される背景作成ルーチン
         private static void InitBackImage(Graphics g, float width, float height, bool isRoundCorner)
         {
@@ -193,51 +104,8 @@ namespace Marmi
             path.AddArc(padding, height - arc - padding, arc, arc, 90, 90);
             path.AddArc(padding, padding, arc, arc, 180, 90);
             path.AddArc(width - arc - padding, padding, arc, arc, 270, 90);
-            //path.AddArc(width - arc, 0, arc, arc, 270, 90);
-            //path.AddArc(width - arc, height - arc, arc, arc, 0, 90);
-            //path.AddArc(0, height - arc, arc, arc, 90, 90);
-            //path.AddArc(0, 0, arc, arc, 180, 90);
-            //path.AddArc(width - arc, 0, arc, arc, 270, 90);
             return path;
         }
-
-        //public static GraphicsPath GetRoundRect(Rectangle rect, int radius)
-        //{
-        //    GraphicsPath path = new GraphicsPath();
-        //    path.StartFigure();
-
-        //    // 左上の角丸
-        //    path.AddArc(rect.Left, rect.Top, radius * 2, radius * 2,
-        //        180, 90);
-        //    // 上の線
-        //    path.AddLine(rect.Left + radius, rect.Top,
-        //        rect.Right - radius, rect.Top);
-        //    // 右上の角丸
-        //    path.AddArc(rect.Right - radius * 2, rect.Top,
-        //        radius * 2, radius * 2,
-        //        270, 90);
-        //    // 右の線
-        //    path.AddLine(rect.Right, rect.Top + radius,
-        //        rect.Right, rect.Bottom - radius);
-        //    // 右下の角丸
-        //    path.AddArc(rect.Right - radius * 2, rect.Bottom - radius * 2,
-        //        radius * 2, radius * 2,
-        //        0, 90);
-        //    // 下の線
-        //    path.AddLine(rect.Right - radius, rect.Bottom,
-        //        rect.Left + radius, rect.Bottom);
-        //    // 左下の角丸
-        //    path.AddArc(rect.Left, rect.Bottom - radius * 2,
-        //        radius * 2, radius * 2,
-        //        90, 90);
-        //    // 左の線
-        //    path.AddLine(rect.Left, rect.Bottom - radius,
-        //        rect.Left, rect.Top + radius);
-
-        //    path.CloseFigure();
-
-        //    return path;
-        //}
 
         //半透明版のDrawImage
         public static void AlphaDrawImage(Graphics g, Image img, float alpha)
@@ -260,30 +128,6 @@ namespace Marmi
                 new Rectangle(0, 0, img.Width, img.Height),
                 0, 0,
                 img.Width, img.Height,
-                GraphicsUnit.Pixel,
-                ia);
-        }
-
-        //半透明版のDrawImage
-        public static void AlphaDrawImage(Graphics g, Image img, Rectangle rect, float alpha)
-        {
-            var cm = new ColorMatrix
-            {
-                Matrix00 = 1,
-                Matrix11 = 1,
-                Matrix22 = 1,
-                Matrix33 = alpha,
-                Matrix44 = 1
-            };
-
-            var ia = new ImageAttributes();
-            ia.SetColorMatrix(cm);
-
-            //アルファブレンドしながら描写
-            g.DrawImage(
-                img,
-                rect,
-                0, 0, img.Width, img.Height,
                 GraphicsUnit.Pixel,
                 ia);
         }
@@ -473,68 +317,11 @@ namespace Marmi
                             }//for y
                         }//unsafe
                         newbmp.UnlockBits(bmpData);
-
-                        ////Manage(Safe)版
-                        ////32bitなのでアルファチャネルを読み込む
-                        //newbmp = new Bitmap(bmpWidth, bmpHeight, PixelFormat.Format32bppArgb);
-                        //ImageStream.Seek(14 + 40 + PALLET * 4, SeekOrigin.Begin);
-                        //for (int y = bmpHeight - 1; y >= 0; y--)
-                        //{
-                        //    for (int x = 0; x < bmpWidth; x++)
-                        //    {
-                        //        //8bit分を処理する
-                        //        int B = ImageStream.ReadByte();
-                        //        int G = ImageStream.ReadByte();
-                        //        int R = ImageStream.ReadByte();
-                        //        int A = ImageStream.ReadByte();
-                        //        newbmp.SetPixel(x, y, Color.FromArgb(A, R, G, B));
-                        //    }//for x
-                        //}//for y
                     }
                     else
                     {
                         newbmp = new Bitmap(ImageStream, true);
                     }
-
-                    //マスクbit対応
-                    //32bit画像の場合は画像側でアルファチャネルを持っているので無視
-
-                    //Manage版
-                    //ver：色深度が低い場合SetPixcel()がエラーを吐く
-                    //SetPixel は、インデックス付きピクセル形式のイメージに対してサポートされていません。
-                    //if (biBitCount < 32)
-                    //{
-                    //    Rectangle rc = new Rectangle(0, 0, bmpWidth, bmpHeight);
-                    //    if (newbmp.PixelFormat != PixelFormat.Format32bppArgb)
-                    //    {
-                    //        Bitmap tmpBmp = newbmp;
-                    //        newbmp = new Bitmap(bmpWidth, bmpHeight, PixelFormat.Format32bppArgb);
-                    //        using (Graphics g = Graphics.FromImage(newbmp))
-                    //        {
-                    //            g.DrawImage(tmpBmp, rc);
-                    //        }
-                    //        tmpBmp.Dispose();
-                    //    }
-
-                    //    int maskSize = bmpWidth * bmpHeight / 8;
-                    //    long maskOffset = dwImageOffset + dwBytesInRes - maskSize;
-                    //    ms.Seek(maskOffset, SeekOrigin.Begin);
-                    //    for (int y = bmpHeight - 1; y >= 0; y--)
-                    //        for (int x8 = 0; x8 < bmpWidth / 8; x8++)
-                    //        {
-                    //            //8bit分を処理する
-                    //            byte mask = (byte)ms.ReadByte();
-                    //            byte checkBit = 0x80;
-                    //            for (int xs = 0; xs < 8; xs++)
-                    //            {
-                    //                if ((mask & checkBit) != 0)
-                    //                {
-                    //                    newbmp.SetPixel(x8 * 8 + xs, y, Color.Transparent);
-                    //                }
-                    //                checkBit /= 2;
-                    //            }
-                    //        }
-                    //}
 
                     //マスクbit対応
                     //32bit画像の場合は画像側でアルファチャネルを持っているので無視
@@ -705,103 +492,6 @@ namespace Marmi
         }
 
         /// <summary>
-        ///  ファイル名からBitmapを返す
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        public static Bitmap LoadImageFromFile(string filename)
-        {
-            if (File.Exists(filename) && Uty.IsPictureFilename(filename))
-            {
-                using (FileStream fs = File.OpenRead(filename))
-                {
-                    return BitmapUty.LoadImageFromStream(filename, fs);
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// StreamからBitmapを返す。
-        /// ファイル名は拡張子をみてicoかどうかを確認している
-        /// </summary>
-        /// <param name="filename">ファイル名</param>
-        /// <param name="fs">ストリーム</param>
-        /// <returns></returns>
-        public static Bitmap LoadImageFromStream(string filename, Stream fs)
-        {
-            try
-            {
-                if (Path.GetExtension(filename).ToLower() == ".ico")
-                {
-                    //return LoadIcon2(fs);
-                    return LoadIcon3(fs);
-                }
-                else
-                {
-                    return new Bitmap(Bitmap.FromStream(fs, false, false));
-                }
-            }
-            catch //(Exception e)
-            {
-                //string[] s = { "読み込みに失敗しました", filename, "", e.Message };
-                //return BitmapUty.Text2Bitmap(s, true);
-                return null;
-            }
-        }
-
-        //ver1.10
-        //2011年8月19日
-        //指定サイズのBitmapに文字を描写
-        public static Bitmap Text2Bitmap(string[] str, int bmpwidth, int bmpheight, Color backColor)
-        {
-            //Bitmapを作る
-            Bitmap _bmp = new Bitmap(bmpwidth, bmpheight);
-
-            using (Graphics g = Graphics.FromImage(_bmp))
-            using (Font font = new Font(FONT_NAME, FONT_POINT))
-            using (SolidBrush brush = new SolidBrush(FONTCOLOR_VALUE))
-            {
-                g.Clear(backColor);
-
-                //テキストサイズを測る
-                float textHeight = 0f;      //計測された高さ
-                float textHeight1line = 0f;     //計測された一行分の高さ
-                float textWidth = 0f;       //計測された幅
-                foreach (string s in str)
-                {
-                    SizeF sizef = g.MeasureString(s, font);
-                    if (sizef.Width > textWidth)
-                        textWidth = sizef.Width;
-                    textHeight1line = sizef.Height;
-                    textHeight += sizef.Height + LinePadding;
-                }
-
-                RectangleF rect = new RectangleF(
-                    (bmpwidth - textWidth) / 2,
-                    (bmpheight - textHeight) / 2,
-                    textWidth,
-                    textHeight1line
-                    );
-
-                StringFormat sf = new StringFormat
-                {
-                    Alignment = StringAlignment.Center,      //上下中央
-                    LineAlignment = StringAlignment.Center  //センタリング
-                };
-
-                foreach (string s in str)
-                {
-                    SizeF sizef = g.MeasureString(s, font);
-
-                    g.DrawString(s, font, brush, rect, sf);
-                    rect.Y += sizef.Height + LinePadding;
-                }
-            }//using
-            return _bmp;
-        }
-
-        /// <summary>
         /// 画像サイズを指定の大きさ以下のサイズになるように調整する
         /// 縦横比は固定
         /// </summary>
@@ -824,91 +514,6 @@ namespace Marmi
             }
 
             return ratio;
-        }
-
-        /// <summary>
-        /// Bitmapのコントラストを下げ、白飛ぶする方向に調整
-        /// 色合い以外の大きさなどは変更なし
-        /// </summary>
-        /// <param name="srcBitmap">元のBitmap</param>
-        /// <returns>調整された新しいBitmap。</returns>
-        public static Bitmap LowContrastBitmap(Bitmap srcBitmap)
-        {
-            Rectangle bmpRect = new Rectangle(0, 0, srcBitmap.Width, srcBitmap.Height);
-            Bitmap newBitmap = srcBitmap.Clone(bmpRect, PixelFormat.Format24bppRgb);
-            BitmapData bmpData = newBitmap.LockBits(bmpRect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                byte* offset = (byte*)bmpData.Scan0;
-                int writePos;
-                for (int y = 0; y < bmpRect.Height; y++)
-                {
-                    for (int x = 0; x < bmpRect.Width; x++)
-                    {
-                        //3byte分を処理する
-                        writePos = x * 3 + bmpData.Stride * y;
-                        offset[writePos + 0] = (byte)(((int)offset[writePos + 0] + 255) / 2); // B;
-                        offset[writePos + 1] = (byte)(((int)offset[writePos + 1] + 255) / 2); // G;
-                        offset[writePos + 2] = (byte)(((int)offset[writePos + 2] + 255) / 2); // R;
-                    }//for x
-                }//for y
-            }//unsafe
-            newBitmap.UnlockBits(bmpData);
-
-            return newBitmap;
-        }
-
-        /// <summary>
-        /// Bitmapの輝度を半分にする。
-        /// 単純に半分のため暗くなる
-        /// 色合い以外の大きさなどは変更なし
-        /// </summary>
-        /// <param name="srcBitmap">元のBitmap</param>
-        /// <returns>半分の明るさのBitmap</returns>
-        public static Bitmap HalfBrightnessBitmap(Bitmap srcBitmap)
-        {
-            Rectangle bmpRect = new Rectangle(0, 0, srcBitmap.Width, srcBitmap.Height);
-            Bitmap newBitmap = srcBitmap.Clone(bmpRect, PixelFormat.Format24bppRgb);
-            BitmapData bmpData = newBitmap.LockBits(bmpRect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                byte* offset = (byte*)bmpData.Scan0;
-                int endPos = bmpData.Stride * bmpRect.Height - 1;
-                for (int pos = 0; pos < endPos; pos++)
-                {
-                    offset[pos] = (byte)(offset[pos] / 2); // B;
-                }//for y
-            }//unsafe
-            newBitmap.UnlockBits(bmpData);
-
-            return newBitmap;
-        }
-
-        /// <summary>
-        /// コントラストを半分にし、グレイ(128,128,128)に近づくように調整されたBitmapを作成
-        /// </summary>
-        /// <param name="srcBitmap">元のBitmap</param>
-        /// <returns>調整されたBitmap</returns>
-        public static Bitmap HalfBrightnessBitmap2(Bitmap srcBitmap)
-        {
-            Rectangle bmpRect = new Rectangle(0, 0, srcBitmap.Width, srcBitmap.Height);
-            Bitmap newBitmap = srcBitmap.Clone(bmpRect, PixelFormat.Format24bppRgb);
-            BitmapData bmpData = newBitmap.LockBits(bmpRect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                byte* offset = (byte*)bmpData.Scan0;
-                int endPos = bmpData.Stride * bmpRect.Height - 1;
-                for (int pos = 0; pos < endPos; pos++)
-                {
-                    offset[pos] = (byte)((offset[pos] / 2) + 64); // B;
-                }//for y
-            }//unsafe
-            newBitmap.UnlockBits(bmpData);
-
-            return newBitmap;
         }
 
         /// <summary>
@@ -964,37 +569,6 @@ namespace Marmi
             if (lx == 0) lx = 1;
             if (ly == 0) ly = 1;
             return new Size(lx, ly);
-        }
-
-        public static Size CalcThumbnailSize(Size s, int maxLength)
-        {
-            return CalcThumbnailSize(s.Width, s.Height, maxLength);
-        }
-
-        /// <summary>
-        /// 指定サイズのサムネイルを作成
-        /// </summary>
-        /// <param name="orgImage">元の画像</param>
-        /// <param name="maxLength">最大長</param>
-        /// <returns>新しいサムネイルBitmap</returns>
-        public static Bitmap MakeThumbnailImage(Bitmap orgImage, int maxLength)
-        {
-            if (orgImage == null)
-                return null;
-
-            if (orgImage.Width <= maxLength
-                && orgImage.Height <= maxLength)
-                return orgImage.Clone() as Bitmap;
-
-            Size s = BitmapUty.CalcThumbnailSize(orgImage.Width, orgImage.Height, maxLength);
-            Bitmap _bmp = new Bitmap(s.Width, s.Height);
-
-            using (Graphics g = Graphics.FromImage(_bmp))
-            {
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.DrawImage(orgImage, 0, 0, s.Width, s.Height);
-            }
-            return _bmp;
         }
 
         public static Bitmap MakeHeightFixThumbnailImage(Bitmap orgImage, int maxHeight)
@@ -1204,28 +778,20 @@ namespace Marmi
         {
             int lx = srcbmp.Width;      //対象画像のサイズ：横
             int ly = srcbmp.Height;     //対象画像のサイズ：縦
-            Bitmap destbmp = new Bitmap(lx, ly);
-            Stopwatch sw = Stopwatch.StartNew();
-
-            //3x3ラプラシアン用マトリクス
-            //ループ内部で展開したので使わない
-            //int[,] m = new int[3, 3]{
-            //	{-1,-1,-1},
-            //	{-1, 9,-1},
-            //	{-1,-1,-1}
-            //};
+            var destbmp = new Bitmap(lx, ly);
+            var sw = Stopwatch.StartNew();
 
             //画像をロックするための下準備
-            Rectangle sRect = new Rectangle(0, 0, lx, ly);
-            Rectangle dRect = new Rectangle(0, 0, lx, ly);
-            BitmapData srcData = srcbmp.LockBits(
-                                    sRect,
-                                    ImageLockMode.ReadOnly,
-                                    PixelFormat.Format24bppRgb);
-            BitmapData destData = destbmp.LockBits(
-                                    dRect,
-                                    ImageLockMode.WriteOnly,
-                                    PixelFormat.Format24bppRgb);
+            var sRect = new Rectangle(0, 0, lx, ly);
+            var dRect = new Rectangle(0, 0, lx, ly);
+            var srcData = srcbmp.LockBits(
+                                sRect,
+                                ImageLockMode.ReadOnly,
+                                PixelFormat.Format24bppRgb);
+            var destData = destbmp.LockBits(
+                                dRect,
+                                ImageLockMode.WriteOnly,
+                                PixelFormat.Format24bppRgb);
 
             unsafe
             {
@@ -1235,13 +801,16 @@ namespace Marmi
 
                 //クリッピング処理 最上段はただのコピー;
                 for (int x = 0; x < lx * 3; x++)
+                {
                     pDest[x] = pSrc[x];
+                }
                 //クリッピング処理 最下段もただのコピー;
                 int start = (ly - 1) * srcData.Stride;
                 for (int x = start; x < start + lx * 3; x++)
+                {
                     pDest[x] = pSrc[x];
+                }
 
-                //Parallel.For(1, ly - 1, y =>
                 for (int y = 1; y < ly - 1; y++)
                 {
                     //Parallelのためにループの中に記載
@@ -1330,7 +899,6 @@ namespace Marmi
                         pDest[writePos + 2] = (byte)R;
                     }
                 }
-                //); //Parallel.For
             }//unsafe
 
             //Bitmapの解放
