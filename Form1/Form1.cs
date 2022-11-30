@@ -1,7 +1,6 @@
 #define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -47,15 +46,6 @@ namespace Marmi
 
         #endregion --- コントロール ---
 
-        #region --- データクラス ---
-
-        private readonly List<string> DeleteDirList = new List<string>();    //削除候補ディレクトリ
-
-        //ver1.35 スクリーンキャッシュ
-        //private Dictionary<int, Bitmap> ScreenCache = new Dictionary<int, Bitmap>();
-
-        #endregion --- データクラス ---
-
         //マウスクリックされた位置を保存。ドラッグ操作用
         private Point g_LastClickPoint = Point.Empty;
 
@@ -90,7 +80,7 @@ namespace Marmi
 
             //初期設定
             this.KeyPreview = true;
-            this.BackColor = (App.Config.General.BackColor.A==0) ? Color.SlateBlue : App.Config.General.BackColor;
+            this.BackColor = (App.Config.General.BackColor.A == 0) ? Color.SlateBlue : App.Config.General.BackColor;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.SetStyle(ControlStyles.Opaque, true);
             Application.Idle += Application_Idle;
@@ -212,7 +202,7 @@ namespace Marmi
             AsyncIO.StopThread();
 
             //Tempディレクトリの削除
-            DeleteAllTempDirs();
+            TempDirs.DeleteAll();
 
             //設定の保存
             if (App.Config.General.SaveConfig)

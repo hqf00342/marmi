@@ -249,7 +249,7 @@ namespace Marmi
             //App.g_pi = new PackageInfo();
 
             //一時フォルダの削除
-            DeleteAllTempDirs();
+            TempDirs.DeleteAll();
 
             //そのほか本体内の情報をクリア
             g_viewPages = 1;
@@ -258,15 +258,6 @@ namespace Marmi
 
             //書庫のパスワードをクリア
             SevenZipWrapper.ClearPassword();
-        }
-
-        private void DeleteAllTempDirs()
-        {
-            foreach (string dir in DeleteDirList)
-            {
-                Uty.DeleteTempDir(dir);
-            }
-            DeleteDirList.Clear();
         }
 
         /// <summary>
@@ -281,7 +272,7 @@ namespace Marmi
             {
                 var tempDir = SuggestTempDirName();
                 Directory.CreateDirectory(tempDir);
-                DeleteDirList.Add(tempDir);
+                TempDirs.AddDir(tempDir);
                 App.g_pi.tempDirname = tempDir;
             }
             catch

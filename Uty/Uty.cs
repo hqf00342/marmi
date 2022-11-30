@@ -1,9 +1,8 @@
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using Microsoft.VisualBasic.FileIO;
 
 namespace Marmi
 {
@@ -27,6 +26,7 @@ namespace Marmi
                 case ".gz":
                 case ".tgz":
                     return true;
+
                 default:
                     return false;
             }
@@ -124,26 +124,6 @@ namespace Marmi
             {
                 //別に作成できなくてもいいので例外はすべて放置
                 //throw;
-            }
-        }
-
-        /// <summary>
-        /// 一時ディレクトリを削除する
-        /// </summary>
-        /// <param name="tempDirName">一時ディレクトリ</param>
-        public static void DeleteTempDir(string tempDirName)
-        {
-            if (Directory.Exists(tempDirName))
-            {
-                try
-                {
-                    //再帰的に消す
-                    Directory.Delete(tempDirName, true);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show($"{tempDirName}の削除が出来ませんでした", "フォルダ削除エラー");
-                }
             }
         }
 

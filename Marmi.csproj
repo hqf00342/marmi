@@ -121,6 +121,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Interfaces\IConfig.cs" />
     <Compile Include="Uty\GitInfo.cs" />
+    <Compile Include="Uty\TempDirs.cs" />
     <Compile Include="Uty\XmlFile.cs" />
     <None Include="dlls\axpdf.spi" />
     <None Include="Properties\DataSources\Marmi.DataModel.AdvanceConfig.datasource" />
