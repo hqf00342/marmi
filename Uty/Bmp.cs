@@ -46,21 +46,6 @@ namespace Marmi
         }
 
         /// <summary>
-        /// 非同期でBitmapを読み込む。
-        /// await不要でタスクを積むだけでよい場合はこれを使う。
-        /// サムネイルを作る、画像サイズを取得するだけならこれでいい。
-        /// Taskオブジェクトを作らない分、軽いはず。
-        /// </summary>
-        /// <param name="ix"></param>
-        public static void LoadBitmapAndForget(int ix)
-        {
-            if (!App.g_pi.Items[ix].CacheImage.HasImage)
-            {
-                AsyncIO.AddJobLow(ix, null);
-            }
-        }
-
-        /// <summary>
         /// 原寸サイズの画像を生成
         /// 2枚表示する場合は2画像を結合する。
         /// </summary>
