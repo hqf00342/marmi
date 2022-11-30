@@ -152,7 +152,6 @@
     <Compile Include="DataModel\Configs\ThumbnailConfig.cs" />
     <Compile Include="DataModel\ThumbnailEventArgs.cs" />
     <Compile Include="DataModel\Configs\ViewConfig.cs" />
-    <Compile Include="enums\DrawStatus.cs" />
     <Compile Include="Form1\Form1.Navigation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,8 +167,6 @@
     <Compile Include="enums\ThumbnailSize.cs" />
     <Compile Include="enums\DiagLocate.cs" />
     <Compile Include="enums\PackageType.cs" />
-    <Compile Include="enums\ThreadStatus.cs" />
-    <Compile Include="enums\ThumnailMode.cs" />
     <Compile Include="AsyncIO.cs" />
     <Compile Include="Form1\Form1.Event.cs">
       <SubType>Form</SubType>
