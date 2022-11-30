@@ -119,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Form1\Form1.Loupe.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1\Form1.Slideshow.cs">
       <SubType>Form</SubType>
     </Compile>
