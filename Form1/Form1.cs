@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -51,12 +50,6 @@ namespace Marmi
 
         //ver1.51 事前のScreenCacheを作るかどうかのフラグ
         private bool needMakeScreenCache = false;
-
-        //ver1.35 スライドショータイマー
-        private readonly Timer SlideShowTimer = new Timer();
-
-        //スライドショー中かどうか
-        public bool IsSlideShow => SlideShowTimer.Enabled;
 
         public Form1()
         {
@@ -724,48 +717,6 @@ namespace Marmi
             //Trackbarを変更
             InitTrackbar();
         }
-
-        #region スライドショー
-
-        private void Menu_SlideShow_Click(object sender, EventArgs e)
-        {
-            if (SlideShowTimer.Enabled)
-            {
-                StopSlideShow();
-            }
-            else
-            {
-                if (App.g_pi.Items.Count == 0)
-                    return;
-
-                _clearPanel.ShowAndClose(
-                    "スライドショーを開始します。\r\nマウスクリックまたはキー入力で終了します。",
-                    1500);
-                SlideShowTimer.Interval = App.Config.SlideshowTime;
-                //SlideShowTimer.Tick += new EventHandler(SlideShowTimer_Tick);
-                SlideShowTimer.Start();
-            }
-        }
-
-        private async void SlideShowTimer_Tick(object sender, EventArgs e)
-        {
-            if (await GetNextPageIndexAsync(App.g_pi.NowViewPage) == -1)
-                StopSlideShow();
-            else
-                await NavigateToForwordAsync();
-        }
-
-        private void StopSlideShow()
-        {
-            if (SlideShowTimer.Enabled)
-            {
-                //スライドショーを終了させる
-                SlideShowTimer.Stop();
-                _clearPanel.ShowAndClose("スライドショーを終了しました", 1500);
-            }
-        }
-
-        #endregion スライドショー
 
         protected override void OnActivated(EventArgs e)
         {
