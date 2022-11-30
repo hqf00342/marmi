@@ -124,6 +124,9 @@
     <Compile Include="Uty\TempDirs.cs" />
     <Compile Include="Uty\XmlFile.cs" />
     <None Include="dlls\axpdf.spi" />
+    <Compile Include="Form1\Form1.IPC.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <None Include="Properties\DataSources\Marmi.DataModel.AdvanceConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.GeneralConfig.datasource" />
     <None Include="Properties\DataSources\Marmi.DataModel.KeyConfig.datasource" />
