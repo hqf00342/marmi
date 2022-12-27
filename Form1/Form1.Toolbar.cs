@@ -146,6 +146,17 @@ namespace Marmi
             {
                 _trackbar.Maximum = App.g_pi.Items.Count - 1;
                 _trackbar.Enabled = true;
+
+                if (App.g_pi.NowViewPage < 0)
+                {
+                    App.g_pi.NowViewPage = 0;
+                }
+
+                if (App.g_pi.NowViewPage > App.g_pi.Items.Count - 1)
+                {
+                    App.g_pi.NowViewPage = App.g_pi.Items.Count - 1;
+                }
+
                 _trackbar.Value = App.g_pi.NowViewPage;
             }
             else
