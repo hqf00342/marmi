@@ -202,13 +202,7 @@ namespace Marmi
                         wBitCount = colorDepth;
                         dwBytesInRes = BitConverter.ToUInt32(ICONDIRENTRY, 8);
                         dwImageOffset = BitConverter.ToUInt32(ICONDIRENTRY, 12);
-                        Debug.WriteLine(string.Format(
-                            "Item={0}, bWidth={1}, dwimageOffset={2}, dwBytesInRes={3}",
-                            Item,
-                            bWidth,
-                            dwImageOffset,
-                            dwBytesInRes),
-                            "ICONDIRENTRY");
+                        Debug.WriteLine($"Item={Item}, bWidth={bWidth}, dwimageOffset={dwImageOffset}, dwBytesInRes={dwBytesInRes}", "ICONDIRENTRY");
                     }
                 }
 
@@ -233,11 +227,7 @@ namespace Marmi
                 {
                     UInt16 biBitCount = BitConverter.ToUInt16(BITMAPINFOHEADER, 14);
                     UInt32 biCompression = BitConverter.ToUInt32(BITMAPINFOHEADER, 16);
-                    Debug.WriteLine(string.Format(
-                        "biBitCount={0}, biCompression={1}",
-                        biBitCount,
-                        biCompression),
-                        "BITMAPINFOHEADER");
+                    Debug.WriteLine($"biBitCount={biBitCount}, biCompression={biCompression}",                        "BITMAPINFOHEADER");
 
                     //色数からパレット数を計算
                     int PALLET = 0;
@@ -631,10 +621,9 @@ namespace Marmi
 
                 StringFormat sf = new StringFormat()
                 {
-                    //上下左右中央
+                    //中央、文字列が表示しきれないときに"..."を表示する
                     Alignment = StringAlignment.Center,
                     LineAlignment = StringAlignment.Center,
-                    //文字列が表示しきれないときに"..."を表示する
                     Trimming = StringTrimming.EllipsisPath,
                 };
 

@@ -57,7 +57,7 @@ namespace Marmi
                     else
                     {
                         //クライアント起動
-                        var URL = string.Format("ipc://{0}/{1}", APPNAME, OBJECTNAME);
+                        var URL = $"ipc://{APPNAME}/{OBJECTNAME}";
                         var remoteObject = RemotingServices.Connect(typeof(IRemoteObject), URL) as IRemoteObject;
                         //オブジェクトへコマンドライン引数を渡す
                         remoteObject.IPCMessage(Environment.GetCommandLineArgs());

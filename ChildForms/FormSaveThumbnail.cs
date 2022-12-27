@@ -152,7 +152,7 @@ namespace Marmi
         private void ThumbPanel_SavedItemChanged(object obj, ThumbnailEventArgs e)
         {
             int num = e.HoverItemNumber;
-            toolStripStatusLabel1.Text = string.Format("完了数 : {0} / {1}", num + 1, m_thumbnailSet.Count);
+            toolStripStatusLabel1.Text = $"完了数 : {num + 1} / {m_thumbnailSet.Count}";
             if (tsProgressBar1.Visible)
                 tsProgressBar1.Value = num;
 
@@ -183,8 +183,7 @@ namespace Marmi
             if (ItemCount % nItemsX > 0)        //割り切れなかった場合は1行追加
                 nItemsY++;
 
-            tbInfo.Text = string.Format("出力画像サイズ : {0:N0} x {1:N0} [pixels]\r\n",
-                nItemsX * ThumbnailSize, nItemsY * ThumbnailSize);
+            tbInfo.Text = $"出力画像サイズ : {nItemsX * ThumbnailSize:N0} x {nItemsY * ThumbnailSize:N0} [pixels]\r\n";
         }
     }
 }

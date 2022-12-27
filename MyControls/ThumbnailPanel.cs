@@ -935,7 +935,7 @@ namespace Marmi
             //ファイルサイズを書く
             if (App.Config.Thumbnail.DrawFilesize)
             {
-                string s = String.Format("{0:#,0} bytes", m_ImgSet[item].FileLength);
+                string s = $"{m_ImgSet[item].FileLength:#,0} bytes";
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }
@@ -943,10 +943,7 @@ namespace Marmi
             //画像サイズを書く
             if (App.Config.Thumbnail.DrawPicsize)
             {
-                string s = String.Format(
-                    "{0:#,0}x{1:#,0} px",
-                    m_ImgSet[item].Width,
-                    m_ImgSet[item].Height);
+                string s = $"{m_ImgSet[item].Width:#,0}x{m_ImgSet[item].Height:#,0} px";
                 g.DrawString(s, _font, new SolidBrush(_fontColor), textRect, sf);
                 textRect.Y += FONT_HEIGHT;
             }

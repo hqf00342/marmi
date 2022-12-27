@@ -374,7 +374,7 @@ namespace Marmi
 
             //‰æ‘œ”Ô†‚ğ‰æ‘œã‚É•\¦
             g.DrawString(
-                string.Format("{0}", index + 1),
+                $"{index + 1}",
                 fontL,
                 Brushes.LightGray,
                 cRect,

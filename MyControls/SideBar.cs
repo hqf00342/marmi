@@ -278,14 +278,7 @@ namespace Marmi
 
                 //ToolTipを表示する
                 //ToolTip用の文字を設定
-                string sz = String.Format(
-                    "{0}\n 日付: {1:yyyy年M月d日 H:m:s}\n 大きさ: {2:N0}bytes\n サイズ: {3:N0}x{4:N0}ピクセル",
-                    m_packageInfo.Items[item].Filename,
-                    m_packageInfo.Items[item].CreateDate,
-                    m_packageInfo.Items[item].FileLength,
-                    m_packageInfo.Items[item].Width,
-                    m_packageInfo.Items[item].Height
-                );
+                string sz = $"{m_packageInfo.Items[item].Filename}\n 日付: {m_packageInfo.Items[item].CreateDate:yyyy年M月d日 H:m:s}\n 大きさ: {m_packageInfo.Items[item].FileLength:N0}bytes\n サイズ: {m_packageInfo.Items[item].Width:N0}x{m_packageInfo.Items[item].Height:N0}ピクセル";
 
                 //ToolTipの位置を設定 ver0.9833
                 int dispY = item * BOX_HEIGHT - m_vsBar.Value;
@@ -513,7 +506,7 @@ namespace Marmi
             //文字の描写:画像通し番号
             int x = rect.X + 2;
             int y = rect.Y + 20;
-            string sz = string.Format("{0}", index + 1);
+            string sz = $"{index + 1}";
             int HeightL = fontLsize.Height;
             int HeightS = fontSsize.Height;
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
@@ -588,7 +581,7 @@ namespace Marmi
             strRect.Width = rect.Width - strRect.Left;
             strRect.Y = y;
             strRect.Height = HeightL;
-            sz = string.Format("{0}", Path.GetFileName(ImgInfo.Filename));
+            sz = $"{Path.GetFileName(ImgInfo.Filename)}";
             g.DrawString(sz, fontL, Brushes.White, strRect);
             strRect.Y += HeightL + PADDING;
 
@@ -597,20 +590,12 @@ namespace Marmi
             strRect.X += PADDING;
             strRect.Width = rect.Width - strRect.Left;
             strRect.Height = HeightS;
-            sz = string.Format(
-                "{0:N0}bytes,   {1}",
-                ImgInfo.FileLength,
-                ImgInfo.CreateDate
-                );
+            sz = $"{ImgInfo.FileLength:N0}bytes,   {ImgInfo.CreateDate}";
             g.DrawString(sz, fontS, Brushes.LightGray, strRect);
             strRect.Y += HeightS + PADDING;
 
             //文字の描写:ピクセル数
-            sz = string.Format(
-                "{0:N0}x{1:N0}pixels",
-                ImgInfo.Width,
-                ImgInfo.Height
-                );
+            sz = $"{ImgInfo.Width:N0}x{ImgInfo.Height:N0}pixels";
             g.DrawString(sz, fontS, Brushes.RoyalBlue, strRect);
 
             //枠線の描写

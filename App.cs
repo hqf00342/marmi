@@ -40,6 +40,11 @@ namespace Marmi
         //TODO:利用していない疑惑あり
         internal const string TAG_PICTURECACHE = "CACHE";
 
+        //staticフォント
+        internal static readonly Font Font12B = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
+
+        internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);
+
         public static class Cursors
         {
             private static readonly Icon iconLoope = Properties.Resources.loopeIcon;

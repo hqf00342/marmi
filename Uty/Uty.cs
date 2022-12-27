@@ -98,7 +98,7 @@ namespace Marmi
             //ダメな場合はユニークな名前を探し回る
             while (true)
             {
-                string tryName = string.Format("{0}{1}", tryBaseName, trynum);
+                string tryName = $"{tryBaseName}{trynum}";
                 if (Directory.Exists(tryName))
                     trynum++;
                 else
@@ -143,13 +143,13 @@ namespace Marmi
         {
             long used = GC.GetTotalMemory(false);
             if (used < 1000)
-                return string.Format("Used:{0}bytes", used);
+                return $"Used:{used}bytes";
             else if (used < 1000000)
-                return string.Format("Used:{0}Kbytes", used / 1000);
+                return $"Used:{used / 1000}Kbytes";
             else if (used < 1000000000)
-                return string.Format("Used:{0}Mbytes", used / 1000000);
+                return $"Used:{used / 1000000}Mbytes";
             else
-                return string.Format("Used:{0}Gbytes", used / 1000000000);
+                return $"Used:{used / 1000000000}Gbytes";
         }
     }
 }

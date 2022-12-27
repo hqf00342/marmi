@@ -38,10 +38,7 @@ namespace Marmi
             {
                 //%表示
                 SetStatubarRatio(
-                    string.Format("ルーペ:{0}倍（{1,0:p1}表示）",
-                        App.Config.Loupe.LoupeMagnifcant,
-                        (double)(PicPanel.ZoomRatio * App.Config.Loupe.LoupeMagnifcant)
-                        ));
+                    $"ルーペ:{App.Config.Loupe.LoupeMagnifcant}倍（{(double)(PicPanel.ZoomRatio * App.Config.Loupe.LoupeMagnifcant),0:p1}表示）");
             }
         }
 

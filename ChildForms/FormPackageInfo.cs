@@ -55,18 +55,18 @@ namespace Marmi
                 //Zipファイル
                 pictureBox1.Image = Properties.Resources.zippedFile;
                 textBox1.Lines = new string[]{
-                    string.Format("Zipファイル名 \t: {0}", Path.GetFileName(m_packageInfo.PackageName)),
-                    string.Format("ファイルパス  \t: {0}", m_packageInfo.PackageName),
-                    string.Format("画像ファイル数\t: {0}", m_packageInfo.Items.Count),
+                    $"Zipファイル名 \t: {Path.GetFileName(m_packageInfo.PackageName)}",
+                    $"ファイルパス  \t: {m_packageInfo.PackageName}",
+                    $"画像ファイル数\t: {m_packageInfo.Items.Count}",
                 };
             }
             else if (m_packageInfo.PackageName != null)
             {
                 pictureBox1.Image = Properties.Resources.Folder_Open;
                 textBox1.Lines = new string[]{
-                    string.Format("フォルダ名    \t: {0}", Path.GetFileName(m_packageInfo.PackageName)),
-                    string.Format("ファイルパス  \t: {0}", m_packageInfo.PackageName),
-                    string.Format("画像ファイル数\t: {0}", m_packageInfo.Items.Count),
+                    $"フォルダ名    \t: {Path.GetFileName(m_packageInfo.PackageName)}",
+                    $"ファイルパス  \t: {m_packageInfo.PackageName}",
+                    $"画像ファイル数\t: {m_packageInfo.Items.Count}",
                 };
             }
             else
@@ -74,7 +74,7 @@ namespace Marmi
                 pictureBox1.Image = Properties.Resources.Image_File;
                 textBox1.Lines = new string[]{
                     "画像ファイル",
-                    string.Format("画像ファイル数\t: {0}", m_packageInfo.Items.Count),
+                    $"画像ファイル数\t: {m_packageInfo.Items.Count}",
                 };
             }
 
@@ -159,7 +159,7 @@ namespace Marmi
             //通し番号の描写
             int x = e.Bounds.X + 2;
             int y = e.Bounds.Y + 20;
-            string sz = string.Format("{0}", e.Index + 1);
+            var sz = $"{e.Index + 1}";
             SizeF size = g.MeasureString(sz, fontL);
             int HeightL = (int)size.Height;
             size = g.MeasureString(sz, fontS);
@@ -200,7 +200,7 @@ namespace Marmi
 
             //文字の描写:ファイル名
             x += PADDING + NUM_WIDTH + THUMBSIZE;
-            sz = string.Format("{0}", Path.GetFileName(ImgInfo.Filename));
+            sz = Path.GetFileName(ImgInfo.Filename);
             g.DrawString(sz, fontL, Brushes.Black, x, y);
             y += HeightL + PADDING;
 
@@ -224,33 +224,16 @@ namespace Marmi
             }
 
             //文字の描写:サイズ, 日付
-            sz = string.Format(
-                "{0:N0}bytes,   {1}",
-                ImgInfo.FileLength,
-                ImgInfo.CreateDate
-                );
+            sz = $"{ImgInfo.FileLength:N0}bytes,   {ImgInfo.CreateDate}";
             g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
             size = g.MeasureString(sz, fontS, e.Bounds.Width - x);
             x += (int)size.Width + PADDING;
             //y += HeightS + PADDING;
 
             //文字の描写:ピクセル数
-            sz = string.Format(
-                "{0:N0}x{1:N0}pixels",
-                ImgInfo.Width,
-                ImgInfo.Height
-                );
+            sz = $"{ImgInfo.Width:N0}x{ImgInfo.Height:N0}pixels";
             g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
             //y += HeightS + PADDING; //最後なので不要
-
-            ////文字の描写:Exifその他
-            //sz = string.Format(
-            //    "{0} {1}",
-            //    ImgInfo.ExifMake,
-            //    ImgInfo.ExifModel);
-            //if (ImgInfo.ExifISO != 0)
-            //    sz = string.Format("ISO={0} {1}", ImgInfo.ExifISO, sz);
-            //g.DrawString(sz, fontS, Brushes.SteelBlue, x, y);
 
             g.DrawRectangle(Pens.LightGray, e.Bounds);
             e.DrawFocusRectangle();     //フォーカスがあるときに枠を描写

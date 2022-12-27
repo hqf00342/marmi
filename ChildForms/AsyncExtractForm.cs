@@ -238,12 +238,7 @@ namespace Marmi
         {
             //string filename = obj as string;
             ExtractedFiles++;
-            string s = string.Format(
-                "{0}/{1} : {2}",
-                ExtractedFiles,
-                TargetFileCount,
-                Path.GetFileName(progressArchiveName)
-                );
+            string s = $"{ExtractedFiles}/{TargetFileCount} : {Path.GetFileName(progressArchiveName)}";
 
             if (now7z.IsCancelExtraction)
                 s = "キャンセル処理中";
