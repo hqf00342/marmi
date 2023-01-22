@@ -1,307 +1,314 @@
+﻿=====================================================================
+【タイトル】 アーカイブ画像ビューア Marmi
+【作成月日】 2009年7月12日～
+【制 作 者】 T.Nagashima
+【動作環境】 日本語版 WindowsXP/Vista以降 (.NetFramework3.5以降)
+【配布形態】 フリーウェア
+【HomePage】 http://yk.tea-nifty.com/netdev/
+【連 絡 先】 b4rsk.yk@gmail.com
+【転　　載】 自由
+【著 作 権】 Copyright (C) 2009-2021 by T.Nagashima
 =====================================================================
-�y�^�C�g���z �A�[�J�C�u�摜�r���[�A Marmi
-�y�쐬�����z 2009�N7��12���`
-�y�� �� �ҁz T.Nagashima
-�y������z ���{��� WindowsXP/Vista�ȍ~ (.NetFramework3.5�ȍ~)
-�y�z�z�`�ԁz �t���[�E�F�A
-�yHomePage�z http://yk.tea-nifty.com/netdev/
-�y�A �� ��z b4rsk.yk@gmail.com
-�y�]�@�@�ځz ���R
-�y�� �� ���z Copyright (C) 2009-2021 by T.Nagashima
-=====================================================================
 
 
-���T�v
+■概要
 
-  �t�H���_�∳�k�t�@�C���ɓ����Ă���摜�t�@�C�����{������\�t�g�ł��B
-  �Q�摜����ׂē����\���ł��閟��r���[�A�@�\������܂��B
+  フォルダや圧縮ファイルに入っている画像ファイルを閲覧するソフトです。
+  ２画像を並べて同時表示できる漫画ビューア機能があります。
 
-  [����]
-  �E2�y�[�W�����{���\�B
-  �Ezip�Alzh�Arar�Atar�A7z�Agz�Atgz�`���ɑΉ�
-  �E���ɓ��ɏ��ɂ�����ꍇ�ł����̏��ɓ��𑖍����܂��B
-  �E���ɂ͎���J�����ۂɑ�������\�����܂��B
-  �ESSD�ɗD�����H�B���k�t�@�C����W�J�����ɕ\�����܂��B
-  �E�t�H���_���Ɖ{���A�ċA�I�ɃT�u�t�H���_�܂Ō���
-  �E�T���l�C���ꗗ�\���@�\
-  �Epdf�ɑΉ�(ver1.57���Bsusie plugin���K�v�j
+  [特徴]
+  ・2ページ同時閲覧可能。
+  ・zip、lzh、rar、tar、7z、gz、tgz形式に対応
+  ・書庫内に書庫がある場合でもその書庫内を走査します。
+  ・書庫は次回開いた際に続きから表示します。
+  ・SSDに優しい？。圧縮ファイルを展開せずに表示します。
+  ・フォルダごと閲覧可、再帰的にサブフォルダまで検索
+  ・サムネイル一覧表示機能
+  ・pdfに対応(ver1.57より。susie pluginが必要）
 
-�������
+■動作環境
 
- Windows10�œ���m�F�B
- Windows 7�` 8.1�œ��삷��ɂ� .NET Framework4.8���K�v�ɂȂ�܂��B
-
-
-���Ή����ɁA�Ή��摜�`��
-
-  ���ɁF zip, lzh, rar, tar, 7z, gz ,tgz
-  �摜�F bmp, jpg, png, gif, ico, tiff, pdf
-  �A�j���[�V�����`���ɂ͑Ή����Ă��܂���B
-  pdf��32bit���̂݁B64bit���ł͉{���ł��܂���B
+ Windows10で動作確認。
+ Windows 7～ 8.1で動作するには .NET Framework4.8が必要になります。
 
 
-���C���X�g�[���E�A���C���X�g�[��
+■対応書庫、対応画像形式
 
-  �W�J�����t�@�C�����D���ȃt�H���_�ɂ����Ă��������B
-  ���̒���Marmi.exe�����s�v���O�����ɂȂ�܂��B
-  �ݒ�t�@�C���͂��̃t�H���_�ɕۑ�����܂��B
-  ���W�X�g���͎g�p���Ă���܂���B
-  �A���C���X�g�[���͂��̃t�H���_���ƍ폜����Ί����ł��B
+  書庫： zip, lzh, rar, tar, 7z, gz ,tgz
+  画像： bmp, jpg, png, gif, ico, tiff, pdf
+  アニメーション形式には対応していません。
+  pdfは32bit環境のみ。64bit環境では閲覧できません。
 
-��pdf�Ή�
 
-  pdf�{���ɂ�susie plugin axpdf.spi�œ���m�F���Ă��܂��B
-  ������64bit���ł͓��삵�܂���B
+■インストール・アンインストール
+
+  展開したファイルを好きなフォルダにおいてください。
+  この中のMarmi.exeが実行プログラムになります。
+  設定ファイルはこのフォルダに保存されます。
+  レジストリは使用しておりません。
+  アンインストールはこのフォルダごと削除すれば完了です。
+
+■pdf対応
+
+  pdf閲覧にはsusie pluginの axpdf.spi で動作確認しています。
+  ただし64bit環境では動作しません。
 
   axpdf.spi (GPLv3)
   http://mimizunoapp.appspot.com/susie/
 
-  ��spi�t�@�C����marmi.exe�Ɠ����t�H���_�ɓ���Ă��������B
-  ���܂��ǂݍ��߂Ă��Ȃ��ꍇ��pdf�̓T�|�[�g����Ȃ��ƌx�����o�܂��B
+  同spiファイルをmarmi.exeと同じフォルダに入れてください。
+  うまく読み込めていない場合はpdfはサポートされないと警告が出ます。
 
-���g����
+■使い方
 
-  ���k�t�@�C����t�H���_�A�摜���h���b�O�A���h�h���b�v���Ă��������B
-  �L�[�{�[�h�A�}�E�X����͎�Ɏ��̂悤�ɂȂ�܂��B
-  �I�v�V�����ŃJ�X�^�}�C�Y�\�ł��B
+  圧縮ファイルやフォルダ、画像をドラッグアンドドロップしてください。
+  キーボード、マウス操作は主に次のようになります。
+  オプションでカスタマイズ可能です。
 
-�@�@��ʉE���N���b�N�@���y�[�W
-�@�@��ʍ����N���b�N�@�O�y�[�W
-�@�@�E�N���b�N�@�@�@�@�R���e�L�X�g���j���[�\��
-�@�@�E�h���b�O�@�@�@�@���[�y�N��
-�@�@�����L�[�@�@�@�@���y�[�W
-�@�@�����L�[�@�@�@�@���y�[�W
-�@�@�X�y�[�X�@�@�@�@�@���y�[�W
-�@�@�����L�[�@�@�@�@�O�y�[�W
-�@�@�����L�[�@�@�@�@�O�y�[�W
-�@�@�d�r�b�L�[�@�@�@�@�S��ʃ��[�h���~
-�@�@Ctrl+TAB�@�@�@�@�@�����N������Marmi��؂�ւ���
-
-
-�����p�A�]�ڏ����A���C�Z���X
-
-  ���p�͌l���p�A���p��킸�����R�ɂ����p���������B
-  �������{�\�t�g�E�F�A�̎g�p�Ɉ��邠���鎖�Ԃɑ΂���҂͈�ؐӔC�𕉂��܂���B
-  �]�ڂ����R�ł����A���L�A����֋L�ڂ���������Ə�����܂��B
-  �܂��A�{�\�t�g�E�F�A�͈ȉ��̃��C�u�����𗘗p���Ă��܂��B�쐬�A���J����Ă���
-  �F�l�Ɋ��ӂ������܂��B
-
-  SevenZipSharp�iGNU LGPL3.0�j
-  http://sevenzipsharp.codeplex.com/
-  
-  7z.dll
-  http://7-zip.org
-
-  axpdf.spi (GPLv3)
-  http://mimizunoapp.appspot.com/susie/
-
-  �A�C�R��
-  �ꕔ�̃A�C�R���͈ȉ��̂��̂𗘗p�����Ă��������Ă��܂��B
-  Fugue Icons - Copyright (C) 2010 Yusuke Kamiyamane. All rights reserved.
-  The icons are licensed under a Creative Commons Attribution 3.0 license.
-  http://creativecommons.org/licenses/by/3.0/
-  http://p.yusukekamiyamane.com/
+　　画面右側クリック　次ページ
+　　画面左側クリック　前ページ
+　　右クリック　　　　コンテキストメニュー表示
+　　右ドラッグ　　　　ルーペ起動
+　　→矢印キー　　　　次ページ
+　　↓矢印キー　　　　次ページ
+　　スペース　　　　　次ページ
+　　←矢印キー　　　　前ページ
+　　↑矢印キー　　　　前ページ
+　　ＥＳＣキー　　　　全画面モード中止
+　　Ctrl+TAB　　　　　複数起動中のMarmiを切り替える
 
 
+■利用、転載条件、ライセンス
 
-���A����
+  本ソフトウェアはMITライセンスとして公開します。
+  利用は個人利用、商用問わずご自由にご利用ください。
+  ただし本ソフトウェアの使用に因るあらゆる事態に対し作者は一切責任を負いません。
+  転載も自由ですが、下記連絡先へ記載いただけると助かります。
+  また、本ソフトウェアは以下のライブラリを利用しています。作成、公開されている
+  皆様に感謝いたします。
 
-�o�O�E�v�]�͈ȉ���HP�̃R�����g���ɂ��肢���܂��B
+SevenZipSharp（GNU LGPL3.0）
+http://sevenzipsharp.codeplex.com/
+https://github.com/squid-box/SevenZipSharp/blob/dev/license
+
+7z.dll(7zip-license = GNU LGPL +unRAR restriction )
+http://7-zip.org
+https://sevenzip.osdn.jp/license.txt
+
+axpdf.spi (GPLv3)
+http://mimizunoapp.appspot.com/susie/
+
+アイコン
+一部のアイコンは以下のものを利用させていただいています。
+Fugue Icons - Copyright (C) 2010 Yusuke Kamiyamane. All rights reserved.
+The icons are licensed under a Creative Commons Attribution 3.0 license.
+http://creativecommons.org/licenses/by/3.0/
+http://p.yusukekamiyamane.com/
+
+■ソースコード
+
+MITライセンスで公開しています。
+https://github.com/hqf00342/marmi
+
+
+■連絡先
+
+バグ・要望は以下のHPのコメント欄にお願いします。
 http://yk.tea-nifty.com/netdev/2009/07/marmi-e771.html
 
 
-���ύX����
+■変更履歴
 
-ver 1.97b 2023�N1��22��
-�E�ݒ�̕ۑ����f�t�H���g�ŗL�����B
+ver 1.97b 2023年1月22日
+・設定の保存をデフォルトで有効化。
 
-ver 1.97a 2023�N1��22��
-�E�y�[�W�̑�������ǂދ@�\�����삵�Ȃ��P�[�X������A���C���B
-�E�ݒ��ʂ̓���������C��
+ver 1.97a 2023年1月22日
+・ページの続きから読む機能が動作しないケースがある、を修正。
+・設定画面の内部動作を修正
 
-ver 1.95 2022�N9��18��
-  �E Windows10�ɑΉ����܂����B
-  �E.NET Framework4.8���K�v�ł��iWindows10�ł͕s�v�j
-  �E���𑜓x�f�B�X�v���C�ɑΉ�
-  �E64bit���ɑΉ����܂����B
-  �Erar5�Ή������O���܂����B�ʏ��rar�͉{���\�ł��B
-  �E64bit���[�h�̏ꍇ�A�v���O�C���̐����pdf�ɖ��Ή��ł��B
+ver 1.95 2022年9月18日
+  ・ Windows10に対応しました。
+  ・.NET Framework4.8が必要です（Windows10では不要）
+  ・高解像度ディスプレイに対応
+  ・64bit環境に対応しました。
+  ・rar5対応を除外しました。通常のrarは閲覧可能です。
+  ・64bitモードの場合、プラグインの制約でpdfに未対応です。
 
-ver1.82 2014�N4��6��
-  �E�����胁�j���[�ɉ摜��\������悤�ɕύX
-  �E���ɂ���Ɉꎞ�t�H���_�ɓW�J����I�v�V������ǉ�
-  �E������ʒu���ۑ�����Ȃ����Ƃ�����o�O�̏C��
-  �E�����I��2�y�[�W���[�h�ɂ���I�v�V������ǉ�
-  �E���d�N���֎~���A�h���b�v�����t�@�C����O��Marmi�ɑ���悤�ɂ��܂���
-  �E�ŏI�y�[�W�ł̎��̏��ɂ��J����1���ڂ̎���2�ł͂Ȃ�10�ɂȂ��Ă���o�O��
-    �C���i���ёւ��̖��j
-  �E�L�[�{�[�h�F�����@�\���Q�Ɋ��蓖�Ă���悤�ɕύX
-  �E�L�[�{�[�h�FCtrl�AShift��F������悤�ɕύX
-  �E�}�E�X�̃z�C�[���{�^���A�߂�i�ރ{�^�����@�\���蓖�Ăł���悤�ɕύX
-  �E�T���l�C����K�v�ɂȂ�܂ō쐬���Ȃ��悤�ɕύX�B
-  �E�T���l�C���\���ɃX���[�X�X�N���[���I�v�V������ǉ�
+ver1.82 2014年4月6日
+  ・しおりメニューに画像を表示するように変更
+  ・書庫を常に一時フォルダに展開するオプションを追加
+  ・しおり位置が保存されないことがあるバグの修正
+  ・強制的に2ページモードにするオプションを追加
+  ・多重起動禁止時、ドロップしたファイルを前のMarmiに送るようにしました
+  ・最終ページでの次の書庫を開く際1冊目の次が2ではなく10になっているバグを
+    修正（並び替えの問題）
+  ・キーボード：同じ機能を２つに割り当てられるように変更
+  ・キーボード：Ctrl、Shiftを認識するように変更
+  ・マウスのホイールボタン、戻る進むボタンも機能割り当てできるように変更
+  ・サムネイルを必要になるまで作成しないように変更。
+  ・サムネイル表示にスムーススクロールオプションを追加
 
-ver1.78 2014�N3��23��
-  �Eunrar.dll�ɂ��rar5���ɂɑΉ����܂����B
-  �E�L�[�o�C���h�ݒ�Ɂu�I���v��ǉ����܂����B
-  �E���d�N�����֎~����I�v�V������t���܂����B�i�I�v�V�������j���[�j
-  �E�N�����̉�ʈʒu�������������Ƃ��C���B�i�I�v�V�������j���[�j
-  �E�ő剻��ԂŏI���������Ƃ��o����悤�C���B�i�I�v�V�������j���[�j
-  �E�ŋߎg�����t�@�C�����ۑ�����Ȃ����Ƃ�����o�O���C��
-  �E������i�u�b�N�}�[�N�j���ۑ��ΏۂɕύX
-  �E������i�u�b�N�}�[�N�j���P�̃��j���[�ɕύX
-  �E�T���l�C����ʂɂ����肪���Ă���}�[�N��ǉ�
-  �E�摜�t�@�C����1�������J���Ƃ��A���̃f�B���N�g�����Q�Ƃ���悤�ɕύX
-  �E�y�[�W�ړ����ɕ\���{�����ێ����郂�[�h��ǉ�
-  �E�I�v�V�������j���[�̉��ɊȈՂȐݒ��ǉ�
+ver1.78 2014年3月23日
+  ・unrar.dllによるrar5書庫に対応しました。
+  ・キーバインド設定に「終了」を追加しました。
+  ・多重起動を禁止するオプションを付けました。（オプションメニュー）
+  ・起動時の画面位置がおかしくことを修正。（オプションメニュー）
+  ・最大化状態で終了したことを覚えるよう修正。（オプションメニュー）
+  ・最近使ったファイルが保存されないことがあるバグを修正
+  ・しおり（ブックマーク）も保存対象に変更
+  ・しおり（ブックマーク）を１つのメニューに変更
+  ・サムネイル画面にしおりがついているマークを追加
+  ・画像ファイルを1枚だけ開くとき、そのディレクトリを参照するように変更
+  ・ページ移動時に表示倍率を維持するモードを追加
+  ・オプションメニューの下に簡易な設定を追加
 
-ver1.75 2014�N1��12��
-  �ED&D�N�����Ɏ��Ԃ������邱�Ƃ�����̂��኱���P
-  �E�ꎞ�W�J�t�H���_���w��o����悤�ɂ��܂����B
-  �E�ŋߗ��p�����t�@�C���iMRU�j�̐��w��A�������s����悤�ɂ��܂����B
+ver1.75 2014年1月12日
+  ・D&D起動時に時間がかかることがあるのを若干改善
+  ・一時展開フォルダを指定出来るようにしました。
+  ・最近利用したファイル（MRU）の数指定、消去を行えるようにしました。
 
-ver1.72 2013�N10��26��
-  �E�X���[�X�X�N���[���֘A�̃I�v�V�����\�����Ԉ���Ă����̂��C��
-  �E��ʒ����\���I�v�V�����ŃE�B���h�E�T�C�Y�̓��Z�b�g���Ȃ��d�l�ɕύX
+ver1.72 2013年10月26日
+  ・スムーススクロール関連のオプション表示が間違っていたのを修正
+  ・画面中央表示オプションでウィンドウサイズはリセットしない仕様に変更
 
-ver1.71 2013�N10��13��
-  �E2���\�����̔�����ɂ�����I�v�V������ǉ�
-  �E�T�C�h�o�[�̃X���[�X�X�N���[����off����I�v�V������ǉ�
-  �E�ŏI�y�[�W�Ŏ��̏��ɂ�T���I�v�V������ǉ�
-  �E��L�ɔ����I�v�V�����E�B���h�E�Ɂu�\���v��ǉ�
+ver1.71 2013年10月13日
+  ・2枚表示時の判定を緩くするオプションを追加
+  ・サイドバーのスムーススクロールをoffするオプションを追加
+  ・最終ページで次の書庫を探すオプションを追加
+  ・上記に伴いオプションウィンドウに「表示」を追加
 
-ver1.69 2013�N8��21��
-  �E[bug] gif�摜�̃T���l�C�������Ȃ��o�O���C��
-  �E[bug] TIFF�ɑΉ����Ă��Ȃ������̂��C��
-  �E[bug] 2�y�[�W���[�h���ɍŏI�y�[�W�������ۂɗ�����s����C��
+ver1.69 2013年8月21日
+  ・[bug] gif画像のサムネイルが作れないバグを修正
+  ・[bug] TIFFに対応していなかったのを修正
+  ・[bug] 2ページモード時に最終ページを見た際に落ちる不具合を修正
 
-ver1.67 2013�N8��11��
-  �E�}�E�X�̃J�X�^�}�C�Y�𑝂₵���i��ʃN���b�N�ʒu�ƃc�[���o�[����̕����j
-  �E�c�[���o�[�ɂ���u�S��ʁv�u�I���v�̕�����������悤�ɃI�v�V�����ǉ�
-  �E�\�����j���[���������邽�߁u�y�[�W�ړ��v�֘A��ʃ��j���[��
-  �E[bug] �c�[���o�[���̏�ԂŃT���l�C����ʂ̓��삪�I�J�V�C�̂��C��
-  �E[bug] �T���l�C����ʂ̂܂ܑS��ʂɂ���ƕ��ʂ̉�ʂɖ߂�̂��C��
-  �E[bug] �T���l�C����ʂ̂܂܍ŏ�������Ɨ�O�I������̂��C��
-  �E[bug] �T���l�C���쐬���ɕʂ�zip/�t�H���_���J�����Ƃ���ƈُ�I������̂��C��
-  �E[bug]�i����pdf�Łj���������p�ʂ��z��ȏ�ɑ�������̂��C��
-  �E[bug] �N������g���b�N�o�[���\������Ȃ����Ƃ�����o�O���C��
+ver1.67 2013年8月11日
+  ・マウスのカスタマイズを増やした（画面クリック位置とツールバー動作の分離）
+  ・ツールバーにある「全画面」「終了」の文字を消せるようにオプション追加
+  ・表示メニューが長すぎるため「ページ移動」関連を別メニューに
+  ・[bug] ツールバー下の状態でサムネイル画面の動作がオカシイのを修正
+  ・[bug] サムネイル画面のまま全画面にすると普通の画面に戻るのを修正
+  ・[bug] サムネイル画面のまま最小化すると例外終了するのを修正
+  ・[bug] サムネイル作成中に別のzip/フォルダを開こうとすると異常終了するのを修正
+  ・[bug]（特にpdfで）メモリ利用量が想定以上に増加するのを修正
+  ・[bug] 起動直後トラックバーが表示されないことがあるバグを修正
 
-ver1.63 2013�N8��4��
-  �E��ʃL���b�V����������Ԃŉ摜�������d�l�������Ȃ��悤�ɕύX
+ver1.63 2013年8月4日
+  ・画面キャッシュが無い状態で画像を消す仕様を消さないように変更
 
-ver1.62 2013�N7��28��
-  �E�c�[���o�[�����Ɉړ��ł���悤�ɂ����B
+ver1.62 2013年7月28日
+  ・ツールバーを下に移動できるようにした。
 
-ver1.61 2013�N7��21��
-  �E�K�v������.net Framework 3.5(ClientProfile)�ɕύX
-  �ECtrl+TAB�ɂ�镡���N����Marmi�̐ؑւɑΉ�
+ver1.61 2013年7月21日
+  ・必要条件を.net Framework 3.5(ClientProfile)に変更
+  ・Ctrl+TABによる複数起動のMarmiの切替に対応
 
-ver1.60 2013�N7��7��
-  �E�A�j���[�V�������ʂ��y������
-  �E�T���l�C���쐬���Ɏ��̏��ɂ�����Ɨ�O����������̂��C��
-  �E�g���b�N�o�[�̃T�C�Y�����܂ɔ��f����Ȃ��̂��C��
-  �E�L�[�R���t�B�O�Őݒ薳���̏d�����o���Ȃ��o�O���C��
+ver1.60 2013年7月7日
+  ・アニメーション効果を軽くした
+  ・サムネイル作成中に次の書庫を見ると例外が発生するのを修正
+  ・トラックバーのサイズがたまに反映されないのを修正
+  ・キーコンフィグで設定無しの重複が出来ないバグを修正
 
-ver1.57 2013�N5��19��
-  �Epdf�Ή��isusie plugin�o�R�j
+ver1.57 2013年5月19日
+  ・pdf対応（susie plugin経由）
 
-ver1.56 2013�N5��11��
-  �E�N���b�N�A�őΉ��iver1.53�̑Ή������j
-  �E�T���l�C���̎��O�Ǎ��𕜊�
-  �E��L�ɔ����S�̓I�ȍ�����
+ver1.56 2013年5月11日
+  ・クリック連打対応（ver1.53の対応強化）
+  ・サムネイルの事前読込を復活
+  ・上記に伴う全体的な高速化
 
-ver1.53 2013�N5��6��
-  �E��ʒ����ɕ\������I�v�V������ǉ�
-  �E�N���b�N�A�łɑΉ��i�������A�����S�ŘA�ł�������ƑO�y�[�W�ɖ߂邱�Ƃ���j
-  �E���̑��������̂��߂̏����ǉ�
+ver1.53 2013年5月6日
+  ・画面中央に表示するオプションを追加
+  ・クリック連打に対応（ただし、未完全で連打しすぎると前ページに戻ることあり）
+  ・その他高速化のための処理追加
 
-ver1.47 2013�N3��31��
-  �E���펞�ł�CPU�g�p�������������o�O���C���B
-  �E�T���l�C���\���̃t�F�[�h�C���ɑΉ�
+ver1.47 2013年3月31日
+  ・平常時でもCPU使用率が高かったバグを修正。
+  ・サムネイル表示のフェードインに対応
 
-ver1.33 2013�N1��20��
-  �E���������p�ʂ����k�i�L���b�V���̎�������ύX�j
-  �E�T���l�C���쐬��K�v�Ȏ������ɕύX
-  �E��L�ɔ���DB�t�@�C�����쐬���Ȃ��悤�ɕύX
-  �E�A�j���[�V�����֘A�̃X�s�[�h��ύX
-  �E���̑����쑬�x�̔���������
-  �E�摜�ꖇ�\���̏ꍇ�ADEL�L�[�ŉ摜���S�~���ɎC�����悤�ɂȂ���
-  �E�X���C�h�V���[�@�\�ǉ�
+ver1.33 2013年1月20日
+  ・メモリ利用量を圧縮（キャッシュの持ち方を変更）
+  ・サムネイル作成を必要な時だけに変更
+  ・上記に伴いDBファイルを作成しないように変更
+  ・アニメーション関連のスピードを変更
+  ・その他動作速度の微調整多数
+  ・画像一枚表示の場合、DELキーで画像をゴミ箱に擦れられるようになった
+  ・スライドショー機能追加
 
-ver1.34 2012�N4��15��
-  �E���ɓ����ɂŃt�H���_�\�������Ă���Ƃ��ɓ��삵�Ȃ��ꍇ������̂��C��
+ver1.34 2012年4月15日
+  ・書庫内書庫でフォルダ構造をしているときに動作しない場合があるのを修正
 
-ver1.32 2012�N3��11��
-  �E���ɓ����ɂɑΉ��i�b��j
-  �Egz�Abzip�Atgz�`���ɑΉ�
-  �E���J���Ɏb��Ή����܂���
-  �ECtrl+�z�C�[���ɋ����I�ɃY�[�������蓖��
-  �E��ʂ̐؂�ւ����@�Ƃ��ăX���C�h��W���ɂ��܂����B
-  �E�K�v�Ȃ��Ƃ��ɃX�N���[���o�[���\�������ꍇ���������̂��C��
-  �E�p�X���[�h�t�����ɂɉ��x���m�F���o�Ă������C��
+ver1.32 2012年3月11日
+  ・書庫内書庫に対応（暫定）
+  ・gz、bzip、tgz形式に対応
+  ・左開きに暫定対応しました
+  ・Ctrl+ホイールに強制的にズームを割り当て
+  ・画面の切り替わり方法としてスライドを標準にしました。
+  ・必要ないときにスクロールバーが表示される場合があったのを修正
+  ・パスワード付き書庫に何度も確認が出ていたを修正
 
-ver1.29 2012�N1��19��
-  �E2���\���`�F�b�N������Â����܂���
+ver1.29 2012年1月19日
+  ・2枚表示チェック判定を甘くしました
 
-ver1.28 2011�N12��14��
-  �E�T���l�C���ۑ����ɃT���l�C���쐬�����ƃG���[�I�����Ă��������C��
-  �E�c�[���o�[���������������܂���
-  �E���쑬�x���኱���P���܂���
+ver1.28 2011年12月14日
+  ・サムネイル保存時にサムネイル作成中だとエラー終了していた問題を修正
+  ・ツールバーを少し小さくしました
+  ・動作速度を若干改善しました
 
-ver1.26 2011�N11��27��
-  �E�Y�[���E��]�@�\������
-  �E�T���l�C���T�C�Y�̕ύX�@�\������
-  �E���I�v�V�������j���[�̒ǉ�
+ver1.26 2011年11月27日
+  ・ズーム・回転機能を実装
+  ・サムネイルサイズの変更機能を実装
+  ・他オプションメニューの追加
 
-ver1.23 2011�N10��24��
-  �E2���\���̏��������P
-  �E�T�C�h�o�[�\�����ɃL�[���͂��_�u�邱�Ƃ�����̂��C��
-  �E��ʂ̐؂�ւ����ʂ����������f����Ȃ����Ƃ�����̂��C��
-  �E�L�[�J�X�^�}�C�Y�̃h���b�v�_�E���̏d�����C��
-  �E�N������Ɂu�\���v���j���[���J���ƃG���[�I������̂��C��
-  �E�I�v�V�����_�C�A���O�̕\�����ڂ����P
+ver1.23 2011年10月24日
+  ・2枚表示の条件を改善
+  ・サイドバー表示時にキー入力がダブることがあるのを修正
+  ・画面の切り替え効果が正しく反映されないことがあるのを修正
+  ・キーカスタマイズのドロップダウンの重複を修正
+  ・起動直後に「表示」メニューを開くとエラー終了するのを修正
+  ・オプションダイアログの表示項目を改善
 
-ver1.21 2011�N10��16��
-  �E�L�[�{�[�h�J�X�^�}�C�Y�@�\��ǉ�
-  �E��ʐ؂�ւ��A�j���[�V������I���\��
+ver1.21 2011年10月16日
+  ・キーボードカスタマイズ機能を追加
+  ・画面切り替わりアニメーションを選択可能に
 
-ver1.20 2011�N10��12��
-  �E������@�\�ǉ�
-  �E�T���l�C����ʂł̉E�N���b�N���j���[�ɑΉ�
-  �E�Q�y�[�W�\����������P�A�قړ����T�C�Y�̎��݂̂Q�y�[�W��
-  �E�T���l�C����ʂŃ}�E�X�ʒu�ƈقȂ�摜��I������\��������̂��C��
-  �E�T���l�C���쐬���������i���C�u�����œK���j
-  �E100%�\�����Ƀ}�E�X�h���b�O�ŃX�N���[���ł��Ȃ������o�O���C��
-  �E�g���b�N�o�[�ł̃v���r���[��������
-  �E�������L���b�V�����œK�������������p�ʂ�}���܂���
+ver1.20 2011年10月12日
+  ・しおり機能追加
+  ・サムネイル画面での右クリックメニューに対応
+  ・２ページ表示判定を改善、ほぼ同じサイズの時のみ２ページ化
+  ・サムネイル画面でマウス位置と異なる画像を選択する可能性があるのを修正
+  ・サムネイル作成を効率化（ライブラリ最適化）
+  ・100%表示時にマウスドラッグでスクロールできなかったバグを修正
+  ・トラックバーでのプレビューを高速に
+  ・メモリキャッシュを最適化しメモリ利用量を抑えました
 
-ver1.13 2011�N9��4��
-  �E7z���ɐ����Ή�
-  �E�摜�؂�ւ��ɃA�j���[�V�������ʂ�ǉ�
-  �E�z�z�t�@�C���������炵�܂���
-  �E�g���b�N�o�[�𑀍삵�����ƃ}�E�X�z�C�[���������Ȃ��Ȃ�o�O���C��
-  �E���[�y�g�p���ɍ��N���b�N����ƌł܂錻�ۂ��C��
-  �E�T�C�h�o�[���̉摜�T�C�Y���������������̂��C��
-  �ESharpZipLib����7z.dll�ɑS�ʈڍs���܂���
-    �ق����C������
+ver1.13 2011年9月4日
+  ・7z書庫正式対応
+  ・画像切り替えにアニメーション効果を追加
+  ・配布ファイル数を減らしました
+  ・トラックバーを操作したあとマウスホイールが効かなくなるバグを修正
+  ・ルーペ使用時に左クリックすると固まる現象を修正
+  ・サイドバー等の画像サイズがおかしかったのを修正
+  ・SharpZipLibから7z.dllに全面移行しました
+    ほか微修正多数
 
-ver1.01 2011�N8��2��
-  �E�T���l�C���쐬���ɕs����ƂȂ�P�[��������̂����P
+ver1.01 2011年8月2日
+  ・サムネイル作成中に不安定となるケールがあるのを改善
 
-ver1.00 2011�N8��2��
-  �Ezip�ȊO�̏��ɂɑΉ��B�irar,tar,lzh,7z�j
-  �E�������A7z�`���̓\���b�h���ɂ̂��߁A���x���������x�����
-  �E���[�y�̓����ύX�B�����\������S��ʕ\���ɕύX�B
-  �E���p���C�u������SharpZip����SevenZipSharp�ɕύX�B
-  �E�T���l�C���T�C�Y�̃f�t�H���g��160dot�ɕύX
-  �E�L�[�{�[�h���삪�����Ȃ��Ȃ邱�Ƃ����錻�ۂ��኱���P�i�܂��s���S�j
-  �E�}�E�X�z�C�[���������Ȃ��Ȃ邱�Ƃ����錻�ۂ��኱���P�i�܂��s���S�j
-ver0.83  2009�N7��12��
-  �E���Ń����[�X
+ver1.00 2011年8月2日
+  ・zip以外の書庫に対応。（rar,tar,lzh,7z）
+  ・ただし、7z形式はソリッド書庫のため、速度が著しく遅い状態
+  ・ルーペの動作を変更。部分表示から全画面表示に変更。
+  ・利用ライブラリをSharpZipからSevenZipSharpに変更。
+  ・サムネイルサイズのデフォルトを160dotに変更
+  ・キーボード操作が効かなくなることがある現象を若干改善（まだ不完全）
+  ・マウスホイールが効かなくなることがある現象を若干改善（まだ不完全）
+ver0.83  2009年7月12日
+  ・初版リリース
 
 
 
-�����C�Z���X
+■ライセンス
 
   7-Zip
   ~~~~~

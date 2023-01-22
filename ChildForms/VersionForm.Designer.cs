@@ -40,6 +40,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -81,12 +83,14 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(205, 24);
             this.label2.TabIndex = 3;
-            this.label2.Text = "CopyRight(C) 2009-2013  T.Nagashima\r\nhttp://yk.tea-nifty.com/netdev/";
+            this.label2.Text = "CopyRight(C) 2009-2023  T.Nagashima\r\nhttp://yk.tea-nifty.com/netdev/";
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.linkLabel4);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.linkLabel2);
             this.groupBox1.Controls.Add(this.linkLabel3);
             this.groupBox1.Controls.Add(this.linkLabel1);
@@ -95,7 +99,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(12, 96);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(405, 143);
+            this.groupBox1.Size = new System.Drawing.Size(405, 237);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "利用しているライブラリの情報";
@@ -160,12 +164,32 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "SevenZipSharp";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 148);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 12);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "axpdf.spi";
+            // 
+            // linkLabel4
+            // 
+            this.linkLabel4.AutoSize = true;
+            this.linkLabel4.Location = new System.Drawing.Point(6, 160);
+            this.linkLabel4.Name = "linkLabel4";
+            this.linkLabel4.Size = new System.Drawing.Size(220, 12);
+            this.linkLabel4.TabIndex = 8;
+            this.linkLabel4.TabStop = true;
+            this.linkLabel4.Text = "https://mimizunoapp2.appspot.com/susie/";
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // VersionForm
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 251);
+            this.ClientSize = new System.Drawing.Size(429, 345);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
@@ -200,5 +224,7 @@
 		private System.Windows.Forms.LinkLabel linkLabel3;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
-	}
+        private System.Windows.Forms.LinkLabel linkLabel4;
+        private System.Windows.Forms.Label label6;
+    }
 }
