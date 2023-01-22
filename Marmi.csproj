@@ -132,7 +132,6 @@
     <Compile Include="Uty\GitInfo.cs" />
     <Compile Include="Uty\TempDirs.cs" />
     <Compile Include="Uty\XmlFile.cs" />
-    <None Include="dlls\axpdf.spi" />
     <Compile Include="Form1\Form1.IPC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -385,7 +384,6 @@
     <None Include="dlls\7z.dll" />
     <None Include="dlls\7z64.dll" />
     <None Include="ToDo.md" />
-    <None Include="DPIメモ.md" />
     <EmbeddedResource Include="git_branch.txt" />
     <EmbeddedResource Include="git_id.txt" />
     <Content Include="zic.ico" />
