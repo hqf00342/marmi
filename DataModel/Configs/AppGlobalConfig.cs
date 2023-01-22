@@ -42,11 +42,6 @@ namespace Marmi
         public bool FitToScreen { get; set; }
 
         /// <summary>
-        /// リサイズ時の描写をやめる
-        /// </summary>
-        public bool StopPaintingAtResize { get; set; }
-
-        /// <summary>
         /// サイドバーの幅
         /// </summary>
         public int SidebarWidth { get; set; }
@@ -130,7 +125,6 @@ namespace Marmi
             windowLocation = new Point(0, 0);
             RecurseSearchDir = false;
             FitToScreen = true;
-            StopPaintingAtResize = false;
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
             SlideshowTime = 3000;
             ToolbarIsTop = true;

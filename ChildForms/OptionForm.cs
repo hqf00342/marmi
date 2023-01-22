@@ -29,9 +29,6 @@ namespace Marmi
             viewConfigBindingSource.DataSource = _config.View;
             keyConfigBindingSource.DataSource = _config.Keys;
 
-            //高度な設定タブ
-            bStopPaintingAtResize.Checked = set.StopPaintingAtResize; //リサイズ描写
-
             //ver1.78 倍率の保持
             keepMagnification.Checked = set.KeepMagnification;
         }
@@ -46,9 +43,6 @@ namespace Marmi
             set.Thumbnail = _config.Thumbnail;
             set.View = _config.View;
             set.Keys = _config.Keys;
-
-            //高度な設定タブ
-            set.StopPaintingAtResize = bStopPaintingAtResize.Checked;
 
             //ver1.78 倍率の保持
             set.KeepMagnification = keepMagnification.Checked;

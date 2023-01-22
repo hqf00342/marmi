@@ -152,7 +152,6 @@
             this.tb_cachesize = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.bStopPaintingAtResize = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.InitButton = new System.Windows.Forms.Button();
@@ -1674,7 +1673,6 @@
             this.Detail.Controls.Add(this.tb_cachesize);
             this.Detail.Controls.Add(this.label22);
             this.Detail.Controls.Add(this.label21);
-            this.Detail.Controls.Add(this.bStopPaintingAtResize);
             this.Detail.Location = new System.Drawing.Point(4, 22);
             this.Detail.Name = "Detail";
             this.Detail.Padding = new System.Windows.Forms.Padding(3);
@@ -1756,19 +1754,6 @@
             this.label21.Size = new System.Drawing.Size(101, 12);
             this.label21.TabIndex = 10;
             this.label21.Text = "キャッシュメモリサイズ";
-            // 
-            // bStopPaintingAtResize
-            // 
-            this.bStopPaintingAtResize.AutoSize = true;
-            this.bStopPaintingAtResize.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.advanceConfigBindingSource, "FastDrawAtResize", true));
-            this.bStopPaintingAtResize.Enabled = false;
-            this.bStopPaintingAtResize.Location = new System.Drawing.Point(6, 18);
-            this.bStopPaintingAtResize.Name = "bStopPaintingAtResize";
-            this.bStopPaintingAtResize.Size = new System.Drawing.Size(259, 16);
-            this.bStopPaintingAtResize.TabIndex = 9;
-            this.bStopPaintingAtResize.Text = "ウィンドウサイズ変更時の描写をやめて高速化する";
-            this.bStopPaintingAtResize.UseVisualStyleBackColor = true;
-            this.bStopPaintingAtResize.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
             // btnOK
             // 
@@ -1915,7 +1900,6 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox HelpBox;
 		private System.Windows.Forms.TabPage Detail;
-		private System.Windows.Forms.CheckBox bStopPaintingAtResize;
 		private System.Windows.Forms.CheckBox isDrawThumbnailFrame;
 		private System.Windows.Forms.CheckBox isDrawThumbnailShadow;
 		private System.Windows.Forms.CheckBox isShowTPFileName;
