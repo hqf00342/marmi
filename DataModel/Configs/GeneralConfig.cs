@@ -6,36 +6,60 @@ namespace Marmi.DataModel
 {
     public class GeneralConfig : IConfig
     {
-        //コンフィグの保存
-        public bool SaveConfig { get; set; }
+        /// <summary>
+        /// コンフィグの保存
+        /// </summary>
+        public bool SaveConfig { get; set; } = true;
 
-        //書庫は前回の続きから
-        public bool ContinueReading { get; set; }
+        /// <summary>
+        /// 書庫は前回の続きから
+        /// </summary>
+        public bool ContinueReading { get; set; } = true;
 
-        //ver1.79 書庫を常に展開する
-        public bool ExtractArchiveAlways { get; set; }
+        /// <summary>
+        /// 書庫を常に展開する
+        /// </summary>
+        public bool ExtractArchiveAlways { get; set; } = false;
 
-        //ver1.09 ソリッド書庫を一時展開
-        public bool ExtractArchiveIfSolid { get; set; }
+        /// <summary>
+        /// ソリッド書庫を一時展開
+        /// </summary>
+        public bool ExtractArchiveIfSolid { get; set; } = true;
 
-        //ver1.73 一時展開フォルダ
-        public string TmpFolder { get; set; }
+        /// <summary>
+        /// 一時展開フォルダ
+        /// </summary>
+        public string TmpFolder { get; set; } = string.Empty;
 
-        //ツールバーの左右ボタンを入れ替える
-        public bool ReplaceArrowButton { get; set; }
+        /// <summary>
+        /// ツールバーの左右ボタンを入れ替える
+        /// </summary>
+        public bool ReplaceArrowButton { get; set; } = false;
 
-        //ver1.65 ツールバーアイテムの文字を消すか
-        public bool HideToolbarString { get; set; }
+        /// <summary>
+        /// ツールバーアイテムの文字を消す
+        /// </summary>
+        public bool HideToolbarString { get; set; } = false;
 
-        //ver1.70 サイドバーのスムーススクロール
-        public bool SmoothScrollOnSidebar { get; set; }
+        /// <summary>
+        /// サイドバーのスムーススクロール
+        /// </summary>
+        public bool SmoothScrollOnSidebar { get; set; } = true;
 
-        //ver1.73 MRU保持数
-        public int MaxMruNumber { get; set; }
+        /// <summary>
+        /// MRU保持数
+        /// </summary>
+        public int MaxMruNumber { get; set; } = 20;
 
+        /// <summary>
+        /// 背景色
+        /// </summary>
         [XmlIgnore]
         public Color BackColor { get; set; } = Color.LightSlateGray;
 
+        /// <summary>
+        /// 背景色XML値
+        /// </summary>
         [XmlElement("BackColorXml")]
         public string BackColorXml
         {
@@ -46,22 +70,22 @@ namespace Marmi.DataModel
         /// <summary>
         /// ver1.76 多重起動禁止
         /// </summary>
-        public bool SingleProcess { get; set; }
+        public bool SingleProcess { get; set; } = false;
 
         /// <summary>
         /// ver1.77 フルスクリーン状態を復元できるようにする
         /// </summary>
-        public bool SaveFullScreenMode { get; set; }
+        public bool SaveFullScreenMode { get; set; } = true;
 
         //ver1.49 ウィンドウの初期位置を中央にする
-        public bool CenteredAtStart { get; set; }
+        public bool CenteredAtStart { get; set; } = false;
 
         public string TESTA { get; set; }
         public int TESTB { get; set; }
 
         public void Init()
         {
-            SaveConfig = false;
+            SaveConfig = true;
             BackColor = Color.LightSlateGray;
             ReplaceArrowButton = false;
             ContinueReading = true;
@@ -70,7 +94,7 @@ namespace Marmi.DataModel
             HideToolbarString = false;
             SmoothScrollOnSidebar = true;
             TmpFolder = string.Empty;
-            MaxMruNumber = 10;
+            MaxMruNumber = 20;
             SingleProcess = false;
             SaveFullScreenMode = true;
             ExtractArchiveAlways = false;

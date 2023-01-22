@@ -112,6 +112,10 @@ http://yk.tea-nifty.com/netdev/2009/07/marmi-e771.html
 
 ■変更履歴
 
+ver 1.97a 2023年1月22日
+・ページの続きから読む機能が動作しないケースがある、を修正。
+・設定画面の内部動作を修正
+
 ver 1.95 2022年9月18日
   ・ Windows10に対応しました。
   ・.NET Framework4.8が必要です（Windows10では不要）
