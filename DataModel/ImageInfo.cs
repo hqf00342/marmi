@@ -1,11 +1,12 @@
+/*
+ImageInfo
+画像情報とキャッシュを保存するためのクラス
+*/
+
 using Marmi.DataModel;
 using System;
 using System.Drawing;
 using System.IO;
-
-/*
-画像情報とキャッシュを保存するためのクラス
-*/
 
 namespace Marmi
 {

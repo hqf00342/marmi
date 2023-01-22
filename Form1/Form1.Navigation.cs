@@ -13,7 +13,7 @@ namespace Marmi
     public partial class Form1 : Form
     {
         //高速キー入力に対応するため、最後のオーダーを保存する
-        private  long _lastDrawOrderTick = 0;
+        private long _lastDrawOrderTick = 0;
 
         /// <summary>
         /// 指定したインデックスの画像を表示する。
@@ -229,6 +229,5 @@ namespace Marmi
         }
 
         #endregion Navigation
-
     }
 }

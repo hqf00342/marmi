@@ -1,9 +1,10 @@
-using System;
-
 /*
+MRU
 最近使ったファイル
 シリアライズ用
 */
+
+using System;
 
 namespace Marmi
 {

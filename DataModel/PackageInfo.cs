@@ -1,12 +1,13 @@
+/*
+PackageInfo.cs
+閲覧対象の画像一覧クラス
+シリアライズ対応
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-
-/*
-閲覧対象の画像一覧クラス
-シリアライズ対応
-*/
 
 namespace Marmi
 {

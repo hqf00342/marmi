@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ThumbnalConfig
+サムネイル用のコンフィグ
+*/
+
+using System;
 using System.Drawing;
 using System.Xml.Serialization;
 
@@ -7,9 +12,15 @@ namespace Marmi.DataModel
     [Serializable]
     public class ThumbnailConfig
     {
+        /// <summary>
+        /// サムネイルの背景色
+        /// </summary>
         [XmlIgnore]
         public Color ThumbnailBackColor;
 
+        /// <summary>
+        /// サムネイルの背景色(XML)
+        /// </summary>
         [XmlElement("XmlThumbnailBackColor")]
         public string XmlBackColor
         {
@@ -17,9 +28,15 @@ namespace Marmi.DataModel
             get { return ColorTranslator.ToHtml(ThumbnailBackColor); }
         }
 
+        /// <summary>
+        /// サムネイルのフォント
+        /// </summary>
         [XmlIgnore]
         public Font ThumbnailFont;
 
+        /// <summary>
+        /// サムネイルのフォント(XML)
+        /// </summary>
         [XmlElement("XmlThumbnailFont")]
         public string XmlTbFont
         {
@@ -35,9 +52,15 @@ namespace Marmi.DataModel
             }
         }
 
+        /// <summary>
+        /// サムネイルのフォント色
+        /// </summary>
         [XmlIgnore]
         public Color ThumbnailFontColor;
 
+        /// <summary>
+        /// サムネイルのフォント色(XML)
+        /// </summary>
         [XmlElement("XmlThumbnailFontColor")]
         public string XmlFontColor
         {
@@ -45,39 +68,53 @@ namespace Marmi.DataModel
             get { return ColorTranslator.ToHtml(ThumbnailFontColor); }
         }
 
-        //サムネイル画像の大きさ
+        /// <summary>
+        /// サムネイル画像の大きさ
+        /// </summary>
         public int ThumbnailSize { get; set; }
 
-        // サムネイルに影を描写するか
+        /// <summary>
+        /// サムネイルに影を描写
+        /// </summary>
         public bool DrawShadowdrop { get; set; }
 
-        // サムネイルに枠を描写するか
+        /// <summary>
+        /// サムネイルに枠を描写
+        /// </summary>
         public bool DrawFrame { get; set; }
 
-        // サムネイルにファイル名を表示するか
+        /// <summary>
+        /// サムネイルにファイル名を表示
+        /// </summary>
         public bool DrawFilename { get; set; }
 
-        // ファイル名にファイルサイズを表示するか
+        /// <summary>
+        /// ファイルサイズを表示
+        /// </summary>
         public bool DrawFilesize { get; set; }
 
-        // ファイル名に画像サイズを表示するか
+        /// <summary>
+        /// ファイル名に画像サイズを表示するか
+        /// </summary>
         public bool DrawPicsize { get; set; }
 
+        /// <summary>
+        /// サムネイルでスムーススクロールをする
+        /// </summary>
         public bool SmoothScroll { get; set; }
 
         public void Init()
         {
             //サムネイルタブ
-            ThumbnailSize = 200;                            //サムネイルサイズ
-            ThumbnailBackColor = Color.White;               //サムネイルのバックカラー
-            ThumbnailFont = new Font("MS UI Gothic", 9);    //サムネイルのフォント
-            ThumbnailFontColor = Color.Black;               //サムネイルのフォントカラー
-                                                            //isAutoCleanOldCache = false;					//サムネイルを自動でクリーンするか
-            DrawShadowdrop = true;                   //サムネイルに影を描写するか
-            DrawFrame = true;                    //サムネイルに枠を描写するか
-            DrawFilename = true;                        //画像名を表示するか
-            DrawFilesize = false;                       //画像のファイルサイズを表示するか
-            DrawPicsize = false;                        //画像のピクセルサイズを表示するか
+            ThumbnailSize = 200;
+            ThumbnailBackColor = Color.White;
+            ThumbnailFont = new Font("MS UI Gothic", 9);
+            ThumbnailFontColor = Color.Black;
+            DrawShadowdrop = true;
+            DrawFrame = true;
+            DrawFilename = true;
+            DrawFilesize = false;
+            DrawPicsize = false;
             SmoothScroll = true;
         }
     }

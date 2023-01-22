@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+Exif
+画像内のEXIF情報
+*/
+
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Marmi.DataModel
 {
@@ -43,6 +45,7 @@ namespace Marmi.DataModel
                     case 0x9003: //撮影日時「YYYY:MM:DD HH:MM:SS」形式19文字
                         ShootingDate = Encoding.ASCII.GetString(pi.Value, 0, 19);
                         break;
+
                     case 0x010f: //Make
                         Maker = Encoding.ASCII.GetString(pi.Value);
                         Maker = Maker.Trim(new char[] { '\0' });

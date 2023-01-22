@@ -1,3 +1,9 @@
+/********************************************************************************
+AppGlobalConfig
+設定を保存するクラス
+XmlSerializeされる設定を管理している。
+********************************************************************************/
+
 using Marmi.DataModel;
 using System;
 using System.Collections.Generic;
@@ -5,11 +11,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-
-/********************************************************************************
- 設定を保存するクラス
-XmlSerializeされる設定を管理している。
-********************************************************************************/
 
 namespace Marmi
 {
@@ -30,34 +31,74 @@ namespace Marmi
             set => ViewState.DualView = value;
         }
 
-        public bool RecurseSearchDir { get; set; }             //ディレクトリの再帰検索
+        /// <summary>
+        /// ディレクトリの再帰検索
+        /// </summary>
+        public bool RecurseSearchDir { get; set; }
 
-        public bool FitToScreen { get; set; }            //画像とイメージをフィットさせる
-        public bool StopPaintingAtResize { get; set; }         //リサイズ時の描写をやめる
+        /// <summary>
+        /// 画像とイメージをフィットさせる
+        /// </summary>
+        public bool FitToScreen { get; set; }
 
-        public int SidebarWidth { get; set; }                    //サイドバーの幅
+        /// <summary>
+        /// リサイズ時の描写をやめる
+        /// </summary>
+        public bool StopPaintingAtResize { get; set; }
 
-        ////ver1.35 スクリーンショー時間[ms]
+        /// <summary>
+        /// サイドバーの幅
+        /// </summary>
+        public int SidebarWidth { get; set; }
+
+        /// <summary>
+        /// スクリーンショー時間[ms]
+        /// </summary>
         public int SlideshowTime { get; set; }
 
-        //ver1.62 ツールバーの位置
+        /// <summary>
+        /// ツールバーの位置
+        /// </summary>
         public bool ToolbarIsTop { get; set; }
 
-        //ver1.78 倍率の保持
+        /// <summary>
+        /// 倍率の保持
+        /// </summary>
         public bool KeepMagnification { get; set; }
 
+        /// <summary>
+        /// GeneralConfig
+        /// </summary>
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
+        /// <summary>
+        /// ViewConfig
+        /// </summary>
         public ViewConfig View { get; set; } = new ViewConfig();
 
+        /// <summary>
+        /// KeyConfig
+        /// </summary>
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
+        /// <summary>
+        /// MouseConfig
+        /// </summary>
         public MouseConfig Mouse { get; set; } = new MouseConfig();
 
+        /// <summary>
+        /// LoupeConfig
+        /// </summary>
         public LoupeConfig Loupe { get; set; } = new LoupeConfig();
 
+        /// <summary>
+        /// AdvanceConfig
+        /// </summary>
         public AdvanceConfig Advance { get; set; } = new AdvanceConfig();
 
+        /// <summary>
+        /// ThumbnailConfig
+        /// </summary>
         public ThumbnailConfig Thumbnail { get; set; } = new ThumbnailConfig();
 
         /// <summary>

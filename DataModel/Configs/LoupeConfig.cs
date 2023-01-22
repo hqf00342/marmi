@@ -2,10 +2,14 @@
 {
     public class LoupeConfig
     {
-        //ルーペ倍率
+        /// <summary>
+        /// ルーペ倍率
+        /// </summary>
         public int LoupeMagnifcant { get; set; }
 
-        // ルーペを原寸表示とするかどうか。
+        /// <summary>
+        /// ルーペを原寸表示とするかどうか。
+        /// </summary>
         public bool OriginalSizeLoupe { get; set; }
 
         public void Init()

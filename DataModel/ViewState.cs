@@ -2,25 +2,39 @@
 {
     public static class ViewState
     {
-        //2画面並べて表示
+        /// <summary>
+        /// 2画面並べて表示
+        /// </summary>
         public static bool DualView { get; set; } = false;
 
-        //メニューバーの表示
+        /// <summary>
+        /// メニューバーの表示
+        /// </summary>
         public static bool VisibleMenubar { get; set; } = true;
 
-        //ツールバーの表示
+        /// <summary>
+        /// ツールバーの表示
+        /// </summary>
         public static bool VisibleToolBar { get; set; } = true;
 
-        //ステータスバーの表示
+        /// <summary>
+        /// ステータスバーの表示
+        /// </summary>
         public static bool VisibleStatusBar { get; set; } = true;
 
-        //サイドバーの表示
+        /// <summary>
+        /// サイドバーの表示
+        /// </summary>
         public static bool VisibleSidebar { get; set; } = false;
 
-        //ver1.77 画面モード保存対象にする。
+        /// <summary>
+        /// 画面モード. 保存対象にする
+        /// </summary>
         public static bool FullScreen { get; set; }
 
-        //サムネイルモード
+        /// <summary>
+        /// サムネイルモード
+        /// </summary>
         public static bool ThumbnailView { get; set; }
     }
 }

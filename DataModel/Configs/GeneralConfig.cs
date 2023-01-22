@@ -1,4 +1,9 @@
-﻿using Marmi.Interfaces;
+﻿/********************************************************************************
+GlobalConfig
+一般設定
+********************************************************************************/
+
+using Marmi.Interfaces;
 using System.Drawing;
 using System.Xml.Serialization;
 

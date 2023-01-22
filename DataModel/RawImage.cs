@@ -1,11 +1,14 @@
-﻿using System;
+﻿/********************************************************************************
+RawImage
+画像をBitmap化せずにそのままbyte[]として保持。
+必要な時はToBitmap()する。
+********************************************************************************/
+
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-/*
-画像をBitmap化せずにそのままメモリーに保持するクラス。
-必要な時はToBitmap()する。
-*/
+
 namespace Marmi
 {
     public class RawImage
@@ -107,15 +110,14 @@ namespace Marmi
             {
                 return null;
             }
-            catch(NotSupportedException)
+            catch (NotSupportedException)
             {
                 return null;
             }
         }
 
         /// <summary>
-        /// ver1.51 画像サイズをBMPを作らずに取得
-        /// 画像サイズを取得する
+        /// 画像サイズをBMPを作らずに取得する
         /// byte[]配列を直接見ることで対応
         /// ver1.51 png, jpg, bmpに対応
         /// </summary>
