@@ -108,7 +108,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL" />
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\SevenZipSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -379,11 +382,9 @@
     <None Include="Resources\16x16\arrow-circle-double.png" />
     <None Include="Resources\ScrNext.png" />
     <None Include="Resources\ScrPrev.png" />
-    <None Include="配布物\readme.txt" />
     <None Include="dlls\7z.dll" />
     <None Include="dlls\7z64.dll" />
     <None Include="ToDo.md" />
-    <None Include="配布物\SevenZipSharp.dll" />
     <None Include="DPIメモ.md" />
     <EmbeddedResource Include="git_branch.txt" />
     <EmbeddedResource Include="git_id.txt" />
