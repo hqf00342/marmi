@@ -22,7 +22,7 @@ namespace Marmi
     public sealed class ThumbnailPanel : UserControl
     {
         private List<ImageInfo> m_ImgSet => App.g_pi.Items; //ImageInfoのリスト, = g_pi.Items
-        private FormSaveThumbnail m_saveForm;   //サムネイル保存用ダイアログ
+        //private FormSaveThumbnail m_saveForm;   //サムネイル保存用ダイアログ
         private int m_mouseHoverItem = -1;      //現在マウスがホバーしているアイテム
 
         private const int PADDING = 10;         //サムネイルの余白。2014年3月23日変更。間隔狭すぎた
@@ -36,10 +36,10 @@ namespace Marmi
         private Color _fontColor;
         private const string FONTNAME = "ＭＳ ゴシック";
         private const int FONTSIZE = 9;
-        private int FONT_HEIGHT; //SetFont()内で設定される。
+        private static int FONT_HEIGHT; //SetFont()内で設定される。
 
         //サムネイル保存ダイアログに知らせるイベントハンドラー
-        public event EventHandler<ThumbnailEventArgs> SavedItemChanged;
+        //public event EventHandler<ThumbnailEventArgs> SavedItemChanged;
 
         //コンテキストメニュー
         private readonly ContextMenuStrip m_ContextMenu = new ContextMenuStrip();
@@ -58,10 +58,7 @@ namespace Marmi
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
 
-            //画像一覧
-            //m_ImgSet = App.g_pi.Items;
-
-            //ダブルバッファ追加。昔の方法も書いておく
+            //ダブルバッファ。昔の方法も書いておく
             this.SetStyle(ControlStyles.DoubleBuffer, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -97,11 +94,7 @@ namespace Marmi
         /// <param name="thumbnailSize">TBOXサイズ</param>
         public void SetThumbnailSize(int thumbnailSize)
         {
-            if (_thumbnailSize != thumbnailSize)
-            {
-                _thumbnailSize = thumbnailSize;
-            }
-
+            _thumbnailSize = thumbnailSize;
             var size = CalcTboxSize(thumbnailSize);
             _tboxWidth = size.Width;
             _tboxHeight = size.Height;
@@ -114,7 +107,7 @@ namespace Marmi
         /// TBOXサイズを計算する。
         /// 単純にPADDING分と文字列分を足したもの。
         /// </summary>
-        public Size CalcTboxSize(int thumbnailSize)
+        public static Size CalcTboxSize(int thumbnailSize)
         {
             //TBOXサイズを確定
             var w = thumbnailSize + (PADDING * 2);
@@ -702,112 +695,6 @@ namespace Marmi
 
         #endregion アイテム描写
 
-        /// <summary>
-        /// 高品質専用描写DrawItem.
-        /// サムネイル一覧保存用に利用。
-        /// ダミーBMPに描写するため描写位置を固定とする。
-        /// </summary>
-        /// <param name="g"></param>
-        /// <param name="item"></param>
-        private async Task DrawItemHQ2Async(Graphics g, int item)
-        {
-            //対象矩形を背景色で塗りつぶす.
-            g.FillRectangle(
-                new SolidBrush(BackColor),
-                0, 0, _tboxWidth, _tboxHeight);
-
-            //描写品質を最高に
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            //ver0.993 nullReferの原因追及
-            //Ver0.993 2011年7月31日いろいろお試し中
-            //まずなんでocacheじゃないとダメだったのか分からない
-            //エラーが出る原因はやっぱり別スレッド中からの呼び出しみたい
-            if (Parent == null)
-            {
-                //親ウィンドウがなくなっているので何もしない
-                return;
-            }
-
-            var drawBitmap = await Bmp.GetBitmapAsync(item, false);
-
-            //フラグ設定
-            bool drawFrame = true;          //枠線を描写するか
-            bool isResize = true;           //リサイズが必要か（可能か）どうかのフラグ
-            int w;                          //描写画像の幅
-            int h;                          //描写画像の高さ
-
-            if (drawBitmap == null)
-            {
-                //サムネイルは準備できていない
-                drawBitmap = DummyImage;
-                drawFrame = false;
-                isResize = false;
-                w = drawBitmap.Width;
-                h = drawBitmap.Height;
-            }
-            else
-            {
-                w = drawBitmap.Width;
-                h = drawBitmap.Height;
-
-                //リサイズすべきかどうか確認する。
-                if (w <= _thumbnailSize && h <= _thumbnailSize)
-                    isResize = false;
-            }
-
-            //原寸表示させるモノは出来るだけ原寸とする
-            //if (THUMBNAIL_SIZE != DEFAULT_THUMBNAIL_SIZE && isResize == true)
-            if (isResize)
-            {
-                float ratio = (w > h) ?
-                    (float)_thumbnailSize / (float)w :
-                    (float)_thumbnailSize / (float)h;
-                //if (ratio > 1)			//これをコメント化すると
-                //    ratio = 1.0F;		//拡大描写も行う
-                w = (int)(w * ratio);
-                h = (int)(h * ratio);
-            }
-
-            int sx = (_tboxWidth - w) / 2;           //画像描写X位置
-            int sy = _thumbnailSize + PADDING - h;  //画像描写Y位置：下揃え
-
-            Rectangle imageRect = new Rectangle(sx, sy, w, h);
-
-            //影を描写する.アイコン時（＝drawFrame==false）で描写しない
-            if (App.Config.Thumbnail.DrawShadowdrop && drawFrame)
-            {
-                Rectangle frameRect = imageRect;
-                BitmapUty.DrawDropShadow(g, frameRect);
-            }
-
-            //画像を書く
-            //g.DrawImage(drawBitmap, sx, sy, w, h);
-            //フォーカスのない画像を描写
-            g.FillRectangle(Brushes.White, imageRect);
-            g.DrawImage(drawBitmap, imageRect);
-
-            //写真風に外枠を書く
-            if (App.Config.Thumbnail.DrawFrame && drawFrame)
-            {
-                Rectangle frameRect = imageRect;
-                //枠がおかしいので拡大しない
-                //frameRect.Inflate(2, 2);
-                //g.FillRectangle(Brushes.White, frameRect);//ver1.15 コメントアウト、なんだっけ？
-                g.DrawRectangle(Pens.LightGray, frameRect);
-            }
-
-            ////画像情報を文字描写する
-            //RectangleF tRect = new RectangleF(PADDING, PADDING + THUMBNAIL_SIZE + PADDING, THUMBNAIL_SIZE, TEXT_HEIGHT);
-            //DrawTextInfo(g, Item, tRect);
-
-            //Bitmapの破棄。GetBitmapWithoutCache()で取ってきたため
-            if (drawBitmap != null && (string)(drawBitmap.Tag) != App.TAG_PICTURECACHE)
-            {
-                drawBitmap.Dispose();
-            }
-        }
-
         //*** 描写支援ルーチン ****************************************************************
 
         /// <summary>
@@ -949,20 +836,6 @@ namespace Marmi
             }
         }
 
-        ///// <summary>
-        ///// サムネイルアイテムが描写対象かどうかチェックする
-        ///// OnPaint()で使われることも考慮して
-        ///// 描写領域を指定できるようにする
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <param name="screenRect"></param>
-        ///// <returns></returns>
-        //private bool CheckNecessaryToDrawItem(int item, Rectangle screenRect)
-        //{
-        //    Rectangle itemRect = GetThumbboxRectanble(item);
-        //    return screenRect.IntersectsWith(itemRect);
-        //}
-
         /// <summary>
         /// 指定した位置にあるアイテム番号を返す
         /// MouseHoverでの利用を想定。
@@ -988,111 +861,5 @@ namespace Marmi
             //指定ポイントにアイテムがあるか
             return itemPointX > horizonItems - 1 || index > m_ImgSet.Count - 1 ? -1 : index;
         }
-
-        //***************************************************************************************
-
-        #region サムネイルのファイル保存
-
-        /// <summary>
-        /// サムネイル画像を保存する。
-        /// ここでは保存用ダイアログを表示するだけ。
-        /// ダイアログからSaveThumbnailImage()が呼び出される。
-        /// </summary>
-        /// <param name="filenameCandidate">保存ファイル名の候補</param>
-        public void SaveThumbnail(string filenameCandidate)
-        {
-            if (m_ImgSet == null || m_ImgSet.Count == 0)
-                return;
-
-            //いったん保存
-            int tmpThumbnailSize = _thumbnailSize;
-            //int tmpScrollbarValue = m_vScrollBar.Value;
-
-            m_saveForm = new FormSaveThumbnail(this, m_ImgSet, filenameCandidate);
-            m_saveForm.ShowDialog(this);
-            m_saveForm.Dispose();
-
-            //元に戻す
-            SetThumbnailSize(tmpThumbnailSize);
-            //m_vScrollBar.Value = tmpScrollbarValue;
-        }
-
-        /// <summary>
-        /// サムネイル画像一覧を作成、保存する。
-        /// この関数の中で保存Bitmapを生成し、それをpng形式で保存する
-        /// </summary>
-        /// <param name="thumbSize">サムネイル画像のサイズ</param>
-        /// <param name="numX">サムネイルの横方向の画像数</param>
-        /// <param name="FilenameCandidate">保存するファイル名</param>
-        /// <returns>原則true、保存しなかった場合はfalse</returns>
-        public async Task<bool> SaveThumbnailImageAsync(int thumbSize, int numX, string FilenameCandidate)
-        {
-            //初期化済みか確認
-            if (m_ImgSet == null)
-                return false;
-
-            //アイテム数を確認
-            int ItemCount = m_ImgSet.Count;
-            if (ItemCount <= 0)
-                return false;
-
-            //サムネイルサイズを設定.再計算
-            SetThumbnailSize(thumbSize);
-
-            //アイテム数を設定
-            //m_nItemsX = numX;
-            //m_nItemsY = ItemCount / m_nItemsX;	//縦に並ぶアイテム数はサムネイルの数による
-            //if (ItemCount % m_nItemsX > 0)
-            //    m_nItemsY++;						//割り切れなかった場合は1行追加
-
-            Size offscreenSize = CalcScreenSize();
-
-            //Bitmapを生成
-            Bitmap saveBmp = new Bitmap(offscreenSize.Width, offscreenSize.Height);
-            Bitmap dummyBmp = new Bitmap(_tboxWidth, _tboxHeight);
-
-            using (Graphics g = Graphics.FromImage(saveBmp))
-            {
-                //対象矩形を背景色で塗りつぶす.
-                g.Clear(BackColor);
-
-                for (int item = 0; item < m_ImgSet.Count; item++)
-                {
-                    using (Graphics dummyg = Graphics.FromImage(dummyBmp))
-                    {
-                        //高品質画像を描写
-                        await DrawItemHQ2Async(dummyg, item);
-
-                        //ダミーに描写した画像を描写する。
-                        Rectangle r = GetTboxRectanble(item);
-                        g.DrawImageUnscaled(dummyBmp, r);
-
-                        //画像情報を文字描写する
-                        DrawTextInfo(g, item, r);
-                    }
-
-                    ThumbnailEventArgs ev = new ThumbnailEventArgs
-                    {
-                        HoverItemNumber = item,
-                        HoverItemName = m_ImgSet[item].Filename
-                    };
-
-                    //ver1.31 nullチェック
-                    if (SavedItemChanged != null)
-                        this.SavedItemChanged(null, ev);
-                    Application.DoEvents();
-
-                    //キャンセル処理
-                    if (m_saveForm.IsCancel)
-                        return false;
-                }
-            }
-
-            saveBmp.Save(FilenameCandidate);
-            saveBmp.Dispose();
-            return true;
-        }
-
-        #endregion サムネイルのファイル保存
     }
 }

@@ -438,33 +438,32 @@
             // 
             this.MenuItem_FileOpen.Image = global::Marmi.Properties.Resources.folderopen;
             this.MenuItem_FileOpen.Name = "MenuItem_FileOpen";
-            this.MenuItem_FileOpen.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileOpen.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileOpen.Text = "開く...";
             this.MenuItem_FileOpen.Click += new System.EventHandler(this.Menu_FileOpen_Click);
             // 
             // MenuItem_FileRecent
             // 
             this.MenuItem_FileRecent.Name = "MenuItem_FileRecent";
-            this.MenuItem_FileRecent.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileRecent.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileRecent.Text = "最近使った書庫ファイル";
             // 
             // MenuItem_ClearMRU
             // 
             this.MenuItem_ClearMRU.Name = "MenuItem_ClearMRU";
-            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_ClearMRU.Text = "履歴のクリア";
             this.MenuItem_ClearMRU.Click += new System.EventHandler(this.Menu_ClearMRU_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(204, 6);
             // 
             // MenuItem_FileSaveThumbnail
             // 
-            this.MenuItem_FileSaveThumbnail.Enabled = false;
             this.MenuItem_FileSaveThumbnail.Name = "MenuItem_FileSaveThumbnail";
-            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileSaveThumbnail.Text = "サムネイル一覧画像の保存";
             this.MenuItem_FileSaveThumbnail.Click += new System.EventHandler(this.Menu_SaveThumbnail_Click);
             // 
@@ -472,7 +471,7 @@
             // 
             this.MenuItem_FileExit.Image = global::Marmi.Properties.Resources.dooropen;
             this.MenuItem_FileExit.Name = "MenuItem_FileExit";
-            this.MenuItem_FileExit.Size = new System.Drawing.Size(203, 22);
+            this.MenuItem_FileExit.Size = new System.Drawing.Size(207, 26);
             this.MenuItem_FileExit.Text = "終了";
             this.MenuItem_FileExit.Click += new System.EventHandler(this.Menu_Exit_Click);
             // 
@@ -506,7 +505,7 @@
             this.Menu_ViewStatusbar,
             this.Menu_ViewSidebar});
             this.Menu_ViewToggleToolbar.Name = "Menu_ViewToggleToolbar";
-            this.Menu_ViewToggleToolbar.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewToggleToolbar.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewToggleToolbar.Text = "バーの表示切り替え";
             // 
             // Menu_ViewMenubar
@@ -540,20 +539,20 @@
             // Menu_ToolbarBottom
             // 
             this.Menu_ToolbarBottom.Name = "Menu_ToolbarBottom";
-            this.Menu_ToolbarBottom.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ToolbarBottom.Size = new System.Drawing.Size(174, 22);
             this.Menu_ToolbarBottom.Text = "ツールバーを下に";
             this.Menu_ToolbarBottom.Click += new System.EventHandler(this.Menu_ToolbarBottom_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(171, 6);
             // 
             // Menu_ViewReload
             // 
             this.Menu_ViewReload.Image = global::Marmi.Properties.Resources.arrowcircledouble;
             this.Menu_ViewReload.Name = "Menu_ViewReload";
-            this.Menu_ViewReload.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewReload.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewReload.Text = "この画像を再描写";
             this.Menu_ViewReload.Click += new System.EventHandler(this.Menu_Reload_Click);
             // 
@@ -561,14 +560,14 @@
             // 
             this.Menu_ViewFitScreenSize.Image = global::Marmi.Properties.Resources.magnifierZoomFit;
             this.Menu_ViewFitScreenSize.Name = "Menu_ViewFitScreenSize";
-            this.Menu_ViewFitScreenSize.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewFitScreenSize.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewFitScreenSize.Text = "表示サイズ自動調整";
             this.Menu_ViewFitScreenSize.Click += new System.EventHandler(this.Menu_ViewFitScreenSize_Click);
             // 
             // Menu_View2Page
             // 
             this.Menu_View2Page.Name = "Menu_View2Page";
-            this.Menu_View2Page.Size = new System.Drawing.Size(184, 26);
+            this.Menu_View2Page.Size = new System.Drawing.Size(174, 22);
             this.Menu_View2Page.Text = "２枚表示";
             this.Menu_View2Page.Click += new System.EventHandler(this.Menu_ViewDualPage_Click);
             // 
@@ -576,7 +575,7 @@
             // 
             this.Menu_ViewFullScreen.Image = global::Marmi.Properties.Resources.applicationResizeFull;
             this.Menu_ViewFullScreen.Name = "Menu_ViewFullScreen";
-            this.Menu_ViewFullScreen.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewFullScreen.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewFullScreen.Text = "全画面表示";
             this.Menu_ViewFullScreen.Click += new System.EventHandler(this.Menu_ViewFullScreen_Click);
             // 
@@ -588,7 +587,7 @@
             this.MenuItem_ZoomIn,
             this.MenuItem_ZoomOut});
             this.Menu_ViewZoom.Name = "Menu_ViewZoom";
-            this.Menu_ViewZoom.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewZoom.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewZoom.Text = "拡大縮小";
             // 
             // MenuItem_ZoomFit
@@ -626,7 +625,7 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(171, 6);
             // 
             // MenuItem_Sort
             // 
@@ -636,7 +635,7 @@
             this.MenuItem_SortCustom});
             this.MenuItem_Sort.Image = global::Marmi.Properties.Resources.sortAlphabet;
             this.MenuItem_Sort.Name = "MenuItem_Sort";
-            this.MenuItem_Sort.Size = new System.Drawing.Size(184, 26);
+            this.MenuItem_Sort.Size = new System.Drawing.Size(174, 22);
             this.MenuItem_Sort.Text = "並び替え";
             // 
             // MenuItem_SortByName
@@ -664,14 +663,14 @@
             // 
             this.Menu_ViewPictureInfo.Image = global::Marmi.Properties.Resources.information;
             this.Menu_ViewPictureInfo.Name = "Menu_ViewPictureInfo";
-            this.Menu_ViewPictureInfo.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewPictureInfo.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewPictureInfo.Text = "画像情報...";
             this.Menu_ViewPictureInfo.Click += new System.EventHandler(this.Menu_ViewPictureInfo_Click);
             // 
             // Menu_ViewPackageInfo
             // 
             this.Menu_ViewPackageInfo.Name = "Menu_ViewPackageInfo";
-            this.Menu_ViewPackageInfo.Size = new System.Drawing.Size(184, 26);
+            this.Menu_ViewPackageInfo.Size = new System.Drawing.Size(174, 22);
             this.Menu_ViewPackageInfo.Text = "パッケージ情報...";
             this.Menu_ViewPackageInfo.Click += new System.EventHandler(this.Menu_ViewPackageInfo_Click);
             // 

@@ -41,9 +41,11 @@ namespace Marmi
         internal const string TAG_PICTURECACHE = "CACHE";
 
         //staticフォント
+        internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);
         internal static readonly Font Font12B = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
 
-        internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);
+        internal static readonly int Font9_Height;
+        internal static readonly int Font12B_Height;
 
         public static class Cursors
         {
@@ -56,6 +58,22 @@ namespace Marmi
             internal static Cursor Right = new Cursor(iconRightFinger.Handle);
             internal static Cursor Loupe = new Cursor(iconLoope.Handle);
             internal static Cursor OpenHand = new Cursor(iconHandOpen.Handle);
+        }
+
+        static App()
+        {
+            Font9_Height = (int)GetFontHeight(Font9);
+            Font12B_Height = (int)GetFontHeight(Font12B);
+        }
+
+        private static float GetFontHeight(Font font)
+        {
+            using (var bmp = new Bitmap(100, 100))
+            using (var g = Graphics.FromImage(bmp))
+            {
+                SizeF sf = g.MeasureString("テスト文字列", font);
+                return sf.Height;
+            }
         }
 
         /// <summary>

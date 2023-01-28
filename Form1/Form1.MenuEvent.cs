@@ -46,7 +46,8 @@ namespace Marmi
             _thumbPanel.Location = GetClientRectangle().Location;
             _thumbPanel.Size = GetClientRectangle().Size;
             _thumbPanel.Parent = this;
-            _thumbPanel.SaveThumbnail(App.g_pi.PackageName);
+            var form = new FormSaveThumbnail(App.g_pi.Items, App.g_pi.PackageName);
+            form.ShowDialog(this);
         }
 
         private void Menu_Exit_Click(object sender, EventArgs e)
@@ -69,19 +70,8 @@ namespace Marmi
             //MRUを追加
             UpdateMruMenuListUI();
 
-            ////ファイルを閲覧していない場合のナビゲーション
-            //if (g_pi.Items == null || g_pi.Items.Count < 1)
-            //{
-            //	MenuItem_FileSaveThumbnail.Enabled = false;
-            //}
-            //else
-            //{
-            //	//サムネイルボタン
-            //	MenuItem_FileSaveThumbnail.Enabled = true;
-            //}
-
-            //ver1.81サムネイルはしばらく無視
-            MenuItem_FileSaveThumbnail.Enabled = false;
+            //ファイルを閲覧していない場合,サムネイル保存を無効にする
+            MenuItem_FileSaveThumbnail.Enabled = (App.g_pi?.Items?.Count > 0);
         }
 
         /// <summary>
