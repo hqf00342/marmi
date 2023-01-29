@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -13,20 +14,17 @@ namespace Marmi
 
         private void Version_Load(object sender, EventArgs e)
         {
-            //バージョン情報の取得
-            System.Diagnostics.FileVersionInfo fv =
-                System.Diagnostics.FileVersionInfo.GetVersionInfo(
-                    System.Reflection.Assembly.GetExecutingAssembly().Location);
+            //バージョン情報取得
+            var fv = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            var buildenv = fv.IsDebug ? "Debug" : "Release";
 
-            string buildconf = fv.IsDebug ? "Debug" : "Release";
-
-            label1.Text = $"{fv.ProductName} ver{fv.ProductVersion}({buildconf})\n"
+            label1.Text = $"{fv.ProductName} ver{fv.ProductVersion}({buildenv})\n"
                         + $"{GitInfo.BranchName}-{GitInfo.CommitId}";
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(((LinkLabel)sender).Text);
+            Process.Start(((LinkLabel)sender).Text);
         }
     }
 }
