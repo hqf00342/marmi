@@ -169,6 +169,8 @@
             // isDrawFileName
             // 
             this.isDrawFileName.AutoSize = true;
+            this.isDrawFileName.Checked = true;
+            this.isDrawFileName.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isDrawFileName.Location = new System.Drawing.Point(14, 121);
             this.isDrawFileName.Name = "isDrawFileName";
             this.isDrawFileName.Size = new System.Drawing.Size(122, 16);
@@ -179,6 +181,8 @@
             // isDrawFileSize
             // 
             this.isDrawFileSize.AutoSize = true;
+            this.isDrawFileSize.Checked = true;
+            this.isDrawFileSize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isDrawFileSize.Location = new System.Drawing.Point(14, 143);
             this.isDrawFileSize.Name = "isDrawFileSize";
             this.isDrawFileSize.Size = new System.Drawing.Size(139, 16);
@@ -189,6 +193,8 @@
             // isDrawPicSize
             // 
             this.isDrawPicSize.AutoSize = true;
+            this.isDrawPicSize.Checked = true;
+            this.isDrawPicSize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isDrawPicSize.Location = new System.Drawing.Point(14, 165);
             this.isDrawPicSize.Name = "isDrawPicSize";
             this.isDrawPicSize.Size = new System.Drawing.Size(129, 16);
@@ -266,8 +272,6 @@
             this.Controls.Add(this.label1);
             this.Name = "FormSaveThumbnail";
             this.Text = "サムネイル一覧の保存";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSaveThumbnail_FormClosed);
-            this.Load += new System.EventHandler(this.FormSaveThumbnail_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
