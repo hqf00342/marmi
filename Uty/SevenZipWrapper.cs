@@ -182,7 +182,7 @@ namespace Marmi
         {
             //パスワード認証フォームを出し3回チャレンジする
             int passwordRetryRemain = 3;
-            using (FormPassword pf = new FormPassword())
+            using (PasswordForm pf = new PasswordForm())
             {
                 //リトライ回数分をループ
                 while (passwordRetryRemain > 0)
@@ -212,7 +212,7 @@ namespace Marmi
                     else
                     {
                         passwordRetryRemain--;
-                        pf.PasswordText = "";   //password dialogのTextBoxをクリア
+                        pf.ClearText();     //password dialogのTextBoxをクリア
                     }
                 }
 

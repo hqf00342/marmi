@@ -248,11 +248,11 @@
     <Compile Include="ChildForms\FormPackageInfo.Designer.cs">
       <DependentUpon>FormPackageInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChildForms\FormPassword.cs">
+    <Compile Include="ChildForms\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChildForms\FormPassword.Designer.cs">
-      <DependentUpon>FormPassword.cs</DependentUpon>
+    <Compile Include="ChildForms\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ChildForms\FormPictureInfo.cs">
       <SubType>Form</SubType>
@@ -304,9 +304,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>FormPackageInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChildForms\FormPassword.resx">
+    <EmbeddedResource Include="ChildForms\PasswordForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>FormPassword.cs</DependentUpon>
+      <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChildForms\FormPictureInfo.resx">
       <SubType>Designer</SubType>

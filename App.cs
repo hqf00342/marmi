@@ -42,9 +42,11 @@ namespace Marmi
 
         //staticフォント
         internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);
+        internal static readonly Font Font10 = new Font("ＭＳ Ｐ ゴシック", 10.5F);
         internal static readonly Font Font12B = new Font("ＭＳ Ｐ ゴシック", 12F, FontStyle.Bold);
 
         internal static readonly int Font9_Height;
+        internal static readonly int Font10_Height;
         internal static readonly int Font12B_Height;
 
         public static class Cursors
@@ -63,6 +65,7 @@ namespace Marmi
         static App()
         {
             Font9_Height = (int)GetFontHeight(Font9);
+            Font10_Height = (int)GetFontHeight(Font10);
             Font12B_Height = (int)GetFontHeight(Font12B);
         }
 
