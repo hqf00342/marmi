@@ -129,6 +129,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\IConfig.cs" />
+    <Compile Include="Models\TaskExtensions.cs" />
     <Compile Include="Models\ThumbnailPictureMaker.cs" />
     <Compile Include="Uty\GitInfo.cs" />
     <Compile Include="Uty\TempDirs.cs" />

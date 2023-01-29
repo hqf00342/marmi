@@ -244,7 +244,7 @@ namespace Marmi
                 //わざと並列で描写する
                 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
 #pragma warning disable CS4014
-                DrawItem(g, item, offset);
+                DrawItemAsync(g, item, offset);
 #pragma warning restore CS4014
             }
             return;
@@ -311,7 +311,7 @@ namespace Marmi
         /// </summary>
         /// <param name="g">描写先のGraphics</param>
         /// <param name="index">描写アイテム番号</param>
-        private async Task DrawItem(Graphics g, int index, int offset)
+        private async Task DrawItemAsync(Graphics g, int index, int offset)
         {
             if (g == null)
                 throw new ArgumentNullException(nameof(g));

@@ -1,5 +1,6 @@
 #define SEVENZIP	//SevenZipSharpを使うときはこれを定義する。
 
+using Marmi.Models;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -242,10 +243,8 @@ namespace Marmi
                 //2022年9月17日 非同期IOを中止
                 await AsyncIO.ClearJobAndWaitAsync();
 
-#pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
                 //await StartAsync(files);
-                StartAsync(files);
-#pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
+                StartAsync(files).FireAndForget();
             }
             Debug.WriteLine("OnDragDrop() End");
         }

@@ -467,7 +467,7 @@ namespace Marmi
 
 #pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
                 //並列に描写されることを想定し、awaitしない
-                DrawItem(index, g, rc);
+                DrawItemAsync(index, g, rc);
 #pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
             }
 
@@ -486,7 +486,7 @@ namespace Marmi
         /// <param name="index">対象アイテム番号</param>
         /// <param name="g">書き出し先Graphics</param>
         /// <param name="rect">描写する位置</param>
-        private async Task DrawItem(int index, Graphics g, Rectangle rect)
+        private async Task DrawItemAsync(int index, Graphics g, Rectangle rect)
         {
             if (m_packageInfo == null)
                 return;

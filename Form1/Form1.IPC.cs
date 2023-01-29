@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marmi.Models;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -24,10 +25,7 @@ namespace Marmi
                 //1つめに自分のexeファイル名が入っているので除く
                 if (args.Length > 1)
                 {
-                    //AsyncStart(args.Skip(1).ToArray());
-#pragma warning disable CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
-                    StartAsync(args.Skip(1).ToArray());
-#pragma warning restore CS4014 // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
+                    StartAsync(args.Skip(1).ToArray()).FireAndForget();
                 }
             }));
         }
