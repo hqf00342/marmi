@@ -217,11 +217,11 @@
     <Compile Include="ChildForms\AsyncExtractForm.Designer.cs">
       <DependentUpon>AsyncExtractForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChildForms\FormSaveThumbnail.cs">
+    <Compile Include="ChildForms\SaveThumbnailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChildForms\FormSaveThumbnail.Designer.cs">
-      <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
+    <Compile Include="ChildForms\SaveThumbnailForm.Designer.cs">
+      <DependentUpon>SaveThumbnailForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Uty\BitmapUty.cs" />
     <Compile Include="MyControls\ClearPanel.cs">
@@ -292,9 +292,9 @@
     <EmbeddedResource Include="ChildForms\AsyncExtractForm.resx">
       <DependentUpon>AsyncExtractForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChildForms\FormSaveThumbnail.resx">
+    <EmbeddedResource Include="ChildForms\SaveThumbnailForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>FormSaveThumbnail.cs</DependentUpon>
+      <DependentUpon>SaveThumbnailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChildForms\OptionForm.resx">
       <SubType>Designer</SubType>

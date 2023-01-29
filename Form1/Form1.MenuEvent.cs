@@ -46,7 +46,7 @@ namespace Marmi
             _thumbPanel.Location = GetClientRectangle().Location;
             _thumbPanel.Size = GetClientRectangle().Size;
             _thumbPanel.Parent = this;
-            var form = new FormSaveThumbnail(App.g_pi.Items, App.g_pi.PackageName);
+            var form = new SaveThumbnailForm(App.g_pi.Items, App.g_pi.PackageName);
             form.ShowDialog(this);
         }
 

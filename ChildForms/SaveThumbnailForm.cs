@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Marmi
 {
-    public partial class FormSaveThumbnail : Form
+    public partial class SaveThumbnailForm : Form
     {
         private string saveFilename;
         private readonly IReadOnlyList<ImageInfo> _imageList;
@@ -17,7 +17,7 @@ namespace Marmi
 
         private CancellationTokenSource _cts = null;
 
-        public FormSaveThumbnail(List<ImageInfo> imageList, string Filename)
+        public SaveThumbnailForm(List<ImageInfo> imageList, string Filename)
         {
             InitializeComponent();
             _imageList = imageList;
