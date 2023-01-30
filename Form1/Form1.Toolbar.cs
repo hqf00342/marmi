@@ -18,99 +18,93 @@ namespace Marmi
         private void UpdateToolbar()
         {
             //画面モードの状態反映
-            toolButtonDualMode.Checked = ViewState.DualView;
-            toolButtonFullScreen.Checked = ViewState.FullScreen;
-            toolButtonThumbnail.Checked = ViewState.ThumbnailView;
+            toolbar_DualMode.Checked = ViewState.DualView;
+            toolbar_FullScreen.Checked = ViewState.FullScreen;
+            toolbar_Thumbnail.Checked = ViewState.ThumbnailView;
 
             //Sidebar
-            toolStripButton_Sidebar.Checked = _sidebar.Visible;
+            toolbar_Sidebar.Checked = _sidebar.Visible;
 
             if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
                 //ファイルを閲覧していない場合のツールバー
                 _trackbar.Enabled = false;
-                toolButtonLeft.Enabled = false;
-                toolButtonRight.Enabled = false;
-                toolButtonThumbnail.Enabled = false;
-                toolStripButton_Zoom100.Checked = false;
-                toolStripButton_ZoomFit.Checked = false;
-                toolStripButton_ZoomOut.Enabled = false;
-                toolStripButton_ZoomIn.Enabled = false;
-                toolStripButton_Zoom100.Enabled = false;
-                toolStripButton_ZoomFit.Enabled = false;
-                toolStripButton_Favorite.Enabled = false;
-                toolStripButton_Rotate.Enabled = false;
+                toolbar_Left.Enabled = false;
+                toolbar_Right.Enabled = false;
+                toolbar_Thumbnail.Enabled = false;
+                toolbar_Zoom100.Checked = false;
+                toolbar_ZoomFit.Checked = false;
+                toolbar_ZoomOut.Enabled = false;
+                toolbar_ZoomIn.Enabled = false;
+                toolbar_Zoom100.Enabled = false;
+                toolbar_ZoomFit.Enabled = false;
+                toolbar_Favorite.Enabled = false;
+                toolbar_Rotate.Enabled = false;
                 return;
             }
             else
             {
                 //サムネイルボタン
-                toolButtonThumbnail.Enabled = true;
-                //if(g_makeThumbnail)
-                //    toolButtonThumbnail.Enabled = true;
-                //else
-                //    toolButtonThumbnail.Enabled = false;
+                toolbar_Thumbnail.Enabled = true;
 
                 if (ViewState.ThumbnailView)
                 {
                     //サムネイル表示中
-                    toolButtonLeft.Enabled = false;
-                    toolButtonRight.Enabled = false;
-                    toolStripButton_Zoom100.Enabled = false;
-                    toolStripButton_ZoomFit.Enabled = false;
-                    toolStripButton_Favorite.Enabled = false;
-                    toolStripButton_Sidebar.Enabled = false;
-                    //toolStripButton_Zoom100.Checked = false;
-                    //toolStripButton_ZoomFit.Checked = false;
+                    toolbar_Left.Enabled = false;
+                    toolbar_Right.Enabled = false;
+                    toolbar_Zoom100.Enabled = false;
+                    toolbar_ZoomFit.Enabled = false;
+                    toolbar_Favorite.Enabled = false;
+                    toolbar_Sidebar.Enabled = false;
                 }
                 else
                 {
                     //通常表示中
-                    toolStripButton_ZoomIn.Enabled = true;
-                    toolStripButton_ZoomOut.Enabled = true;
-                    toolStripButton_Zoom100.Enabled = true;
-                    toolStripButton_ZoomFit.Enabled = true;
-                    toolStripButton_Favorite.Enabled = true;
-                    toolStripButton_Sidebar.Enabled = true;
-                    toolStripButton_Rotate.Enabled = true;
+                    toolbar_ZoomIn.Enabled = true;
+                    toolbar_ZoomOut.Enabled = true;
+                    toolbar_Zoom100.Enabled = true;
+                    toolbar_ZoomFit.Enabled = true;
+                    toolbar_Favorite.Enabled = true;
+                    toolbar_Sidebar.Enabled = true;
+                    toolbar_Rotate.Enabled = true;
 
                     //左右ボタンの有効無効
                     if (App.Config.General.ReplaceArrowButton)
                     {
                         //入れ替え
-                        toolButtonLeft.Enabled = !IsLastPageViewing();      //最終ページチェック
-                        toolButtonRight.Enabled = (bool)(App.g_pi.NowViewPage != 0);    //先頭ページチェック
+                        toolbar_Left.Enabled = !IsLastPageViewing();      //最終ページチェック
+                        toolbar_Right.Enabled = (bool)(App.g_pi.NowViewPage != 0);    //先頭ページチェック
                     }
                     else
                     {
-                        toolButtonLeft.Enabled = (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
-                        toolButtonRight.Enabled = !IsLastPageViewing();     //最終ページチェック
+                        toolbar_Left.Enabled = (bool)(App.g_pi.NowViewPage != 0); //先頭ページチェック
+                        toolbar_Right.Enabled = !IsLastPageViewing();     //最終ページチェック
                     }
 
                     //100%ズーム
-                    toolStripButton_Zoom100.Checked = PicPanel.IsScreen100p;
+                    toolbar_Zoom100.Checked = PicPanel.IsScreen100p;
 
                     //画面フィットズーム
-                    toolStripButton_ZoomFit.Checked = PicPanel.IsFitToScreen;
+                    toolbar_ZoomFit.Checked = PicPanel.IsFitToScreen;
 
                     //Favorite
                     if (App.g_pi.Items[App.g_pi.NowViewPage].IsBookMark)
                     {
-                        toolStripButton_Favorite.Checked = true;
+                        toolbar_Favorite.Checked = true;
                     }
                     else if (g_viewPages == 2
                         && App.g_pi.NowViewPage < App.g_pi.Items.Count - 1      //ver1.69 最終ページより前チェック
                         && App.g_pi.Items[App.g_pi.NowViewPage + 1].IsBookMark) //
                     {
-                        toolStripButton_Favorite.Checked = true;
+                        toolbar_Favorite.Checked = true;
                     }
                     else
                     {
-                        toolStripButton_Favorite.Checked = false;
+                        toolbar_Favorite.Checked = false;
                     }
 
                     //Sidebar
-                    toolStripButton_Sidebar.Checked = _sidebar.Visible;
+                    toolbar_Sidebar.Checked = _sidebar.Visible;
                 }
 
                 //TrackBar
@@ -126,13 +120,13 @@ namespace Marmi
         {
             if (App.Config.General.HideToolbarString)
             {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.Image;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
+                toolbar_Close.DisplayStyle = ToolStripItemDisplayStyle.Image;
+                toolbar_FullScreen.DisplayStyle = ToolStripItemDisplayStyle.Image;
             }
             else
             {
-                toolButtonClose.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                toolButtonFullScreen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+                toolbar_Close.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+                toolbar_FullScreen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             }
         }
 
@@ -275,13 +269,8 @@ namespace Marmi
 
         private void ToolStripButton_Zoom100_Click(object sender, EventArgs e)
         {
-            //if (PicPanel.FittingRatio == 1.0f)
-            //    PicPanel.isAutoFit = true;
-            //else
-            //    PicPanel.isAutoFit = false;
             PicPanel.IsAutoFit = false;
             PicPanel.ZoomRatio = 1.0f;
-            //PicPanel.Refresh();
             PicPanel.AjustViewAndShow();
         }
 
@@ -289,11 +278,10 @@ namespace Marmi
         {
             PicPanel.IsAutoFit = true;
             //表示倍率の調整
-            float r = PicPanel.FittingRatio;
+            float r = PicPanel.JustFitRatio;
             if (r > 1.0f && App.Config.View.ProhigitExpansionOver100p)
                 r = 1.0f;
             PicPanel.ZoomRatio = r;
-            //PicPanel.Refresh();
             PicPanel.AjustViewAndShow();
         }
 
@@ -312,8 +300,7 @@ namespace Marmi
         private void Trackbar_ValueChanged(object sender, EventArgs e)
         {
             //選択アイテムを中央に表示
-            if (_trackNaviPanel != null)
-                _trackNaviPanel.SetCenterItem(_trackbar.Value);
+            _trackNaviPanel?.SetCenterItem(_trackbar.Value);
         }
 
         private void Trackbar_MouseDown(object sender, MouseEventArgs e)

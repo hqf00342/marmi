@@ -393,7 +393,7 @@ namespace Marmi
                     _thumbPanel.BringToFront();        //ver1.83 最前面になるようにする。ツールバー対策
                 _thumbPanel.Dock = DockStyle.Fill; //ver1.64
                 _thumbPanel.Visible = true;
-                toolButtonThumbnail.Checked = true;
+                toolbar_Thumbnail.Checked = true;
                 _thumbPanel.ReDraw();
             }
             else
@@ -403,7 +403,7 @@ namespace Marmi
                 //this.Controls.Remove(g_ThumbPanel);
                 _thumbPanel.Visible = false;
                 _thumbPanel.Dock = DockStyle.None; //ver1.64
-                toolButtonThumbnail.Checked = false;
+                toolbar_Thumbnail.Checked = false;
 
                 //PicPanelを表示
                 PicPanel.Dock = DockStyle.Fill;
@@ -526,7 +526,7 @@ namespace Marmi
         {
             Debug.WriteLine(isDual, "SetDualViewMode()");
             ViewState.DualView = isDual;
-            toolButtonDualMode.Checked = isDual;
+            toolbar_DualMode.Checked = isDual;
             Menu_View2Page.Checked = isDual;
 
             //ver1.36 スクリーンキャッシュをクリア
@@ -600,7 +600,7 @@ namespace Marmi
                 this.Controls.Add(statusbar);
                 this.Controls.Add(menuStrip1);
 
-                toolButtonFullScreen.Checked = false;
+                toolbar_FullScreen.Checked = false;
                 toolStrip1.Visible = ViewState.VisibleToolBar;
                 menuStrip1.Visible = ViewState.VisibleMenubar;
                 statusbar.Visible = ViewState.VisibleStatusBar;
@@ -609,7 +609,7 @@ namespace Marmi
             //メニュー、ツールバーの更新
             Menu_ViewFullScreen.Checked = ViewState.FullScreen;
             Menu_ContextFullView.Checked = ViewState.FullScreen;
-            toolButtonFullScreen.Checked = ViewState.FullScreen;
+            toolbar_FullScreen.Checked = ViewState.FullScreen;
 
             AjustSidebarArrangement();
             UpdateStatusbar();

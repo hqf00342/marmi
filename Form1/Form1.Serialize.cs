@@ -32,7 +32,7 @@ namespace Marmi
                 SetFullScreen(true);
 
             //2枚表示
-            toolButtonDualMode.Checked = ViewState.DualView;
+            toolbar_DualMode.Checked = ViewState.DualView;
 
             //MRU反映
             //オープンするときに実施するのでコメントアウト
@@ -44,17 +44,17 @@ namespace Marmi
             //左右矢印交換対応
             if (App.Config.General.ReplaceArrowButton)
             {
-                toolButtonLeft.Tag = "次のページに移動します";
-                toolButtonLeft.Text = "次へ";
-                toolButtonRight.Tag = "前のページに移動します";
-                toolButtonRight.Text = "前へ";
+                toolbar_Left.Tag = "次のページに移動します";
+                toolbar_Left.Text = "次へ";
+                toolbar_Right.Tag = "前のページに移動します";
+                toolbar_Right.Text = "前へ";
             }
             else
             {
-                toolButtonLeft.Tag = "前のページに移動します";
-                toolButtonLeft.Text = "前へ";
-                toolButtonRight.Tag = "次のページに移動します";
-                toolButtonRight.Text = "次へ";
+                toolbar_Left.Tag = "前のページに移動します";
+                toolbar_Left.Text = "前へ";
+                toolbar_Right.Tag = "次のページに移動します";
+                toolbar_Right.Text = "次へ";
             }
 
             //サムネイル関連

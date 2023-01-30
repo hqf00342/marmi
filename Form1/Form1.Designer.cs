@@ -31,21 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolButtonOpen = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonLeft = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonRight = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonClose = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonFullScreen = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonThumbnail = new System.Windows.Forms.ToolStripButton();
-            this.toolButtonDualMode = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Open = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Left = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Right = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Close = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_FullScreen = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Thumbnail = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_DualMode = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton_Sidebar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_Favorite = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_Zoom100 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_ZoomFit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_ZoomIn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_ZoomOut = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_Rotate = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Sidebar = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Favorite = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Zoom100 = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_ZoomFit = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_ZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_ZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.toolbar_Rotate = new System.Windows.Forms.ToolStripButton();
             this.statusbar = new System.Windows.Forms.StatusStrip();
             this.Statusbar_InfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Statusbar_PageLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -155,21 +155,21 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolButtonOpen,
-            this.toolButtonLeft,
-            this.toolButtonRight,
-            this.toolButtonClose,
-            this.toolButtonFullScreen,
-            this.toolButtonThumbnail,
-            this.toolButtonDualMode,
+            this.toolbar_Open,
+            this.toolbar_Left,
+            this.toolbar_Right,
+            this.toolbar_Close,
+            this.toolbar_FullScreen,
+            this.toolbar_Thumbnail,
+            this.toolbar_DualMode,
             this.toolStripSeparator10,
-            this.toolStripButton_Sidebar,
-            this.toolStripButton_Favorite,
-            this.toolStripButton_Zoom100,
-            this.toolStripButton_ZoomFit,
-            this.toolStripButton_ZoomIn,
-            this.toolStripButton_ZoomOut,
-            this.toolStripButton_Rotate});
+            this.toolbar_Sidebar,
+            this.toolbar_Favorite,
+            this.toolbar_Zoom100,
+            this.toolbar_ZoomFit,
+            this.toolbar_ZoomIn,
+            this.toolbar_ZoomOut,
+            this.toolbar_Rotate});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -180,101 +180,101 @@
             // 
             // toolButtonOpen
             // 
-            this.toolButtonOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolButtonOpen.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonOpen.Image")));
-            this.toolButtonOpen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonOpen.Name = "toolButtonOpen";
-            this.toolButtonOpen.Size = new System.Drawing.Size(36, 36);
-            this.toolButtonOpen.Tag = "表示するファイルを選択します";
-            this.toolButtonOpen.Text = "開く...";
-            this.toolButtonOpen.Click += new System.EventHandler(this.Menu_FileOpen_Click);
-            this.toolButtonOpen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonOpen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_Open.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Open.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonOpen.Image")));
+            this.toolbar_Open.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Open.Name = "toolButtonOpen";
+            this.toolbar_Open.Size = new System.Drawing.Size(36, 36);
+            this.toolbar_Open.Tag = "表示するファイルを選択します";
+            this.toolbar_Open.Text = "開く...";
+            this.toolbar_Open.Click += new System.EventHandler(this.Menu_FileOpen_Click);
+            this.toolbar_Open.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_Open.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonLeft
             // 
-            this.toolButtonLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolButtonLeft.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonLeft.Image")));
-            this.toolButtonLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonLeft.Name = "toolButtonLeft";
-            this.toolButtonLeft.Size = new System.Drawing.Size(36, 36);
-            this.toolButtonLeft.Tag = "前のページに移動します";
-            this.toolButtonLeft.Text = "前へ";
-            this.toolButtonLeft.Click += new System.EventHandler(this.ToolButtonLeft_Click);
-            this.toolButtonLeft.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonLeft.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_Left.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Left.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonLeft.Image")));
+            this.toolbar_Left.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Left.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Left.Name = "toolButtonLeft";
+            this.toolbar_Left.Size = new System.Drawing.Size(36, 36);
+            this.toolbar_Left.Tag = "前のページに移動します";
+            this.toolbar_Left.Text = "前へ";
+            this.toolbar_Left.Click += new System.EventHandler(this.ToolButtonLeft_Click);
+            this.toolbar_Left.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_Left.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonRight
             // 
-            this.toolButtonRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolButtonRight.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonRight.Image")));
-            this.toolButtonRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonRight.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonRight.Name = "toolButtonRight";
-            this.toolButtonRight.Size = new System.Drawing.Size(36, 36);
-            this.toolButtonRight.Tag = "次のページに移動します";
-            this.toolButtonRight.Text = "次へ";
-            this.toolButtonRight.Click += new System.EventHandler(this.ToolButtonRight_Click);
-            this.toolButtonRight.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonRight.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_Right.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Right.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonRight.Image")));
+            this.toolbar_Right.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Right.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Right.Name = "toolButtonRight";
+            this.toolbar_Right.Size = new System.Drawing.Size(36, 36);
+            this.toolbar_Right.Tag = "次のページに移動します";
+            this.toolbar_Right.Text = "次へ";
+            this.toolbar_Right.Click += new System.EventHandler(this.ToolButtonRight_Click);
+            this.toolbar_Right.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_Right.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonClose
             // 
-            this.toolButtonClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolButtonClose.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonClose.Image")));
-            this.toolButtonClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonClose.Name = "toolButtonClose";
-            this.toolButtonClose.Size = new System.Drawing.Size(67, 36);
-            this.toolButtonClose.Tag = "アプリケーションを終了します";
-            this.toolButtonClose.Text = "終了";
-            this.toolButtonClose.Click += new System.EventHandler(this.Menu_Exit_Click);
-            this.toolButtonClose.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonClose.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_Close.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolbar_Close.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonClose.Image")));
+            this.toolbar_Close.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Close.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Close.Name = "toolButtonClose";
+            this.toolbar_Close.Size = new System.Drawing.Size(67, 36);
+            this.toolbar_Close.Tag = "アプリケーションを終了します";
+            this.toolbar_Close.Text = "終了";
+            this.toolbar_Close.Click += new System.EventHandler(this.Menu_Exit_Click);
+            this.toolbar_Close.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_Close.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonFullScreen
             // 
-            this.toolButtonFullScreen.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolButtonFullScreen.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonFullScreen.Image")));
-            this.toolButtonFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonFullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonFullScreen.Name = "toolButtonFullScreen";
-            this.toolButtonFullScreen.Size = new System.Drawing.Size(103, 36);
-            this.toolButtonFullScreen.Tag = "全画面モードをトグル切り替えします";
-            this.toolButtonFullScreen.Text = "全画面表示";
-            this.toolButtonFullScreen.Click += new System.EventHandler(this.Menu_ViewFullScreen_Click);
-            this.toolButtonFullScreen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonFullScreen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_FullScreen.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolbar_FullScreen.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonFullScreen.Image")));
+            this.toolbar_FullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_FullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_FullScreen.Name = "toolButtonFullScreen";
+            this.toolbar_FullScreen.Size = new System.Drawing.Size(103, 36);
+            this.toolbar_FullScreen.Tag = "全画面モードをトグル切り替えします";
+            this.toolbar_FullScreen.Text = "全画面表示";
+            this.toolbar_FullScreen.Click += new System.EventHandler(this.Menu_ViewFullScreen_Click);
+            this.toolbar_FullScreen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_FullScreen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonThumbnail
             // 
-            this.toolButtonThumbnail.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolButtonThumbnail.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonThumbnail.Image")));
-            this.toolButtonThumbnail.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonThumbnail.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonThumbnail.Name = "toolButtonThumbnail";
-            this.toolButtonThumbnail.Size = new System.Drawing.Size(36, 36);
-            this.toolButtonThumbnail.Tag = "サムネイル一覧を表示し、ページジャンプできます";
-            this.toolButtonThumbnail.Text = "サムネイル一覧を表示";
-            this.toolButtonThumbnail.Click += new System.EventHandler(this.Menu_ViewThumbnail_Click);
-            this.toolButtonThumbnail.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonThumbnail.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_Thumbnail.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Thumbnail.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonThumbnail.Image")));
+            this.toolbar_Thumbnail.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Thumbnail.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Thumbnail.Name = "toolButtonThumbnail";
+            this.toolbar_Thumbnail.Size = new System.Drawing.Size(36, 36);
+            this.toolbar_Thumbnail.Tag = "サムネイル一覧を表示し、ページジャンプできます";
+            this.toolbar_Thumbnail.Text = "サムネイル一覧を表示";
+            this.toolbar_Thumbnail.Click += new System.EventHandler(this.Menu_ViewThumbnail_Click);
+            this.toolbar_Thumbnail.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_Thumbnail.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolButtonDualMode
             // 
-            this.toolButtonDualMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolButtonDualMode.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonDualMode.Image")));
-            this.toolButtonDualMode.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolButtonDualMode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolButtonDualMode.Name = "toolButtonDualMode";
-            this.toolButtonDualMode.Size = new System.Drawing.Size(36, 36);
-            this.toolButtonDualMode.Tag = "2ページモードを切り替えます";
-            this.toolButtonDualMode.Text = "2枚表示モード";
-            this.toolButtonDualMode.Click += new System.EventHandler(this.Menu_ViewDualPage_Click);
-            this.toolButtonDualMode.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
-            this.toolButtonDualMode.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
+            this.toolbar_DualMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_DualMode.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonDualMode.Image")));
+            this.toolbar_DualMode.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_DualMode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_DualMode.Name = "toolButtonDualMode";
+            this.toolbar_DualMode.Size = new System.Drawing.Size(36, 36);
+            this.toolbar_DualMode.Tag = "2ページモードを切り替えます";
+            this.toolbar_DualMode.Text = "2枚表示モード";
+            this.toolbar_DualMode.Click += new System.EventHandler(this.Menu_ViewDualPage_Click);
+            this.toolbar_DualMode.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
+            this.toolbar_DualMode.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
             // toolStripSeparator10
             // 
@@ -283,83 +283,83 @@
             // 
             // toolStripButton_Sidebar
             // 
-            this.toolStripButton_Sidebar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_Sidebar.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Sidebar.Image")));
-            this.toolStripButton_Sidebar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Sidebar.Name = "toolStripButton_Sidebar";
-            this.toolStripButton_Sidebar.Size = new System.Drawing.Size(24, 36);
-            this.toolStripButton_Sidebar.Tag = "サイドバー表示切り替え";
-            this.toolStripButton_Sidebar.Text = "サイドバー表示切り替え";
-            this.toolStripButton_Sidebar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
+            this.toolbar_Sidebar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Sidebar.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Sidebar.Image")));
+            this.toolbar_Sidebar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Sidebar.Name = "toolStripButton_Sidebar";
+            this.toolbar_Sidebar.Size = new System.Drawing.Size(24, 36);
+            this.toolbar_Sidebar.Tag = "サイドバー表示切り替え";
+            this.toolbar_Sidebar.Text = "サイドバー表示切り替え";
+            this.toolbar_Sidebar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
             // 
             // toolStripButton_Favorite
             // 
-            this.toolStripButton_Favorite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_Favorite.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Favorite.Image")));
-            this.toolStripButton_Favorite.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Favorite.Name = "toolStripButton_Favorite";
-            this.toolStripButton_Favorite.Size = new System.Drawing.Size(24, 36);
-            this.toolStripButton_Favorite.Tag = "ブックマーク";
-            this.toolStripButton_Favorite.Text = "ブックマーク";
-            this.toolStripButton_Favorite.Click += new System.EventHandler(this.Menu_ContextBookmark_Click);
+            this.toolbar_Favorite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Favorite.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Favorite.Image")));
+            this.toolbar_Favorite.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Favorite.Name = "toolStripButton_Favorite";
+            this.toolbar_Favorite.Size = new System.Drawing.Size(24, 36);
+            this.toolbar_Favorite.Tag = "ブックマーク";
+            this.toolbar_Favorite.Text = "ブックマーク";
+            this.toolbar_Favorite.Click += new System.EventHandler(this.Menu_ContextBookmark_Click);
             // 
             // toolStripButton_Zoom100
             // 
-            this.toolStripButton_Zoom100.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_Zoom100.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Zoom100.Image")));
-            this.toolStripButton_Zoom100.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_Zoom100.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Zoom100.Name = "toolStripButton_Zoom100";
-            this.toolStripButton_Zoom100.Size = new System.Drawing.Size(28, 36);
-            this.toolStripButton_Zoom100.Tag = "等倍表示";
-            this.toolStripButton_Zoom100.Text = "等倍表示";
-            this.toolStripButton_Zoom100.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
+            this.toolbar_Zoom100.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Zoom100.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Zoom100.Image")));
+            this.toolbar_Zoom100.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_Zoom100.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Zoom100.Name = "toolStripButton_Zoom100";
+            this.toolbar_Zoom100.Size = new System.Drawing.Size(28, 36);
+            this.toolbar_Zoom100.Tag = "等倍表示";
+            this.toolbar_Zoom100.Text = "等倍表示";
+            this.toolbar_Zoom100.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
             // 
             // toolStripButton_ZoomFit
             // 
-            this.toolStripButton_ZoomFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ZoomFit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomFit.Image")));
-            this.toolStripButton_ZoomFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ZoomFit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ZoomFit.Name = "toolStripButton_ZoomFit";
-            this.toolStripButton_ZoomFit.Size = new System.Drawing.Size(28, 36);
-            this.toolStripButton_ZoomFit.Tag = "ウィンドウサイズに合わせて表示";
-            this.toolStripButton_ZoomFit.Text = "ウィンドウサイズに合わせて表示";
-            this.toolStripButton_ZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
+            this.toolbar_ZoomFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_ZoomFit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomFit.Image")));
+            this.toolbar_ZoomFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_ZoomFit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_ZoomFit.Name = "toolStripButton_ZoomFit";
+            this.toolbar_ZoomFit.Size = new System.Drawing.Size(28, 36);
+            this.toolbar_ZoomFit.Tag = "ウィンドウサイズに合わせて表示";
+            this.toolbar_ZoomFit.Text = "ウィンドウサイズに合わせて表示";
+            this.toolbar_ZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
             // 
             // toolStripButton_ZoomIn
             // 
-            this.toolStripButton_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomIn.Image")));
-            this.toolStripButton_ZoomIn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ZoomIn.Name = "toolStripButton_ZoomIn";
-            this.toolStripButton_ZoomIn.Size = new System.Drawing.Size(28, 36);
-            this.toolStripButton_ZoomIn.Tag = "拡大表示";
-            this.toolStripButton_ZoomIn.Text = "拡大表示";
-            this.toolStripButton_ZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
+            this.toolbar_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomIn.Image")));
+            this.toolbar_ZoomIn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_ZoomIn.Name = "toolStripButton_ZoomIn";
+            this.toolbar_ZoomIn.Size = new System.Drawing.Size(28, 36);
+            this.toolbar_ZoomIn.Tag = "拡大表示";
+            this.toolbar_ZoomIn.Text = "拡大表示";
+            this.toolbar_ZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
             // 
             // toolStripButton_ZoomOut
             // 
-            this.toolStripButton_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomOut.Image")));
-            this.toolStripButton_ZoomOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ZoomOut.Name = "toolStripButton_ZoomOut";
-            this.toolStripButton_ZoomOut.Size = new System.Drawing.Size(28, 36);
-            this.toolStripButton_ZoomOut.Tag = "縮小表示";
-            this.toolStripButton_ZoomOut.Text = "縮小表示";
-            this.toolStripButton_ZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
+            this.toolbar_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_ZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomOut.Image")));
+            this.toolbar_ZoomOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolbar_ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_ZoomOut.Name = "toolStripButton_ZoomOut";
+            this.toolbar_ZoomOut.Size = new System.Drawing.Size(28, 36);
+            this.toolbar_ZoomOut.Tag = "縮小表示";
+            this.toolbar_ZoomOut.Text = "縮小表示";
+            this.toolbar_ZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
             // 
             // toolStripButton_Rotate
             // 
-            this.toolStripButton_Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Rotate.Image")));
-            this.toolStripButton_Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Rotate.Name = "toolStripButton_Rotate";
-            this.toolStripButton_Rotate.Size = new System.Drawing.Size(24, 36);
-            this.toolStripButton_Rotate.Text = "右方向に90度回転";
-            this.toolStripButton_Rotate.Click += new System.EventHandler(this.ToolStripButton_Rotate_Click);
+            this.toolbar_Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolbar_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Rotate.Image")));
+            this.toolbar_Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolbar_Rotate.Name = "toolStripButton_Rotate";
+            this.toolbar_Rotate.Size = new System.Drawing.Size(24, 36);
+            this.toolbar_Rotate.Text = "右方向に90度回転";
+            this.toolbar_Rotate.Click += new System.EventHandler(this.ToolStripButton_Rotate_Click);
             // 
             // statusbar
             // 
@@ -1222,13 +1222,13 @@
 		#endregion
 
 		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.ToolStripButton toolButtonLeft;
-		private System.Windows.Forms.ToolStripButton toolButtonRight;
-		private System.Windows.Forms.ToolStripButton toolButtonDualMode;
-		private System.Windows.Forms.ToolStripButton toolButtonFullScreen;
-		private System.Windows.Forms.ToolStripButton toolButtonOpen;
-		private System.Windows.Forms.ToolStripButton toolButtonClose;
-		private System.Windows.Forms.ToolStripButton toolButtonThumbnail;
+		private System.Windows.Forms.ToolStripButton toolbar_Left;
+		private System.Windows.Forms.ToolStripButton toolbar_Right;
+		private System.Windows.Forms.ToolStripButton toolbar_DualMode;
+		private System.Windows.Forms.ToolStripButton toolbar_FullScreen;
+		private System.Windows.Forms.ToolStripButton toolbar_Open;
+		private System.Windows.Forms.ToolStripButton toolbar_Close;
+		private System.Windows.Forms.ToolStripButton toolbar_Thumbnail;
 		private System.Windows.Forms.StatusStrip statusbar;
 		private System.Windows.Forms.ToolStripStatusLabel Statusbar_InfoLabel;
 		private System.Windows.Forms.ToolStripStatusLabel Statusbar_PageLabel;
@@ -1295,14 +1295,14 @@
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextRedraw;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextAddBookmark;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ContextBookmarkList;
-		private System.Windows.Forms.ToolStripButton toolStripButton_ZoomIn;
-		private System.Windows.Forms.ToolStripButton toolStripButton_Zoom100;
-		private System.Windows.Forms.ToolStripButton toolStripButton_ZoomFit;
-		private System.Windows.Forms.ToolStripButton toolStripButton_ZoomOut;
-		private System.Windows.Forms.ToolStripButton toolStripButton_Favorite;
+		private System.Windows.Forms.ToolStripButton toolbar_ZoomIn;
+		private System.Windows.Forms.ToolStripButton toolbar_Zoom100;
+		private System.Windows.Forms.ToolStripButton toolbar_ZoomFit;
+		private System.Windows.Forms.ToolStripButton toolbar_ZoomOut;
+		private System.Windows.Forms.ToolStripButton toolbar_Favorite;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-		private System.Windows.Forms.ToolStripButton toolStripButton_Sidebar;
-		private System.Windows.Forms.ToolStripButton toolStripButton_Rotate;
+		private System.Windows.Forms.ToolStripButton toolbar_Sidebar;
+		private System.Windows.Forms.ToolStripButton toolbar_Rotate;
 		private System.Windows.Forms.ToolStripMenuItem Menu_ViewZoom;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_ZoomFit;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_ZoomOriginal;

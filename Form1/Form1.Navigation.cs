@@ -116,7 +116,7 @@ namespace Marmi
                 || PicPanel.IsFitToScreen)        //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動
-                float r = PicPanel.FittingRatio;
+                float r = PicPanel.JustFitRatio;
                 if (r > 1.0f && App.Config.View.ProhigitExpansionOver100p)
                     r = 1.0f;
                 PicPanel.ZoomRatio = r;

@@ -71,7 +71,7 @@ namespace Marmi
         }
 
         /// <summary>画面ぴったりの拡大比率</summary>
-        public float FittingRatio => GetScreenFitRatio();
+        public float JustFitRatio => GetScreenFitRatio();
 
         /// <summary>高速描写するかどうか。アニメーション時にtrueにする</summary>
         public bool FastDraw { get; set; }
@@ -598,7 +598,7 @@ namespace Marmi
                     //Zoom(ratios[i]);
                     AnimateZoom(ratios[i]);
 
-                    _isAutoFit = (ratios[i] == FittingRatio);
+                    _isAutoFit = (ratios[i] == JustFitRatio);
 
                     // スクロールバーを再計算
                     AjustScrollMinSize();
@@ -647,7 +647,7 @@ namespace Marmi
                     //Zoom(ratios[i]);
                     AnimateZoom(ratios[i]);
 
-                    _isAutoFit = (ratios[i] == FittingRatio);
+                    _isAutoFit = (ratios[i] == JustFitRatio);
 
                     // スクロールバーサイズを再計算
                     AjustScrollMinSize();
@@ -715,9 +715,9 @@ namespace Marmi
                         1.0f,
                         1.5f, 2.0f, 3.0f, 4.0f, 5.0f, 8.0f, 10.0f, 20.0f };
 
-            if (!zoomRatioList.Contains(FittingRatio))
+            if (!zoomRatioList.Contains(JustFitRatio))
             {
-                zoomRatioList.Add(FittingRatio);
+                zoomRatioList.Add(JustFitRatio);
                 zoomRatioList.Sort();
             }
             return zoomRatioList;
@@ -790,7 +790,7 @@ namespace Marmi
                     break;
             }
 
-            ZoomRatio = FittingRatio;
+            ZoomRatio = JustFitRatio;
             AjustScrollMinSize();
             AjustViewLocation();
             Refresh();
@@ -881,7 +881,7 @@ namespace Marmi
         /// <summary>
         /// 表示中の画像が画面いっぱいにフィットしているかどうか
         /// </summary>
-        public bool IsFitToScreen => Math.Abs(ZoomRatio - FittingRatio) < 0.001f;
+        public bool IsFitToScreen => Math.Abs(ZoomRatio - JustFitRatio) < 0.001f;
 
         /// <summary>
         /// 現在の表示が原寸かどうか
