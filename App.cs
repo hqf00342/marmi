@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marmi.Models;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -39,6 +40,9 @@ namespace Marmi
         //Bitmap.Tagにつけるタグ:リソース文字列から移動
         //TODO:利用していない疑惑あり
         internal const string TAG_PICTURECACHE = "CACHE";
+
+        //多目的Bitmapキャッシュ
+        internal readonly static BitmapCache BmpCache = new BitmapCache();
 
         //staticフォント
         internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);

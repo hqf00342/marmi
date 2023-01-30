@@ -216,6 +216,9 @@ namespace Marmi
             //2022年9月17日 非同期IOを中止、書庫のclose
             await AsyncIO.ClearJobAndWaitAsync();
 
+            //汎用キャッシュをクリア
+            App.BmpCache.ClearAll();
+
             //サムネイルモードの解放
             if (ViewState.ThumbnailView)
                 SetThumbnailView(false);
