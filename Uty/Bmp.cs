@@ -66,7 +66,7 @@ namespace Marmi
             if (ViewState.DualView && await CanDualViewAsync(index))
             {
                 //2枚表示
-                Bitmap bmp2 = await GetBitmapAsync(index + 1, true);
+                var bmp2 = await GetBitmapAsync(index + 1, true);
                 if (bmp2 == null)
                 {
                     //2枚目の読み込みがエラーなので1枚表示にする
@@ -99,8 +99,8 @@ namespace Marmi
                         g.DrawImage(bmp2, bmp1.Width, 0, bmp2.Width, bmp2.Height);
                     }
                 }
-                bmp1.Dispose();
-                bmp2.Dispose();
+                //bmp1.Dispose();
+                //bmp2.Dispose();
 
                 returnBmp.Tag = 2;
                 return returnBmp;
