@@ -14,6 +14,10 @@ namespace Marmi.DataModel
         /// </summary>
         public bool ClickRightToNextPic { get; set; }
 
+        /// <summary>
+        /// 左クリックで次ページ。
+        /// このプロパティは削ってはダメ。バインディングで利用している。
+        /// </summary>
         [XmlIgnore]
         public bool ClickLeftToNextPic
         {
