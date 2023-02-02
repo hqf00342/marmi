@@ -32,6 +32,8 @@ namespace Marmi.DataModel
         /// </summary>
         public bool DualView_withSizeCheck { get; set; }
 
+        private bool _stayOnLastPage = false;
+
         /// <summary>
         /// 最終ページに留まる
         /// </summary>
@@ -40,7 +42,7 @@ namespace Marmi.DataModel
         /// <summary>
         /// 最終ページ→先頭ページに移動
         /// </summary>
-        public bool MoveToTopAtLastPage { get; set; }
+        public bool MoveToTopAtLastPage { get =>!StayOnLastPage; set { StayOnLastPage = !value; } }
 
         /// <summary>
         /// 画像切り替え方法「アニメーション」
