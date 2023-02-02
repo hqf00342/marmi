@@ -32,8 +32,6 @@ namespace Marmi.DataModel
         /// </summary>
         public bool DualView_withSizeCheck { get; set; }
 
-        private bool _stayOnLastPage = false;
-
         /// <summary>
         /// 最終ページに留まる
         /// </summary>
@@ -53,8 +51,8 @@ namespace Marmi.DataModel
         {
             ProhigitExpansionOver100p = false;
             DotByDotZoom = false;
-            StayOnLastPage = true;
-            MoveToTopAtLastPage = false;
+            StayOnLastPage = false;
+            MoveToTopAtLastPage = true;
             DualView_Force = false;
             DualView_Normal = true;
             DualView_withSizeCheck = false;
