@@ -45,6 +45,21 @@ namespace Marmi
             return tcs.Task;
         }
 
+        public static void TryStackLoadImageTask(int ix, bool highPriority)
+        {
+            if (!AsyncIO.HasTask(ix))
+            {
+                if (highPriority)
+                {
+                    AsyncIO.AddJobHigh(ix, null);
+                }
+                else
+                {
+                    AsyncIO.AddJobLow(ix, null);
+                }
+            }
+        }
+
         /// <summary>
         /// 原寸サイズの画像を生成
         /// 2枚表示する場合は2画像を結合する。

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,7 +62,7 @@ namespace Marmi
                     int index = kv.Key;
                     Delegate action = kv.Value;
 
-                    Debug.WriteLine($"AsyncIO.Worker() : ix={index}, queue={_queue.Count} : {Path.GetFileName(App.g_pi.PackageName)}");
+                    //Debug.WriteLine($"AsyncIO.Worker() : ix={index}, queue={_queue.Count} : {Path.GetFileName(App.g_pi.PackageName)}");
 
                     //終了信号受信
                     if (index < 0)
@@ -211,6 +212,11 @@ namespace Marmi
                 }
                 Debug.WriteLine("AsyncIO.ClearJobAndWaitAsync() 完了");
             }
+        }
+
+        public static bool HasTask(int index)
+        {
+            return _queue.ToArray().Any(a=>a.Key== index);
         }
     }
 }

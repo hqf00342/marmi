@@ -2,12 +2,18 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace Marmi
 {
     public static class Uty
     {
+        public static void DebugPrint(string message, [CallerMemberName] string memberName = "")
+        {
+            Debug.WriteLine(message, memberName);
+        }
+
         /// <summary>
         /// 対応書庫かどうかをチェックする
         /// </summary>
@@ -73,7 +79,7 @@ namespace Marmi
             GC.WaitForPendingFinalizers();  // ファイナライズ終了まで待つ
             GC.Collect();                   // ファイナライズされたObjをGC
 
-            Debug.WriteLine($"ForceGC {before:N0}byte to {GC.GetTotalMemory(false):N0}byte");
+            DebugPrint($"ForceGC {before:N0}byte to {GC.GetTotalMemory(false):N0}byte");
         }
 
         /// <summary>

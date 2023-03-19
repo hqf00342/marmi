@@ -16,11 +16,11 @@ namespace Marmi
 {
     public class SideBar : UserControl
     {
-        private readonly int GRIP_WIDTH = 8;        //グリップ全体の幅
-        private readonly int GRIP_HEIGHT = 32;      //グリップ描写部分の高さ
-        private readonly int THUMBSIZE = 120;       //サムネイルサイズ
-        private readonly int PADDING = 2;           //各種の余白
-        private readonly int NUM_WIDTH = 32;        //番号部分の幅
+        private const int GRIP_WIDTH = 8;        //グリップ全体の幅
+        private const int GRIP_HEIGHT = 32;      //グリップ描写部分の高さ
+        private const int THUMBSIZE = 120;       //サムネイルサイズ
+        private const int PADDING = 2;           //各種の余白
+        private const int NUM_WIDTH = 32;        //番号部分の幅
         private readonly int BOX_HEIGHT;            //BOXサイズ：コンストラクタで計算
         private int m_hoverItem;                    //選択されているアイテム
         private Point m_mouseDragPoint;             //グリップをドラッグされたときのPoint
@@ -33,13 +33,11 @@ namespace Marmi
         private readonly SolidBrush m_brHoverBack = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
         private readonly VScrollBar m_vsBar = new VScrollBar();          //スクロールバー
         private readonly ToolTip m_tooltip = null;   //ツールチップ
-        private readonly Font fontL = new Font("ＭＳ Ｐ ゴシック", 10.5F);
-        private readonly Font fontS = new Font("ＭＳ Ｐ ゴシック", 9F);
 
-        //フォントサイズの初期計算用
-        private Size fontLsize = Size.Empty;
-
-        private Size fontSsize = Size.Empty;
+        private readonly Font FONTL = App.Font10;
+        private readonly Font FONTS = App.Font9;
+        private readonly int FONTL_HEIGHT = App.Font10_Height;
+        private readonly int FONTS_HEIGHT = App.Font9_Height;
 
         //高速描写/HQ描写判定用フラグ
         private bool fastDraw = false;
@@ -76,16 +74,6 @@ namespace Marmi
             m_vsBar.Value = 0;
             m_drawScrollValue = 0;
             this.Controls.Add(m_vsBar);
-
-            //キー処理
-            //m_vsBar.KeyDown += new KeyEventHandler(m_vsBar_KeyDown);
-
-            //フォントサイズの取得
-            using (Graphics g = CreateGraphics())
-            {
-                fontLsize = g.MeasureString("test font", fontL).ToSize();
-                fontSsize = g.MeasureString("test font", fontS).ToSize();
-            }
 
             //スクロールタイマーの設定
             m_scrollTimer = new Timer { Interval = 10 };
@@ -491,59 +479,58 @@ namespace Marmi
             if (m_packageInfo == null)
                 return;
 
-            //インデックスが範囲内かチェック
+            //インデックス範囲チェック
             if (index < 0 || index >= m_packageInfo.Items.Count)
                 return;
 
             //背景色を自前で描写.普通は塗らなくてもいい
             if (index == m_hoverItem)
+            {
                 g.FillRectangle(m_brHoverBack, rect);
+            }
             else if (index == m_packageInfo.NowViewPage)
+            {
                 g.FillRectangle(m_brSelectBack, rect);
-            //else
-            //    g.FillRectangle(m_brNormalBack, rect);
+            }
 
             //文字の描写:画像通し番号
             int x = rect.X + 2;
             int y = rect.Y + 20;
             string sz = $"{index + 1}";
-            int HeightL = fontLsize.Height;
-            int HeightS = fontSsize.Height;
-            g.DrawString(sz, fontS, Brushes.DarkGray, x, y);
+
+            g.DrawString(sz, FONTS, Brushes.DarkGray, x, y);
 
             //今回描写対象のアイテム
-            ImageInfo ImgInfo = m_packageInfo.Items[index];
+            var imgInfo = m_packageInfo.Items[index];
 
             x = rect.X + PADDING + NUM_WIDTH;
             y = rect.Y + PADDING;
-            if (ImgInfo.Thumbnail != null)
+            if (imgInfo.Thumbnail != null)
             {
-                int ThumbWidth = ImgInfo.Thumbnail.Width;
-                int ThumbHeight = ImgInfo.Thumbnail.Height;
+                int tWidth = imgInfo.Thumbnail.Width;
+                int tHeight = imgInfo.Thumbnail.Height;
 
-                //拡大縮小処理 {}をちゃんとつけないとだめ
-                float ratio = 1.0F;
-                if (ThumbWidth > ThumbHeight)
+                //拡大縮小処理
+                var ratio = 1.0F;
+                if (tWidth > tHeight && tWidth > THUMBSIZE)
                 {
-                    if (ThumbWidth > THUMBSIZE)
-                        ratio = (float)THUMBSIZE / ThumbWidth;
+                    ratio = (float)THUMBSIZE / tWidth;
                 }
-                else
+                else if (tHeight > THUMBSIZE)
                 {
-                    if (ThumbHeight > THUMBSIZE)
-                        ratio = (float)THUMBSIZE / ThumbHeight;
+                    ratio = (float)THUMBSIZE / tHeight;
                 }
 
-                RectangleF drawImageRect = new RectangleF(
-                    x + (THUMBSIZE - ThumbWidth * ratio) / 2,   // 始点X
-                    y + (THUMBSIZE - ThumbHeight * ratio) / 2,  // 始点Y位置
-                    ThumbWidth * ratio,                         // 画像の幅
-                    ThumbHeight * ratio                         // 画像の高さ
+                var drawImageRect = new RectangleF(
+                    x + (THUMBSIZE - tWidth * ratio) / 2,   // 始点X
+                    y + (THUMBSIZE - tHeight * ratio) / 2,  // 始点Y位置
+                    tWidth * ratio,                         // 画像幅
+                    tHeight * ratio                         // 画像高
                     );
 
                 //サムネイル画像の描写
                 g.DrawImage(
-                    ImgInfo.Thumbnail,
+                    imgInfo.Thumbnail,
                     Rectangle.Round(drawImageRect));
 
                 //枠の描写
@@ -551,16 +538,10 @@ namespace Marmi
                     Pens.LightGray,
                     Rectangle.Round(drawImageRect));
             }
-            else //else if(ImgInfo.ThumbImage == null)
+            else
             {
-                //画像を持っていない
-                //持っていないことを表示しよう
-                RectangleF drawImageRect = new RectangleF(
-                    x,  // 始点X
-                    y,  // 始点Y位置
-                    THUMBSIZE,                          // 画像の幅
-                    THUMBSIZE                           // 画像の高さ
-                    );
+                //画像を持っていないので枠だけ描写
+                var drawImageRect = new RectangleF(x, y, THUMBSIZE, THUMBSIZE);
                 g.DrawRectangle(
                     Pens.LightGray,
                     Rectangle.Round(drawImageRect));
@@ -580,27 +561,23 @@ namespace Marmi
             strRect.X = x + PADDING + NUM_WIDTH + THUMBSIZE;
             strRect.Width = rect.Width - strRect.Left;
             strRect.Y = y;
-            strRect.Height = HeightL;
-            sz = $"{Path.GetFileName(ImgInfo.Filename)}";
-            g.DrawString(sz, fontL, Brushes.White, strRect);
-            strRect.Y += HeightL + PADDING;
+            strRect.Height = FONTL_HEIGHT;
+            sz = $"{Path.GetFileName(imgInfo.Filename)}";
+            g.DrawString(sz, FONTL, Brushes.White, strRect);
+            strRect.Y += FONTL_HEIGHT + PADDING;
 
             //文字の描写:サイズ, 日付
             //x += 10;
             strRect.X += PADDING;
             strRect.Width = rect.Width - strRect.Left;
-            strRect.Height = HeightS;
-            sz = $"{ImgInfo.FileLength:N0}bytes,   {ImgInfo.CreateDate}";
-            g.DrawString(sz, fontS, Brushes.LightGray, strRect);
-            strRect.Y += HeightS + PADDING;
+            strRect.Height = FONTS_HEIGHT;
+            sz = $"{imgInfo.FileLength:N0}bytes,   {imgInfo.CreateDate}";
+            g.DrawString(sz, FONTS, Brushes.LightGray, strRect);
+            strRect.Y += FONTS_HEIGHT + PADDING;
 
             //文字の描写:ピクセル数
-            sz = $"{ImgInfo.Width:N0}x{ImgInfo.Height:N0}pixels";
-            g.DrawString(sz, fontS, Brushes.RoyalBlue, strRect);
-
-            //枠線の描写
-            //int PAD = 10;
-            //g.DrawLine(Pens.Gray, PAD, rect.Bottom - 1, rect.Width - PAD, rect.Bottom - 1);
+            sz = $"{imgInfo.Width:N0}x{imgInfo.Height:N0}pixels";
+            g.DrawString(sz, FONTS, Brushes.RoyalBlue, strRect);
         }
 
         /// <summary>

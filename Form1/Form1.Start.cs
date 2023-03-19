@@ -33,7 +33,9 @@ namespace Marmi
 
             //ファイル一覧を生成
             bool needRecurse = MakePackageInfo(filenames);
-            Debug.WriteLine($"Start: MakePackageInfo() 完了");
+            Debug.WriteLine($"StartAsync(): MakePackageInfo() 完了. {0} pages.",App.g_pi.Items.Count);
+            if (App.g_pi.Items.Count == 0)
+                throw new InvalidDataException("書庫内の画像がありません");
 
             //ver1.37 再帰構造だけでなくSolid書庫も展開
             //ver1.79 常に一時書庫に展開オプションに対応
@@ -51,9 +53,11 @@ namespace Marmi
             }
 
             SortPackage();
+            Debug.WriteLine($"StartAsync(): Sort 完了");
 
             //UIを初期化
             UpdateToolbar();
+            Debug.WriteLine($"StartAsync(): UpdateToolbar() 完了");
 
             //pdfチェック
             if (App.g_pi.PackType == PackageType.Pdf
@@ -61,13 +65,15 @@ namespace Marmi
             {
                 const string str = "pdfファイルはサポートしていません";
                 _clearPanel.ShowAndClose(str, 1000);
-                App.g_pi.Initialize();
+                //App.g_pi.Initialize();
+                App.g_pi = new PackageInfo();
                 return;
             }
 
             if (App.g_pi.Items.Count == 0)
             {
                 //画面をクリア、準備中の文字を消す
+                Debug.WriteLine($"StartAsync(): 画像ファイル無し");
                 const string str = "表示できるファイルがありませんでした";
                 _clearPanel.ShowAndClose(str, 1000);
                 SetStatusbarInfo(str);
@@ -101,15 +107,15 @@ namespace Marmi
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
             //サムネイルの作成
-            Debug.WriteLine($"Start: サムネイル作成開始");
+            Uty.DebugPrint("PreloadAllImages()");
             PreloadAllImages();
 
             //画像を表示
-            Debug.WriteLine($"Start: 1ページ目表示命令");
+            Uty.DebugPrint($"最初のページ表示。 = {App.g_pi.NowViewPage}page");
             PicPanel.Message = string.Empty;
             await SetViewPageAsync(App.g_pi.NowViewPage);
 
-            Debug.WriteLine($"Start: 完了");
+            Uty.DebugPrint("完了");
         }
 
         /// <summary>
@@ -120,23 +126,24 @@ namespace Marmi
         private static bool MakePackageInfo(string[] files)
         {
             //初期化
-            App.g_pi.Initialize();
+            //App.g_pi.Initialize();
+            App.g_pi = new PackageInfo();
 
             if (files.Length == 1)
             {
-                //ドロップされたのは1つ
-                App.g_pi.PackageName = files[0];    //ディレクトリかZipファイル名を想定
+                //ドロップされたのは1つ.
+                App.g_pi.PackageName = files[0];
 
-                //ドロップされたファイルの詳細を探る
+                //画像1枚/zip/pdf/dirctory
                 if (Directory.Exists(App.g_pi.PackageName))
                 {
-                    //ディレクトリの場合
+                    //ディレクトリ
                     App.g_pi.PackType = PackageType.Directory;
-                    GetDirPictureList(files[0], App.Config.RecurseSearchDir);
+                    GetPiclistInDirectory(files[0], App.Config.RecurseSearchDir);
                 }
                 else if (Uty.IsSupportArchiveFile(App.g_pi.PackageName))
                 {
-                    // 書庫ファイル
+                    // 書庫
                     App.g_pi.PackType = PackageType.Archive;
                     bool needRecurse = GetArchivedFileInfo(files[0]);
                     if (needRecurse)
@@ -144,18 +151,19 @@ namespace Marmi
                 }
                 else if (files[0].EndsWith(".pdf"))
                 {
-                    //pdfファイル
+                    //pdf
                     return ListPdf(files[0]);
                 }
-                else
+                else if (Uty.IsPictureFilename(files[0]))
                 {
                     //単一画像ファイル
                     App.g_pi.PackageName = string.Empty;
                     App.g_pi.PackType = PackageType.Pictures;
-                    if (Uty.IsPictureFilename(files[0]))
-                    {
                         App.g_pi.Items.Add(new ImageInfo(0, files[0]));
-                    }
+                }
+                else
+                {
+                    throw new System.Exception("ファイルがありませんでした");
                 }
             }
             else //if (files.Length == 1)
@@ -248,8 +256,8 @@ namespace Marmi
             ScreenCache.Clear();
 
             //パッケージ情報を初期化
-            App.g_pi.Initialize();
-            //App.g_pi = new PackageInfo();
+            //App.g_pi.Initialize();
+            App.g_pi = new PackageInfo();
 
             //一時フォルダの削除
             TempDirs.DeleteAll();
@@ -297,7 +305,7 @@ namespace Marmi
             //画像を App.g_pi.Items に読み込む
             App.g_pi.PackType = PackageType.Pictures;
             App.g_pi.Items.Clear();
-            GetDirPictureList(App.g_pi.tempDirname, true);
+            GetPiclistInDirectory(App.g_pi.tempDirname, true);
             return true;
         }
 
@@ -328,7 +336,7 @@ namespace Marmi
         /// </summary>
         /// <param name="dirName">追加対象のディレクトリ名</param>
         /// <param name="recurse">再帰走査する場合true</param>
-        private static void GetDirPictureList(string dirName, bool recurse)
+        private static void GetPiclistInDirectory(string dirName, bool recurse)
         {
             //画像ファイルを追加
             int index = 0;
@@ -344,7 +352,7 @@ namespace Marmi
             if (recurse)
             {
                 foreach (var name in Directory.GetDirectories(dirName))
-                    GetDirPictureList(name, recurse);
+                    GetPiclistInDirectory(name, recurse);
             }
         }
 
@@ -361,7 +369,8 @@ namespace Marmi
             if (!szw.Open(filename))
             {
                 MessageBox.Show("エラーのため書庫は開けませんでした。");
-                App.g_pi.Initialize();
+                //App.g_pi.Initialize();
+                App.g_pi = new PackageInfo();
                 return false;
             }
 

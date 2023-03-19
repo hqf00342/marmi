@@ -38,34 +38,6 @@ namespace Marmi
         public string tempDirname = string.Empty;
 
         /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public PackageInfo()
-        {
-            Initialize();
-        }
-
-        /// <summary>
-        /// 初期化ルーチン
-        /// </summary>
-        public void Initialize()
-        {
-            PackageName = string.Empty;
-            PackType = PackageType.None;
-            isSolid = false;
-            NowViewPage = 0;
-            tempDirname = string.Empty;
-
-            PageDirectionIsLeft = true;
-
-            //ファイルキャッシュをクリア
-            foreach (var item in Items)
-                item.CacheImage.Clear();
-
-            Items.Clear();
-        }
-
-        /// <summary>
         /// ファイル名からインデックスを取得する
         /// </summary>
         /// <param name="filename">ファイル名</param>
