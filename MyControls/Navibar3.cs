@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FormTimer = System.Windows.Forms.Timer;
@@ -26,14 +25,16 @@ namespace Marmi
         private int _offset;                //現在の描写位置.ピクセル数
 
         private readonly PackageInfo _packageInfo;        //g_piそのものを挿す
-        private readonly SolidBrush _BackBrush = new SolidBrush(Color.FromArgb(192, 48, 48, 48));        //背景色
+
+        //背景色
+        private readonly SolidBrush _BackBrush = new SolidBrush(Color.FromArgb(192, 48, 48, 48));
 
         //フォント,フォーマット
         private readonly Font fontL = new Font("Century Gothic", 16F);
+
         private readonly StringFormat sfCenterDown = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
 
-        private List<ItemPos> _thumbnailPosList = null; //サムネイルの位置
-        private readonly Bitmap _dummyImage = null;     // Loadingイメージ
+        private List<ItemPos> _posList = null; //サムネイルの位置
 
         //スクロール用アニメーションタイマー:
         private readonly FormTimer _timer = null;
@@ -53,22 +54,24 @@ namespace Marmi
 
             //背景色
             this.BackColor = Color.Transparent;
+
             //ダブルバッファを有効に
             this.DoubleBuffered = true;
 
             //ver1.19 フォーカスを当てないようにする
             this.SetStyle(ControlStyles.Selectable, false);
+
             //DPIスケーリングは無効にする
             this.AutoScaleMode = AutoScaleMode.None;
 
             //高さを算出
             BOX_HEIGHT = PADDING + THUMBSIZE;
+
             //newされたあとに高さを必要とされるので高さだけ入れておく。
-            this.Height = BOX_HEIGHT        //画像部分
-                + PADDING;
+            this.Height = BOX_HEIGHT + PADDING;
 
             //Loadingと表示するイメージ
-            _dummyImage = BitmapUty.LoadingImage(THUMBSIZE * 2 / 3, THUMBSIZE);
+            //_dummyImage = BitmapUty.LoadingImage(THUMBSIZE * 2 / 3, THUMBSIZE);
 
             //タイマーの初期設定
             _timer = new FormTimer
@@ -118,21 +121,6 @@ namespace Marmi
             this.Height = BOX_HEIGHT + PADDING;
 
             _selectedItem = index;
-
-            #region 半透明描写しながらスライド
-
-            //alpha = 0.0F;
-            //this.Visible = true;
-            //for (int i = 1; i <= 5; i++)
-            //{
-            //    alpha = i * 0.2F;					//透明度を設定
-            //    //this.Top = rect.Top + i - 10;		//スライドインさせる
-
-            //    this.Refresh();
-            //    Application.DoEvents();
-            //}
-
-            #endregion 半透明描写しながらスライド
 
             //アイテム位置を計算
             CalcAllItemPos();
@@ -213,7 +201,6 @@ namespace Marmi
             //タイマー動作中は_offset
             int offset = (_timer == null) ? GetOffset(_selectedItem) : _offset;
 
-
             //全アイテム描写
             for (int item = 0; item < _packageInfo.Items.Count; item++)
             {
@@ -230,10 +217,10 @@ namespace Marmi
         /// </summary>
         private void CalcAllItemPos()
         {
-            if (_thumbnailPosList == null)
+            if (_posList == null)
             {
                 //新規に位置リストを作成
-                _thumbnailPosList = new List<ItemPos>();
+                _posList = new List<ItemPos>();
                 int X = 0;
                 for (int i = 0; i < _packageInfo.Items.Count; i++)
                 {
@@ -243,10 +230,14 @@ namespace Marmi
                     if (_packageInfo.Items[i].Thumbnail != null)
                     {
                         item.size = BitmapUty.CalcHeightFixImageSize(_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
+                        item.Fixed = true;
                     }
                     else
+                    {
                         item.size = new Size(THUMBSIZE * 2 / 3, THUMBSIZE);
-                    _thumbnailPosList.Add(item);
+                    }
+
+                    _posList.Add(item);
                     X += item.size.Width + PADDING;
                 }
             }
@@ -256,14 +247,20 @@ namespace Marmi
                 int X = 0;
                 for (int i = 0; i < _packageInfo.Items.Count; i++)
                 {
-                    //ItemPos item = thumbnailPos[i];
-                    _thumbnailPosList[i].pos.X = X;
-                    _thumbnailPosList[i].pos.Y = PADDING;
-                    if (_packageInfo.Items[i].Thumbnail != null)
-                        _thumbnailPosList[i].size = BitmapUty.CalcHeightFixImageSize(_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
-                    else
-                        _thumbnailPosList[i].size = new Size(THUMBSIZE * 2 / 3, THUMBSIZE);
-                    X += _thumbnailPosList[i].size.Width + PADDING;
+                    _posList[i].pos.X = X;
+                    _posList[i].pos.Y = PADDING;
+
+                    if (_posList[i].Fixed == false)
+                    {
+                        if (_packageInfo.Items[i].Thumbnail != null)
+                        {
+                            _posList[i].size = BitmapUty.CalcHeightFixImageSize(_packageInfo.Items[i].Thumbnail.Size, THUMBSIZE);
+                            _posList[i].Fixed = true;
+                        }
+                        else
+                            _posList[i].size = new Size(THUMBSIZE * 2 / 3, THUMBSIZE);
+                    }
+                    X += _posList[i].size.Width + PADDING;
                 }
             }
         }
@@ -275,18 +272,18 @@ namespace Marmi
         /// <returns></returns>
         private int GetOffset(int centerItem)
         {
-            int X = _thumbnailPosList[centerItem].pos.X;
-            int center = X + _thumbnailPosList[centerItem].size.Width / 2;
+            int X = _posList[centerItem].pos.X;
+            int center = X + _posList[centerItem].size.Width / 2;
             int offset = center - this.Width / 2;
             return offset;
         }
 
         private bool IsDrawItem(int index, int offset)
         {
-            if (_thumbnailPosList == null)
+            if (_posList == null)
                 return false;
 
-            var item = _thumbnailPosList[index];
+            var item = _posList[index];
             int x = item.pos.X - offset;
             return (x > this.Width || x + item.size.Width < 0);
         }
@@ -302,25 +299,25 @@ namespace Marmi
             App.g_pi.ThrowIfOutOfRange(index);
 
             //未計算だったら先に全アイテム位置を計算
+            //呼び出し元で必ず実行しているのでコメントアウト
             //if (_thumbnailPosList == null)
             //    CalcAllItemPos();
-            CalcAllItemPos();
 
             //対象データ
-            var item = _thumbnailPosList[index];
+            var item = _posList[index];
 
             //描写X位置
-            int x = item.pos.X - offset;
+            int x = item.X - offset;
 
             //描写対象外をはじく
-            if (x > this.Width || x + item.size.Width < 0)
+            if (x > this.Width || x + item.Width < 0)
                 return;
 
             var cRect = new Rectangle(
-                item.pos.X - offset,
-                item.pos.Y + BOX_HEIGHT - item.size.Height - PADDING,      //下揃え
-                item.size.Width,
-                item.size.Height);
+                item.X - offset,
+                item.Y + BOX_HEIGHT - item.Height - PADDING,      //下揃え
+                item.Width,
+                item.Height);
 
             //画像取得
             var img = _packageInfo.Items[index].Thumbnail;
@@ -372,6 +369,10 @@ namespace Marmi
     {
         public Point pos;
         public Size size;
-        public float brightness;
+        public bool Fixed = false;
+        public int X => pos.X;
+        public int Y => pos.Y;
+        public int Width => size.Width;
+        public int Height => size.Height;
     }
 }
