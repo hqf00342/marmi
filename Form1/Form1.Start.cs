@@ -221,7 +221,7 @@ namespace Marmi
             await AsyncIO.ClearJobAndWaitAsync();
 
             //汎用キャッシュをクリア
-            App.BmpCache.ClearAll();
+            //App.BmpCache.ClearAll();
 
             //サムネイルモードの解放
             if (ViewState.ThumbnailView)

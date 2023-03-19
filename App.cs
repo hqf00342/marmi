@@ -42,7 +42,7 @@ namespace Marmi
         internal const string TAG_PICTURECACHE = "CACHE";
 
         //多目的Bitmapキャッシュ
-        internal readonly static BitmapCache BmpCache = new BitmapCache();
+        //internal readonly static BitmapCache BmpCache = new BitmapCache();
 
         //staticフォント
         internal static readonly Font Font9 = new Font("ＭＳ Ｐ ゴシック", 9F);

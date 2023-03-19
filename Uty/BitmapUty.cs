@@ -402,6 +402,7 @@ namespace Marmi
         }
 
         //指定した矩形に周りにエフェクトを描写
+        //Navibar3でフォーカスに使っていた
         public static void DrawBlurEffect(Graphics g, Rectangle r, Color c)
         {
             //ver0.975光彩をつける
@@ -501,7 +502,8 @@ namespace Marmi
 
         /// <summary>
         /// ビットマップを暗くする
-        /// ０～２５５の範囲で調整
+        /// Navibar3で暗い画像用に使っていたが
+        /// DrawImageの引数ImageAttribute.ColorMatrixを使うようにしたためObsolated
         /// </summary>
         /// <param name="srcBitmap">元となるBitmap</param>
         /// <param name="Level">0～100。０で真っ黒、１００で元の明るさ</param>
@@ -554,6 +556,12 @@ namespace Marmi
             return new Size(lx, ly);
         }
 
+        /// <summary>
+        /// 高さ指定のサムネイルを作成
+        /// </summary>
+        /// <param name="orgImage"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
         public static Bitmap MakeHeightFixThumbnailImage(Bitmap orgImage, int maxHeight)
         {
             if (orgImage == null)
@@ -577,6 +585,12 @@ namespace Marmi
             return _bmp;
         }
 
+        /// <summary>
+        /// 高さ指定のアスペクト比固定画像サイズを計算
+        /// </summary>
+        /// <param name="orgSize"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
         public static Size CalcHeightFixImageSize(Size orgSize, int maxHeight)
         {
             if (orgSize.Height <= maxHeight)

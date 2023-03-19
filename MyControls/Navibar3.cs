@@ -9,6 +9,8 @@ NaviBar3
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FormTimer = System.Windows.Forms.Timer;
@@ -19,10 +21,8 @@ namespace Marmi
     {
         private const int THUMBSIZE = 200;  //サムネイルサイズ
         private const int PADDING = 2;      //各種余白
-        private const int DARKPERCENT = 50; //左右の画像の暗さ％
         private readonly int BOX_HEIGHT;    //BOXサイズ：コンストラクタで計算
         public int _selectedItem;           //選択されているアイテム
-        private float _alpha = 1.0F;        //描写時の透明度。OnPaint()で利用
         private int _offset;                //現在の描写位置.ピクセル数
 
         private readonly PackageInfo _packageInfo;        //g_piそのものを挿す
@@ -30,12 +30,19 @@ namespace Marmi
 
         //フォント,フォーマット
         private readonly Font fontL = new Font("Century Gothic", 16F);
-
         private readonly StringFormat sfCenterDown = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
 
         private List<ItemPos> _thumbnailPosList = null; //サムネイルの位置
         private readonly Bitmap _dummyImage = null;     // Loadingイメージ
-        private readonly FormTimer _timer = null;       //アニメーションタイマー
+
+        //スクロール用アニメーションタイマー:
+        private readonly FormTimer _timer = null;
+
+        //暗めの画像用のImageAttribute.DrawItem()で利用
+        private ImageAttributes _darkAttribute = new ImageAttributes();
+
+        //選択画像を強調するRectのペン
+        private readonly Pen _borderPen = new Pen(Color.Pink, 2);
 
         // 初期化 ***********************************************************************/
 
@@ -53,8 +60,6 @@ namespace Marmi
             this.SetStyle(ControlStyles.Selectable, false);
             //DPIスケーリングは無効にする
             this.AutoScaleMode = AutoScaleMode.None;
-            //透明度は1.0
-            _alpha = 1.0F;
 
             //高さを算出
             BOX_HEIGHT = PADDING + THUMBSIZE;
@@ -74,6 +79,17 @@ namespace Marmi
 
             //オフセットを設定
             _offset = 0;
+
+            //明るさ半分のImageAttributeを初期化
+            var cm = new ColorMatrix
+            {
+                Matrix00 = 0.5f,    // R
+                Matrix11 = 0.5f,    // G
+                Matrix22 = 0.5f,    // B
+                Matrix33 = 1f,  // Alpha
+                Matrix44 = 1f
+            };
+            _darkAttribute.SetColorMatrix(cm);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -125,7 +141,6 @@ namespace Marmi
             _offset = GetOffset(index);
 
             this.Visible = true;
-            _alpha = 1.0F;
             this.Refresh();
 
             //timerを止める
@@ -137,27 +152,13 @@ namespace Marmi
             //サムネイル作成中なら一度止める
             //Form1.PauseThumbnailMakerThread();
 
-            #region 半透明描写しながらfede out
-
-            //for (int i = 1; i <= 5; i++)
-            //{
-            //    alpha = 1 - i * 0.2F;		//透明度を設定
-            //    //this.Top--;				//スライドアウトさせる
-
-            //    this.Refresh();
-            //    Application.DoEvents();		//これがないとフェードアウトしない
-            //}
-
-            #endregion 半透明描写しながらfede out
-
             this.Visible = false;
-            _alpha = 1.0F;
 
             //timerを止める
             _timer?.Stop();
 
             //BitmapCacheを削除
-            App.BmpCache.Clear(CacheTag.NaviPanel);
+            //App.BmpCache.Clear(CacheTag.NaviPanel);
         }
 
         public void SetCenterItem(int index)
@@ -186,25 +187,8 @@ namespace Marmi
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
             Graphics g = e.Graphics;
-            //g.Clear(m_NormalBackColor);
-
-            if (_alpha >= 1.0F)
-            {
-                //DrawItems(g);
-                DrawItemAll(g);
-            }
-            else
-            {
-                //透明度がある場合は一度別のBitmapに描写して描写する。
-                using (var bmp = new Bitmap(this.Width, this.Height))
-                {
-                    Graphics.FromImage(bmp).Clear(Color.Transparent);
-                    DrawItemAll(Graphics.FromImage(bmp));
-                    BitmapUty.AlphaDrawImage(g, bmp, _alpha);
-                }
-            }
+            DrawItemAll(g);
         }
 
         /// <summary>
@@ -225,23 +209,15 @@ namespace Marmi
             //CalcAllItemPos();
 
             //オフセットを計算
-            int offset;
-            if (_timer == null)
-            {
-                //タイマーが動いていないときはすぐその場所へ
-                offset = GetOffset(_selectedItem);
-            }
-            else
-            {
-                //タイマーが動いているときはoffsetはTimerが更新
-                offset = _offset;
-            }
+            //タイマーが動いていないときはGetOffset()ですぐその場所へ
+            //タイマー動作中は_offset
+            int offset = (_timer == null) ? GetOffset(_selectedItem) : _offset;
+
 
             //全アイテム描写
             for (int item = 0; item < _packageInfo.Items.Count; item++)
             {
                 //わざと並列で描写する
-                // この呼び出しは待機されなかったため、現在のメソッドの実行は呼び出しの完了を待たずに続行されます
 #pragma warning disable CS4014
                 DrawItemAsync(g, item, offset);
 #pragma warning restore CS4014
@@ -305,6 +281,16 @@ namespace Marmi
             return offset;
         }
 
+        private bool IsDrawItem(int index, int offset)
+        {
+            if (_thumbnailPosList == null)
+                return false;
+
+            var item = _thumbnailPosList[index];
+            int x = item.pos.X - offset;
+            return (x > this.Width || x + item.size.Width < 0);
+        }
+
         /// <summary>
         /// 1アイテムを描写する
         /// </summary>
@@ -312,77 +298,70 @@ namespace Marmi
         /// <param name="index">描写アイテム番号</param>
         private async Task DrawItemAsync(Graphics g, int index, int offset)
         {
-            if (g == null)
-                throw new ArgumentNullException(nameof(g));
+            if (g == null) throw new ArgumentNullException(nameof(g));
             App.g_pi.ThrowIfOutOfRange(index);
 
-            //未計算だったら計算
-            if (_thumbnailPosList == null)
-                CalcAllItemPos();
+            //未計算だったら先に全アイテム位置を計算
+            //if (_thumbnailPosList == null)
+            //    CalcAllItemPos();
+            CalcAllItemPos();
 
-            //描写位置を決定
-            int x = _thumbnailPosList[index].pos.X - offset;
+            //対象データ
+            var item = _thumbnailPosList[index];
+
+            //描写X位置
+            int x = item.pos.X - offset;
 
             //描写対象外をはじく
-            if (x > this.Width)
+            if (x > this.Width || x + item.size.Width < 0)
                 return;
-            if (x + _thumbnailPosList[index].size.Width < 0)
-                return;
+
+            var cRect = new Rectangle(
+                item.pos.X - offset,
+                item.pos.Y + BOX_HEIGHT - item.size.Height - PADDING,      //下揃え
+                item.size.Width,
+                item.size.Height);
 
             //画像取得
-            Bitmap img = App.BmpCache.GetBitmap(index, CacheTag.NaviPanel);
-            if (img == null)
-            {
-                img = BitmapUty.MakeHeightFixThumbnailImage(
-                    _packageInfo.Items[index].Thumbnail,
-                    THUMBSIZE);
-                App.BmpCache.Add(index, CacheTag.NaviPanel, img);
-            }
+            var img = _packageInfo.Items[index].Thumbnail;
 
             if (img == null)
             {
-                img = _dummyImage;
+                //読み込む
+                //_ = await Bmp.LoadBitmapAsync(index, false);
+                //CalcAllItemPos();
 
-                //ver1.81 読み込みルーチンをPushLow()に変更
-                if (_timer == null || !_timer.Enabled)
-                {
-                    await Bmp.LoadBitmapAsync(index, false);
-                    CalcAllItemPos();
-                    if (this.Visible)
-                        this.Invalidate();
-                }
-            }
-
-            Rectangle cRect = new Rectangle(
-                _thumbnailPosList[index].pos.X - offset,
-                _thumbnailPosList[index].pos.Y + BOX_HEIGHT - img.Height - PADDING,      //下揃え
-                _thumbnailPosList[index].size.Width,
-                _thumbnailPosList[index].size.Height);
-
-            //描写
-            if (index == _selectedItem)
-            {
-                //中央のアイテム
-                //ver1.17追加 フォーカス枠
-                BitmapUty.DrawBlurEffect(g, cRect, Color.LightBlue);
-                //中央を描写
-                g.DrawImage(img, cRect);
+                ////ver1.81 読み込みルーチンをPushLow()に変更
+                //if (_timer == null || !_timer.Enabled)
+                //{
+                //    await Bmp.LoadBitmapAsync(index, false);
+                //    CalcAllItemPos();
+                //    if (this.Visible)
+                //        this.Invalidate();
+                //    return;
+                //}
             }
             else
             {
-                //中央以外の画像を描写
-                g.DrawImage(
-                    BitmapUty.BitmapToDark(img, DARKPERCENT),
-                    cRect);
+                //描写
+                if (index == _selectedItem)
+                {
+                    //中央のアイテム
+                    g.DrawImage(img, cRect);
+                }
+                else
+                {
+                    //中央以外の画像：暗めに描写
+                    g.DrawImage(img, cRect, 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, _darkAttribute);
+                }
             }
 
+            //枠描写
+            var penColor = (index == _selectedItem) ? _borderPen : Pens.Gray;
+            g.DrawRectangle(penColor, cRect);
+
             //画像番号を画像上に表示
-            g.DrawString(
-                $"{index + 1}",
-                fontL,
-                Brushes.LightGray,
-                cRect,
-                sfCenterDown);
+            g.DrawString($"{index + 1}", fontL, Brushes.LightGray, cRect, sfCenterDown);
         }
     }
 
