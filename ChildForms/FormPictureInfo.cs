@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -57,7 +56,6 @@ namespace Marmi
         {
             if (e.Button == MouseButtons.Left)
             {
-                Debug.WriteLine(e.Clicks, "MouseMove");
                 this.SetDesktopLocation(
                     this.Left - _mouseDownPoint.X + e.X,
                     this.Top - _mouseDownPoint.Y + e.Y);

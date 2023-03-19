@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;				//Debug, Stopwatch
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 /*
@@ -37,8 +36,6 @@ namespace Marmi
         {
             base.OnMouseClick(e);
 
-            Debug.WriteLine($"OnMouseClick: {e.Button}");
-
             //スライドショー中だったら中断させる
             if (IsSlideShow)
             {
@@ -53,7 +50,7 @@ namespace Marmi
             //ドラッグによるスクロール中であればクリックイベントは無視
             if (!g_LastClickPoint.IsEmpty)
             {
-                Debug.WriteLine("OnMouseClick()どうしてここに来るのか不明");
+                Uty.DebugPrint("OnMouseClick()どうしてここに来るのか不明");
                 g_LastClickPoint = Point.Empty;
                 return;
             }

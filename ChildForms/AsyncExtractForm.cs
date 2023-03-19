@@ -217,7 +217,6 @@ namespace Marmi
                 if (Uty.IsSupportArchiveFile(file))
                 {
                     string extDirName = Uty.GetUniqueDirname(file);
-                    Debug.WriteLine(file, extDirName);
                     RecurseExtractAll(file, extDirName);
                 }
             }

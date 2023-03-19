@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -343,7 +342,6 @@ namespace Marmi
             {
                 _trackNaviPanel.ClosePanel();
                 PicPanel.Controls.Remove(_trackNaviPanel);
-                Debug.WriteLine("remove navigatebar");
             }
 
             //マウスが離れたところで確定する
@@ -358,7 +356,6 @@ namespace Marmi
         private void Trackbar_MouseWheel(object sender, MouseEventArgs e)
         {
             OnMouseWheel(e);
-            Debug.WriteLine("g_trackbar_MouseWheel");
             ((HandledMouseEventArgs)e).Handled = true;
         }
     }

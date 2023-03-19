@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -124,7 +123,6 @@ namespace Marmi
                 Alpha = a;      //ìßñæìxÇê›íË
                 this.Refresh();
                 //Thread.Sleep(100);
-                //Debug.WriteLine(a, "fadeout()");
             }
             this.Visible = false;
             Alpha = 0.0F;
@@ -340,7 +338,6 @@ namespace Marmi
                     continue;
                 }
 
-                Debug.WriteLine(c.Name, "ParentControl");
                 this.DrawBackControl(c, pevent);
             }
         }

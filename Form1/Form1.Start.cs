@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Marmi
     {
         private async Task StartAsync(string[] filenames)
         {
-            Debug.WriteLine($"StartAsync()");
+            Uty.DebugPrint("Start");
 
             //ファイルがすでに開いているかどうかチェック
             if (filenames.Length == 1 && filenames[0] == App.g_pi.PackageName)
@@ -33,7 +32,7 @@ namespace Marmi
 
             //ファイル一覧を生成
             bool needRecurse = MakePackageInfo(filenames);
-            Debug.WriteLine($"StartAsync(): MakePackageInfo() 完了. {0} pages.",App.g_pi.Items.Count);
+            Uty.DebugPrint($"MakePackageInfo() 完了. {App.g_pi.Items.Count} pages.");
             if (App.g_pi.Items.Count == 0)
                 throw new InvalidDataException("書庫内の画像がありません");
 
@@ -53,11 +52,11 @@ namespace Marmi
             }
 
             SortPackage();
-            Debug.WriteLine($"StartAsync(): Sort 完了");
+            Uty.DebugPrint($"Sort 完了");
 
             //UIを初期化
             UpdateToolbar();
-            Debug.WriteLine($"StartAsync(): UpdateToolbar() 完了");
+            Uty.DebugPrint($"UpdateToolbar() 完了");
 
             //pdfチェック
             if (App.g_pi.PackType == PackageType.Pdf
@@ -73,7 +72,7 @@ namespace Marmi
             if (App.g_pi.Items.Count == 0)
             {
                 //画面をクリア、準備中の文字を消す
-                Debug.WriteLine($"StartAsync(): 画像ファイル無し");
+                Uty.DebugPrint($"画像ファイル無し");
                 const string str = "表示できるファイルがありませんでした";
                 _clearPanel.ShowAndClose(str, 1000);
                 SetStatusbarInfo(str);
@@ -126,7 +125,6 @@ namespace Marmi
         private static bool MakePackageInfo(string[] files)
         {
             //初期化
-            //App.g_pi.Initialize();
             App.g_pi = new PackageInfo();
 
             if (files.Length == 1)
@@ -159,7 +157,7 @@ namespace Marmi
                     //単一画像ファイル
                     App.g_pi.PackageName = string.Empty;
                     App.g_pi.PackType = PackageType.Pictures;
-                        App.g_pi.Items.Add(new ImageInfo(0, files[0]));
+                    App.g_pi.Items.Add(new ImageInfo(0, files[0]));
                 }
                 else
                 {
@@ -181,7 +179,7 @@ namespace Marmi
                         App.g_pi.Items.Add(new ImageInfo(index++, filename));
                     }
                 }
-            }//if (files.Length == 1)
+            }
             return false;
 
             bool ListPdf(string file)
@@ -219,8 +217,6 @@ namespace Marmi
         /// </summary>
         private async Task InitMarmiAsync()
         {
-            Debug.WriteLine("InitMarmiAsync()");
-
             //2022年9月17日 非同期IOを中止、書庫のclose
             await AsyncIO.ClearJobAndWaitAsync();
 

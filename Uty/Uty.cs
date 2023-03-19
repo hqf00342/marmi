@@ -9,9 +9,10 @@ namespace Marmi
 {
     public static class Uty
     {
-        public static void DebugPrint(string message, [CallerMemberName] string memberName = "")
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugPrint(string message, [CallerMemberName] string callerName = "")
         {
-            Debug.WriteLine(message, memberName);
+            Debug.WriteLine(message, callerName);
         }
 
         /// <summary>

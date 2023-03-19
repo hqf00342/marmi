@@ -202,7 +202,6 @@ namespace Marmi
                         wBitCount = colorDepth;
                         dwBytesInRes = BitConverter.ToUInt32(ICONDIRENTRY, 8);
                         dwImageOffset = BitConverter.ToUInt32(ICONDIRENTRY, 12);
-                        Debug.WriteLine($"Item={Item}, bWidth={bWidth}, dwimageOffset={dwImageOffset}, dwBytesInRes={dwBytesInRes}", "ICONDIRENTRY");
                     }
                 }
 
@@ -227,7 +226,6 @@ namespace Marmi
                 {
                     UInt16 biBitCount = BitConverter.ToUInt16(BITMAPINFOHEADER, 14);
                     UInt32 biCompression = BitConverter.ToUInt32(BITMAPINFOHEADER, 16);
-                    Debug.WriteLine($"biBitCount={biBitCount}, biCompression={biCompression}",                        "BITMAPINFOHEADER");
 
                     //色数からパレット数を計算
                     int PALLET = 0;
@@ -333,7 +331,6 @@ namespace Marmi
                         }
 
                         //マスクを読み込む
-                        Debug.WriteLine("Load Mask");
                         int maskSize = bmpWidth / 8 * bmpHeight;
                         if (bmpWidth % 32 != 0)         //1ライン4バイト（32bit）単位にする。
                             maskSize = (bmpWidth / 32 + 1) * 4 * bmpHeight;
@@ -351,7 +348,6 @@ namespace Marmi
                                     //8bit分を処理する
                                     byte mask = (byte)ms.ReadByte();
                                     bytes++;
-                                    Debug.Write(mask.ToString("X2"));
                                     byte checkBit = 0x80;
                                     for (int xs = 0; xs < 8; xs++)
                                     {
@@ -362,14 +358,11 @@ namespace Marmi
                                         checkBit /= 2;
                                     }
                                 }
-                                Debug.Write("|");
                                 while ((bytes % 4) != 0)
                                 {
                                     byte b = (byte)ms.ReadByte();   //捨てる
-                                    Debug.Write(b.ToString("X2"));
                                     bytes++;
                                 }
-                                Debug.WriteLine("");
                             }
                         }//unsafe
                         newbmp.UnlockBits(bd);
@@ -894,7 +887,6 @@ namespace Marmi
             srcbmp.UnlockBits(srcData);
             destbmp.UnlockBits(destData);
 
-            Debug.WriteLine(sw.ElapsedMilliseconds, "unsharpness_unsafe()");
             return destbmp;
         }
     }

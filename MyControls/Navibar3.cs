@@ -8,7 +8,6 @@ NaviBar3
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -88,7 +87,6 @@ namespace Marmi
             {
                 _timer.Stop();
                 CalcAllItemPos();
-                Debug.WriteLine("Timer Stop diff 0");
             }
             //ï`é 
             this.Refresh();
@@ -174,7 +172,6 @@ namespace Marmi
             {
                 //É^ÉCÉ}Å[Ç≈ï`é 
                 _timer.Enabled = true;
-                Debug.WriteLine("TimerStart at SetCenterItem");
             }
             else
             {

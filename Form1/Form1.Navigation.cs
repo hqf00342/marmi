@@ -85,13 +85,13 @@ namespace Marmi
             //ver1.55 最新描写でなければスキップ
             if (_lastDrawOrderTick > orderTick)
             {
-                Debug.WriteLine($"Too old order: index={index}]");
+                Uty.DebugPrint($"Skip draw(too old). index={index}]");
                 return;
             }
 
             if (screenImage == null)
             {
-                Debug.WriteLine($"bmpがnull(index={index})");
+                Uty.DebugPrint($"bmpがnull(index={index})");
                 PicPanel.Message = $"表示エラー 再度表示してみてください (index={index})";
                 PicPanel.Refresh();
                 return;
@@ -161,7 +161,7 @@ namespace Marmi
             //ver1.35 ループ機能を実装
             int now = App.g_pi.NowViewPage;
             int next = await GetNextPageIndexAsync(App.g_pi.NowViewPage);
-            Debug.WriteLine($"NavigateToForword() {now} -> {next}");
+            Uty.DebugPrint($"NavigateToForword() {now} -> {next}");
             if (next >= 0)
             {
                 await SetViewPageAsync(next);

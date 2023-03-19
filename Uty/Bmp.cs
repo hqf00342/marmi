@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -68,13 +67,13 @@ namespace Marmi
         /// <returns></returns>
         internal static async Task<Bitmap> MakeOriginalSizeImageAsync(int index)
         {
-            Debug.WriteLine($"MakeOriginalSizeImage({index})");
+            Uty.DebugPrint($"make {index}");
 
             //とりあえず1枚読め！
             var bmp1 = await GetBitmapAsync(index, true);
             if (bmp1 == null)
             {
-                Debug.WriteLine("GetBitmapAsync()からnullがきた。");
+                Uty.DebugPrint("GetBitmapAsync()からnullがきた。");
                 throw new InvalidOperationException("nullはおかしい");
             }
 

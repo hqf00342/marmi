@@ -2,7 +2,6 @@
 
 using Marmi.Models;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -231,7 +230,7 @@ namespace Marmi
         {
             base.OnDragDrop(drgevent);
 
-            Debug.WriteLine("OnDragDrop() Start");
+            Uty.DebugPrint("Start");
 
             //ドロップされた物がファイルかどうかチェック
             if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
@@ -246,13 +245,12 @@ namespace Marmi
                 //await StartAsync(files);
                 StartAsync(files).FireAndForget();
             }
-            Debug.WriteLine("OnDragDrop() End");
+            Uty.DebugPrint("End");
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            //Debug.WriteLine("OnResize()");
 
             //初期化前なら何もしない。
             //フォーム生成前にResize()は呼ばれる可能性がある。
@@ -295,7 +293,7 @@ namespace Marmi
         protected override void OnResizeEnd(EventArgs e)
         {
             base.OnResizeEnd(e);
-            Debug.WriteLine("OnResizeEnd()");
+            //Uty.DebugPrint("enter");
 
             //ウィンドウサイズ、位置を保存
             if (this.WindowState == FormWindowState.Normal)
@@ -358,7 +356,7 @@ namespace Marmi
                 case Keys.Right:
                 case Keys.Down:
                 case Keys.Escape:
-                    Debug.WriteLine(e.KeyCode, "Form1_PreviewKeyDown()");
+                    Uty.DebugPrint(e.KeyCode.ToString());
                     e.IsInputKey = true;
                     break;
             }
@@ -524,7 +522,6 @@ namespace Marmi
 
         private async Task SetDualViewModeAsync(bool isDual)
         {
-            Debug.WriteLine(isDual, "SetDualViewMode()");
             ViewState.DualView = isDual;
             toolbar_DualMode.Checked = isDual;
             Menu_View2Page.Checked = isDual;
@@ -697,7 +694,6 @@ namespace Marmi
             else
             {
                 //next=0 : 最後のページを消した
-                Debug.WriteLine("最後のページを消した");
                 PicPanel.Bmp = null;
                 PicPanel.ResetZoomAndAlpha();
                 PicPanel.Refresh();
@@ -705,7 +701,6 @@ namespace Marmi
 
             //ゴミ箱へ送る
             Uty.RecycleBin(nowfile);
-            Debug.WriteLine(now.ToString() + "," + nowfile, "Delete");
 
             //piから削除
             App.g_pi.Items.RemoveAt(now);

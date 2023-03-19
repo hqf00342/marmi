@@ -2,12 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Marmi
 {
@@ -53,7 +51,6 @@ namespace Marmi
             //スレッド専用SevenZip
             SevenZipWrapper AsyncSZ = new SevenZipWrapper();
 
-
             while (_threadAlive)
             {
                 if (_queue.Count > 0)
@@ -67,12 +64,12 @@ namespace Marmi
                     //終了信号受信
                     if (index < 0)
                     {
-                        Debug.WriteLine("AsyncIO : 7z解放信号受信");
+                        Uty.DebugPrint("7z解放信号受信");
                         if (AsyncSZ.IsOpen)
                         {
                             AsyncSZ.Close();
                             AsyncSZ = new SevenZipWrapper();
-                            Debug.WriteLine($"AsyncIO : sz Close()");
+                            Uty.DebugPrint("sz Closeed.");
                         }
                         //szOpen = false;
                         continue;
@@ -102,7 +99,7 @@ namespace Marmi
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine($"AsyncIO : EXCEPTION: {e.GetType().Name}");
+                        Uty.DebugPrint($"EXCEPTION: {e.GetType().Name}");
                     }
                 }
                 else
@@ -117,9 +114,9 @@ namespace Marmi
             if (AsyncSZ.IsOpen)
             {
                 AsyncSZ?.Close();
-                Debug.WriteLine($"AsyncIO : sz Close()");
+                Uty.DebugPrint($"sz close2");
             }
-            Debug.WriteLine("AsyncIO.Worker()スレッドは終了しました");
+            Uty.DebugPrint("スレッドは終了しました");
         }
 
         /// <summary>
@@ -145,7 +142,7 @@ namespace Marmi
                     {
                         //書庫をOpenする
                         sz.Open(App.g_pi.PackageName);
-                        Debug.WriteLine($"AsyncIO.LoadImage() : Open 7z: {App.g_pi.PackageName}");
+                        Uty.DebugPrint($"Open {App.g_pi.PackageName}");
                     }
 
                     if (App.g_pi.isSolid && App.Config.General.ExtractArchiveIfSolid)
@@ -210,13 +207,12 @@ namespace Marmi
                 {
                     await Task.Delay(50);
                 }
-                Debug.WriteLine("AsyncIO.ClearJobAndWaitAsync() 完了");
             }
         }
 
         public static bool HasTask(int index)
         {
-            return _queue.ToArray().Any(a=>a.Key== index);
+            return _queue.ToArray().Any(a => a.Key == index);
         }
     }
 }

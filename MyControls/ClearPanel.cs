@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -53,7 +52,6 @@ namespace Marmi
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Debug.WriteLine($"ClearPanel::OnPaint() : {e.ClipRectangle}");
             base.OnPaint(e);
 
             if (_screenImage != null)

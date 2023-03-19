@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;				//Process, Debug, Stopwatch
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 /*
  * キーイベント
@@ -16,8 +15,6 @@ namespace Marmi
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-
-            Debug.WriteLine(e.KeyData, "KeyData");
 
             //スライドショー中だったら中断させる
             if (IsSlideShow)
