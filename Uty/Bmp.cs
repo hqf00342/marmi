@@ -13,11 +13,9 @@ namespace Marmi
         /// <returns>Bitmap</returns>
         public static async Task<Bitmap> GetBitmapAsync(int ix, bool highPriority)
         {
-            await LoadBitmapAsync(ix, highPriority);
+            await LoadBitmapToCacheAsync(ix, highPriority);
             var bmp = App.g_pi.Items[ix].CacheImage.ToBitmap();
-            if (bmp == null)
-                throw new Exception("GetBitmapAsync():画像取得に失敗");
-            return bmp;
+            return bmp ?? throw new Exception("GetBitmapAsync():画像取得に失敗");
         }
 
         /// <summary>
@@ -27,7 +25,7 @@ namespace Marmi
         /// </summary>
         /// <param name="ix"></param>
         /// <returns>戻り値は使わない。.NET Frameworkにはジェネリック版しかない</returns>
-        public static Task<bool> LoadBitmapAsync(int ix, bool highPriority)
+        public static Task<bool> LoadBitmapToCacheAsync(int ix, bool highPriority)
         {
             var tcs = new TaskCompletionSource<bool>();
             if (App.g_pi.Items[ix].CacheImage.HasImage)
@@ -42,21 +40,6 @@ namespace Marmi
                     AsyncIO.AddJobLow(ix, () => { tcs.SetResult(true); });
             }
             return tcs.Task;
-        }
-
-        public static void TryStackLoadImageTask(int ix, bool highPriority)
-        {
-            if (!AsyncIO.HasTask(ix))
-            {
-                if (highPriority)
-                {
-                    AsyncIO.AddJobHigh(ix, null);
-                }
-                else
-                {
-                    AsyncIO.AddJobLow(ix, null);
-                }
-            }
         }
 
         /// <summary>
@@ -150,7 +133,7 @@ namespace Marmi
             //1枚目読み込み
             if (App.g_pi.Items[index].ImgSize == Size.Empty)
             {
-                await Bmp.LoadBitmapAsync(index, true);
+                await Bmp.LoadBitmapToCacheAsync(index, true);
             }
 
             //1枚目が横長ならfalse
@@ -160,7 +143,7 @@ namespace Marmi
             //2枚目読み込み
             if (App.g_pi.Items[index + 1].ImgSize == Size.Empty)
             {
-                await Bmp.LoadBitmapAsync(index + 1, true);
+                await Bmp.LoadBitmapToCacheAsync(index + 1, true);
             }
 
             //2枚目が横長ならfalse

@@ -639,7 +639,7 @@ namespace Marmi
                 g.DrawRectangle(Pens.LightGray, tboxRect);
 
                 //サムネイルを作成
-                Bmp.LoadBitmapAsync(item, true)
+                Bmp.LoadBitmapToCacheAsync(item, true)
                     .ContinueWith(_ =>
                     {
                         //コントロール表示中、且つ、描写範囲内かチェック

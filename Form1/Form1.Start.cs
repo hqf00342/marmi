@@ -105,6 +105,9 @@ namespace Marmi
             //タイトルバーの設定
             this.Text = $"{App.APPNAME} - {Path.GetFileName(App.g_pi.PackageName)}";
 
+            //1ページ目だけは先に読み込む
+            await Bmp.LoadBitmapToCacheAsync(0, highPriority: true);
+
             //サムネイルの作成
             Uty.DebugPrint("PreloadAllImages()");
             PreloadAllImages();

@@ -550,7 +550,7 @@ namespace Marmi
                 //その後サムネイル登録.タイマーが止まってから実行
                 if (m_scrollTimer == null || !m_scrollTimer.Enabled)
                 {
-                    await Bmp.LoadBitmapAsync(index, false);
+                    await Bmp.LoadBitmapToCacheAsync(index, false);
                     if (this.Visible)
                         this.Invalidate();
                 }

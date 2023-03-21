@@ -10,7 +10,7 @@ namespace Marmi
 {
     public partial class PicturePanel : UserControl
     {
-        private bool _mouseDowmFlag = false;
+        private bool _mouseDowmFlag = false;            // マウス状態を示すフラグ
         private Point _mouseDownPos = Point.Empty;      // MouseDownされた位置（ドラッグ中も不変）
         private Point _mousePreDragPos = Point.Empty;   // 前回ドラッグされた位置（ドラッグ中に変化）
         private readonly Matrix _amat = new Matrix();   // アフィン変換用行列
@@ -37,7 +37,7 @@ namespace Marmi
             }
         }
 
-        /// <summary>透明度 0f～1.0f</summary>
+        /// <summary>画像の透明度：0f～1.0f</summary>
         public float Opacity
         {
             get { return _cmat.Matrix33; }
