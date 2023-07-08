@@ -89,13 +89,14 @@ namespace Marmi
         /// <param name="msg"></param>
         public static void SetStatusbarInfo(string msg)
         {
-            if (Form1._instance.InvokeRequired)
+            var form1 = Form1._instance ?? throw new Exception();
+            if (form1.InvokeRequired)
             {
-                Form1._instance.BeginInvoke((Action)(() => { SetStatusbarInfo(msg); })); ;
+                form1.BeginInvoke((Action)(() => { form1.SetStatusbarInfo(msg); })); ;
             }
             else
             {
-                Form1._instance.SetStatusbarInfo(msg);
+                form1.SetStatusbarInfo(msg);
             }
         }
     }

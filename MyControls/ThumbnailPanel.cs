@@ -426,7 +426,7 @@ namespace Marmi
 
             //ステータスバー変更
             string s = $"[{itemIndex + 1}]{m_ImgSet[m_mouseHoverItem].Filename}";
-            Form1._instance.SetStatusbarInfo(s);
+            App.SetStatusbarInfo(s);
         }
 
         protected override async void OnMouseClick(MouseEventArgs e)

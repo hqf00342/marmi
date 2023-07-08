@@ -496,7 +496,7 @@ namespace Marmi
         /// <summary>
         /// 全画像読込をジョブスタックに積む
         /// </summary>
-        private void PreloadAllImages()
+        private static void PreloadAllImages()
         {
             //ver1.54 2013年5月7日
             for (int cnt = 0; cnt < App.g_pi.Items.Count; cnt++)
@@ -507,13 +507,13 @@ namespace Marmi
                 //サムネイルを作成するだけなのでawaitせず高速に回す。
                 AsyncIO.AddJobLow(cnt, () =>
                 {
-                    SetStatusbarInfo(msg);
+                    App.SetStatusbarInfo(msg);
                     //読み込んだものをPurge対象にする
                     App.g_pi.FileCacheCleanUp2(App.Config.Advance.CacheSize);
                 });
             }
             //読み込み完了メッセージ
-            AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => SetStatusbarInfo("事前画像情報読み込み完了"));
+            AsyncIO.AddJobLow(App.g_pi.Items.Count - 1, () => App.SetStatusbarInfo("事前画像情報読み込み完了"));
         }
 
         // ユーティリティ系 *************************************************************/
