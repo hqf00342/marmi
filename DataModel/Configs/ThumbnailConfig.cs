@@ -16,7 +16,7 @@ namespace Marmi.DataModel
         /// サムネイルの背景色
         /// </summary>
         [XmlIgnore]
-        public Color ThumbnailBackColor;
+        public Color ThumbnailBackColor { get; set; }
 
         /// <summary>
         /// サムネイルの背景色(XML)
@@ -32,7 +32,7 @@ namespace Marmi.DataModel
         /// サムネイルのフォント
         /// </summary>
         [XmlIgnore]
-        public Font ThumbnailFont;
+        public Font ThumbnailFont { get; set; }
 
         /// <summary>
         /// サムネイルのフォント(XML)
@@ -56,7 +56,7 @@ namespace Marmi.DataModel
         /// サムネイルのフォント色
         /// </summary>
         [XmlIgnore]
-        public Color ThumbnailFontColor;
+        public Color ThumbnailFontColor { get; set; }
 
         /// <summary>
         /// サムネイルのフォント色(XML)

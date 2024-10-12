@@ -21,6 +21,7 @@ namespace Marmi
         {
             _config = set.Clone();
 
+            //BindingSouceとコンフィグを連携させる。
             generalConfigBindingSource.DataSource = _config.General;
             advanceConfigBindingSource.DataSource = _config.Advance;
             loupeConfigBindingSource.DataSource = _config.Loupe;
