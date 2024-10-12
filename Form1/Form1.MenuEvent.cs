@@ -11,68 +11,9 @@ namespace Marmi
     {
         // メニューイベント ************************************************************************
 
-        private async void OnClickMRUMenu(object sender, EventArgs e)
-        {
-            var filename = ((ToolStripDropDownItem)sender).Text;
-
-            if (File.Exists(filename) || Directory.Exists(filename))
-            {
-                await StartAsync(new string[] { filename });
-            }
-            else
-            {
-                MessageBox.Show($"ファイルが見つかりませんでした\n{filename}", "ファイルオープンエラー");
-
-                //MRUリストから削除
-                var target = App.Config.Mru.Find(a => a.Name == filename);
-                if (target != null)
-                {
-                    App.Config.Mru.Remove(target);
-                }
-            }
-        }
-
         // #### FILE ###############################################################################
 
         #region FILE
-
-        private async void Menu_FileOpen_Click(object sender, EventArgs e)
-        {
-            await OpenDialog();
-        }
-
-        private void Menu_SaveThumbnail_Click(object sender, EventArgs e)
-        {
-            _thumbPanel.Location = GetClientRectangle().Location;
-            _thumbPanel.Size = GetClientRectangle().Size;
-            _thumbPanel.Parent = this;
-            var form = new SaveThumbnailForm(App.g_pi.Items, App.g_pi.PackageName);
-            form.ShowDialog(this);
-        }
-
-        private void Menu_Exit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            Application.Exit();
-        }
-
-        private void Menu_ClearMRU_Click(object sender, EventArgs e)
-        {
-            App.Config.Mru.Clear();
-            //for (int i = 0; i < App.Config.mru.Length; i++)
-            //{
-            //    App.Config.mru[i] = null;
-            //}
-        }
-
-        private void Menu_File_DropDownOpening(object sender, EventArgs e)
-        {
-            //MRUを追加
-            UpdateMruMenuListUI();
-
-            //ファイルを閲覧していない場合,サムネイル保存を無効にする
-            MenuItem_FileSaveThumbnail.Enabled = (App.g_pi?.Items?.Count > 0);
-        }
 
         /// <summary>
         /// MRUリストを更新する。実際にメニューの中身を更新
@@ -105,149 +46,6 @@ namespace Marmi
 
         //表示メニュー******************************************************************************
 
-        private async void Menu_ViewNext_Click(object sender, EventArgs e)
-        {
-            await NavigateToForwordAsync();
-        }
-
-        private async void Menu_ViewBack_Click(object sender, EventArgs e)
-        {
-            await NavigateToBackAsync();
-        }
-
-        private async void Menu_ViewTop_Click(object sender, EventArgs e)
-        {
-            await SetViewPageAsync(0);
-        }
-
-        private async void Menu_ViewEnd_Click(object sender, EventArgs e)
-        {
-            await SetViewPageAsync(App.g_pi.Items.Count - 1);
-        }
-
-        private void Menu_ViewThumbnail_Click(object sender, EventArgs e)
-        {
-            if (App.g_pi.Items.Count > 0)
-            {
-                //全画面であればメニュー系は全て非表示
-                if (ViewState.FullScreen)
-                {
-                    toolStrip1.Visible = false;
-                    statusbar.Visible = false;
-                    menuStrip1.Visible = false;
-                }
-                SetThumbnailView(!ViewState.ThumbnailView);
-            }
-        }
-
-        private void Menu_ViewFullScreen_Click(object sender, EventArgs e)
-        {
-            SetFullScreen(!ViewState.FullScreen);
-        }
-
-        private async void Menu_ViewMenubar_Click(object sender, EventArgs e)
-        {
-            //トグル切り替え
-            ViewState.VisibleMenubar = !ViewState.VisibleMenubar;
-            menuStrip1.Visible = ViewState.VisibleMenubar;
-
-            //ver0.972 サイドバーの位置調整
-            //AjustControlArrangement();
-            //再描写
-            await ReloadPageAsync();
-        }
-
-        private async void Menu_ViewToolbar_Click(object sender, EventArgs e)
-        {
-            //トグル切り替え
-            ViewState.VisibleToolBar = !ViewState.VisibleToolBar;
-            toolStrip1.Visible = ViewState.VisibleToolBar;
-
-            //ver0.972 ナビバーがあればリサイズ
-            //AjustControlArrangement();
-            //再描写
-            await ReloadPageAsync();
-        }
-
-        private async void Menu_ViewStatusbar_Click(object sender, EventArgs e)
-        {
-            //トグル切り替え
-            ViewState.VisibleStatusBar = !ViewState.VisibleStatusBar;
-            statusbar.Visible = ViewState.VisibleStatusBar;
-
-            //ver0.972 サイドバーの位置調整
-            //AjustControlArrangement();
-            //再描写
-            await ReloadPageAsync();
-        }
-
-        private async void Menu_ViewDualPage_Click(object sender, EventArgs e)
-        {
-            //トグル切り替え
-            await SetDualViewModeAsync(!ViewState.DualView);
-        }
-
-        private async void Menu_ViewHalfPageBack_Click(object sender, EventArgs e)
-        {
-            if (ViewState.DualView)
-            {
-                if (App.g_pi.NowViewPage > 0)
-                {
-                    await SetViewPageAsync(--App.g_pi.NowViewPage);
-                }
-                else
-                {
-                    //先頭ページだったので何もしない。
-                }
-            }
-        }
-
-        private async void Menu_ViewHalfPageForword_Click(object sender, EventArgs e)
-        {
-            if (ViewState.DualView)
-            {
-                if (App.g_pi.NowViewPage < App.g_pi.Items.Count)
-                {
-                    App.g_pi.NowViewPage++;  //半ページ戻し
-                    await SetViewPageAsync(App.g_pi.NowViewPage);  //ver0.988 2010年6月20日
-                }
-                else
-                {
-                    // 最終ページなので何もしない
-                }
-            }
-        }
-
-        private void Menu_ViewPictureInfo_Click(object sender, EventArgs e)
-        {
-            //ver1.81 画像情報確認
-            if (App.g_pi.NowViewPage < 0 || App.g_pi.NowViewPage >= App.g_pi.Items.Count)
-                return;
-
-            FormPictureInfo p = new FormPictureInfo();
-            if (g_viewPages == 1)
-                p.Show(this, App.g_pi.Items[App.g_pi.NowViewPage], null);
-            else
-                p.Show(this, App.g_pi.Items[App.g_pi.NowViewPage], App.g_pi.Items[App.g_pi.NowViewPage + 1]);
-        }
-
-        private void Menu_ViewPackageInfo_Click(object sender, EventArgs e)
-        {
-            //ver1.81 画像数確認
-            if (App.g_pi.Items.Count == 0)
-                return;
-
-            FormPackageInfo pif = new FormPackageInfo(this, App.g_pi);
-            pif.SetSortMode(false);
-            //pif.Show(g_pi.ViewPage);
-            pif.ShowDialog(App.g_pi.NowViewPage);
-        }
-
-        private void Menu_ViewFitScreenSize_Click(object sender, EventArgs e)
-        {
-            ToggleFitScreen();
-        }
-
         private void ToggleFitScreen()
         {
             App.Config.FitToScreen = !App.Config.FitToScreen;
@@ -257,58 +55,12 @@ namespace Marmi
             UpdateStatusbar();
         }
 
-        private void Menu_ViewSidebar_Click(object sender, EventArgs e)
-        {
-            if (_sidebar.Visible)
-            {
-                //閉じる
-                _sidebar.Visible = false;
-                ViewState.VisibleSidebar = false;
-            }
-            else
-            {
-                //サイドバーオープン
-                _sidebar.Init(App.g_pi);
-                if (App.Config != null)
-                    _sidebar.Width = App.Config.SidebarWidth;
-                else
-                    _sidebar.Width = App.SIDEBAR_DEFAULT_WIDTH;
-
-                _sidebar.Visible = true;
-                _sidebar.SetItemToCenter(App.g_pi.NowViewPage);
-                ViewState.VisibleSidebar = true;
-            }
-            AjustSidebarArrangement();
-        }
-
-        [Obsolete]
-        private void Menu_ViewFixSidebar_Click(object sender, EventArgs e)
-        {
-            //App.Config.isFixSidebar = !App.Config.isFixSidebar;
-            //MenuItem_ViewFixSidebar.Checked = App.Config.isFixSidebar;
-            //MenuItem_OptionSidebarFix.Checked = App.Config.isFixSidebar;
-        }
-
-        private async void Menu_View_LeftOpen_Click(object sender, EventArgs e)
-        {
-            App.g_pi.PageDirectionIsLeft = !App.g_pi.PageDirectionIsLeft;
-            if (ViewState.DualView)
-            {
-                await SetViewPageAsync(App.g_pi.NowViewPage);
-            }
-        }
-
         private void Menu_ToolbarBottom_Click(object sender, EventArgs e)
         {
             if (toolStrip1.Dock == DockStyle.Bottom)
                 toolStrip1.Dock = DockStyle.Top;
             else
                 toolStrip1.Dock = DockStyle.Bottom;
-        }
-
-        private async void Menu_Reload_Click(object sender, EventArgs e)
-        {
-            await ReloadPageAsync();
         }
 
         //ヘルプメニュー*****************************************************************************
@@ -323,41 +75,6 @@ namespace Marmi
         }
 
         //オプションメニュー*************************************************************************
-
-        private void Menu_Option_Click(object sender, EventArgs e)
-        {
-            var fo = new OptionForm();
-            fo.LoadConfig(App.Config);
-            if (fo.ShowDialog() == DialogResult.OK)
-            {
-                //App.Configに取り込み
-                fo.SaveConfig(ref App.Config);
-                //App.Configをウィンドウに反映
-                ApplyConfigToWindow();
-            }
-        }
-
-        private void Menu_RecurseDir_Click(object sender, EventArgs e)
-        {
-            App.Config.RecurseSearchDir = !App.Config.RecurseSearchDir;
-            Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
-        }
-
-        private void Menu_keepMagnification_Click(object sender, EventArgs e)
-        {
-            App.Config.KeepMagnification = !App.Config.KeepMagnification;
-        }
-
-        private void Menu_UseBicubic_Click(object sender, EventArgs e)
-        {
-            App.Config.View.DotByDotZoom = !App.Config.View.DotByDotZoom;
-        }
-
-        private async void Menu_DontEnlargeOver100percent_Click(object sender, EventArgs e)
-        {
-            App.Config.View.ProhigitExpansionOver100p = !App.Config.View.ProhigitExpansionOver100p;
-            await SetViewPageAsync(App.g_pi.NowViewPage);
-        }
 
         // コンテキストメニュー  ********************************************************************
 

@@ -7,7 +7,6 @@ using System.Windows.Forms;
 /*
 Marmiの閲覧開始ポイント
 Start()
-
 */
 
 namespace Marmi

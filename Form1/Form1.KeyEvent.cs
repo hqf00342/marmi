@@ -1,12 +1,8 @@
 ﻿using System.Windows.Forms;
 
 /*
- * キーイベント
- *
- * ver1.61で切り出し
- * 2013年7月21日
- *
- */
+キーイベント
+*/
 
 namespace Marmi
 {
@@ -40,6 +36,25 @@ namespace Marmi
             //ver1.80 Ctrl,Shitに対応するためKeyDataに変更
             if (KeyDefines.TryGetValue(e.KeyData, out var func))
                 func?.Invoke();
+        }
+
+        protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+
+            /// 矢印キーへ対応させる
+            switch (e.KeyCode)
+            {
+                //矢印キーが押されたことを表示する
+                case Keys.Up:
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Down:
+                case Keys.Escape:
+                    Uty.DebugPrint(e.KeyCode.ToString());
+                    e.IsInputKey = true;
+                    break;
+            }
         }
     }
 }

@@ -129,7 +129,22 @@
     <Compile Include="Form1\Form1.Slideshow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form1\MenuEvent.File.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1\MenuEvent.Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1\MenuEvent.Option.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1\MenuEvent.View.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\IConfig.cs" />
+    <Compile Include="Form1\Form1.FormEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <None Include="Models\BitmapCache.cs" />
     <Compile Include="Models\TaskExtensions.cs" />
     <Compile Include="Models\ThumbnailPictureMaker.cs" />
@@ -174,7 +189,7 @@
     <Compile Include="enums\DiagLocate.cs" />
     <Compile Include="enums\PackageType.cs" />
     <Compile Include="AsyncIO.cs" />
-    <Compile Include="Form1\Form1.Event.cs">
+    <Compile Include="Form1\Form1.KeyEvent.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interfaces\IRemoteObject.cs" />

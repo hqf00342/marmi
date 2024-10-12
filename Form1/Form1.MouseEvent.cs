@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Marmi.Models;
+using System.Drawing;
 using System.Windows.Forms;
 
 /*
@@ -13,6 +14,42 @@ namespace Marmi
 {
     public partial class Form1 : Form
     {
+        #region D&D
+
+        protected override async void OnDragDrop(DragEventArgs drgevent)
+        {
+            base.OnDragDrop(drgevent);
+
+            Uty.DebugPrint("Start");
+
+            //ドロップされた物がファイルかどうかチェック
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                //Formをアクティブ
+                this.Activate();
+                string[] files = drgevent.Data.GetData(DataFormats.FileDrop) as string[];
+
+                //2022年9月17日 非同期IOを中止
+                await AsyncIO.ClearJobAndWaitAsync();
+
+                //await StartAsync(files);
+                StartAsync(files).FireAndForget();
+            }
+            Uty.DebugPrint("End");
+        }
+
+        protected override void OnDragEnter(DragEventArgs drgevent)
+        {
+            base.OnDragEnter(drgevent);
+
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+                drgevent.Effect = DragDropEffects.All;
+            else
+                drgevent.Effect = DragDropEffects.None;
+        }
+
+        #endregion D&D
+
         private async void PicPanel_MouseWheel(object sender, MouseEventArgs e)
         {
             if (App.Config.Mouse.MouseConfigWheel == "拡大縮小")
