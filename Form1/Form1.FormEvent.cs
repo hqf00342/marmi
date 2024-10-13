@@ -24,10 +24,16 @@ namespace Marmi
             //設定をFormに適用する
             ApplyConfigToWindow();
 
-            //起動直後フルスクリーン設定なら実施
+            //起動直後専用オプションの対応
             if (App.Config.General.FullScreenWhenStartup)
             {
+                //フルスクリーン表示
                 SetFullScreen(true);
+            }
+            else if(App.Config.General.CenteredAtStart)
+            {
+                //画面中央表示
+                this.StartPosition = FormStartPosition.CenterScreen;
             }
 
             //初期化

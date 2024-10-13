@@ -9,6 +9,7 @@ namespace Marmi
 
         /// <summary>
         /// ロードしたコンフィグをアプリに適用していく
+        /// Form_Loadイベントとオプション画面で変更があった場合に実行される。
         /// </summary>
         private void ApplyConfigToWindow()
         {
