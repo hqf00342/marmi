@@ -56,6 +56,14 @@ namespace Marmi
         //var1.54 横長かどうか
         public bool IsFat => Width > Height;
 
+        /// <summary>
+        /// コンストラクタ
+        /// 書庫内ファイル用で作成日とファイルサイズを引数でもらう
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="filename"></param>
+        /// <param name="creationDate"></param>
+        /// <param name="bytes"></param>
         public ImageInfo(int index, string filename, DateTime creationDate, long bytes)
         {
             OrgIndex = index;
@@ -64,6 +72,12 @@ namespace Marmi
             FileLength = bytes;
         }
 
+        /// <summary>
+        /// 実ファイル用コンストラクタ
+        /// FileInfoクラスを使って作成日とファイルサイズは内部取得する。
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="filename"></param>
         public ImageInfo(int index, string filename)
         {
             var fi = new FileInfo(filename);
@@ -77,7 +91,6 @@ namespace Marmi
         /// ver1.10 サムネイル画像をオリジナル画像から登録する。
         /// Bitmapを実体化させるのでExifも同時に取得
         /// </summary>
-
         public void CreateThumbnail()
         {
             if (Thumbnail != null)

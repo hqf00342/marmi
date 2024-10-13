@@ -32,7 +32,7 @@ namespace Marmi
         }
 
         /// <summary>
-        /// ディレクトリの再帰検索
+        /// ディレクトリの再帰検索を行うか
         /// </summary>
         public bool RecurseSearchDir { get; set; }
 
@@ -42,57 +42,57 @@ namespace Marmi
         public bool FitToScreen { get; set; }
 
         /// <summary>
-        /// サイドバーの幅
+        /// サイドバー幅
         /// </summary>
         public int SidebarWidth { get; set; }
 
         /// <summary>
-        /// スクリーンショー時間[ms]
+        /// スクリーンショー時間[msec]
         /// </summary>
         public int SlideshowTime { get; set; }
 
         /// <summary>
-        /// ツールバーの位置
+        /// ツールバーの位置.上部ならtrue
         /// </summary>
         public bool ToolbarIsTop { get; set; }
 
         /// <summary>
-        /// 倍率の保持
+        /// 表示倍率を保持する場合はtrue
         /// </summary>
         public bool KeepMagnification { get; set; }
 
         /// <summary>
-        /// GeneralConfig
+        /// OptionFormダイアログの「全般」タブ用Config
         /// </summary>
         public GeneralConfig General { get; set; } = new GeneralConfig();
 
         /// <summary>
-        /// ViewConfig
+        /// OptionFormダイアログの「表示」タブ用Config
         /// </summary>
         public ViewConfig View { get; set; } = new ViewConfig();
 
         /// <summary>
-        /// KeyConfig
+        /// OptionFormダイアログの「キーコンフィグ」タブ用Config
         /// </summary>
         public KeyConfig Keys { get; set; } = new KeyConfig();
 
         /// <summary>
-        /// MouseConfig
+        /// OptionFormダイアログの「マウス」タブ用Config
         /// </summary>
         public MouseConfig Mouse { get; set; } = new MouseConfig();
 
         /// <summary>
-        /// LoupeConfig
+        /// OptionFormダイアログの「ルーペ」タブ用Config
         /// </summary>
         public LoupeConfig Loupe { get; set; } = new LoupeConfig();
 
         /// <summary>
-        /// AdvanceConfig
+        /// OptionFormダイアログの「高度な設定」タブ用Config
         /// </summary>
         public AdvanceConfig Advance { get; set; } = new AdvanceConfig();
 
         /// <summary>
-        /// ThumbnailConfig
+        /// OptionFormダイアログの「サムネイル」タブ用Config
         /// </summary>
         public ThumbnailConfig Thumbnail { get; set; } = new ThumbnailConfig();
 
@@ -109,7 +109,8 @@ namespace Marmi
         /*******************************************************************************/
 
         /// <summary>
-        /// コンストラクタ
+        /// コンストラクタ。
+        /// 各パラメータを初期値にする。
         /// </summary>
         public AppGlobalConfig()
         {
@@ -117,7 +118,7 @@ namespace Marmi
         }
 
         /// <summary>
-        /// 各パラメータの初期値
+        /// 全プロパティを初期値に設定
         /// </summary>
         private void Initialize()
         {
@@ -164,6 +165,10 @@ namespace Marmi
             return;
         }
 
+        /// <summary>
+        /// このオブジェクトをディープコピーしCloneする。
+        /// </summary>
+        /// <returns></returns>
         public AppGlobalConfig Clone()
         {
             var xs = new XmlSerializer(typeof(AppGlobalConfig));

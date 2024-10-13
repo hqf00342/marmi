@@ -24,6 +24,12 @@ namespace Marmi
             //設定をFormに適用する
             ApplyConfigToWindow();
 
+            //起動直後フルスクリーン設定なら実施
+            if (App.Config.General.FullScreenWhenStartup)
+            {
+                SetFullScreen(true);
+            }
+
             //初期化
             await InitMarmiAsync();
             UpdateToolbar();

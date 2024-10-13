@@ -12,22 +12,22 @@ namespace Marmi.DataModel
     public class GeneralConfig : IConfig
     {
         /// <summary>
-        /// コンフィグの保存
+        /// 終了時にコンフィグ保存するかどうか
         /// </summary>
         public bool SaveConfig { get; set; } = true;
 
         /// <summary>
-        /// 書庫は前回の続きから
+        /// 書庫Open時に前回の続きページから開くか
         /// </summary>
         public bool ContinueReading { get; set; } = true;
 
         /// <summary>
-        /// 書庫を常に展開する
+        /// 書庫を常にファイルへ一時展開するか堂か
         /// </summary>
         public bool ExtractArchiveAlways { get; set; } = false;
 
         /// <summary>
-        /// ソリッド書庫を一時展開
+        /// ソリッド書庫は常に一時展開するか堂か
         /// </summary>
         public bool ExtractArchiveIfSolid { get; set; } = true;
 
@@ -73,14 +73,14 @@ namespace Marmi.DataModel
         }
 
         /// <summary>
-        /// ver1.76 多重起動禁止
+        /// Marmiの多重起動禁止(ver1.76)
         /// </summary>
         public bool SingleProcess { get; set; } = false;
 
         /// <summary>
         /// ver1.77 フルスクリーン状態を復元できるようにする
         /// </summary>
-        public bool SaveFullScreenMode { get; set; } = true;
+        public bool FullScreenWhenStartup { get; set; } = true;
 
         //ver1.49 ウィンドウの初期位置を中央にする
         public bool CenteredAtStart { get; set; } = false;
@@ -101,7 +101,7 @@ namespace Marmi.DataModel
             TmpFolder = string.Empty;
             MaxMruNumber = 20;
             SingleProcess = false;
-            SaveFullScreenMode = true;
+            FullScreenWhenStartup = true;
             ExtractArchiveAlways = false;
         }
 

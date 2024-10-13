@@ -28,7 +28,7 @@ namespace Marmi
             SetFormPosition();
 
             //ver1.77全画面モード対応
-            if (App.Config.General.SaveFullScreenMode && ViewState.FullScreen)
+            if (App.Config.General.FullScreenWhenStartup && ViewState.FullScreen)
                 SetFullScreen(true);
 
             //2枚表示
