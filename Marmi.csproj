@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="DataModel\BindableBase.cs" />
     <Compile Include="enums\CacheTag.cs" />
     <Compile Include="Form1\Form1.Loupe.cs">
       <SubType>Form</SubType>

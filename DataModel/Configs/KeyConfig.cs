@@ -1,13 +1,20 @@
 ﻿/********************************************************************************
 KeyConfig
 キー設定
+
+2024年10月13日
+BindableBase派生にしINotifyPropertyChangedに対応する。
+しかし、全部をINotifyPropertyChangedにするのは面倒なので
+必要なとき(初期値に戻す)にOnPropertyChangedを手動呼び出しする。
+
 ********************************************************************************/
 
+using Mii;
 using System.Windows.Forms;
 
 namespace Marmi.DataModel
 {
-    public class KeyConfig
+    public class KeyConfig : BindableBase
     {
         public Keys Key_Exit1 { get; set; }
         public Keys Key_Exit2 { get; set; }
@@ -53,6 +60,11 @@ namespace Marmi.DataModel
             Key_Thumbnail = Keys.T;
             Key_Sidebar = Keys.S;
             Key_MinWindow = Keys.Z;
+
+            //WinFormsのデータバインド機構は
+            //1つPropertyChangedを投げると全部チェックしてくれるため
+            //1つだけ投げる
+            OnPropertyChanged(nameof(Key_Exit1));
         }
     }
 }

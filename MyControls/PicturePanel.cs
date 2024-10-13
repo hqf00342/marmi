@@ -28,7 +28,7 @@ namespace Marmi
             set
             {
                 _bmp = value;
-                if (!App.Config.KeepMagnification)
+                if (!App.Config.View.KeepMagnification)
                     _amat.Reset();
                 //alpha = 1.0f;
 
@@ -82,7 +82,6 @@ namespace Marmi
         //表示するメッセージ
         public string Message { get; set; }
 
-
         #endregion --- properties ---
 
         public PicturePanel()
@@ -124,7 +123,7 @@ namespace Marmi
         {
             //ver1.78 倍率固定に対応
             //mat.Reset();
-            if (!App.Config.KeepMagnification)
+            if (!App.Config.View.KeepMagnification)
                 _amat.Reset();
             Opacity = 1.0f;
         }
@@ -876,7 +875,6 @@ namespace Marmi
             }
             FastDraw = false;
         }
-
 
         /// <summary>
         /// 表示中の画像が画面いっぱいにフィットしているかどうか

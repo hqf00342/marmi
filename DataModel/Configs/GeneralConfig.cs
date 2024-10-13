@@ -1,15 +1,22 @@
 ﻿/********************************************************************************
 GlobalConfig
 一般設定
+
+2024年10月13日
+BindableBase派生にしINotifyPropertyChangedに対応する。
+しかし、全部をINotifyPropertyChangedにするのは面倒なので
+必要なとき(初期値に戻す)にOnPropertyChangedを手動呼び出しする。
+
 ********************************************************************************/
 
 using Marmi.Interfaces;
+using Mii;
 using System.Drawing;
 using System.Xml.Serialization;
 
 namespace Marmi.DataModel
 {
-    public class GeneralConfig : IConfig
+    public class GeneralConfig : BindableBase, IConfig
     {
         /// <summary>
         /// 終了時にコンフィグ保存するかどうか
@@ -101,8 +108,13 @@ namespace Marmi.DataModel
             TmpFolder = string.Empty;
             MaxMruNumber = 20;
             SingleProcess = false;
-            FullScreenWhenStartup = true;
+            FullScreenWhenStartup = false;
             ExtractArchiveAlways = false;
+
+            //WinFormsのデータバインド機構は
+            //1つPropertyChangedを投げると全部チェックしてくれるため
+            //1つだけ投げる
+            OnPropertyChanged(nameof(SaveConfig));
         }
 
         public GeneralConfig Clone()

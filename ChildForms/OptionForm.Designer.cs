@@ -48,7 +48,7 @@
             this.bReplaceArrowButton = new System.Windows.Forms.CheckBox();
             this.bSaveConfig = new System.Windows.Forms.CheckBox();
             this.isWindowPosCenter = new System.Windows.Forms.CheckBox();
-            this.view = new System.Windows.Forms.TabPage();
+            this.View = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dualView_withSizeCheck = new System.Windows.Forms.RadioButton();
             this.dualView_Normal = new System.Windows.Forms.RadioButton();
@@ -165,7 +165,7 @@
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
-            this.view.SuspendLayout();
+            this.View.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.Thumbnail.SuspendLayout();
@@ -197,7 +197,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.General);
-            this.tabControl1.Controls.Add(this.view);
+            this.tabControl1.Controls.Add(this.View);
             this.tabControl1.Controls.Add(this.Thumbnail);
             this.tabControl1.Controls.Add(this.Loope);
             this.tabControl1.Controls.Add(this.KeyConfig);
@@ -455,21 +455,21 @@
             this.isWindowPosCenter.Enter += new System.EventHandler(this.OnFocus_Enter);
             this.isWindowPosCenter.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // view
+            // View
             // 
-            this.view.Controls.Add(this.groupBox4);
-            this.view.Controls.Add(this.keepMagnification);
-            this.view.Controls.Add(this.groupBox3);
-            this.view.Controls.Add(this.SwitchPicMode);
-            this.view.Controls.Add(this.label23);
-            this.view.Controls.Add(this.isDotByDotZoom);
-            this.view.Controls.Add(this.noEnlargeOver100p);
-            this.view.Location = new System.Drawing.Point(4, 22);
-            this.view.Name = "view";
-            this.view.Size = new System.Drawing.Size(497, 364);
-            this.view.TabIndex = 6;
-            this.view.Text = "表示";
-            this.view.UseVisualStyleBackColor = true;
+            this.View.Controls.Add(this.groupBox4);
+            this.View.Controls.Add(this.keepMagnification);
+            this.View.Controls.Add(this.groupBox3);
+            this.View.Controls.Add(this.SwitchPicMode);
+            this.View.Controls.Add(this.label23);
+            this.View.Controls.Add(this.isDotByDotZoom);
+            this.View.Controls.Add(this.noEnlargeOver100p);
+            this.View.Location = new System.Drawing.Point(4, 22);
+            this.View.Name = "View";
+            this.View.Size = new System.Drawing.Size(497, 364);
+            this.View.TabIndex = 6;
+            this.View.Text = "表示";
+            this.View.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -523,6 +523,7 @@
             // keepMagnification
             // 
             this.keepMagnification.AutoSize = true;
+            this.keepMagnification.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.viewConfigBindingSource, "KeepMagnification", true));
             this.keepMagnification.Location = new System.Drawing.Point(12, 84);
             this.keepMagnification.Name = "keepMagnification";
             this.keepMagnification.Size = new System.Drawing.Size(225, 16);
@@ -1836,8 +1837,8 @@
             this.General.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).EndInit();
-            this.view.ResumeLayout(false);
-            this.view.PerformLayout();
+            this.View.ResumeLayout(false);
+            this.View.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -1929,7 +1930,7 @@
 		private System.Windows.Forms.PictureBox pictureBoxLeftScr;
 		private System.Windows.Forms.CheckBox eraseToolbarItemString;
 		private System.Windows.Forms.CheckBox sidebar_smoothscroll;
-		private System.Windows.Forms.TabPage view;
+		private System.Windows.Forms.TabPage View;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.RadioButton lastPage_toTop;
 		private System.Windows.Forms.RadioButton lastPage_stay;

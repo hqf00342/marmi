@@ -189,7 +189,7 @@ namespace Marmi
             //チェック状態
             Menu_OptionRecurseDir.Checked = App.Config.RecurseSearchDir;
             //MenuItem_OptionSidebarFix.Checked = App.Config.isFixSidebar;
-            Menu_keepMagnification.Checked = App.Config.KeepMagnification;
+            Menu_keepMagnification.Checked = App.Config.View.KeepMagnification;
             Menu_UseBicubic.Checked = !App.Config.View.DotByDotZoom;
             Menu_DontEnlargeOver100percent.Checked = App.Config.View.ProhigitExpansionOver100p;
 

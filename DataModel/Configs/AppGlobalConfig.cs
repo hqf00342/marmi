@@ -57,11 +57,6 @@ namespace Marmi
         public bool ToolbarIsTop { get; set; }
 
         /// <summary>
-        /// 表示倍率を保持する場合はtrue
-        /// </summary>
-        public bool KeepMagnification { get; set; }
-
-        /// <summary>
         /// OptionFormダイアログの「全般」タブ用Config
         /// </summary>
         public GeneralConfig General { get; set; } = new GeneralConfig();
@@ -129,7 +124,6 @@ namespace Marmi
             SidebarWidth = App.SIDEBAR_INIT_WIDTH;
             SlideshowTime = 3000;
             ToolbarIsTop = true;
-            KeepMagnification = false;
 
             General.Init();
             View.Init();

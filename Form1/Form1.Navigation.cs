@@ -100,7 +100,7 @@ namespace Marmi
             //ver1.50 表示
             PicPanel.Message = string.Empty;
             if (App.Config.View.PageTransitionEffect == "アニメーション"
-                && !App.Config.KeepMagnification
+                && !App.Config.View.KeepMagnification
                 && pageDirection != 0)
             {
                 //スライドインアニメーション
@@ -112,7 +112,7 @@ namespace Marmi
             PicPanel.FastDraw = false;
 
             //ver1.78 倍率をオプション指定できるように変更
-            if (!App.Config.KeepMagnification     //倍率維持モードではない
+            if (!App.Config.View.KeepMagnification     //倍率維持モードではない
                 || PicPanel.IsFitToScreen)        //画面にフィットしている
             {
                 //画面切り替わり時はフィットモードで起動

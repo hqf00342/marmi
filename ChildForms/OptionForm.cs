@@ -29,9 +29,6 @@ namespace Marmi
             thumbnailConfigBindingSource.DataSource = _config.Thumbnail;
             viewConfigBindingSource.DataSource = _config.View;
             keyConfigBindingSource.DataSource = _config.Keys;
-
-            //ver1.78 倍率の保持
-            keepMagnification.Checked = set.KeepMagnification;
         }
 
         public void SaveConfig(ref AppGlobalConfig set)
@@ -44,19 +41,51 @@ namespace Marmi
             set.Thumbnail = _config.Thumbnail;
             set.View = _config.View;
             set.Keys = _config.Keys;
-
-            //ver1.78 倍率の保持
-            set.KeepMagnification = keepMagnification.Checked;
         }
 
         private void InitButton_Click(object sender, EventArgs e)
         {
+            //現在表示中のタブを確認
+            var tabName = this.tabControl1.SelectedTab.Name;
+            var tabNameJp = this.tabControl1.SelectedTab.Text;
+
             if (MessageBox.Show(
-                    "全ての設定が初期値に戻りますが実行しますか？",
+                    $"「{tabNameJp}」設定を初期値に戻しますか？",
                     "確認",
                     MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                LoadConfig(new AppGlobalConfig());      //初期値を作り出す
+                switch (tabName)
+                {
+                    case "General":
+                        _config.General.Init();
+                        break;
+
+                    case "View":
+                        _config.View.Init();
+                        break;
+
+                    case "Thumbnail":
+                        _config.Thumbnail.Init();
+                        break;
+
+                    case "Loope":
+                        _config.Loupe.Init();
+                        break;
+
+                    case "KeyConfig":
+                        _config.Keys.Init();
+                        break;
+
+                    case "Mouse":
+                        _config.Mouse.Init();
+                        break;
+
+                    case "Detail":
+                        _config.Advance.Init();
+                        break;
+                }
+                //LoadConfig(new AppGlobalConfig());      //初期値を作り出す
+
                 this.Refresh();
             }
         }

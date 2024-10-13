@@ -1,8 +1,15 @@
 ﻿/*
 ThumbnalConfig
 サムネイル用のコンフィグ
+
+2024年10月13日
+BindableBase派生にしINotifyPropertyChangedに対応する。
+しかし、全部をINotifyPropertyChangedにするのは面倒なので
+必要なとき(初期値に戻す)にOnPropertyChangedを手動呼び出しする。
+
 */
 
+using Mii;
 using System;
 using System.Drawing;
 using System.Xml.Serialization;
@@ -10,7 +17,7 @@ using System.Xml.Serialization;
 namespace Marmi.DataModel
 {
     [Serializable]
-    public class ThumbnailConfig
+    public class ThumbnailConfig : BindableBase
     {
         /// <summary>
         /// サムネイルの背景色
@@ -116,6 +123,11 @@ namespace Marmi.DataModel
             DrawFilesize = false;
             DrawPicsize = false;
             SmoothScroll = true;
+
+            //WinFormsのデータバインド機構は
+            //1つPropertyChangedを投げると全部チェックしてくれるため
+            //1つだけ投げる
+            OnPropertyChanged(nameof(ThumbnailSize));
         }
     }
 }

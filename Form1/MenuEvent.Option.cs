@@ -26,7 +26,7 @@ namespace Marmi
 
         private void Menu_keepMagnification_Click(object sender, EventArgs e)
         {
-            App.Config.KeepMagnification = !App.Config.KeepMagnification;
+            App.Config.View.KeepMagnification = !App.Config.View.KeepMagnification;
         }
 
         private void Menu_UseBicubic_Click(object sender, EventArgs e)
