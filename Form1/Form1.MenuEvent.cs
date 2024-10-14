@@ -206,6 +206,10 @@ namespace Marmi
         {
             //左開きにする
             Menu_View_LeftOpen.Checked = !App.g_pi.PageDirectionIsLeft;
+
+            //複数ページ表示部分を更新
+            UpDateMenuTextOfMultiPageNavigation();
+
             //ファイルを閲覧していない場合のナビゲーション
             if (App.g_pi == null || App.g_pi.Items == null || App.g_pi.Items.Count < 1)
             {
@@ -224,6 +228,8 @@ namespace Marmi
                 Menu_ViewZoom.Enabled = false;  //Zoom
                 Menu_ViewReload.Enabled = false;
                 Menu_SlideShow.Enabled = false;
+                Menu_ForwordMultiPages.Enabled = false;
+                Menu_BackwordMultiPages.Enabled = false;
                 return;
             }
             else if (App.g_pi.Items.Count == 1)
@@ -242,6 +248,8 @@ namespace Marmi
                 Menu_ViewZoom.Enabled = true;   //Zoom
                 Menu_ViewReload.Enabled = true;
                 Menu_SlideShow.Enabled = false;
+                Menu_ForwordMultiPages.Enabled = false;
+                Menu_BackwordMultiPages.Enabled = false;
                 return;
             }
             else
@@ -275,6 +283,8 @@ namespace Marmi
                     Menu_ViewNext.Enabled = false;
                     Menu_View2Page.Enabled = false;
                     Menu_ViewSidebar.Enabled = false;
+                    Menu_ForwordMultiPages.Enabled = false;
+                    Menu_BackwordMultiPages.Enabled = false;
                 }
                 else
                 {
@@ -285,6 +295,8 @@ namespace Marmi
                     Menu_ViewNext.Enabled = !IsLastPageViewing();       //最終ページチェック
                     Menu_View2Page.Enabled = true;
                     Menu_ViewSidebar.Enabled = true;
+                    Menu_ForwordMultiPages.Enabled = true;
+                    Menu_BackwordMultiPages.Enabled = true;
                 }
             }
         }
@@ -527,6 +539,23 @@ namespace Marmi
 
             //再描写
             PicPanel.Invalidate();
+        }
+
+        private async void Menu_ForwordMultiPages_Click(object sender, EventArgs e)
+        {
+            await NavigateToForwordMultiPageAsync();
+        }
+
+        private async void Menu_BackwordMultiPages_Click(object sender, EventArgs e)
+        {
+            await NavigateToBackwordMultiPageAsync();
+        }
+
+        private void UpDateMenuTextOfMultiPageNavigation()
+        {
+            var pages = App.Config.General.MultiPageNavigationCount;
+            Menu_ForwordMultiPages.Text = $"{pages} ページ進む";
+            Menu_BackwordMultiPages.Text = $"{pages} ページ戻る";
         }
     }
 }

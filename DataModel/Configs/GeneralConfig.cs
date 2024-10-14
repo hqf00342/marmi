@@ -92,8 +92,8 @@ namespace Marmi.DataModel
         //ver1.49 ウィンドウの初期位置を中央にする
         public bool CenteredAtStart { get; set; } = false;
 
-        public string TESTA { get; set; }
-        public int TESTB { get; set; }
+        /// <summary>複数ページ進む/戻るのページ数</summary>
+        public int MultiPageNavigationCount { get; set; } = 10;
 
         public void Init()
         {
@@ -110,6 +110,7 @@ namespace Marmi.DataModel
             SingleProcess = false;
             FullScreenWhenStartup = false;
             ExtractArchiveAlways = false;
+            MultiPageNavigationCount = 10;
 
             //WinFormsのデータバインド機構は
             //1つPropertyChangedを投げると全部チェックしてくれるため

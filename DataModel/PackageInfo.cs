@@ -2,6 +2,10 @@
 PackageInfo.cs
 閲覧対象の画像一覧クラス
 シリアライズ対応
+
+主なプロパティ
+Items       ページ一覧
+NowViewPage 現在のページ
 */
 
 using System;

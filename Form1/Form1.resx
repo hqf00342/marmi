@@ -121,7 +121,7 @@
     <value>125, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolButtonOpen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Open.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASISURBVFhH7ZZ9TJV1FMehNHVURoEMFZBd1CHGUpIyNIuB
@@ -147,7 +147,7 @@
         RU5ErkJggg==
 </value>
   </data>
-  <data name="toolButtonLeft.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Left.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARHSURBVFhH3Zd9UNN1HMdXE0FAhDwpRCoHSRNPOlqm21SQ
@@ -172,7 +172,7 @@
         YII=
 </value>
   </data>
-  <data name="toolButtonRight.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Right.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARISURBVFhH1Zd7TNNXFMe7dfhAdIgTFWEKRZShM0Nk461i
@@ -197,7 +197,7 @@
         QmCC
 </value>
   </data>
-  <data name="toolButtonClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Close.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAW9SURBVFhH7VdXaFRZGHYby8I+iK/uixDYZfdhBSGigqKi
@@ -228,7 +228,7 @@
         SRBeiwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="toolButtonFullScreen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_FullScreen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP/SURBVFhHzZddTFNnGMeJu9JkN9uVd9Nkiwtz82KZ824X
@@ -251,7 +251,7 @@
         4jNiETGXmEXEjDcITvUWMfsV8ybBuqzPPjSSkv4DCN2b28XCbTYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolButtonThumbnail.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Thumbnail.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAZ3SURBVFhH3ZfdT1v3GcfdVtOmttM2abvIRYqSqsumatou
@@ -285,7 +285,7 @@
         /wKXuS5gXBthqgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="toolButtonDualMode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_DualMode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAYYSURBVFhH7ZZrTJN3GMWb7cOS7csuccuSzc3EOBKSDScu
@@ -317,7 +317,7 @@
         YNZeUa62q14R1wuu40MpZs12HR/V/7tkst8AaH4xpZnKkHEAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripButton_Sidebar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Sidebar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMMSURBVEhL7ZLJSxthGMY/vLQilPZU7LFHb4IXwZMHQfAg
@@ -336,7 +336,7 @@
         3SbkfEnue1xwl3hAlBKPbomHBMvvEP/0EuInhgDIdk9GxGgAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripButton_Favorite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Favorite.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVEhL1ZPbS1RhFMX37kZFV6IrBBH9TV3mqqMy3sa7
@@ -352,7 +352,7 @@
         uuruLxsMpul546xx2jhpHDf2mx/YhchP4vygSXRnDTEAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripButton_Zoom100.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Zoom100.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPgSURBVEhLzZRtTBN3HMfxYVHItoiik7GQOGVv1Bgl5SEp
@@ -375,7 +375,7 @@
         28i9fRczuwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="toolStripButton_ZoomFit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_ZoomFit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPTSURBVEhLzZRdTFNnGMdxukyILkOZk7GQOD9udFmUlI+k
@@ -398,7 +398,7 @@
         TkSuQmCC
 </value>
   </data>
-  <data name="toolStripButton_ZoomIn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_ZoomIn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPkSURBVEhLzZRvTFtlFMbRaRSiRibOIYZkbvhlM2Yj5U9S
@@ -421,7 +421,7 @@
         QcGfwmrBNiiSemkAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripButton_ZoomOut.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_ZoomOut.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOoSURBVEhLzZRbSFNxHMftRikVWXYxQ+j6UhEl8wIza7kG
@@ -443,7 +443,7 @@
         kPAbOPnODLM/umYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripButton_Rotate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolbar_Rotate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKxSURBVEhL5ZRdSJphFMddRe22MXa1GtVuul93My+CKC1T

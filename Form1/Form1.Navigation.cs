@@ -34,6 +34,12 @@ namespace Marmi
             //ver1.36 Index範囲チェック
             Debug.Assert(index >= 0 && index < App.g_pi.Items.Count);
 
+            if (index < 0)
+                index = 0;
+
+            if (index > App.g_pi.Items.Count - 1)
+                index = App.g_pi.Items.Count - 1;
+
             // ページ進行方向 進む方向なら正、戻る方向なら負
             // アニメーションで利用する
             int pageDirection = index - App.g_pi.NowViewPage;
@@ -226,6 +232,34 @@ namespace Marmi
                 //最終ページ
                 return -1;
             }
+        }
+
+        /// <summary>
+        /// ページを複数ページ進める
+        /// </summary>
+        /// <returns></returns>
+        private async Task NavigateToForwordMultiPageAsync()
+        {
+            var nextPage = App.g_pi.NowViewPage + App.Config.General.MultiPageNavigationCount;
+            if (nextPage > App.g_pi.Items.Count - 1)
+            {
+                nextPage = App.g_pi.Items.Count - 1;
+            }
+            await SetViewPageAsync(nextPage);
+        }
+
+        /// <summary>
+        /// ページを複数ページ戻る
+        /// </summary>
+        /// <returns></returns>
+        private async Task NavigateToBackwordMultiPageAsync()
+        {
+            var nextPage = App.g_pi.NowViewPage - App.Config.General.MultiPageNavigationCount;
+            if (nextPage < 0)
+            {
+                nextPage = 0;
+            }
+            await SetViewPageAsync(nextPage);
         }
 
         #endregion Navigation

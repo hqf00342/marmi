@@ -31,7 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.General = new System.Windows.Forms.TabPage();
+            this.multipageCountUpDown = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.generalConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.alwaysExtractArchive = new System.Windows.Forms.CheckBox();
             this.saveFullScreenMode = new System.Windows.Forms.CheckBox();
             this.disableMultipleStarts = new System.Windows.Forms.CheckBox();
@@ -42,6 +44,7 @@
             this.sidebar_smoothscroll = new System.Windows.Forms.CheckBox();
             this.eraseToolbarItemString = new System.Windows.Forms.CheckBox();
             this.pictureBox_BackColor = new System.Windows.Forms.PictureBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.isExtractIfSolidArchive = new System.Windows.Forms.CheckBox();
             this.bContinueZip = new System.Windows.Forms.CheckBox();
@@ -51,6 +54,7 @@
             this.View = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dualView_withSizeCheck = new System.Windows.Forms.RadioButton();
+            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dualView_Normal = new System.Windows.Forms.RadioButton();
             this.dualView_Force = new System.Windows.Forms.RadioButton();
             this.keepMagnification = new System.Windows.Forms.CheckBox();
@@ -63,6 +67,7 @@
             this.noEnlargeOver100p = new System.Windows.Forms.CheckBox();
             this.Thumbnail = new System.Windows.Forms.TabPage();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.thumbnailConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ThumbnailPanelSmoothScroll = new System.Windows.Forms.CheckBox();
             this.isDrawThumbnailFrame = new System.Windows.Forms.CheckBox();
             this.isShowTPPicSize = new System.Windows.Forms.CheckBox();
@@ -79,12 +84,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.Loope = new System.Windows.Forms.TabPage();
             this.loupeMag = new System.Windows.Forms.TextBox();
+            this.loupeConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.isOriginalSizeLoupe = new System.Windows.Forms.CheckBox();
             this.KeyConfig = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ka_exit2 = new Marmi.KeyAccelerator();
+            this.keyConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ka_exit1 = new Marmi.KeyAccelerator();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
@@ -97,17 +106,35 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
+            this.ka_bookmark1 = new Marmi.KeyAccelerator();
+            this.ka_fullscreen1 = new Marmi.KeyAccelerator();
+            this.ka_dualview1 = new Marmi.KeyAccelerator();
+            this.ka_viewratio1 = new Marmi.KeyAccelerator();
+            this.ka_recycle1 = new Marmi.KeyAccelerator();
+            this.ka_nextpage1 = new Marmi.KeyAccelerator();
+            this.ka_prevpage1 = new Marmi.KeyAccelerator();
+            this.ka_toppage1 = new Marmi.KeyAccelerator();
+            this.ka_lastpage1 = new Marmi.KeyAccelerator();
+            this.ka_nexthalf1 = new Marmi.KeyAccelerator();
+            this.ka_prevhalf1 = new Marmi.KeyAccelerator();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
+            this.ka_nextpage2 = new Marmi.KeyAccelerator();
+            this.ka_prevpage2 = new Marmi.KeyAccelerator();
             this.label12 = new System.Windows.Forms.Label();
+            this.ka_rotate1 = new Marmi.KeyAccelerator();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.ka_thunbnail = new Marmi.KeyAccelerator();
+            this.ka_sidebar = new Marmi.KeyAccelerator();
             this.label18 = new System.Windows.Forms.Label();
+            this.ka_minWindow = new Marmi.KeyAccelerator();
             this.Mouse = new System.Windows.Forms.TabPage();
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
+            this.mouseConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.mouseConfigWheel = new System.Windows.Forms.ComboBox();
@@ -121,6 +148,7 @@
             this.radioRightScrToNextPic = new System.Windows.Forms.RadioButton();
             this.Detail = new System.Windows.Forms.TabPage();
             this.unsharpDepth = new System.Windows.Forms.NumericUpDown();
+            this.advanceConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label11 = new System.Windows.Forms.Label();
             this.useUnsharpMask = new System.Windows.Forms.CheckBox();
             this.tb_cachesize = new System.Windows.Forms.TextBox();
@@ -135,59 +163,34 @@
             this.HelpBox = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.generalConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.viewConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.thumbnailConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.loupeConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ka_exit2 = new Marmi.KeyAccelerator();
-            this.keyConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ka_exit1 = new Marmi.KeyAccelerator();
-            this.ka_bookmark1 = new Marmi.KeyAccelerator();
-            this.ka_fullscreen1 = new Marmi.KeyAccelerator();
-            this.ka_dualview1 = new Marmi.KeyAccelerator();
-            this.ka_viewratio1 = new Marmi.KeyAccelerator();
-            this.ka_recycle1 = new Marmi.KeyAccelerator();
-            this.ka_nextpage1 = new Marmi.KeyAccelerator();
-            this.ka_prevpage1 = new Marmi.KeyAccelerator();
-            this.ka_toppage1 = new Marmi.KeyAccelerator();
-            this.ka_lastpage1 = new Marmi.KeyAccelerator();
-            this.ka_nexthalf1 = new Marmi.KeyAccelerator();
-            this.ka_prevhalf1 = new Marmi.KeyAccelerator();
-            this.ka_nextpage2 = new Marmi.KeyAccelerator();
-            this.ka_prevpage2 = new Marmi.KeyAccelerator();
-            this.ka_rotate1 = new Marmi.KeyAccelerator();
-            this.ka_thunbnail = new Marmi.KeyAccelerator();
-            this.ka_sidebar = new Marmi.KeyAccelerator();
-            this.ka_minWindow = new Marmi.KeyAccelerator();
-            this.mouseConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.advanceConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.multipageCountUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
             this.View.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.Thumbnail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).BeginInit();
             this.Loope.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loupeConfigBindingSource)).BeginInit();
             this.KeyConfig.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).BeginInit();
             this.Mouse.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRightScr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeftScr)).BeginInit();
             this.Detail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loupeConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -214,6 +217,7 @@
             // 
             // General
             // 
+            this.General.Controls.Add(this.multipageCountUpDown);
             this.General.Controls.Add(this.numericUpDown1);
             this.General.Controls.Add(this.alwaysExtractArchive);
             this.General.Controls.Add(this.saveFullScreenMode);
@@ -225,6 +229,7 @@
             this.General.Controls.Add(this.sidebar_smoothscroll);
             this.General.Controls.Add(this.eraseToolbarItemString);
             this.General.Controls.Add(this.pictureBox_BackColor);
+            this.General.Controls.Add(this.label19);
             this.General.Controls.Add(this.label4);
             this.General.Controls.Add(this.isExtractIfSolidArchive);
             this.General.Controls.Add(this.bContinueZip);
@@ -240,6 +245,14 @@
             this.General.Text = "全般";
             this.General.UseVisualStyleBackColor = true;
             // 
+            // multipageCountUpDown
+            // 
+            this.multipageCountUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.generalConfigBindingSource, "MultiPageNavigationCount", true));
+            this.multipageCountUpDown.Location = new System.Drawing.Point(333, 318);
+            this.multipageCountUpDown.Name = "multipageCountUpDown";
+            this.multipageCountUpDown.Size = new System.Drawing.Size(80, 19);
+            this.multipageCountUpDown.TabIndex = 23;
+            // 
             // numericUpDown1
             // 
             this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.generalConfigBindingSource, "MaxMruNumber", true));
@@ -247,6 +260,10 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(80, 19);
             this.numericUpDown1.TabIndex = 23;
+            // 
+            // generalConfigBindingSource
+            // 
+            this.generalConfigBindingSource.DataSource = typeof(Marmi.DataModel.GeneralConfig);
             // 
             // alwaysExtractArchive
             // 
@@ -373,6 +390,17 @@
             this.pictureBox_BackColor.Click += new System.EventHandler(this.PictureBoxBackColor_Click);
             this.pictureBox_BackColor.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(249, 293);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(164, 12);
+            this.label19.TabIndex = 7;
+            this.label19.Tag = "複数ページを進む/戻る場合のページ数";
+            this.label19.Text = "複数ページナビゲーションページ数";
+            this.label19.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -494,6 +522,10 @@
             this.dualView_withSizeCheck.TabStop = true;
             this.dualView_withSizeCheck.Text = "縦画像＋同サイズの場合に2ページ表示とする";
             this.dualView_withSizeCheck.UseVisualStyleBackColor = true;
+            // 
+            // viewConfigBindingSource
+            // 
+            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
             // 
             // dualView_Normal
             // 
@@ -675,6 +707,10 @@
             0,
             0,
             0});
+            // 
+            // thumbnailConfigBindingSource
+            // 
+            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
             // 
             // ThumbnailPanelSmoothScroll
             // 
@@ -874,6 +910,10 @@
             this.loupeMag.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.loupeMag.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // loupeConfigBindingSource
+            // 
+            this.loupeConfigBindingSource.DataSource = typeof(Marmi.DataModel.LoupeConfig);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1005,6 +1045,34 @@
             this.tableLayoutPanel1.Tag = "マウス左クリックで選択し、キーボードを押してください。右クリックで解除します。また、マウスのホイールボタン、戻る、進むボタンでクリックすることでマウスボタンも登録" +
     "できます。";
             this.tableLayoutPanel1.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
+            // 
+            // ka_exit2
+            // 
+            this.ka_exit2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_exit2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Exit2", true));
+            this.ka_exit2.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_exit2.Location = new System.Drawing.Point(344, 25);
+            this.ka_exit2.Name = "ka_exit2";
+            this.ka_exit2.Size = new System.Drawing.Size(120, 16);
+            this.ka_exit2.TabIndex = 2;
+            this.ka_exit2.Tag = "Marmiの終了(2)";
+            this.ka_exit2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // keyConfigBindingSource
+            // 
+            this.keyConfigBindingSource.DataSource = typeof(Marmi.DataModel.KeyConfig);
+            // 
+            // ka_exit1
+            // 
+            this.ka_exit1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_exit1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Exit1", true));
+            this.ka_exit1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_exit1.Location = new System.Drawing.Point(103, 25);
+            this.ka_exit1.Name = "ka_exit1";
+            this.ka_exit1.Size = new System.Drawing.Size(120, 16);
+            this.ka_exit1.TabIndex = 1;
+            this.ka_exit1.Tag = "Marmiの終了";
+            this.ka_exit1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label31
             // 
@@ -1138,6 +1206,138 @@
             this.label42.Text = "半ページ戻る";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // ka_bookmark1
+            // 
+            this.ka_bookmark1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_bookmark1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Bookmark1", true));
+            this.ka_bookmark1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_bookmark1.Location = new System.Drawing.Point(103, 47);
+            this.ka_bookmark1.Name = "ka_bookmark1";
+            this.ka_bookmark1.Size = new System.Drawing.Size(120, 16);
+            this.ka_bookmark1.TabIndex = 1;
+            this.ka_bookmark1.Tag = "しおりOn/Off";
+            this.ka_bookmark1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_fullscreen1
+            // 
+            this.ka_fullscreen1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_fullscreen1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Fullscreen1", true));
+            this.ka_fullscreen1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_fullscreen1.Location = new System.Drawing.Point(103, 69);
+            this.ka_fullscreen1.Name = "ka_fullscreen1";
+            this.ka_fullscreen1.Size = new System.Drawing.Size(120, 16);
+            this.ka_fullscreen1.TabIndex = 1;
+            this.ka_fullscreen1.Tag = "全画面On/Off";
+            this.ka_fullscreen1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_dualview1
+            // 
+            this.ka_dualview1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_dualview1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Dualview1", true));
+            this.ka_dualview1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_dualview1.Location = new System.Drawing.Point(103, 91);
+            this.ka_dualview1.Name = "ka_dualview1";
+            this.ka_dualview1.Size = new System.Drawing.Size(120, 16);
+            this.ka_dualview1.TabIndex = 1;
+            this.ka_dualview1.Tag = "2ページモード切替";
+            this.ka_dualview1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_viewratio1
+            // 
+            this.ka_viewratio1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_viewratio1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_ViewRatio1", true));
+            this.ka_viewratio1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_viewratio1.Location = new System.Drawing.Point(103, 113);
+            this.ka_viewratio1.Name = "ka_viewratio1";
+            this.ka_viewratio1.Size = new System.Drawing.Size(120, 16);
+            this.ka_viewratio1.TabIndex = 1;
+            this.ka_viewratio1.Tag = "表示倍率切替";
+            this.ka_viewratio1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_recycle1
+            // 
+            this.ka_recycle1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_recycle1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Recycle1", true));
+            this.ka_recycle1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_recycle1.Location = new System.Drawing.Point(103, 135);
+            this.ka_recycle1.Name = "ka_recycle1";
+            this.ka_recycle1.Size = new System.Drawing.Size(120, 16);
+            this.ka_recycle1.TabIndex = 1;
+            this.ka_recycle1.Tag = "ファイルをゴミ箱へ";
+            this.ka_recycle1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_nextpage1
+            // 
+            this.ka_nextpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nextpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nextpage1", true));
+            this.ka_nextpage1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_nextpage1.Location = new System.Drawing.Point(103, 179);
+            this.ka_nextpage1.Name = "ka_nextpage1";
+            this.ka_nextpage1.Size = new System.Drawing.Size(120, 16);
+            this.ka_nextpage1.TabIndex = 1;
+            this.ka_nextpage1.Tag = "次のページ";
+            this.ka_nextpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_prevpage1
+            // 
+            this.ka_prevpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevpage1", true));
+            this.ka_prevpage1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_prevpage1.Location = new System.Drawing.Point(103, 201);
+            this.ka_prevpage1.Name = "ka_prevpage1";
+            this.ka_prevpage1.Size = new System.Drawing.Size(120, 16);
+            this.ka_prevpage1.TabIndex = 1;
+            this.ka_prevpage1.Tag = "前のページ";
+            this.ka_prevpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_toppage1
+            // 
+            this.ka_toppage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_toppage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Toppage1", true));
+            this.ka_toppage1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_toppage1.Location = new System.Drawing.Point(103, 223);
+            this.ka_toppage1.Name = "ka_toppage1";
+            this.ka_toppage1.Size = new System.Drawing.Size(120, 16);
+            this.ka_toppage1.TabIndex = 1;
+            this.ka_toppage1.Tag = "先頭ページ";
+            this.ka_toppage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_lastpage1
+            // 
+            this.ka_lastpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_lastpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Lastpage1", true));
+            this.ka_lastpage1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_lastpage1.Location = new System.Drawing.Point(103, 245);
+            this.ka_lastpage1.Name = "ka_lastpage1";
+            this.ka_lastpage1.Size = new System.Drawing.Size(120, 16);
+            this.ka_lastpage1.TabIndex = 1;
+            this.ka_lastpage1.Tag = "最終ページ";
+            this.ka_lastpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_nexthalf1
+            // 
+            this.ka_nexthalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nexthalf1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nexthalf1", true));
+            this.ka_nexthalf1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_nexthalf1.Location = new System.Drawing.Point(103, 267);
+            this.ka_nexthalf1.Name = "ka_nexthalf1";
+            this.ka_nexthalf1.Size = new System.Drawing.Size(120, 16);
+            this.ka_nexthalf1.TabIndex = 1;
+            this.ka_nexthalf1.Tag = "半ページ進む";
+            this.ka_nexthalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_prevhalf1
+            // 
+            this.ka_prevhalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevhalf1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevhalf1", true));
+            this.ka_prevhalf1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_prevhalf1.Location = new System.Drawing.Point(103, 289);
+            this.ka_prevhalf1.Name = "ka_prevhalf1";
+            this.ka_prevhalf1.Size = new System.Drawing.Size(120, 16);
+            this.ka_prevhalf1.TabIndex = 1;
+            this.ka_prevhalf1.Tag = "半ページ戻る";
+            this.ka_prevhalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
             // label43
             // 
             this.label43.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1160,6 +1360,30 @@
             this.label44.Text = "キー設定２";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ka_nextpage2
+            // 
+            this.ka_nextpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_nextpage2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nextpage2", true));
+            this.ka_nextpage2.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_nextpage2.Location = new System.Drawing.Point(344, 179);
+            this.ka_nextpage2.Name = "ka_nextpage2";
+            this.ka_nextpage2.Size = new System.Drawing.Size(120, 16);
+            this.ka_nextpage2.TabIndex = 1;
+            this.ka_nextpage2.Tag = "次のページ(2)";
+            this.ka_nextpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_prevpage2
+            // 
+            this.ka_prevpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_prevpage2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevpage2", true));
+            this.ka_prevpage2.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_prevpage2.Location = new System.Drawing.Point(344, 201);
+            this.ka_prevpage2.Name = "ka_prevpage2";
+            this.ka_prevpage2.Size = new System.Drawing.Size(120, 16);
+            this.ka_prevpage2.TabIndex = 1;
+            this.ka_prevpage2.Tag = "前のページ(2)";
+            this.ka_prevpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1170,6 +1394,18 @@
             this.label12.TabIndex = 11;
             this.label12.Text = "回転";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_rotate1
+            // 
+            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Rotate1", true));
+            this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
+            this.ka_rotate1.Name = "ka_rotate1";
+            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate1.TabIndex = 12;
+            this.ka_rotate1.Tag = "回転";
+            this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label13
             // 
@@ -1228,6 +1464,30 @@
             this.label17.Text = "サイドバー";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // ka_thunbnail
+            // 
+            this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_thunbnail.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Thumbnail", true));
+            this.ka_thunbnail.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
+            this.ka_thunbnail.Name = "ka_thunbnail";
+            this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
+            this.ka_thunbnail.TabIndex = 2;
+            this.ka_thunbnail.Tag = "サムネイル";
+            this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_sidebar
+            // 
+            this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_sidebar.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Sidebar", true));
+            this.ka_sidebar.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
+            this.ka_sidebar.Name = "ka_sidebar";
+            this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
+            this.ka_sidebar.TabIndex = 2;
+            this.ka_sidebar.Tag = "サイドバー";
+            this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
             // label18
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1238,6 +1498,18 @@
             this.label18.TabIndex = 13;
             this.label18.Text = "最小化";
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_minWindow
+            // 
+            this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_minWindow.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_MinWindow", true));
+            this.ka_minWindow.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
+            this.ka_minWindow.Name = "ka_minWindow";
+            this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
+            this.ka_minWindow.TabIndex = 14;
+            this.ka_minWindow.Tag = "半ページ戻る";
+            this.ka_minWindow.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // Mouse
             // 
@@ -1265,6 +1537,10 @@
             this.DoubleClickToFullscreen.Tag = "画面をダブルクリックすると全画面モードの切替をします。ただし、Onにすると高速クリックがダブルクリックとみなされますので注意してください。";
             this.DoubleClickToFullscreen.Text = "ダブルクリックで全画面モード切替";
             this.DoubleClickToFullscreen.UseVisualStyleBackColor = true;
+            // 
+            // mouseConfigBindingSource
+            // 
+            this.mouseConfigBindingSource.DataSource = typeof(Marmi.DataModel.MouseConfig);
             // 
             // groupBox1
             // 
@@ -1449,6 +1725,10 @@
             this.unsharpDepth.TabIndex = 26;
             this.unsharpDepth.Tag = "アンシャープマスクの強度を指定します。0～255まで設定可能。大きいほど画像のエッジが強調されます。";
             // 
+            // advanceConfigBindingSource
+            // 
+            this.advanceConfigBindingSource.DataSource = typeof(Marmi.DataModel.AdvanceConfig);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -1559,262 +1839,6 @@
             this.HelpBox.Tag = "ここに各機能の概要を表示します";
             this.HelpBox.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
-            // generalConfigBindingSource
-            // 
-            this.generalConfigBindingSource.DataSource = typeof(Marmi.DataModel.GeneralConfig);
-            // 
-            // viewConfigBindingSource
-            // 
-            this.viewConfigBindingSource.DataSource = typeof(Marmi.DataModel.ViewConfig);
-            // 
-            // thumbnailConfigBindingSource
-            // 
-            this.thumbnailConfigBindingSource.DataSource = typeof(Marmi.DataModel.ThumbnailConfig);
-            // 
-            // loupeConfigBindingSource
-            // 
-            this.loupeConfigBindingSource.DataSource = typeof(Marmi.DataModel.LoupeConfig);
-            // 
-            // ka_exit2
-            // 
-            this.ka_exit2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_exit2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Exit2", true));
-            this.ka_exit2.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_exit2.Location = new System.Drawing.Point(344, 25);
-            this.ka_exit2.Name = "ka_exit2";
-            this.ka_exit2.Size = new System.Drawing.Size(120, 16);
-            this.ka_exit2.TabIndex = 2;
-            this.ka_exit2.Tag = "Marmiの終了(2)";
-            this.ka_exit2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // keyConfigBindingSource
-            // 
-            this.keyConfigBindingSource.DataSource = typeof(Marmi.DataModel.KeyConfig);
-            // 
-            // ka_exit1
-            // 
-            this.ka_exit1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_exit1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Exit1", true));
-            this.ka_exit1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_exit1.Location = new System.Drawing.Point(103, 25);
-            this.ka_exit1.Name = "ka_exit1";
-            this.ka_exit1.Size = new System.Drawing.Size(120, 16);
-            this.ka_exit1.TabIndex = 1;
-            this.ka_exit1.Tag = "Marmiの終了";
-            this.ka_exit1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_bookmark1
-            // 
-            this.ka_bookmark1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_bookmark1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Bookmark1", true));
-            this.ka_bookmark1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_bookmark1.Location = new System.Drawing.Point(103, 47);
-            this.ka_bookmark1.Name = "ka_bookmark1";
-            this.ka_bookmark1.Size = new System.Drawing.Size(120, 16);
-            this.ka_bookmark1.TabIndex = 1;
-            this.ka_bookmark1.Tag = "しおりOn/Off";
-            this.ka_bookmark1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_fullscreen1
-            // 
-            this.ka_fullscreen1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_fullscreen1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Fullscreen1", true));
-            this.ka_fullscreen1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_fullscreen1.Location = new System.Drawing.Point(103, 69);
-            this.ka_fullscreen1.Name = "ka_fullscreen1";
-            this.ka_fullscreen1.Size = new System.Drawing.Size(120, 16);
-            this.ka_fullscreen1.TabIndex = 1;
-            this.ka_fullscreen1.Tag = "全画面On/Off";
-            this.ka_fullscreen1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_dualview1
-            // 
-            this.ka_dualview1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_dualview1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Dualview1", true));
-            this.ka_dualview1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_dualview1.Location = new System.Drawing.Point(103, 91);
-            this.ka_dualview1.Name = "ka_dualview1";
-            this.ka_dualview1.Size = new System.Drawing.Size(120, 16);
-            this.ka_dualview1.TabIndex = 1;
-            this.ka_dualview1.Tag = "2ページモード切替";
-            this.ka_dualview1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_viewratio1
-            // 
-            this.ka_viewratio1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_viewratio1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_ViewRatio1", true));
-            this.ka_viewratio1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_viewratio1.Location = new System.Drawing.Point(103, 113);
-            this.ka_viewratio1.Name = "ka_viewratio1";
-            this.ka_viewratio1.Size = new System.Drawing.Size(120, 16);
-            this.ka_viewratio1.TabIndex = 1;
-            this.ka_viewratio1.Tag = "表示倍率切替";
-            this.ka_viewratio1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_recycle1
-            // 
-            this.ka_recycle1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_recycle1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Recycle1", true));
-            this.ka_recycle1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_recycle1.Location = new System.Drawing.Point(103, 135);
-            this.ka_recycle1.Name = "ka_recycle1";
-            this.ka_recycle1.Size = new System.Drawing.Size(120, 16);
-            this.ka_recycle1.TabIndex = 1;
-            this.ka_recycle1.Tag = "ファイルをゴミ箱へ";
-            this.ka_recycle1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_nextpage1
-            // 
-            this.ka_nextpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_nextpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nextpage1", true));
-            this.ka_nextpage1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_nextpage1.Location = new System.Drawing.Point(103, 179);
-            this.ka_nextpage1.Name = "ka_nextpage1";
-            this.ka_nextpage1.Size = new System.Drawing.Size(120, 16);
-            this.ka_nextpage1.TabIndex = 1;
-            this.ka_nextpage1.Tag = "次のページ";
-            this.ka_nextpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_prevpage1
-            // 
-            this.ka_prevpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_prevpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevpage1", true));
-            this.ka_prevpage1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_prevpage1.Location = new System.Drawing.Point(103, 201);
-            this.ka_prevpage1.Name = "ka_prevpage1";
-            this.ka_prevpage1.Size = new System.Drawing.Size(120, 16);
-            this.ka_prevpage1.TabIndex = 1;
-            this.ka_prevpage1.Tag = "前のページ";
-            this.ka_prevpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_toppage1
-            // 
-            this.ka_toppage1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_toppage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Toppage1", true));
-            this.ka_toppage1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_toppage1.Location = new System.Drawing.Point(103, 223);
-            this.ka_toppage1.Name = "ka_toppage1";
-            this.ka_toppage1.Size = new System.Drawing.Size(120, 16);
-            this.ka_toppage1.TabIndex = 1;
-            this.ka_toppage1.Tag = "先頭ページ";
-            this.ka_toppage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_lastpage1
-            // 
-            this.ka_lastpage1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_lastpage1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Lastpage1", true));
-            this.ka_lastpage1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_lastpage1.Location = new System.Drawing.Point(103, 245);
-            this.ka_lastpage1.Name = "ka_lastpage1";
-            this.ka_lastpage1.Size = new System.Drawing.Size(120, 16);
-            this.ka_lastpage1.TabIndex = 1;
-            this.ka_lastpage1.Tag = "最終ページ";
-            this.ka_lastpage1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_nexthalf1
-            // 
-            this.ka_nexthalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_nexthalf1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nexthalf1", true));
-            this.ka_nexthalf1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_nexthalf1.Location = new System.Drawing.Point(103, 267);
-            this.ka_nexthalf1.Name = "ka_nexthalf1";
-            this.ka_nexthalf1.Size = new System.Drawing.Size(120, 16);
-            this.ka_nexthalf1.TabIndex = 1;
-            this.ka_nexthalf1.Tag = "半ページ進む";
-            this.ka_nexthalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_prevhalf1
-            // 
-            this.ka_prevhalf1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_prevhalf1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevhalf1", true));
-            this.ka_prevhalf1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_prevhalf1.Location = new System.Drawing.Point(103, 289);
-            this.ka_prevhalf1.Name = "ka_prevhalf1";
-            this.ka_prevhalf1.Size = new System.Drawing.Size(120, 16);
-            this.ka_prevhalf1.TabIndex = 1;
-            this.ka_prevhalf1.Tag = "半ページ戻る";
-            this.ka_prevhalf1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_nextpage2
-            // 
-            this.ka_nextpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_nextpage2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Nextpage2", true));
-            this.ka_nextpage2.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_nextpage2.Location = new System.Drawing.Point(344, 179);
-            this.ka_nextpage2.Name = "ka_nextpage2";
-            this.ka_nextpage2.Size = new System.Drawing.Size(120, 16);
-            this.ka_nextpage2.TabIndex = 1;
-            this.ka_nextpage2.Tag = "次のページ(2)";
-            this.ka_nextpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_prevpage2
-            // 
-            this.ka_prevpage2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_prevpage2.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Prevpage2", true));
-            this.ka_prevpage2.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_prevpage2.Location = new System.Drawing.Point(344, 201);
-            this.ka_prevpage2.Name = "ka_prevpage2";
-            this.ka_prevpage2.Size = new System.Drawing.Size(120, 16);
-            this.ka_prevpage2.TabIndex = 1;
-            this.ka_prevpage2.Tag = "前のページ(2)";
-            this.ka_prevpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_rotate1
-            // 
-            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Rotate1", true));
-            this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
-            this.ka_rotate1.Name = "ka_rotate1";
-            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
-            this.ka_rotate1.TabIndex = 12;
-            this.ka_rotate1.Tag = "回転";
-            this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_thunbnail
-            // 
-            this.ka_thunbnail.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_thunbnail.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Thumbnail", true));
-            this.ka_thunbnail.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_thunbnail.Location = new System.Drawing.Point(344, 47);
-            this.ka_thunbnail.Name = "ka_thunbnail";
-            this.ka_thunbnail.Size = new System.Drawing.Size(120, 16);
-            this.ka_thunbnail.TabIndex = 2;
-            this.ka_thunbnail.Tag = "サムネイル";
-            this.ka_thunbnail.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_sidebar
-            // 
-            this.ka_sidebar.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_sidebar.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Sidebar", true));
-            this.ka_sidebar.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_sidebar.Location = new System.Drawing.Point(344, 69);
-            this.ka_sidebar.Name = "ka_sidebar";
-            this.ka_sidebar.Size = new System.Drawing.Size(120, 16);
-            this.ka_sidebar.TabIndex = 2;
-            this.ka_sidebar.Tag = "サイドバー";
-            this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // ka_minWindow
-            // 
-            this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_minWindow.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_MinWindow", true));
-            this.ka_minWindow.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
-            this.ka_minWindow.Name = "ka_minWindow";
-            this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
-            this.ka_minWindow.TabIndex = 14;
-            this.ka_minWindow.Tag = "半ページ戻る";
-            this.ka_minWindow.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
-            // mouseConfigBindingSource
-            // 
-            this.mouseConfigBindingSource.DataSource = typeof(Marmi.DataModel.MouseConfig);
-            // 
-            // advanceConfigBindingSource
-            // 
-            this.advanceConfigBindingSource.DataSource = typeof(Marmi.DataModel.AdvanceConfig);
-            // 
             // OptionForm
             // 
             this.AcceptButton = this.btnOK;
@@ -1835,26 +1859,33 @@
             this.tabControl1.ResumeLayout(false);
             this.General.ResumeLayout(false);
             this.General.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.multipageCountUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).EndInit();
             this.View.ResumeLayout(false);
             this.View.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.Thumbnail.ResumeLayout(false);
             this.Thumbnail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailFontColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThumbnailBackColor)).EndInit();
             this.Loope.ResumeLayout(false);
             this.Loope.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loupeConfigBindingSource)).EndInit();
             this.KeyConfig.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).EndInit();
             this.Mouse.ResumeLayout(false);
             this.Mouse.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1864,12 +1895,6 @@
             this.Detail.ResumeLayout(false);
             this.Detail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.unsharpDepth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnailConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loupeConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.keyConfigBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mouseConfigBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.advanceConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2010,5 +2035,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.BindingSource viewConfigBindingSource;
         private System.Windows.Forms.BindingSource keyConfigBindingSource;
+        private System.Windows.Forms.NumericUpDown multipageCountUpDown;
+        private System.Windows.Forms.Label label19;
     }
 }

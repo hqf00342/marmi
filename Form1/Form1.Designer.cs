@@ -92,6 +92,8 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_View_LeftOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_SlideShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_ForwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_BackwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Bookmark = new System.Windows.Forms.ToolStripMenuItem();
             this.Bookmark_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.BookMark_Clear = new System.Windows.Forms.ToolStripMenuItem();
@@ -178,13 +180,13 @@
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.Resize += new System.EventHandler(this.ToolStrip1_Resize);
             // 
-            // toolButtonOpen
+            // toolbar_Open
             // 
             this.toolbar_Open.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Open.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonOpen.Image")));
+            this.toolbar_Open.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Open.Image")));
             this.toolbar_Open.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Open.Name = "toolButtonOpen";
+            this.toolbar_Open.Name = "toolbar_Open";
             this.toolbar_Open.Size = new System.Drawing.Size(36, 36);
             this.toolbar_Open.Tag = "表示するファイルを選択します";
             this.toolbar_Open.Text = "開く...";
@@ -192,13 +194,13 @@
             this.toolbar_Open.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_Open.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonLeft
+            // toolbar_Left
             // 
             this.toolbar_Left.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Left.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonLeft.Image")));
+            this.toolbar_Left.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Left.Image")));
             this.toolbar_Left.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Left.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Left.Name = "toolButtonLeft";
+            this.toolbar_Left.Name = "toolbar_Left";
             this.toolbar_Left.Size = new System.Drawing.Size(36, 36);
             this.toolbar_Left.Tag = "前のページに移動します";
             this.toolbar_Left.Text = "前へ";
@@ -206,13 +208,13 @@
             this.toolbar_Left.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_Left.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonRight
+            // toolbar_Right
             // 
             this.toolbar_Right.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Right.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonRight.Image")));
+            this.toolbar_Right.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Right.Image")));
             this.toolbar_Right.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Right.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Right.Name = "toolButtonRight";
+            this.toolbar_Right.Name = "toolbar_Right";
             this.toolbar_Right.Size = new System.Drawing.Size(36, 36);
             this.toolbar_Right.Tag = "次のページに移動します";
             this.toolbar_Right.Text = "次へ";
@@ -220,13 +222,13 @@
             this.toolbar_Right.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_Right.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonClose
+            // toolbar_Close
             // 
             this.toolbar_Close.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolbar_Close.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonClose.Image")));
+            this.toolbar_Close.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Close.Image")));
             this.toolbar_Close.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Close.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Close.Name = "toolButtonClose";
+            this.toolbar_Close.Name = "toolbar_Close";
             this.toolbar_Close.Size = new System.Drawing.Size(67, 36);
             this.toolbar_Close.Tag = "アプリケーションを終了します";
             this.toolbar_Close.Text = "終了";
@@ -234,13 +236,13 @@
             this.toolbar_Close.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_Close.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonFullScreen
+            // toolbar_FullScreen
             // 
             this.toolbar_FullScreen.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolbar_FullScreen.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonFullScreen.Image")));
+            this.toolbar_FullScreen.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_FullScreen.Image")));
             this.toolbar_FullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_FullScreen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_FullScreen.Name = "toolButtonFullScreen";
+            this.toolbar_FullScreen.Name = "toolbar_FullScreen";
             this.toolbar_FullScreen.Size = new System.Drawing.Size(103, 36);
             this.toolbar_FullScreen.Tag = "全画面モードをトグル切り替えします";
             this.toolbar_FullScreen.Text = "全画面表示";
@@ -248,13 +250,13 @@
             this.toolbar_FullScreen.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_FullScreen.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonThumbnail
+            // toolbar_Thumbnail
             // 
             this.toolbar_Thumbnail.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Thumbnail.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonThumbnail.Image")));
+            this.toolbar_Thumbnail.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Thumbnail.Image")));
             this.toolbar_Thumbnail.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Thumbnail.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Thumbnail.Name = "toolButtonThumbnail";
+            this.toolbar_Thumbnail.Name = "toolbar_Thumbnail";
             this.toolbar_Thumbnail.Size = new System.Drawing.Size(36, 36);
             this.toolbar_Thumbnail.Tag = "サムネイル一覧を表示し、ページジャンプできます";
             this.toolbar_Thumbnail.Text = "サムネイル一覧を表示";
@@ -262,13 +264,13 @@
             this.toolbar_Thumbnail.MouseLeave += new System.EventHandler(this.ToolButton_MouseLeave);
             this.toolbar_Thumbnail.MouseHover += new System.EventHandler(this.ToolButton_MouseHover);
             // 
-            // toolButtonDualMode
+            // toolbar_DualMode
             // 
             this.toolbar_DualMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_DualMode.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonDualMode.Image")));
+            this.toolbar_DualMode.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_DualMode.Image")));
             this.toolbar_DualMode.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_DualMode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_DualMode.Name = "toolButtonDualMode";
+            this.toolbar_DualMode.Name = "toolbar_DualMode";
             this.toolbar_DualMode.Size = new System.Drawing.Size(36, 36);
             this.toolbar_DualMode.Tag = "2ページモードを切り替えます";
             this.toolbar_DualMode.Text = "2枚表示モード";
@@ -281,82 +283,82 @@
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(6, 39);
             // 
-            // toolStripButton_Sidebar
+            // toolbar_Sidebar
             // 
             this.toolbar_Sidebar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Sidebar.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Sidebar.Image")));
+            this.toolbar_Sidebar.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Sidebar.Image")));
             this.toolbar_Sidebar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Sidebar.Name = "toolStripButton_Sidebar";
+            this.toolbar_Sidebar.Name = "toolbar_Sidebar";
             this.toolbar_Sidebar.Size = new System.Drawing.Size(24, 36);
             this.toolbar_Sidebar.Tag = "サイドバー表示切り替え";
             this.toolbar_Sidebar.Text = "サイドバー表示切り替え";
             this.toolbar_Sidebar.Click += new System.EventHandler(this.Menu_ViewSidebar_Click);
             // 
-            // toolStripButton_Favorite
+            // toolbar_Favorite
             // 
             this.toolbar_Favorite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Favorite.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Favorite.Image")));
+            this.toolbar_Favorite.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Favorite.Image")));
             this.toolbar_Favorite.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Favorite.Name = "toolStripButton_Favorite";
+            this.toolbar_Favorite.Name = "toolbar_Favorite";
             this.toolbar_Favorite.Size = new System.Drawing.Size(24, 36);
             this.toolbar_Favorite.Tag = "ブックマーク";
             this.toolbar_Favorite.Text = "ブックマーク";
             this.toolbar_Favorite.Click += new System.EventHandler(this.Menu_ContextBookmark_Click);
             // 
-            // toolStripButton_Zoom100
+            // toolbar_Zoom100
             // 
             this.toolbar_Zoom100.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Zoom100.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Zoom100.Image")));
+            this.toolbar_Zoom100.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Zoom100.Image")));
             this.toolbar_Zoom100.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_Zoom100.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Zoom100.Name = "toolStripButton_Zoom100";
+            this.toolbar_Zoom100.Name = "toolbar_Zoom100";
             this.toolbar_Zoom100.Size = new System.Drawing.Size(28, 36);
             this.toolbar_Zoom100.Tag = "等倍表示";
             this.toolbar_Zoom100.Text = "等倍表示";
             this.toolbar_Zoom100.Click += new System.EventHandler(this.ToolStripButton_Zoom100_Click);
             // 
-            // toolStripButton_ZoomFit
+            // toolbar_ZoomFit
             // 
             this.toolbar_ZoomFit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_ZoomFit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomFit.Image")));
+            this.toolbar_ZoomFit.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_ZoomFit.Image")));
             this.toolbar_ZoomFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_ZoomFit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_ZoomFit.Name = "toolStripButton_ZoomFit";
+            this.toolbar_ZoomFit.Name = "toolbar_ZoomFit";
             this.toolbar_ZoomFit.Size = new System.Drawing.Size(28, 36);
             this.toolbar_ZoomFit.Tag = "ウィンドウサイズに合わせて表示";
             this.toolbar_ZoomFit.Text = "ウィンドウサイズに合わせて表示";
             this.toolbar_ZoomFit.Click += new System.EventHandler(this.ToolStripButton_ZoomFit_Click);
             // 
-            // toolStripButton_ZoomIn
+            // toolbar_ZoomIn
             // 
             this.toolbar_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomIn.Image")));
+            this.toolbar_ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_ZoomIn.Image")));
             this.toolbar_ZoomIn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_ZoomIn.Name = "toolStripButton_ZoomIn";
+            this.toolbar_ZoomIn.Name = "toolbar_ZoomIn";
             this.toolbar_ZoomIn.Size = new System.Drawing.Size(28, 36);
             this.toolbar_ZoomIn.Tag = "拡大表示";
             this.toolbar_ZoomIn.Text = "拡大表示";
             this.toolbar_ZoomIn.Click += new System.EventHandler(this.ToolStripButton_ZoomIn_Click);
             // 
-            // toolStripButton_ZoomOut
+            // toolbar_ZoomOut
             // 
             this.toolbar_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_ZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_ZoomOut.Image")));
+            this.toolbar_ZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_ZoomOut.Image")));
             this.toolbar_ZoomOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolbar_ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_ZoomOut.Name = "toolStripButton_ZoomOut";
+            this.toolbar_ZoomOut.Name = "toolbar_ZoomOut";
             this.toolbar_ZoomOut.Size = new System.Drawing.Size(28, 36);
             this.toolbar_ZoomOut.Tag = "縮小表示";
             this.toolbar_ZoomOut.Text = "縮小表示";
             this.toolbar_ZoomOut.Click += new System.EventHandler(this.ToolStripButton_ZoomOut_Click);
             // 
-            // toolStripButton_Rotate
+            // toolbar_Rotate
             // 
             this.toolbar_Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolbar_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Rotate.Image")));
+            this.toolbar_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("toolbar_Rotate.Image")));
             this.toolbar_Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolbar_Rotate.Name = "toolStripButton_Rotate";
+            this.toolbar_Rotate.Name = "toolbar_Rotate";
             this.toolbar_Rotate.Size = new System.Drawing.Size(24, 36);
             this.toolbar_Rotate.Text = "右方向に90度回転";
             this.toolbar_Rotate.Click += new System.EventHandler(this.ToolStripButton_Rotate_Click);
@@ -438,32 +440,32 @@
             // 
             this.MenuItem_FileOpen.Image = global::Marmi.Properties.Resources.folderopen;
             this.MenuItem_FileOpen.Name = "MenuItem_FileOpen";
-            this.MenuItem_FileOpen.Size = new System.Drawing.Size(207, 26);
+            this.MenuItem_FileOpen.Size = new System.Drawing.Size(203, 22);
             this.MenuItem_FileOpen.Text = "開く...";
             this.MenuItem_FileOpen.Click += new System.EventHandler(this.Menu_FileOpen_Click);
             // 
             // MenuItem_FileRecent
             // 
             this.MenuItem_FileRecent.Name = "MenuItem_FileRecent";
-            this.MenuItem_FileRecent.Size = new System.Drawing.Size(207, 26);
+            this.MenuItem_FileRecent.Size = new System.Drawing.Size(203, 22);
             this.MenuItem_FileRecent.Text = "最近使った書庫ファイル";
             // 
             // MenuItem_ClearMRU
             // 
             this.MenuItem_ClearMRU.Name = "MenuItem_ClearMRU";
-            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(207, 26);
+            this.MenuItem_ClearMRU.Size = new System.Drawing.Size(203, 22);
             this.MenuItem_ClearMRU.Text = "履歴のクリア";
             this.MenuItem_ClearMRU.Click += new System.EventHandler(this.Menu_ClearMRU_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(204, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
             // 
             // MenuItem_FileSaveThumbnail
             // 
             this.MenuItem_FileSaveThumbnail.Name = "MenuItem_FileSaveThumbnail";
-            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(207, 26);
+            this.MenuItem_FileSaveThumbnail.Size = new System.Drawing.Size(203, 22);
             this.MenuItem_FileSaveThumbnail.Text = "サムネイル一覧画像の保存";
             this.MenuItem_FileSaveThumbnail.Click += new System.EventHandler(this.Menu_SaveThumbnail_Click);
             // 
@@ -471,7 +473,7 @@
             // 
             this.MenuItem_FileExit.Image = global::Marmi.Properties.Resources.dooropen;
             this.MenuItem_FileExit.Name = "MenuItem_FileExit";
-            this.MenuItem_FileExit.Size = new System.Drawing.Size(207, 26);
+            this.MenuItem_FileExit.Size = new System.Drawing.Size(203, 22);
             this.MenuItem_FileExit.Text = "終了";
             this.MenuItem_FileExit.Click += new System.EventHandler(this.Menu_Exit_Click);
             // 
@@ -683,6 +685,8 @@
             this.Menu_ViewEnd,
             this.Menu_ViewHalfPageForword,
             this.Menu_ViewHalfPageBack,
+            this.Menu_ForwordMultiPages,
+            this.Menu_BackwordMultiPages,
             this.toolStripSeparator6,
             this.Menu_View_LeftOpen,
             this.Menu_SlideShow});
@@ -695,7 +699,7 @@
             // 
             this.Menu_ViewTop.Image = global::Marmi.Properties.Resources.arrowstop090;
             this.Menu_ViewTop.Name = "Menu_ViewTop";
-            this.Menu_ViewTop.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewTop.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewTop.Text = "先頭ページ";
             this.Menu_ViewTop.Click += new System.EventHandler(this.Menu_ViewTop_Click);
             // 
@@ -703,7 +707,7 @@
             // 
             this.Menu_ViewBack.Image = global::Marmi.Properties.Resources.arrow180;
             this.Menu_ViewBack.Name = "Menu_ViewBack";
-            this.Menu_ViewBack.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewBack.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewBack.Text = "前ページ";
             this.Menu_ViewBack.Click += new System.EventHandler(this.Menu_ViewBack_Click);
             // 
@@ -711,7 +715,7 @@
             // 
             this.Menu_ViewNext.Image = global::Marmi.Properties.Resources.arrow;
             this.Menu_ViewNext.Name = "Menu_ViewNext";
-            this.Menu_ViewNext.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewNext.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewNext.Text = "次ページ";
             this.Menu_ViewNext.Click += new System.EventHandler(this.Menu_ViewNext_Click);
             // 
@@ -719,7 +723,7 @@
             // 
             this.Menu_ViewEnd.Image = global::Marmi.Properties.Resources.arrowstop270;
             this.Menu_ViewEnd.Name = "Menu_ViewEnd";
-            this.Menu_ViewEnd.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewEnd.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewEnd.Text = "最終ページ";
             this.Menu_ViewEnd.Click += new System.EventHandler(this.Menu_ViewEnd_Click);
             // 
@@ -727,7 +731,7 @@
             // 
             this.Menu_ViewHalfPageForword.Image = global::Marmi.Properties.Resources.arrow000small;
             this.Menu_ViewHalfPageForword.Name = "Menu_ViewHalfPageForword";
-            this.Menu_ViewHalfPageForword.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewHalfPageForword.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewHalfPageForword.Text = "見開き半ページ進む";
             this.Menu_ViewHalfPageForword.Click += new System.EventHandler(this.Menu_ViewHalfPageForword_Click);
             // 
@@ -735,28 +739,42 @@
             // 
             this.Menu_ViewHalfPageBack.Image = global::Marmi.Properties.Resources.arrow180small;
             this.Menu_ViewHalfPageBack.Name = "Menu_ViewHalfPageBack";
-            this.Menu_ViewHalfPageBack.Size = new System.Drawing.Size(192, 22);
+            this.Menu_ViewHalfPageBack.Size = new System.Drawing.Size(196, 26);
             this.Menu_ViewHalfPageBack.Text = "見開き半ページ戻す";
             this.Menu_ViewHalfPageBack.Click += new System.EventHandler(this.Menu_ViewHalfPageBack_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(189, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
             // 
             // Menu_View_LeftOpen
             // 
             this.Menu_View_LeftOpen.Name = "Menu_View_LeftOpen";
-            this.Menu_View_LeftOpen.Size = new System.Drawing.Size(192, 22);
+            this.Menu_View_LeftOpen.Size = new System.Drawing.Size(196, 26);
             this.Menu_View_LeftOpen.Text = "左開きにする（左綴じ）";
             this.Menu_View_LeftOpen.Click += new System.EventHandler(this.Menu_View_LeftOpen_Click);
             // 
             // Menu_SlideShow
             // 
             this.Menu_SlideShow.Name = "Menu_SlideShow";
-            this.Menu_SlideShow.Size = new System.Drawing.Size(192, 22);
+            this.Menu_SlideShow.Size = new System.Drawing.Size(196, 26);
             this.Menu_SlideShow.Text = "スライドショーモード";
             this.Menu_SlideShow.Click += new System.EventHandler(this.Menu_Slideshow_Click);
+            // 
+            // Menu_ForwordMultiPages
+            // 
+            this.Menu_ForwordMultiPages.Name = "Menu_ForwordMultiPages";
+            this.Menu_ForwordMultiPages.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ForwordMultiPages.Text = "複数ページ進む";
+            this.Menu_ForwordMultiPages.Click += new System.EventHandler(this.Menu_ForwordMultiPages_Click);
+            // 
+            // Menu_BackwordMultiPages
+            // 
+            this.Menu_BackwordMultiPages.Name = "Menu_BackwordMultiPages";
+            this.Menu_BackwordMultiPages.Size = new System.Drawing.Size(196, 26);
+            this.Menu_BackwordMultiPages.Text = "複数ページ戻る";
+            this.Menu_BackwordMultiPages.Click += new System.EventHandler(this.Menu_BackwordMultiPages_Click);
             // 
             // Menu_Bookmark
             // 
@@ -809,47 +827,47 @@
             // 
             this.MenuItem_OptionOption.Image = global::Marmi.Properties.Resources.gear;
             this.MenuItem_OptionOption.Name = "MenuItem_OptionOption";
-            this.MenuItem_OptionOption.Size = new System.Drawing.Size(297, 22);
+            this.MenuItem_OptionOption.Size = new System.Drawing.Size(301, 26);
             this.MenuItem_OptionOption.Text = "オプション...";
             this.MenuItem_OptionOption.Click += new System.EventHandler(this.Menu_Option_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(294, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(298, 6);
             // 
             // Menu_OptionRecurseDir
             // 
             this.Menu_OptionRecurseDir.Name = "Menu_OptionRecurseDir";
-            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(297, 22);
+            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(301, 26);
             this.Menu_OptionRecurseDir.Text = "ディレクトリは下の階層まで閲覧";
             this.Menu_OptionRecurseDir.Click += new System.EventHandler(this.Menu_RecurseDir_Click);
             // 
             // Menu_keepMagnification
             // 
             this.Menu_keepMagnification.Name = "Menu_keepMagnification";
-            this.Menu_keepMagnification.Size = new System.Drawing.Size(297, 22);
+            this.Menu_keepMagnification.Size = new System.Drawing.Size(301, 26);
             this.Menu_keepMagnification.Text = "ページ移動時、表示倍率を維持";
             this.Menu_keepMagnification.Click += new System.EventHandler(this.Menu_keepMagnification_Click);
             // 
             // Menu_UseBicubic
             // 
             this.Menu_UseBicubic.Name = "Menu_UseBicubic";
-            this.Menu_UseBicubic.Size = new System.Drawing.Size(297, 22);
+            this.Menu_UseBicubic.Size = new System.Drawing.Size(301, 26);
             this.Menu_UseBicubic.Text = "100%以上の倍率でドット補完する";
             this.Menu_UseBicubic.Click += new System.EventHandler(this.Menu_UseBicubic_Click);
             // 
             // Menu_DontEnlargeOver100percent
             // 
             this.Menu_DontEnlargeOver100percent.Name = "Menu_DontEnlargeOver100percent";
-            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(297, 22);
+            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(301, 26);
             this.Menu_DontEnlargeOver100percent.Text = "画像サイズ自動調整で100%以上に拡大しない";
             this.Menu_DontEnlargeOver100percent.Click += new System.EventHandler(this.Menu_DontEnlargeOver100percent_Click);
             // 
             // MenuItem_Unsharp
             // 
             this.MenuItem_Unsharp.Name = "MenuItem_Unsharp";
-            this.MenuItem_Unsharp.Size = new System.Drawing.Size(297, 22);
+            this.MenuItem_Unsharp.Size = new System.Drawing.Size(301, 26);
             this.MenuItem_Unsharp.Text = "アンシャープマスクを有効";
             this.MenuItem_Unsharp.Click += new System.EventHandler(this.Menu_Unsharp_Click);
             // 
@@ -1335,6 +1353,8 @@
 		private System.Windows.Forms.ToolStripMenuItem Menu_UseBicubic;
 		private System.Windows.Forms.ToolStripMenuItem Menu_DontEnlargeOver100percent;
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_Unsharp;
+        private System.Windows.Forms.ToolStripMenuItem Menu_ForwordMultiPages;
+        private System.Windows.Forms.ToolStripMenuItem Menu_BackwordMultiPages;
     }
 }
 
