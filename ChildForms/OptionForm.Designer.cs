@@ -32,8 +32,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.General = new System.Windows.Forms.TabPage();
             this.multipageCountUpDown = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.generalConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.alwaysExtractArchive = new System.Windows.Forms.CheckBox();
             this.saveFullScreenMode = new System.Windows.Forms.CheckBox();
             this.disableMultipleStarts = new System.Windows.Forms.CheckBox();
@@ -132,6 +132,10 @@
             this.ka_sidebar = new Marmi.KeyAccelerator();
             this.label18 = new System.Windows.Forms.Label();
             this.ka_minWindow = new Marmi.KeyAccelerator();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.ka_multiForward = new Marmi.KeyAccelerator();
+            this.ka_multiBackword = new Marmi.KeyAccelerator();
             this.Mouse = new System.Windows.Forms.TabPage();
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
             this.mouseConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -166,8 +170,8 @@
             this.tabControl1.SuspendLayout();
             this.General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.multipageCountUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).BeginInit();
             this.View.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -253,6 +257,10 @@
             this.multipageCountUpDown.Size = new System.Drawing.Size(80, 19);
             this.multipageCountUpDown.TabIndex = 23;
             // 
+            // generalConfigBindingSource
+            // 
+            this.generalConfigBindingSource.DataSource = typeof(Marmi.DataModel.GeneralConfig);
+            // 
             // numericUpDown1
             // 
             this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.generalConfigBindingSource, "MaxMruNumber", true));
@@ -260,10 +268,6 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(80, 19);
             this.numericUpDown1.TabIndex = 23;
-            // 
-            // generalConfigBindingSource
-            // 
-            this.generalConfigBindingSource.DataSource = typeof(Marmi.DataModel.GeneralConfig);
             // 
             // alwaysExtractArchive
             // 
@@ -1010,8 +1014,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label44, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.ka_nextpage2, 3, 8);
             this.tableLayoutPanel1.Controls.Add(this.ka_prevpage2, 3, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.ka_rotate1, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.label13, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label14, 2, 8);
             this.tableLayoutPanel1.Controls.Add(this.label15, 2, 9);
@@ -1019,8 +1021,14 @@
             this.tableLayoutPanel1.Controls.Add(this.label17, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.ka_thunbnail, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.ka_sidebar, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label18, 0, 14);
-            this.tableLayoutPanel1.Controls.Add(this.ka_minWindow, 1, 14);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.ka_rotate1, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label18, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.ka_minWindow, 3, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label20, 0, 14);
+            this.tableLayoutPanel1.Controls.Add(this.label25, 0, 15);
+            this.tableLayoutPanel1.Controls.Add(this.ka_multiForward, 1, 14);
+            this.tableLayoutPanel1.Controls.Add(this.ka_multiBackword, 1, 15);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 16;
@@ -1388,7 +1396,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 159);
+            this.label12.Location = new System.Drawing.Point(244, 93);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(94, 12);
             this.label12.TabIndex = 11;
@@ -1400,7 +1408,7 @@
             this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Rotate1", true));
             this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_rotate1.Location = new System.Drawing.Point(103, 157);
+            this.ka_rotate1.Location = new System.Drawing.Point(344, 91);
             this.ka_rotate1.Name = "ka_rotate1";
             this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
             this.ka_rotate1.TabIndex = 12;
@@ -1492,7 +1500,7 @@
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 313);
+            this.label18.Location = new System.Drawing.Point(244, 115);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(94, 12);
             this.label18.TabIndex = 13;
@@ -1504,12 +1512,58 @@
             this.ka_minWindow.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ka_minWindow.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_MinWindow", true));
             this.ka_minWindow.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_minWindow.Location = new System.Drawing.Point(103, 311);
+            this.ka_minWindow.Location = new System.Drawing.Point(344, 113);
             this.ka_minWindow.Name = "ka_minWindow";
             this.ka_minWindow.Size = new System.Drawing.Size(120, 16);
             this.ka_minWindow.TabIndex = 14;
             this.ka_minWindow.Tag = "半ページ戻る";
             this.ka_minWindow.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(3, 313);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(94, 12);
+            this.label20.TabIndex = 15;
+            this.label20.Text = "複数ページ進む";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(3, 334);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(94, 12);
+            this.label25.TabIndex = 15;
+            this.label25.Text = "複数ページ戻る";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_multiForward
+            // 
+            this.ka_multiForward.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_multiForward.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_MultiForward", true));
+            this.ka_multiForward.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_multiForward.Location = new System.Drawing.Point(103, 311);
+            this.ka_multiForward.Name = "ka_multiForward";
+            this.ka_multiForward.Size = new System.Drawing.Size(120, 16);
+            this.ka_multiForward.TabIndex = 1;
+            this.ka_multiForward.Tag = "複数ページ進む。ページ数は「全般」で設定します。";
+            this.ka_multiForward.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // ka_multiBackword
+            // 
+            this.ka_multiBackword.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_multiBackword.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_MultiBackward", true));
+            this.ka_multiBackword.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_multiBackword.Location = new System.Drawing.Point(103, 333);
+            this.ka_multiBackword.Name = "ka_multiBackword";
+            this.ka_multiBackword.Size = new System.Drawing.Size(120, 15);
+            this.ka_multiBackword.TabIndex = 1;
+            this.ka_multiBackword.Tag = "複数ページ戻る。ページ数は「全般」で設定します。";
+            this.ka_multiBackword.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // Mouse
             // 
@@ -1860,8 +1914,8 @@
             this.General.ResumeLayout(false);
             this.General.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.multipageCountUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.generalConfigBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_BackColor)).EndInit();
             this.View.ResumeLayout(false);
             this.View.PerformLayout();
@@ -2037,5 +2091,9 @@
         private System.Windows.Forms.BindingSource keyConfigBindingSource;
         private System.Windows.Forms.NumericUpDown multipageCountUpDown;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label25;
+        private KeyAccelerator ka_multiForward;
+        private KeyAccelerator ka_multiBackword;
     }
 }

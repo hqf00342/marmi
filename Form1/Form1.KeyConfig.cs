@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Marmi
@@ -17,12 +18,6 @@ namespace Marmi
         private void SetKeyConfig2()
         {
             KeyDefines.Clear();
-
-            void setkey(Keys key, MethodInvoker func)
-            {
-                if (key != Keys.None)
-                    KeyDefines.Add(key, func);
-            }
 
             //前後ページ移動
             setkey(App.Config.Keys.Key_Nextpage1, async () => { await NavigateToForwordAsync(); });
@@ -60,6 +55,27 @@ namespace Marmi
 
             //最小化
             setkey(App.Config.Keys.Key_MinWindow, ToggleFormSizeMinNormal);
+
+            //複数ページ操作
+            setkey(App.Config.Keys.Key_MultiForward, () => Menu_ForwordMultiPages_Click(null, null));
+            setkey(App.Config.Keys.Key_MultiBackward, () => Menu_BackwordMultiPages_Click(null, null));
+        }
+
+        private void setkey(Keys key, MethodInvoker func)
+        {
+            if (key != Keys.None)
+            {
+                try
+                {
+                    KeyDefines.Add(key, func);
+                }
+                catch
+                {
+                    //Dictionaryのキー重複
+                    //何らかの事情でキー重複があったが無視する
+                    Debug.WriteLine("キー重複があったと推定: {0}", key);
+                }
+            }
         }
     }
 }

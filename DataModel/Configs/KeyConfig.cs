@@ -39,6 +39,9 @@ namespace Marmi.DataModel
 
         public Keys Key_MinWindow { get; set; }
 
+        public Keys Key_MultiForward { get; set; }
+        public Keys Key_MultiBackward { get; set; }
+
         public void Init()
         {
             Key_Exit1 = Keys.Q;
@@ -60,6 +63,8 @@ namespace Marmi.DataModel
             Key_Thumbnail = Keys.T;
             Key_Sidebar = Keys.S;
             Key_MinWindow = Keys.Z;
+            Key_MultiForward = Keys.Right | Keys.Shift;
+            Key_MultiBackward = Keys.Left | Keys.Shift;
 
             //WinFormsのデータバインド機構は
             //1つPropertyChangedを投げると全部チェックしてくれるため

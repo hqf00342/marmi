@@ -33,7 +33,8 @@ namespace Marmi
                 WindowOperation.TryToChangeActiveWindow(e.Shift);
             }
 
-            //ver1.80 Ctrl,Shitに対応するためKeyDataに変更
+            //キー操作本体
+            //ver1.80 Ctrl,Shiftに対応するためKeyDataに変更
             if (KeyDefines.TryGetValue(e.KeyData, out var func))
                 func?.Invoke();
         }
