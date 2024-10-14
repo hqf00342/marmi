@@ -89,11 +89,11 @@
             this.Menu_ViewEnd = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ViewHalfPageForword = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ViewHalfPageBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_ForwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_BackwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.Menu_View_LeftOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_SlideShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_ForwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_BackwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Bookmark = new System.Windows.Forms.ToolStripMenuItem();
             this.Bookmark_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.BookMark_Clear = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,6 +116,8 @@
             this.Menu_ContextLast = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextHalfPageForword = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextHalfPageBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmenu_ForwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmenu_BackwordMultiPages = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextBookmarkList = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextAddBookmark = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_ContextStartSlideshow = new System.Windows.Forms.ToolStripMenuItem();
@@ -699,7 +701,7 @@
             // 
             this.Menu_ViewTop.Image = global::Marmi.Properties.Resources.arrowstop090;
             this.Menu_ViewTop.Name = "Menu_ViewTop";
-            this.Menu_ViewTop.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewTop.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewTop.Text = "先頭ページ";
             this.Menu_ViewTop.Click += new System.EventHandler(this.Menu_ViewTop_Click);
             // 
@@ -707,7 +709,7 @@
             // 
             this.Menu_ViewBack.Image = global::Marmi.Properties.Resources.arrow180;
             this.Menu_ViewBack.Name = "Menu_ViewBack";
-            this.Menu_ViewBack.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewBack.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewBack.Text = "前ページ";
             this.Menu_ViewBack.Click += new System.EventHandler(this.Menu_ViewBack_Click);
             // 
@@ -715,7 +717,7 @@
             // 
             this.Menu_ViewNext.Image = global::Marmi.Properties.Resources.arrow;
             this.Menu_ViewNext.Name = "Menu_ViewNext";
-            this.Menu_ViewNext.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewNext.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewNext.Text = "次ページ";
             this.Menu_ViewNext.Click += new System.EventHandler(this.Menu_ViewNext_Click);
             // 
@@ -723,7 +725,7 @@
             // 
             this.Menu_ViewEnd.Image = global::Marmi.Properties.Resources.arrowstop270;
             this.Menu_ViewEnd.Name = "Menu_ViewEnd";
-            this.Menu_ViewEnd.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewEnd.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewEnd.Text = "最終ページ";
             this.Menu_ViewEnd.Click += new System.EventHandler(this.Menu_ViewEnd_Click);
             // 
@@ -731,7 +733,7 @@
             // 
             this.Menu_ViewHalfPageForword.Image = global::Marmi.Properties.Resources.arrow000small;
             this.Menu_ViewHalfPageForword.Name = "Menu_ViewHalfPageForword";
-            this.Menu_ViewHalfPageForword.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewHalfPageForword.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewHalfPageForword.Text = "見開き半ページ進む";
             this.Menu_ViewHalfPageForword.Click += new System.EventHandler(this.Menu_ViewHalfPageForword_Click);
             // 
@@ -739,42 +741,42 @@
             // 
             this.Menu_ViewHalfPageBack.Image = global::Marmi.Properties.Resources.arrow180small;
             this.Menu_ViewHalfPageBack.Name = "Menu_ViewHalfPageBack";
-            this.Menu_ViewHalfPageBack.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ViewHalfPageBack.Size = new System.Drawing.Size(192, 22);
             this.Menu_ViewHalfPageBack.Text = "見開き半ページ戻す";
             this.Menu_ViewHalfPageBack.Click += new System.EventHandler(this.Menu_ViewHalfPageBack_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
-            // 
-            // Menu_View_LeftOpen
-            // 
-            this.Menu_View_LeftOpen.Name = "Menu_View_LeftOpen";
-            this.Menu_View_LeftOpen.Size = new System.Drawing.Size(196, 26);
-            this.Menu_View_LeftOpen.Text = "左開きにする（左綴じ）";
-            this.Menu_View_LeftOpen.Click += new System.EventHandler(this.Menu_View_LeftOpen_Click);
-            // 
-            // Menu_SlideShow
-            // 
-            this.Menu_SlideShow.Name = "Menu_SlideShow";
-            this.Menu_SlideShow.Size = new System.Drawing.Size(196, 26);
-            this.Menu_SlideShow.Text = "スライドショーモード";
-            this.Menu_SlideShow.Click += new System.EventHandler(this.Menu_Slideshow_Click);
             // 
             // Menu_ForwordMultiPages
             // 
             this.Menu_ForwordMultiPages.Name = "Menu_ForwordMultiPages";
-            this.Menu_ForwordMultiPages.Size = new System.Drawing.Size(196, 26);
+            this.Menu_ForwordMultiPages.Size = new System.Drawing.Size(192, 22);
             this.Menu_ForwordMultiPages.Text = "複数ページ進む";
             this.Menu_ForwordMultiPages.Click += new System.EventHandler(this.Menu_ForwordMultiPages_Click);
             // 
             // Menu_BackwordMultiPages
             // 
             this.Menu_BackwordMultiPages.Name = "Menu_BackwordMultiPages";
-            this.Menu_BackwordMultiPages.Size = new System.Drawing.Size(196, 26);
+            this.Menu_BackwordMultiPages.Size = new System.Drawing.Size(192, 22);
             this.Menu_BackwordMultiPages.Text = "複数ページ戻る";
             this.Menu_BackwordMultiPages.Click += new System.EventHandler(this.Menu_BackwordMultiPages_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(189, 6);
+            // 
+            // Menu_View_LeftOpen
+            // 
+            this.Menu_View_LeftOpen.Name = "Menu_View_LeftOpen";
+            this.Menu_View_LeftOpen.Size = new System.Drawing.Size(192, 22);
+            this.Menu_View_LeftOpen.Text = "左開きにする（左綴じ）";
+            this.Menu_View_LeftOpen.Click += new System.EventHandler(this.Menu_View_LeftOpen_Click);
+            // 
+            // Menu_SlideShow
+            // 
+            this.Menu_SlideShow.Name = "Menu_SlideShow";
+            this.Menu_SlideShow.Size = new System.Drawing.Size(192, 22);
+            this.Menu_SlideShow.Text = "スライドショーモード";
+            this.Menu_SlideShow.Click += new System.EventHandler(this.Menu_Slideshow_Click);
             // 
             // Menu_Bookmark
             // 
@@ -827,47 +829,47 @@
             // 
             this.MenuItem_OptionOption.Image = global::Marmi.Properties.Resources.gear;
             this.MenuItem_OptionOption.Name = "MenuItem_OptionOption";
-            this.MenuItem_OptionOption.Size = new System.Drawing.Size(301, 26);
+            this.MenuItem_OptionOption.Size = new System.Drawing.Size(297, 22);
             this.MenuItem_OptionOption.Text = "オプション...";
             this.MenuItem_OptionOption.Click += new System.EventHandler(this.Menu_Option_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(298, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(294, 6);
             // 
             // Menu_OptionRecurseDir
             // 
             this.Menu_OptionRecurseDir.Name = "Menu_OptionRecurseDir";
-            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(301, 26);
+            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(297, 22);
             this.Menu_OptionRecurseDir.Text = "ディレクトリは下の階層まで閲覧";
             this.Menu_OptionRecurseDir.Click += new System.EventHandler(this.Menu_RecurseDir_Click);
             // 
             // Menu_keepMagnification
             // 
             this.Menu_keepMagnification.Name = "Menu_keepMagnification";
-            this.Menu_keepMagnification.Size = new System.Drawing.Size(301, 26);
+            this.Menu_keepMagnification.Size = new System.Drawing.Size(297, 22);
             this.Menu_keepMagnification.Text = "ページ移動時、表示倍率を維持";
             this.Menu_keepMagnification.Click += new System.EventHandler(this.Menu_keepMagnification_Click);
             // 
             // Menu_UseBicubic
             // 
             this.Menu_UseBicubic.Name = "Menu_UseBicubic";
-            this.Menu_UseBicubic.Size = new System.Drawing.Size(301, 26);
+            this.Menu_UseBicubic.Size = new System.Drawing.Size(297, 22);
             this.Menu_UseBicubic.Text = "100%以上の倍率でドット補完する";
             this.Menu_UseBicubic.Click += new System.EventHandler(this.Menu_UseBicubic_Click);
             // 
             // Menu_DontEnlargeOver100percent
             // 
             this.Menu_DontEnlargeOver100percent.Name = "Menu_DontEnlargeOver100percent";
-            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(301, 26);
+            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(297, 22);
             this.Menu_DontEnlargeOver100percent.Text = "画像サイズ自動調整で100%以上に拡大しない";
             this.Menu_DontEnlargeOver100percent.Click += new System.EventHandler(this.Menu_DontEnlargeOver100percent_Click);
             // 
             // MenuItem_Unsharp
             // 
             this.MenuItem_Unsharp.Name = "MenuItem_Unsharp";
-            this.MenuItem_Unsharp.Size = new System.Drawing.Size(301, 26);
+            this.MenuItem_Unsharp.Size = new System.Drawing.Size(297, 22);
             this.MenuItem_Unsharp.Text = "アンシャープマスクを有効";
             this.MenuItem_Unsharp.Click += new System.EventHandler(this.Menu_Unsharp_Click);
             // 
@@ -907,6 +909,8 @@
             this.Menu_ContextLast,
             this.Menu_ContextHalfPageForword,
             this.Menu_ContextHalfPageBack,
+            this.cmenu_ForwordMultiPages,
+            this.cmenu_BackwordMultiPages,
             this.Menu_ContextBookmarkList,
             this.Menu_ContextAddBookmark,
             this.Menu_ContextStartSlideshow,
@@ -927,7 +931,7 @@
             this.MenuItem_ContextCancel});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(179, 568);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(179, 620);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStrip1_Opening);
             // 
             // Menu_ContextBack
@@ -977,6 +981,20 @@
             this.Menu_ContextHalfPageBack.Size = new System.Drawing.Size(178, 26);
             this.Menu_ContextHalfPageBack.Text = "見開き半ページ戻す";
             this.Menu_ContextHalfPageBack.Click += new System.EventHandler(this.Menu_ViewHalfPageBack_Click);
+            // 
+            // cmenu_ForwordMultiPages
+            // 
+            this.cmenu_ForwordMultiPages.Name = "cmenu_ForwordMultiPages";
+            this.cmenu_ForwordMultiPages.Size = new System.Drawing.Size(178, 26);
+            this.cmenu_ForwordMultiPages.Text = "複数ページ進む";
+            this.cmenu_ForwordMultiPages.Click += new System.EventHandler(this.Menu_ForwordMultiPages_Click);
+            // 
+            // cmenu_BackwordMultiPages
+            // 
+            this.cmenu_BackwordMultiPages.Name = "cmenu_BackwordMultiPages";
+            this.cmenu_BackwordMultiPages.Size = new System.Drawing.Size(178, 26);
+            this.cmenu_BackwordMultiPages.Text = "複数ページ戻る";
+            this.cmenu_BackwordMultiPages.Click += new System.EventHandler(this.Menu_BackwordMultiPages_Click);
             // 
             // Menu_ContextBookmarkList
             // 
@@ -1355,6 +1373,8 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuItem_Unsharp;
         private System.Windows.Forms.ToolStripMenuItem Menu_ForwordMultiPages;
         private System.Windows.Forms.ToolStripMenuItem Menu_BackwordMultiPages;
+        private System.Windows.Forms.ToolStripMenuItem cmenu_ForwordMultiPages;
+        private System.Windows.Forms.ToolStripMenuItem cmenu_BackwordMultiPages;
     }
 }
 

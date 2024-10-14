@@ -301,6 +301,11 @@ namespace Marmi
             }
         }
 
+        /// <summary>
+        /// コンテキストメニューが開くときのイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             //バー関連のメニュー
@@ -316,6 +321,9 @@ namespace Marmi
             Menu_ContextFitScreenSize.Checked = App.Config.FitToScreen;
 
             Menu_ContextSidebar.Checked = _sidebar.Visible;
+
+            //複数ページ進む・戻るのテキスト更新
+            UpDateMenuTextOfMultiPageNavigation();
 
             //ファイルを閲覧していない場合のナビゲーション
             if (App.g_pi.Items == null || App.g_pi.Items.Count < 1)
@@ -333,6 +341,8 @@ namespace Marmi
                 Menu_ContextAddBookmark.Enabled = false;
                 Menu_ContextZoom.Enabled = false;   //zoom
                 Menu_ContextRedraw.Enabled = false;
+                cmenu_ForwordMultiPages.Enabled = false;
+                cmenu_BackwordMultiPages.Enabled = false;
                 return;
             }
             else if (App.g_pi.Items.Count == 1)
@@ -351,6 +361,8 @@ namespace Marmi
                 Menu_ContextAddBookmark.Enabled = false;
                 Menu_ContextZoom.Enabled = true;    //zoom
                 Menu_ContextRedraw.Enabled = true;
+                cmenu_ForwordMultiPages.Enabled = false;
+                cmenu_BackwordMultiPages.Enabled = false;
                 return;
             }
             else
@@ -373,6 +385,8 @@ namespace Marmi
                 //2ページモード:半ページ送りは2ページモード時のみ
                 Menu_ContextHalfPageBack.Enabled = ViewState.DualView && (bool)(App.g_pi.NowViewPage != 0);  //先頭ページチェック
                 Menu_ContextHalfPageForword.Enabled = ViewState.DualView && !IsLastPageViewing();    //最終ページチェック
+                cmenu_ForwordMultiPages.Enabled = true;
+                cmenu_BackwordMultiPages.Enabled = true;
 
                 //サムネイル表示中
                 if (ViewState.ThumbnailView)
@@ -556,6 +570,8 @@ namespace Marmi
             var pages = App.Config.General.MultiPageNavigationCount;
             Menu_ForwordMultiPages.Text = $"{pages} ページ進む";
             Menu_BackwordMultiPages.Text = $"{pages} ページ戻る";
+            cmenu_ForwordMultiPages.Text = $"{pages} ページ進む";
+            cmenu_BackwordMultiPages.Text = $"{pages} ページ戻る";
         }
     }
 }
