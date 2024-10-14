@@ -195,6 +195,9 @@ namespace Marmi
 
             //ver1.83アンシャープ
             MenuItem_Unsharp.Checked = App.Config.Advance.UnsharpMask;
+
+            //全画面起動オプション
+            Menu_StartWithFullScreen.Checked = App.Config.General.FullScreenWhenStartup;
         }
 
         private void Menu_Help_DropDownOpening(object sender, EventArgs e)
@@ -572,6 +575,14 @@ namespace Marmi
             Menu_BackwordMultiPages.Text = $"{pages} ページ戻る";
             cmenu_ForwordMultiPages.Text = $"{pages} ページ進む";
             cmenu_BackwordMultiPages.Text = $"{pages} ページ戻る";
+        }
+
+        /// <summary>メニューイベントハンドラ。起動時全画面</summary>
+        private void Menu_StartWithFullScreen_Click(object sender, EventArgs e)
+        {
+            var newMode = !App.Config.General.FullScreenWhenStartup;
+            App.Config.General.FullScreenWhenStartup = newMode;
+            Menu_StartWithFullScreen.Checked = newMode;
         }
     }
 }

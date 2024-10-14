@@ -148,6 +148,7 @@
             this.MenuItem_ContextOption = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ContextExit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_ContextCancel = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_StartWithFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.statusbar.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -817,7 +818,8 @@
             this.Menu_keepMagnification,
             this.Menu_UseBicubic,
             this.Menu_DontEnlargeOver100percent,
-            this.MenuItem_Unsharp});
+            this.MenuItem_Unsharp,
+            this.Menu_StartWithFullScreen});
             this.Menu_Option.Name = "Menu_Option";
             this.Menu_Option.Size = new System.Drawing.Size(79, 20);
             this.Menu_Option.Text = "オプション(&O)";
@@ -829,47 +831,47 @@
             // 
             this.MenuItem_OptionOption.Image = global::Marmi.Properties.Resources.gear;
             this.MenuItem_OptionOption.Name = "MenuItem_OptionOption";
-            this.MenuItem_OptionOption.Size = new System.Drawing.Size(297, 22);
+            this.MenuItem_OptionOption.Size = new System.Drawing.Size(301, 26);
             this.MenuItem_OptionOption.Text = "オプション...";
             this.MenuItem_OptionOption.Click += new System.EventHandler(this.Menu_Option_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(294, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(298, 6);
             // 
             // Menu_OptionRecurseDir
             // 
             this.Menu_OptionRecurseDir.Name = "Menu_OptionRecurseDir";
-            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(297, 22);
+            this.Menu_OptionRecurseDir.Size = new System.Drawing.Size(301, 26);
             this.Menu_OptionRecurseDir.Text = "ディレクトリは下の階層まで閲覧";
             this.Menu_OptionRecurseDir.Click += new System.EventHandler(this.Menu_RecurseDir_Click);
             // 
             // Menu_keepMagnification
             // 
             this.Menu_keepMagnification.Name = "Menu_keepMagnification";
-            this.Menu_keepMagnification.Size = new System.Drawing.Size(297, 22);
+            this.Menu_keepMagnification.Size = new System.Drawing.Size(301, 26);
             this.Menu_keepMagnification.Text = "ページ移動時、表示倍率を維持";
             this.Menu_keepMagnification.Click += new System.EventHandler(this.Menu_keepMagnification_Click);
             // 
             // Menu_UseBicubic
             // 
             this.Menu_UseBicubic.Name = "Menu_UseBicubic";
-            this.Menu_UseBicubic.Size = new System.Drawing.Size(297, 22);
+            this.Menu_UseBicubic.Size = new System.Drawing.Size(301, 26);
             this.Menu_UseBicubic.Text = "100%以上の倍率でドット補完する";
             this.Menu_UseBicubic.Click += new System.EventHandler(this.Menu_UseBicubic_Click);
             // 
             // Menu_DontEnlargeOver100percent
             // 
             this.Menu_DontEnlargeOver100percent.Name = "Menu_DontEnlargeOver100percent";
-            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(297, 22);
+            this.Menu_DontEnlargeOver100percent.Size = new System.Drawing.Size(301, 26);
             this.Menu_DontEnlargeOver100percent.Text = "画像サイズ自動調整で100%以上に拡大しない";
             this.Menu_DontEnlargeOver100percent.Click += new System.EventHandler(this.Menu_DontEnlargeOver100percent_Click);
             // 
             // MenuItem_Unsharp
             // 
             this.MenuItem_Unsharp.Name = "MenuItem_Unsharp";
-            this.MenuItem_Unsharp.Size = new System.Drawing.Size(297, 22);
+            this.MenuItem_Unsharp.Size = new System.Drawing.Size(301, 26);
             this.MenuItem_Unsharp.Text = "アンシャープマスクを有効";
             this.MenuItem_Unsharp.Click += new System.EventHandler(this.Menu_Unsharp_Click);
             // 
@@ -1225,6 +1227,13 @@
             this.MenuItem_ContextCancel.Size = new System.Drawing.Size(178, 26);
             this.MenuItem_ContextCancel.Text = "キャンセル";
             // 
+            // Menu_StartWithFullScreen
+            // 
+            this.Menu_StartWithFullScreen.Name = "Menu_StartWithFullScreen";
+            this.Menu_StartWithFullScreen.Size = new System.Drawing.Size(301, 26);
+            this.Menu_StartWithFullScreen.Text = "全画面で起動する";
+            this.Menu_StartWithFullScreen.Click += new System.EventHandler(this.Menu_StartWithFullScreen_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1375,6 +1384,7 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_BackwordMultiPages;
         private System.Windows.Forms.ToolStripMenuItem cmenu_ForwordMultiPages;
         private System.Windows.Forms.ToolStripMenuItem cmenu_BackwordMultiPages;
+        private System.Windows.Forms.ToolStripMenuItem Menu_StartWithFullScreen;
     }
 }
 
