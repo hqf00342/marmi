@@ -1,5 +1,6 @@
 ﻿using Marmi.Models;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /*
@@ -80,9 +81,24 @@ namespace Marmi
                 return;
             }
 
-            //右クリック対応はForm1_MouseUp()でやっているので無視
+            //右クリック
+            //Form1_MouseUp()でやっているので無視
             if (e.Button == MouseButtons.Right)
                 return;
+
+            //X1ボタン
+            if (e.Button == MouseButtons.XButton1)
+            {
+                await ExecuteXButtonCommandAsync(App.Config.Mouse.X1Behavior);
+                return;
+            }
+
+            //X2ボタン
+            if (e.Button == MouseButtons.XButton2)
+            {
+                await ExecuteXButtonCommandAsync(App.Config.Mouse.X2Behavior);
+                return;
+            }
 
             //ドラッグによるスクロール中であればクリックイベントは無視
             if (!g_LastClickPoint.IsEmpty)
@@ -341,6 +357,59 @@ namespace Marmi
                     toolStrip1.Visible = false;
                     statusbar.Visible = false;
                 }
+            }
+        }
+
+        private async Task ExecuteXButtonCommandAsync(string behavior)
+        {
+            //サムネイルモードなら何もしない
+            if (ViewState.ThumbnailView)
+                return;
+
+            if (string.IsNullOrEmpty(behavior))
+                return;
+
+            switch (behavior)
+            {
+                case "次のページ":
+                    await NavigateToForwordAsync();
+                    break;
+
+                case "前のページ":
+                    await NavigateToBackAsync();
+                    break;
+
+                case "複数ページ進む":
+                    await NavigateToForwordMultiPageAsync();
+                    break;
+
+                case "複数ページ戻る":
+                    await NavigateToBackwordMultiPageAsync();
+                    break;
+
+                case "2ページモード切替":
+                    await SetDualViewModeAsync(!ViewState.DualView);
+                    break;
+
+                case "回転":
+                    ToolStripButton_Rotate_Click(null, null);
+                    break;
+
+                case "フルスクリーン":
+                    ToggleFullScreen();
+                    break;
+
+                case "最小化":
+                    ToggleFormSizeMinNormal();
+                    break;
+
+                case "しおりOn/Off":
+                    ToggleBookmark();
+                    break;
+
+                case "サムネイルモード":
+                    Menu_ViewThumbnail_Click(null, null);
+                    break;
             }
         }
     }

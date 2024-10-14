@@ -2,6 +2,13 @@
 AppGlobalConfig
 設定を保存するクラス
 XmlSerializeされる設定を管理している。
+
+主なプロパティ
+bool DualView       2画面モードか
+bool FitToScreen    スクリーンに画像をフィットさせる
+
+画面状態はViewState staticクラスにある
+
 ********************************************************************************/
 
 using Marmi.DataModel;
@@ -37,7 +44,7 @@ namespace Marmi
         public bool RecurseSearchDir { get; set; }
 
         /// <summary>
-        /// 画像とイメージをフィットさせる
+        /// 画像とスクリーンをフィットさせる
         /// </summary>
         public bool FitToScreen { get; set; }
 

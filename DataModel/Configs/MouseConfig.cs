@@ -45,12 +45,21 @@ namespace Marmi.DataModel
         /// </summary>
         public bool DoubleClickToFullscreen { get; set; }
 
+        /// <summary>戻るボタンの動作</summary>
+        public string X1Behavior { get; set; } = string.Empty;
+
+        /// <summary>進むボタンの動作</summary>
+        public string X2Behavior { get; set; } = string.Empty;
+
         public void Init()
         {
             MouseConfigWheel = "拡大縮小";
             ClickRightToNextPic = true;
             ReverseDirectionWhenLeftBook = true;
             DoubleClickToFullscreen = false;
+
+            X1Behavior = "前のページ";
+            X2Behavior = "次のページ";
 
             //WinFormsのデータバインド機構は
             //1つPropertyChangedを投げると全部チェックしてくれるため

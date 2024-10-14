@@ -121,8 +121,6 @@
             this.label44 = new System.Windows.Forms.Label();
             this.ka_nextpage2 = new Marmi.KeyAccelerator();
             this.ka_prevpage2 = new Marmi.KeyAccelerator();
-            this.label12 = new System.Windows.Forms.Label();
-            this.ka_rotate1 = new Marmi.KeyAccelerator();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -130,6 +128,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.ka_thunbnail = new Marmi.KeyAccelerator();
             this.ka_sidebar = new Marmi.KeyAccelerator();
+            this.label12 = new System.Windows.Forms.Label();
+            this.ka_rotate1 = new Marmi.KeyAccelerator();
             this.label18 = new System.Windows.Forms.Label();
             this.ka_minWindow = new Marmi.KeyAccelerator();
             this.label20 = new System.Windows.Forms.Label();
@@ -140,7 +140,11 @@
             this.DoubleClickToFullscreen = new System.Windows.Forms.CheckBox();
             this.mouseConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.cbX2Button = new System.Windows.Forms.ComboBox();
+            this.cbX1Button = new System.Windows.Forms.ComboBox();
             this.mouseConfigWheel = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -1392,29 +1396,6 @@
             this.ka_prevpage2.Tag = "前のページ(2)";
             this.ka_prevpage2.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(244, 93);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 12);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "回転";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // ka_rotate1
-            // 
-            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Rotate1", true));
-            this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
-            this.ka_rotate1.Location = new System.Drawing.Point(344, 91);
-            this.ka_rotate1.Name = "ka_rotate1";
-            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
-            this.ka_rotate1.TabIndex = 12;
-            this.ka_rotate1.Tag = "回転";
-            this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
-            // 
             // label13
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1495,6 +1476,29 @@
             this.ka_sidebar.TabIndex = 2;
             this.ka_sidebar.Tag = "サイドバー";
             this.ka_sidebar.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(244, 93);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 12);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "回転";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ka_rotate1
+            // 
+            this.ka_rotate1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ka_rotate1.DataBindings.Add(new System.Windows.Forms.Binding("KeyData", this.keyConfigBindingSource, "Key_Rotate1", true));
+            this.ka_rotate1.KeyData = System.Windows.Forms.Keys.None;
+            this.ka_rotate1.Location = new System.Drawing.Point(344, 91);
+            this.ka_rotate1.Name = "ka_rotate1";
+            this.ka_rotate1.Size = new System.Drawing.Size(120, 16);
+            this.ka_rotate1.TabIndex = 12;
+            this.ka_rotate1.Tag = "回転";
+            this.ka_rotate1.Validating += new System.ComponentModel.CancelEventHandler(this.KeyAcc_Validating);
             // 
             // label18
             // 
@@ -1584,7 +1588,7 @@
             this.DoubleClickToFullscreen.AutoSize = true;
             this.DoubleClickToFullscreen.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.mouseConfigBindingSource, "DoubleClickToFullscreen", true));
             this.DoubleClickToFullscreen.Enabled = false;
-            this.DoubleClickToFullscreen.Location = new System.Drawing.Point(14, 291);
+            this.DoubleClickToFullscreen.Location = new System.Drawing.Point(14, 333);
             this.DoubleClickToFullscreen.Name = "DoubleClickToFullscreen";
             this.DoubleClickToFullscreen.Size = new System.Drawing.Size(180, 16);
             this.DoubleClickToFullscreen.TabIndex = 2;
@@ -1600,14 +1604,40 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label45);
+            this.groupBox1.Controls.Add(this.label30);
             this.groupBox1.Controls.Add(this.label24);
+            this.groupBox1.Controls.Add(this.cbX2Button);
+            this.groupBox1.Controls.Add(this.cbX1Button);
             this.groupBox1.Controls.Add(this.mouseConfigWheel);
             this.groupBox1.Location = new System.Drawing.Point(6, 206);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(418, 67);
+            this.groupBox1.Size = new System.Drawing.Size(418, 121);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "マウスホイール";
+            this.groupBox1.Text = "マウスホイール/そのほかのボタン";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(7, 78);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(54, 12);
+            this.label45.TabIndex = 6;
+            this.label45.Tag = "マウスのホイールに割り当てる機能を設定します。";
+            this.label45.Text = "進むボタン";
+            this.toolTip1.SetToolTip(this.label45, "マウスのホイールに割り当てる機能を設定します。");
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(7, 52);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(53, 12);
+            this.label30.TabIndex = 5;
+            this.label30.Tag = "マウスのホイールに割り当てる機能を設定します。";
+            this.label30.Text = "戻るボタン";
+            this.toolTip1.SetToolTip(this.label30, "マウスのホイールに割り当てる機能を設定します。");
             // 
             // label24
             // 
@@ -1621,6 +1651,54 @@
             this.toolTip1.SetToolTip(this.label24, "マウスのホイールに割り当てる機能を設定します。");
             this.label24.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
             // 
+            // cbX2Button
+            // 
+            this.cbX2Button.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mouseConfigBindingSource, "X2Behavior", true));
+            this.cbX2Button.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbX2Button.FormattingEnabled = true;
+            this.cbX2Button.Items.AddRange(new object[] {
+            "(なし)",
+            "次のページ",
+            "前のページ",
+            "複数ページ進む",
+            "複数ページ戻る",
+            "2ページモード切替",
+            "回転",
+            "フルスクリーン",
+            "最小化",
+            "しおりOn/Off",
+            "サムネイルモード"});
+            this.cbX2Button.Location = new System.Drawing.Point(121, 75);
+            this.cbX2Button.Name = "cbX2Button";
+            this.cbX2Button.Size = new System.Drawing.Size(118, 20);
+            this.cbX2Button.TabIndex = 4;
+            this.cbX2Button.Tag = "次のページに進むキー設定です";
+            this.cbX2Button.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
+            // 
+            // cbX1Button
+            // 
+            this.cbX1Button.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mouseConfigBindingSource, "X1Behavior", true));
+            this.cbX1Button.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbX1Button.FormattingEnabled = true;
+            this.cbX1Button.Items.AddRange(new object[] {
+            "(なし)",
+            "次のページ",
+            "前のページ",
+            "複数ページ進む",
+            "複数ページ戻る",
+            "2ページモード切替",
+            "回転",
+            "フルスクリーン",
+            "最小化",
+            "しおりOn/Off",
+            "サムネイルモード"});
+            this.cbX1Button.Location = new System.Drawing.Point(121, 49);
+            this.cbX1Button.Name = "cbX1Button";
+            this.cbX1Button.Size = new System.Drawing.Size(118, 20);
+            this.cbX1Button.TabIndex = 4;
+            this.cbX1Button.Tag = "次のページに進むキー設定です";
+            this.cbX1Button.MouseEnter += new System.EventHandler(this.OnFocus_Enter);
+            // 
             // mouseConfigWheel
             // 
             this.mouseConfigWheel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mouseConfigBindingSource, "MouseConfigWheel", true));
@@ -1631,7 +1709,7 @@
             "ページ送り"});
             this.mouseConfigWheel.Location = new System.Drawing.Point(121, 23);
             this.mouseConfigWheel.Name = "mouseConfigWheel";
-            this.mouseConfigWheel.Size = new System.Drawing.Size(100, 20);
+            this.mouseConfigWheel.Size = new System.Drawing.Size(118, 20);
             this.mouseConfigWheel.TabIndex = 4;
             this.mouseConfigWheel.Tag = "次のページに進むキー設定です";
             this.toolTip1.SetToolTip(this.mouseConfigWheel, "マウスのホイールに割り当てる機能を設定します。");
@@ -2095,5 +2173,9 @@
         private System.Windows.Forms.Label label25;
         private KeyAccelerator ka_multiForward;
         private KeyAccelerator ka_multiBackword;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox cbX2Button;
+        private System.Windows.Forms.ComboBox cbX1Button;
     }
 }

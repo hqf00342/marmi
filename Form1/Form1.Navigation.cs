@@ -240,6 +240,10 @@ namespace Marmi
         /// <returns></returns>
         private async Task NavigateToForwordMultiPageAsync()
         {
+            //サムネイルモードなら何もしない
+            if (ViewState.ThumbnailView)
+                return;
+
             var nextPage = App.g_pi.NowViewPage + App.Config.General.MultiPageNavigationCount;
             if (nextPage > App.g_pi.Items.Count - 1)
             {
@@ -254,6 +258,10 @@ namespace Marmi
         /// <returns></returns>
         private async Task NavigateToBackwordMultiPageAsync()
         {
+            //サムネイルモードなら何もしない
+            if (ViewState.ThumbnailView)
+                return;
+
             var nextPage = App.g_pi.NowViewPage - App.Config.General.MultiPageNavigationCount;
             if (nextPage < 0)
             {
